@@ -1,6 +1,6 @@
 package org.grizz.game.model.impl;
 
-import lombok.Data;
+import lombok.*;
 import org.grizz.game.model.Location;
 
 /**

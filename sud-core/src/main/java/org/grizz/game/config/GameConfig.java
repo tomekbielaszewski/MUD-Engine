@@ -11,6 +11,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 
 /**
  * Hello world!
@@ -36,6 +38,11 @@ public class GameConfig {
         questLoader().load();
         locationLoader().load();
         locationScriptLoader().load();
+    }
+
+    @Bean
+    public ScriptEngine scriptEngine() {
+        return new ScriptEngineManager().getEngineByName("nashorn");
     }
 
     @Bean
