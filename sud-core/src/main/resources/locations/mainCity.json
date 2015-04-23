@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "name": "Port",
+    "description": "bl bl bl",
+    "south": "2",
+    "entryScript": "someID",
+    "leavingScript": "someID2"
+  },
+  {
+    "id": "2",
+    "name": "Plaza",
+    "description": "bl bl bl2",
+    "north": "1",
+    "entryScript": "someID",
+    "leavingScript": "someID2"
+  }
+]
