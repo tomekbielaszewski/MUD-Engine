@@ -13,6 +13,10 @@ public interface PlayerContext {
     int getCharisma();
     int getVitality();
 
+    String getCurrentLocation();
+
+    String getPastLocation();
+
     void addAttribute(String key, Object value);
     Object getAttribute(String key);
     boolean containsAttribute(String key);

@@ -1,5 +1,7 @@
 package org.grizz.game;
 
+import com.google.common.collect.Maps;
+import org.grizz.game.model.impl.PlayerContextImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,20 @@ public class GameImpl implements Game {
             e.printStackTrace();
         }
 
+        PlayerContextImpl grizz = new PlayerContextImpl("Grizz",
+                100,
+                50,
+                20,
+                25,
+                45,
+                80,
+                "1",
+                "1",
+                Maps.newHashMap());
+        PlayerContextImpl grizzPlusStr = grizz.copy().strength(101).build();
+
+        System.out.println("Grizz:  " + grizz);
+        System.out.println("Grizz+: " + grizzPlusStr);
 
         return String.format("Uzyles komendy [%s] jako [%s]", command, player);
     }
