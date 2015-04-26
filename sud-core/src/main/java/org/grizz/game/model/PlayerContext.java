@@ -19,5 +19,7 @@ public interface PlayerContext {
 
     void addAttribute(String key, Object value);
     Object getAttribute(String key);
+
+    void removeAttribute(String key);
     boolean containsAttribute(String key);
 }

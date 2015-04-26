@@ -1,7 +1,7 @@
 package org.grizz.game.model.impl;
 
 import lombok.AllArgsConstructor;
-import lombok.Value;
+import lombok.Data;
 import lombok.experimental.Builder;
 import org.grizz.game.model.PlayerContext;
 
@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by tomasz.bielaszewski on 2015-04-23.
  */
-@Value
+@Data
 @Builder
 @AllArgsConstructor
 public class PlayerContextImpl implements PlayerContext {
@@ -39,6 +39,11 @@ public class PlayerContextImpl implements PlayerContext {
     }
 
     @Override
+    public void removeAttribute(String key) {
+        attributes.remove(key);
+    }
+
+    @Override
     public boolean containsAttribute(String key) {
         return attributes.containsKey(key);
     }
@@ -55,5 +60,18 @@ public class PlayerContextImpl implements PlayerContext {
                 .currentLocation(this.getCurrentLocation())
                 .pastLocation(this.getPastLocation())
                 .attributes(this.getAttributes());
+    }
+
+    public void setTo(PlayerContextImpl context) {
+        this.name = context.name;
+        this.strength = context.strength;
+        this.dexterity = context.dexterity;
+        this.intelligence = context.intelligence;
+        this.wisdom = context.wisdom;
+        this.charisma = context.charisma;
+        this.vitality = context.vitality;
+        this.currentLocation = context.currentLocation;
+        this.pastLocation = context.pastLocation;
+        this.attributes = context.attributes;
     }
 }

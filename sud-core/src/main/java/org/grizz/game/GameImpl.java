@@ -2,6 +2,8 @@ package org.grizz.game;
 
 import com.google.common.collect.Maps;
 import org.grizz.game.model.impl.PlayerContextImpl;
+import org.grizz.game.service.Direction;
+import org.grizz.game.service.MovementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import java.io.OutputStreamWriter;
 public class GameImpl implements Game {
     @Autowired
     private ScriptEngine scriptEngine;
+    @Autowired
+    private MovementService movementService;
 
     @Override
     public String runCommand(String command, String player) {
@@ -43,6 +47,16 @@ public class GameImpl implements Game {
 
         System.out.println("Grizz:  " + grizz);
         System.out.println("Grizz+: " + grizzPlusStr);
+
+        System.out.println("Moving Grizz NORTH");
+        movementService.move(Direction.NORTH, grizzPlusStr);
+
+        System.out.println(grizzPlusStr);
+
+        System.out.println("Moving Grizz NORTH");
+        movementService.move(Direction.NORTH, grizzPlusStr);
+
+        System.out.println(grizzPlusStr);
 
         return String.format("Uzyles komendy [%s] jako [%s]", command, player);
     }
