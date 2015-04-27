@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Builder;
 import org.grizz.game.model.PlayerContext;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +28,7 @@ public class PlayerContextImpl implements PlayerContext {
     private String pastLocation;
 
     private Map<String, Object> attributes;
+    private List<String> events;
 
     @Override
     public void addAttribute(String key, Object value) {
@@ -48,6 +50,11 @@ public class PlayerContextImpl implements PlayerContext {
         return attributes.containsKey(key);
     }
 
+    @Override
+    public void addEvent(String event) {
+        events.add(event);
+    }
+
     public PlayerContextImpl.PlayerContextImplBuilder copy() {
         return PlayerContextImpl.builder()
                 .name(this.getName())
@@ -59,7 +66,8 @@ public class PlayerContextImpl implements PlayerContext {
                 .vitality(this.getVitality())
                 .currentLocation(this.getCurrentLocation())
                 .pastLocation(this.getPastLocation())
-                .attributes(this.getAttributes());
+                .attributes(this.getAttributes())
+                .events(this.events);
     }
 
     public void setTo(PlayerContextImpl context) {
@@ -73,5 +81,6 @@ public class PlayerContextImpl implements PlayerContext {
         this.currentLocation = context.currentLocation;
         this.pastLocation = context.pastLocation;
         this.attributes = context.attributes;
+        this.events = context.events;
     }
 }

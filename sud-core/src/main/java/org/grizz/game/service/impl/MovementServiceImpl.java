@@ -1,5 +1,7 @@
 package org.grizz.game.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
+import org.grizz.game.exception.CantGoThereException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.impl.PlayerContextImpl;
@@ -14,6 +16,7 @@ import java.util.function.Supplier;
 /**
  * Created by Grizz on 2015-04-26.
  */
+@Slf4j
 @Service
 public class MovementServiceImpl implements MovementService {
     @Autowired
@@ -23,31 +26,36 @@ public class MovementServiceImpl implements MovementService {
     public void move(Direction dir, PlayerContext playerContext) {
         Location currentLocation = locationRepo.get(playerContext.getCurrentLocation());
 
-        switch (dir) {
-            case NORTH:
-                move(currentLocation::getNorth, playerContext, currentLocation);
-                break;
-            case SOUTH:
-                move(currentLocation::getSouth, playerContext, currentLocation);
-                break;
-            case EAST:
-                move(currentLocation::getEast, playerContext, currentLocation);
-                break;
-            case WEST:
-                move(currentLocation::getWest, playerContext, currentLocation);
-                break;
-            case UP:
-                move(currentLocation::getUp, playerContext, currentLocation);
-                break;
-            case DOWN:
-                move(currentLocation::getDown, playerContext, currentLocation);
-                break;
+        try {
+            switch (dir) {
+                case NORTH:
+                    move(currentLocation::getNorth, playerContext, currentLocation);
+                    break;
+                case SOUTH:
+                    move(currentLocation::getSouth, playerContext, currentLocation);
+                    break;
+                case EAST:
+                    move(currentLocation::getEast, playerContext, currentLocation);
+                    break;
+                case WEST:
+                    move(currentLocation::getWest, playerContext, currentLocation);
+                    break;
+                case UP:
+                    move(currentLocation::getUp, playerContext, currentLocation);
+                    break;
+                case DOWN:
+                    move(currentLocation::getDown, playerContext, currentLocation);
+                    break;
+            }
+        } catch (IllegalArgumentException e) {
+            log.warn("{} tried to go from ID[{}] to [{}]: {}", playerContext.getName(), currentLocation.getId(), dir, e.getMessage());
+            throw new CantGoThereException();
         }
     }
 
     private void move(Supplier<String> locationSupplier, PlayerContext playerContext, Location currentLocation) {
-        Location targetLocation = locationRepo.get(locationSupplier.get());
         PlayerContextImpl player = (PlayerContextImpl) playerContext;
+        Location targetLocation = locationRepo.get(locationSupplier.get());
 
         player.setTo(player.copy()
                         .pastLocation(currentLocation.getId())

@@ -1,6 +1,8 @@
 package org.grizz.game;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.grizz.game.commands.CommandHandlerBus;
 import org.grizz.game.model.impl.PlayerContextImpl;
 import org.grizz.game.service.Direction;
 import org.grizz.game.service.MovementService;
@@ -21,6 +23,8 @@ public class GameImpl implements Game {
     private ScriptEngine scriptEngine;
     @Autowired
     private MovementService movementService;
+    @Autowired
+    private CommandHandlerBus commandHandlerBus;
 
     @Override
     public String runCommand(String command, String player) {
@@ -42,7 +46,8 @@ public class GameImpl implements Game {
                 80,
                 "1",
                 "1",
-                Maps.newHashMap());
+                Maps.newHashMap(),
+                Lists.newArrayList());
         PlayerContextImpl grizzPlusStr = grizz.copy().strength(101).build();
 
         System.out.println("Grizz:  " + grizz);
@@ -55,9 +60,17 @@ public class GameImpl implements Game {
 
         System.out.println("Moving Grizz NORTH");
         movementService.move(Direction.NORTH, grizzPlusStr);
-
         System.out.println(grizzPlusStr);
 
-        return String.format("Uzyles komendy [%s] jako [%s]", command, player);
+        commandHandlerBus.execute("south", grizzPlusStr);
+        System.out.println(grizzPlusStr);
+
+        commandHandlerBus.execute("east", grizzPlusStr);
+        System.out.println(grizzPlusStr);
+
+        commandHandlerBus.execute("east", grizzPlusStr);
+        System.out.println(grizzPlusStr);
+
+        return "";
     }
 }
