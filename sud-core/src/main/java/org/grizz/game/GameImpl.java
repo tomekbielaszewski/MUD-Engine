@@ -2,6 +2,8 @@ package org.grizz.game;
 
 import org.grizz.game.commands.CommandHandlerBus;
 import org.grizz.game.model.PlayerContext;
+import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.model.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,7 @@ public class GameImpl implements Game {
     private PlayerRepository playerRepository;
 
     @Override
-    public String runCommand(String command, String player) {
+    public PlayerResponse runCommand(String command, String player) {
         PlayerContext context = playerRepository.get(player);
         commandHandlerBus.execute(command, context);
 
@@ -67,6 +69,6 @@ public class GameImpl implements Game {
 //        commandHandlerBus.execute("east", grizzPlusStr);
 //        System.out.println(grizzPlusStr);
 
-        return "";
+        return new PlayerResponseImpl();
     }
 }

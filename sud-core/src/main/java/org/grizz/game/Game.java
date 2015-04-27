@@ -1,8 +1,10 @@
 package org.grizz.game;
 
+import org.grizz.game.model.PlayerResponse;
+
 /**
  * Created by Grizz on 2015-04-17.
  */
 public interface Game {
-    String runCommand(String command, String player);
+    PlayerResponse runCommand(String command, String player);
 }

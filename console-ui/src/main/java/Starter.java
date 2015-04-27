@@ -1,5 +1,6 @@
 import org.grizz.game.Game;
 import org.grizz.game.config.GameConfig;
+import org.grizz.game.model.PlayerResponse;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -12,7 +13,7 @@ public class Starter {
         ConfigurableApplicationContext context = SpringApplication.run(GameConfig.class);
         Game game = context.getBean(Game.class);
 
-        String result = game.runCommand("north", "Grizz");
+        PlayerResponse result = game.runCommand("north", "Grizz");
         System.out.println(result);
     }
 }
