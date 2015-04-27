@@ -20,7 +20,6 @@ public class CommandConfig {
         CommandHandlerBus commandHandlerBus = new CommandHandlerBus();
 
         commandHandlerBus.addCommand(movementCommand);
-        //
 
         return commandHandlerBus;
     }
