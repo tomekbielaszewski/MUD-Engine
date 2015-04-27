@@ -23,6 +23,7 @@ public class MovementServiceImplIntegrationTest {
     @Test
     public void mainCityWalkthroughTest() {
         PlayerContextImpl context = PlayerContextImpl.builder()
+                .name("TestUser")
                 .currentLocation("1")
                 .build();
         movementService.move(Direction.NORTH, context);// 2

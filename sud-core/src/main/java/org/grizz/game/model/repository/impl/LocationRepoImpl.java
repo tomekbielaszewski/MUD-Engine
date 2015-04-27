@@ -11,8 +11,8 @@ import java.util.Map;
 /**
  * Created by Grizz on 2015-04-21.
  */
-@Service
 @Slf4j
+@Service
 public class LocationRepoImpl implements LocationRepo {
     private Map<String, Location> locations = Maps.newHashMap();
 

@@ -12,7 +12,7 @@ public class Starter {
         ConfigurableApplicationContext context = SpringApplication.run(GameConfig.class);
         Game game = context.getBean(Game.class);
 
-        String result = game.runCommand("rozejrzyj sie", "Grizwold");
+        String result = game.runCommand("north", "Grizz");
         System.out.println(result);
     }
 }

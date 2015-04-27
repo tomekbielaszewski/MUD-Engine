@@ -57,6 +57,8 @@ public class MovementServiceImpl implements MovementService {
         PlayerContextImpl player = (PlayerContextImpl) playerContext;
         Location targetLocation = locationRepo.get(locationSupplier.get());
 
+        log.info("{} moved from ID[{}] to ID[{}]", player.getName(), currentLocation.getName(), targetLocation.getName());
+
         player.setTo(player.copy()
                         .pastLocation(currentLocation.getId())
                         .currentLocation(targetLocation.getId())
