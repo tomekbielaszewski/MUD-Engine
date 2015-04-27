@@ -3,6 +3,8 @@ package org.grizz.game.commands;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.model.PlayerContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 
 import java.util.Set;
 
@@ -12,6 +14,9 @@ import java.util.Set;
 @Slf4j
 public class CommandHandlerBus {
     private Set<Command> commands = Sets.newHashSet();
+
+    @Autowired
+    private Environment env;
 
     public void execute(String strCommand, PlayerContext context) {
         for (Command command : commands) {
@@ -24,6 +29,7 @@ public class CommandHandlerBus {
         }
 
         log.info("{} executed UNKNOWN command[{}]", context.getName(), strCommand);
+        context.addEvent(env.getProperty("unknown.command.invoced") + " \"" + strCommand + "\"");
     }
 
     public void addCommand(Command command) {
