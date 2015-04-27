@@ -4,10 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.loader.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
@@ -20,7 +18,11 @@ import javax.script.ScriptEngineManager;
 @Slf4j
 @Configuration
 @ComponentScan("org.grizz.game")
-@PropertySource("assets.properties")
+@EnableAutoConfiguration
+@PropertySources({
+        @PropertySource("assets.properties"),
+        @PropertySource("strings.properties")
+})
 public class GameConfig {
     private static final String ASSETS_JSON_PATH_LOCATIONS = "assets.json.path.locations";
     private static final String ASSETS_JSON_PATH_LOCATIONS_SCRIPTS = "assets.json.path.locations.scripts";
