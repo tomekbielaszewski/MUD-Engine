@@ -1,0 +1,44 @@
+[
+  {
+    "id": "1",
+    "name": "Złota moneta",
+    "description": "Sporawy, złoty krążek z wizerunkiem jednego z dawno juz nie żyjących władców.",
+    "itemType": "MISC"
+  },
+  {
+    "id": "2",
+    "name": "Srebrna moneta",
+    "description": "Mały, srebrny krążek z wizerunkiem jednej z Wielkich Kapłanek.",
+    "itemType": "MISC"
+  },
+  {
+    "id": "3",
+    "name": "Brązowa moneta",
+    "description": "Mały, powycierany, brązowy krążek z ledwo widoczną sylwetką rycerza na koniu.",
+    "itemType": "MISC"
+  },
+  {
+    "id": "4",
+    "name": "Srebrny klucz",
+    "description": "Lśniący, lekko zadrapany przy oczku klucz. Często używany. Może byc sporo warty, a to co otwiera - jeszcze więcej.",
+    "itemType": "MISC"
+  },
+  {
+    "id": "5",
+    "name": "Zniszczona patelnia",
+    "description": "Dziurawa, zniszczona patelnia. Raczej nie nadaje się do użytku.",
+    "itemType": "MISC"
+  },
+  {
+    "id": "6",
+    "name": "Brudna szmata",
+    "description": "Kawałek dziurawego i brudnego materiału.",
+    "itemType": "MISC"
+  },
+  {
+    "id": "7",
+    "name": "Zardzewiały klucz",
+    "description": "Jest to mały zardzewiały klucz. Widać, że nie był używany od dłuższego czasu.",
+    "itemType": "MISC"
+  }
+]

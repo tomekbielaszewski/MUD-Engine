@@ -1,0 +1,42 @@
+[
+  {
+    "id": "100",
+    "name": "Krótki miecz",
+    "description": "Krótkie, lekko uszczerbione, jednoręczne ostrze. Prosty jelec. Zużyta rękojeść. Nic szczególnego.",
+    "itemType": "WEAPON",
+    "weaponType": "SWORD",
+    "handleType": "ONE_HANDED",
+    "damageMin": 2,
+    "damageMax": 5
+  },
+  {
+    "id": "101",
+    "name": "Lekki topór",
+    "description": "Lekki topór o wyszczerbionym ostrzu. Rękojeść jest solidnie oprawiona w skórę.",
+    "itemType": "WEAPON",
+    "weaponType": "AXE",
+    "handleType": "ONE_HANDED",
+    "damageMin": 3,
+    "damageMax": 5
+  },
+  {
+    "id": "102",
+    "name": "Młot bojowy",
+    "description": "Ciężki młot z kolczastym wykończeniem pod obuchem. Rękojeść jest solidnie oprawiona w skórę.",
+    "itemType": "WEAPON",
+    "weaponType": "HAMMER",
+    "handleType": "TWO_HANDED",
+    "damageMin": 5,
+    "damageMax": 10
+  },
+  {
+    "id": "103",
+    "name": "Sztylet",
+    "description": "Lekkie, poręczne ostrze. Łatwo można je schować w rękawie lub cholewie buta.",
+    "itemType": "WEAPON",
+    "weaponType": "DAGGER",
+    "handleType": "ONE_HANDED",
+    "damageMin": 1,
+    "damageMax": 3
+  }
+]
