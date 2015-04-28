@@ -1,5 +1,6 @@
 package org.grizz.game.service.impl;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.exception.CantGoThereException;
 import org.grizz.game.model.Location;
@@ -23,7 +24,7 @@ public class MovementServiceImpl implements MovementService {
     private LocationRepo locationRepo;
 
     @Override
-    public void move(Direction dir, PlayerContext playerContext) {
+    public void move(@NonNull Direction dir, @NonNull PlayerContext playerContext) {
         Location currentLocation = locationRepo.get(playerContext.getCurrentLocation());
 
         try {

@@ -19,11 +19,14 @@ public class CommandHandlerBus {
     private Environment env;
 
     public void execute(String strCommand, PlayerContext context) {
-        for (Command command : commands) {
-            if (command.accept(strCommand)) {
-                log.info("{} executed command[{}]", context.getName(), strCommand);
+        String formattedStrCommand = strCommand.trim();
+        formattedStrCommand = formattedStrCommand.toLowerCase();
 
-                command.execute(strCommand, context);
+        for (Command command : commands) {
+            if (command.accept(formattedStrCommand)) {
+                log.info("{} executed command[{}]", context.getName(), formattedStrCommand);
+
+                command.execute(formattedStrCommand, context);
                 return;
             }
         }
