@@ -8,7 +8,6 @@ import org.grizz.game.loader.impl.*;
 import org.grizz.game.model.impl.PlayerContextImpl;
 import org.grizz.game.model.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 
@@ -22,7 +21,6 @@ import javax.script.ScriptEngineManager;
 @Slf4j
 @Configuration
 @ComponentScan("org.grizz.game")
-@EnableAutoConfiguration
 @PropertySources({
         @PropertySource("assets.properties"),
         @PropertySource("strings.properties")
