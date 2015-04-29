@@ -1,0 +1,38 @@
+[
+  {
+    "id": "200",
+    "name": "Lniana koszula",
+    "description": "Przyzwoita, lekko przybrudzona lniana koszula",
+    "itemType": "ARMOR",
+    "armorType": "LINEN",
+    "wearType": "CHEST",
+    "armor": 0
+  },
+  {
+    "id": "201",
+    "name": "Kolczuga",
+    "description": "Typowa kolczuga wytworzona z małych, stalowych oczek. Niezbyt ciężka",
+    "itemType": "ARMOR",
+    "armorType": "STEEL",
+    "wearType": "CHEST",
+    "armor": 2
+  },
+  {
+    "id": "202",
+    "name": "Napierśnik",
+    "description": "Napierśnik wytworzony z solidnej stalowej płyty. Mocowany za pomocą starannie ukrytych skórzanych pasów.",
+    "itemType": "ARMOR",
+    "armorType": "STEEL",
+    "wearType": "CHEST",
+    "armor": 6
+  },
+  {
+    "id": "203",
+    "name": "Drewniane sandały",
+    "description": "Ktoś, kiedyś wziął deskę, przymocował do niej kilka skórzanych pasków i nazwał to sandałami.",
+    "itemType": "ARMOR",
+    "armorType": "LINEN",
+    "wearType": "FEET",
+    "armor": 0
+  }
+]
