@@ -1,6 +1,5 @@
 package org.grizz.game.loader.impl;
 
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
-import java.util.List;
 
 /**
  * Created by Grizz on 2015-04-17.
@@ -36,9 +34,8 @@ public class LocationLoader implements Loader {
         readLocations(_path);
     }
 
-    private List<Location> readLocations(String _path) throws IOException, URISyntaxException {
+    private void readLocations(String _path) throws IOException, URISyntaxException {
         Gson gson = new Gson();
-        List<Location> locations = Lists.newArrayList();
         FileUtils.listFilesInFolder(_path)
                 .forEach(path -> {
                     Location[] locationsArray = null;
@@ -52,7 +49,5 @@ public class LocationLoader implements Loader {
                         e.printStackTrace();
                     }
                 });
-
-        return locations;
     }
 }

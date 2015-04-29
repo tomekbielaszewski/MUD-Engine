@@ -1,14 +1,19 @@
 package org.grizz.game.loader.impl;
 
-import com.google.common.collect.Lists;
+import com.google.gson.Gson;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.model.Item;
-import org.grizz.game.model.impl.ItemEntity;
+import org.grizz.game.model.enums.ItemType;
 import org.grizz.game.model.repository.Repository;
+import org.grizz.game.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.List;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
 
 /**
  * Created by Grizz on 2015-04-17.
@@ -25,20 +30,57 @@ public class ItemLoader implements Loader {
     }
 
     @Override
+    @SneakyThrows
     public void load() {
-        String path = "";
-
-        List<ItemEntity> items = readItems(path);
-        storeItems(items);
+        readItems(_path);
     }
 
-    private List<ItemEntity> readItems(String path) {
-        return Lists.newArrayList();
+    private void readItems(String _path) throws IOException, URISyntaxException {
+        Gson gson = new Gson();
+        FileUtils.listFilesInFolder(_path)
+                .forEach(path -> {
+                    UniversalItem[] itemsArray = null;
+                    try {
+                        log.info("Reading: {}", path.toString());
+                        itemsArray = gson.fromJson(Files.newBufferedReader(path), UniversalItem[].class);
+                        for (UniversalItem item : itemsArray) {
+                            itemRepo.add(transformItem(item));
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
-    private void storeItems(List<ItemEntity> items) {
-        for (ItemEntity item : items) {
-            itemRepo.add(item);
+    private Item transformItem(UniversalItem item) {
+        switch (item.itemType) {
+            case WEAPON:
+                return transformWeapon(item);
+            case ARMOR:
+                return transformArmor(item);
+            case MISC:
+                return transformMisc(item);
         }
+
+        throw new NotImplementedException();
+    }
+
+    private Item transformWeapon(UniversalItem item) {
+        return null;
+    }
+
+    private Item transformArmor(UniversalItem item) {
+        return null;
+    }
+
+    private Item transformMisc(UniversalItem item) {
+        return null;
+    }
+
+    private class UniversalItem implements Item {
+        String id;
+        String name;
+        String description;
+        ItemType itemType;
     }
 }
