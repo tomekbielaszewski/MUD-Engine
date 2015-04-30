@@ -2,10 +2,14 @@ package org.grizz.game.loader.impl;
 
 import com.google.gson.Gson;
 import lombok.SneakyThrows;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.model.Item;
 import org.grizz.game.model.enums.ItemType;
+import org.grizz.game.model.impl.items.ArmorEntity;
+import org.grizz.game.model.impl.items.MiscEntity;
+import org.grizz.game.model.impl.items.WeaponEntity;
 import org.grizz.game.model.repository.Repository;
 import org.grizz.game.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,17 +70,33 @@ public class ItemLoader implements Loader {
     }
 
     private Item transformWeapon(UniversalItem item) {
-        return null;
+        return WeaponEntity.builder()
+                .id(item.id)
+                .name(item.name)
+                .description(item.description)
+                .itemType(item.itemType)
+                .build();
     }
 
     private Item transformArmor(UniversalItem item) {
-        return null;
+        return ArmorEntity.builder()
+                .id(item.id)
+                .name(item.name)
+                .description(item.description)
+                .itemType(item.itemType)
+                .build();
     }
 
     private Item transformMisc(UniversalItem item) {
-        return null;
+        return MiscEntity.builder()
+                .id(item.id)
+                .name(item.name)
+                .description(item.description)
+                .itemType(item.itemType)
+                .build();
     }
 
+    @Value
     private class UniversalItem implements Item {
         String id;
         String name;
