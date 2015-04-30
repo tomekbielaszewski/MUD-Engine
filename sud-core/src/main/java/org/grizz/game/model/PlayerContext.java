@@ -1,5 +1,7 @@
 package org.grizz.game.model;
 
+import org.grizz.game.model.repository.ItemStack;
+
 import java.util.List;
 
 /**
@@ -14,6 +16,8 @@ public interface PlayerContext {
     int getWisdom();
     int getCharisma();
     int getVitality();
+
+    List<ItemStack> getEquipment();
 
     String getCurrentLocation();
     String getPastLocation();

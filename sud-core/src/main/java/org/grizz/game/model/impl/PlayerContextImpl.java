@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Builder;
 import org.grizz.game.model.PlayerContext;
+import org.grizz.game.model.repository.ItemStack;
 
 import java.util.List;
 import java.util.Map;
@@ -24,11 +25,18 @@ public class PlayerContextImpl implements PlayerContext {
     private int charisma;
     private int vitality;
 
+    private List<ItemStack> equipment;
+
     private String currentLocation;
     private String pastLocation;
 
     private Map<String, Object> attributes;
     private List<String> events;
+
+    @Override
+    public List<ItemStack> getEquipment() {
+        return equipment;
+    }
 
     @Override
     public void addAttribute(String key, Object value) {
@@ -64,6 +72,7 @@ public class PlayerContextImpl implements PlayerContext {
                 .wisdom(this.getWisdom())
                 .charisma(this.getCharisma())
                 .vitality(this.getVitality())
+                .equipment(this.equipment)
                 .currentLocation(this.getCurrentLocation())
                 .pastLocation(this.getPastLocation())
                 .attributes(this.getAttributes())
@@ -82,5 +91,6 @@ public class PlayerContextImpl implements PlayerContext {
         this.pastLocation = context.pastLocation;
         this.attributes = context.attributes;
         this.events = context.events;
+        this.equipment = context.equipment;
     }
 }

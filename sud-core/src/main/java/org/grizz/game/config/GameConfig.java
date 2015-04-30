@@ -7,6 +7,7 @@ import org.grizz.game.loader.Loader;
 import org.grizz.game.loader.impl.*;
 import org.grizz.game.model.impl.PlayerContextImpl;
 import org.grizz.game.model.repository.PlayerRepository;
+import org.grizz.game.model.repository.impl.ItemStackEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
@@ -53,6 +54,24 @@ public class GameConfig {
                 PlayerContextImpl.builder()
                         .name("Grizz")
                         .currentLocation("1")
+                        .equipment(Lists.newArrayList(
+                                ItemStackEntity.builder()
+                                        .itemId("3") //brazowa moneta
+                                        .quantity(54)
+                                        .build(),
+                                ItemStackEntity.builder()
+                                        .itemId("2") //srebrna moneta
+                                        .quantity(21)
+                                        .build(),
+                                ItemStackEntity.builder()
+                                        .itemId("1") //złota moneta
+                                        .quantity(3)
+                                        .build(),
+                                ItemStackEntity.builder()
+                                        .itemId("100") //krótki miecz
+                                        .quantity(1)
+                                        .build()
+                        ))
                         .events(Lists.newArrayList())
                         .attributes(Maps.newHashMap())
                         .build()
@@ -61,6 +80,7 @@ public class GameConfig {
                 PlayerContextImpl.builder()
                         .name("Nebu")
                         .currentLocation("1")
+                        .equipment(Lists.newArrayList())
                         .events(Lists.newArrayList())
                         .attributes(Maps.newHashMap())
                         .build()
@@ -69,6 +89,7 @@ public class GameConfig {
                 PlayerContextImpl.builder()
                         .name("Lothar")
                         .currentLocation("1")
+                        .equipment(Lists.newArrayList())
                         .events(Lists.newArrayList())
                         .attributes(Maps.newHashMap())
                         .build()
