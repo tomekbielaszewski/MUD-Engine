@@ -41,7 +41,7 @@
   {
     "id": "5",
     "name": "Scieżka do slumsów",
-    "description": "Idziesz wąską ścieżką prowadzącą do slumsów. Czujesz dochodzący z południa swąd mieszaniny odchodów, gnijącego jedzenia i niemytych ubrań. Jedynie swierza bryza z miasta z północy powoduje, że jeszcze masz swój ostatni posiłek w żołądku.",
+    "description": "Idziesz wąską ścieżką prowadzącą do slumsów. Czujesz dochodzący z południa swąd mieszaniny odchodów, gnijącego jedzenia i niemytych ubrań. Jedynie świeża bryza z miasta z północy powoduje, że jeszcze masz swój ostatni posiłek w żołądku.",
     "north": "6",
     "south": "2",
     "entryScript": "someID",
