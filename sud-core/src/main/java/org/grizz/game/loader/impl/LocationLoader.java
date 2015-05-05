@@ -1,5 +1,6 @@
 package org.grizz.game.loader.impl;
 
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -38,11 +39,12 @@ public class LocationLoader implements Loader {
         Gson gson = new Gson();
         FileUtils.listFilesInFolder(_path)
                 .forEach(path -> {
-                    Location[] locationsArray = null;
+                    LocationEntity[] locationsArray = null;
                     try {
                         log.info("Reading: {}", path.toString());
                         locationsArray = gson.fromJson(Files.newBufferedReader(path), LocationEntity[].class);
-                        for (Location location : locationsArray) {
+                        for (LocationEntity location : locationsArray) {
+                            location.setItems(Lists.newArrayList());
                             locationRepo.add(location);
                         }
                     } catch (IOException e) {

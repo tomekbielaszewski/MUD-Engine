@@ -20,6 +20,10 @@ public class OutputFormatterImpl implements OutputFormatter {
         appendSeparator(sb, 79);
         appendPossibleExits(playerResponse, sb);
         appendSeparator(sb, 79);
+        if (!playerResponse.getLocationItems().isEmpty()) {
+            appendVisibleItems(playerResponse, sb);
+            appendSeparator(sb, 79);
+        }
         appendPlayerEvents(playerResponse, sb);
 
         sb.append("\n\n");
@@ -52,6 +56,15 @@ public class OutputFormatterImpl implements OutputFormatter {
         }
 
         sb.setLength(sb.length() - 2);
+    }
+
+    private void appendVisibleItems(PlayerResponse playerResponse, StringBuilder sb) {
+        sb.append("Znajdujesz tutaj:\n");
+        for (String itemDescription : playerResponse.getLocationItems()) {
+            sb.append("\t" + itemDescription);
+            sb.append("\n");
+        }
+        sb.setLength(sb.length() - 1);
     }
 
     private void appendPlayerEvents(PlayerResponse playerResponse, StringBuilder sb) {

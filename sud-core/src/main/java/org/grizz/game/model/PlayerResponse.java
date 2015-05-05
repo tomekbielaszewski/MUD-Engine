@@ -8,6 +8,8 @@ import java.util.List;
 public interface PlayerResponse {
     String getLocationName();
     String getLocationDescription();
+
+    List<String> getLocationItems();
     List<String> getPossibleExits();
     List<String> getPlayerEvents();
 }

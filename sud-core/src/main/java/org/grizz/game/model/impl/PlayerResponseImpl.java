@@ -12,6 +12,7 @@ import java.util.List;
 public class PlayerResponseImpl implements PlayerResponse {
     private String locationName;
     private String locationDescription;
+    private List<String> locationItems;
     private List<String> possibleExits;
     private List<String> playerEvents;
 }

@@ -1,7 +1,10 @@
 package org.grizz.game.model.impl;
 
-import lombok.*;
+import lombok.Data;
 import org.grizz.game.model.Location;
+import org.grizz.game.model.repository.ItemStack;
+
+import java.util.List;
 
 /**
  * Created by Grizz on 2015-04-21.
@@ -21,4 +24,6 @@ public class LocationEntity implements Location {
     private String west;
     private String up;
     private String down;
+
+    private List<ItemStack> items;
 }

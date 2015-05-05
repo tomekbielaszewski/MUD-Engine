@@ -1,5 +1,9 @@
 package org.grizz.game.model;
 
+import org.grizz.game.model.repository.ItemStack;
+
+import java.util.List;
+
 /**
  * Created by Grizz on 2015-04-21.
  */
@@ -25,4 +29,6 @@ public interface Location {
     String getUp();
 
     String getDown();
+
+    List<ItemStack> getItems();
 }

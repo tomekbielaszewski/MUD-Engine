@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.loader.impl.*;
 import org.grizz.game.model.impl.PlayerContextImpl;
+import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.model.repository.PlayerRepository;
 import org.grizz.game.model.repository.impl.ItemStackEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class GameConfig {
 
     @Autowired
     private PlayerRepository playerRepository;
+
+    @Autowired
+    private LocationRepo locationRepo;
 
     @PostConstruct
     public void initGame() {
@@ -94,6 +98,20 @@ public class GameConfig {
                         .attributes(Maps.newHashMap())
                         .build()
         );
+        locationRepo.get("3").getItems().addAll(Lists.newArrayList(
+                ItemStackEntity.builder()
+                        .itemId("3")
+                        .quantity(2)
+                        .build(),
+                ItemStackEntity.builder()
+                        .itemId("203")
+                        .quantity(1)
+                        .build(),
+                ItemStackEntity.builder()
+                        .itemId("102")
+                        .quantity(20)
+                        .build()
+        ));
     }
 
     @Bean
