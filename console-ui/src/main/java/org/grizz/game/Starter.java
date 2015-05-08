@@ -17,17 +17,21 @@ public class Starter {
 
         Scanner sc = new Scanner(System.in);
 
+        try {
 //        System.out.println("Podaj nazwe gracza...");
 //        String player = sc.nextLine();
-        String player = "Grizz";
-        String command = "";
+            String player = "Grizz";
+            String command = "";
 
-        PlayerResponse response = game.runCommand(command, player);
-        System.out.println(formatter.format(response));
-
-        while (!(command = sc.nextLine()).equals("q")) {
-            response = game.runCommand(command, player);
+            PlayerResponse response = game.runCommand(command, player);
             System.out.println(formatter.format(response));
+
+            while (!(command = sc.nextLine()).equals("q")) {
+                response = game.runCommand(command, player);
+                System.out.println(formatter.format(response));
+            }
+        } finally {
+            sc.close();
         }
     }
 }

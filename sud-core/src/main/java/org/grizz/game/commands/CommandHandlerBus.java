@@ -16,28 +16,28 @@ public class CommandHandlerBus {
     private Set<Command> commands = Sets.newHashSet();
 
     @Autowired
+    private Command unknownCommand;
+
+    @Autowired
     private Environment env;
 
     public void execute(String strCommand, PlayerContext context) {
         String formattedStrCommand = strCommand.trim();
         formattedStrCommand = formattedStrCommand.toLowerCase();
 
-        for (Command command : commands) {
-            if (command.accept(formattedStrCommand)) {
-                log.info("{} executed command[{}]", context.getName(), formattedStrCommand);
 
-                command.execute(formattedStrCommand, context);
-                return;
-            }
-        }
+        Command commandHandler = commands.stream()
+                .filter(x -> x.accept(strCommand))
+                .findFirst()
+                .orElse(unknownCommand);
 
-        log.info("{} executed UNKNOWN command[{}]", context.getName(), strCommand);
-        context.addEvent(env.getProperty("unknown.command.invoced") + " \"" + strCommand + "\"");
+        log.info("{} executed {} using '{}'", context.getName(), commandHandler.getClass().getSimpleName(), formattedStrCommand);
+        commandHandler.execute(formattedStrCommand, context);
     }
 
     public void addCommand(Command command) {
         if (!commands.add(command)) {
-            throw new IllegalArgumentException("Duplicated Command! Only one instance of " + command.getClass().getCanonicalName() + " allowed");
+            throw new IllegalArgumentException("Duplicated Command! Only one instance of " + command.getClass().getName() + " allowed");
         }
     }
 }
