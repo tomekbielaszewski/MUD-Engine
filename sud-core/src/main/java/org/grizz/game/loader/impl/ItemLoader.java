@@ -1,15 +1,19 @@
 package org.grizz.game.loader.impl;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.InstanceCreator;
 import lombok.SneakyThrows;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.loader.Loader;
-import org.grizz.game.model.Item;
 import org.grizz.game.model.enums.ItemType;
 import org.grizz.game.model.impl.items.ArmorEntity;
+import org.grizz.game.model.impl.items.ItemScriptEntity;
 import org.grizz.game.model.impl.items.MiscEntity;
 import org.grizz.game.model.impl.items.WeaponEntity;
+import org.grizz.game.model.items.Item;
+import org.grizz.game.model.items.ItemScript;
 import org.grizz.game.model.repository.Repository;
 import org.grizz.game.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.util.List;
 
 /**
  * Created by Grizz on 2015-04-17.
@@ -40,7 +45,7 @@ public class ItemLoader implements Loader {
     }
 
     private void readItems(String _path) throws IOException, URISyntaxException {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(ItemScript.class, (InstanceCreator<ItemScript>) type -> ItemScriptEntity.builder().build()).create();
         FileUtils.listFilesInFolder(_path)
                 .forEach(path -> {
                     UniversalItem[] itemsArray = null;
@@ -102,5 +107,6 @@ public class ItemLoader implements Loader {
         String name;
         String description;
         ItemType itemType;
+        private List<ItemScript> commands;
     }
 }

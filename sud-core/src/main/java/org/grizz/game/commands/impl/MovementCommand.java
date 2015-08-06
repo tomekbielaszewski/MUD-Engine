@@ -3,6 +3,7 @@ package org.grizz.game.commands.impl;
 import org.grizz.game.commands.Command;
 import org.grizz.game.exception.CantGoThereException;
 import org.grizz.game.model.PlayerContext;
+import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.service.MovementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -32,7 +33,7 @@ public class MovementCommand implements Command {
     }
 
     @Override
-    public void execute(final String command, final PlayerContext playerContext) {
+    public PlayerResponse execute(final String command, final PlayerContext playerContext) {
         try {
             switch (command) {
                 case "north":
@@ -55,7 +56,10 @@ public class MovementCommand implements Command {
                     break;
             }
         } catch (CantGoThereException e) {
+            //TODO: add event to response not context
             playerContext.addEvent(env.getProperty("cant.go.there"));
         }
+
+        return null; //TODO: return PlayerResponse
     }
 }

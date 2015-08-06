@@ -3,6 +3,7 @@ package org.grizz.game.commands;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.model.PlayerContext;
+import org.grizz.game.model.PlayerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
@@ -21,18 +22,17 @@ public class CommandHandlerBus {
     @Autowired
     private Environment env;
 
-    public void execute(String strCommand, PlayerContext context) {
+    public PlayerResponse execute(String strCommand, PlayerContext context) {
         String formattedStrCommand = strCommand.trim();
         formattedStrCommand = formattedStrCommand.toLowerCase();
 
-
         Command commandHandler = commands.stream()
-                .filter(x -> x.accept(strCommand))
+                .filter(x -> x.accept(strCommand, context))
                 .findFirst()
                 .orElse(unknownCommand);
 
         log.info("{} executed {} using '{}'", context.getName(), commandHandler.getClass().getSimpleName(), formattedStrCommand);
-        commandHandler.execute(formattedStrCommand, context);
+        return commandHandler.execute(formattedStrCommand, context);
     }
 
     public void addCommand(Command command) {

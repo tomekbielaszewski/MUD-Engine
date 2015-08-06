@@ -1,5 +1,6 @@
 package org.grizz.game.model.impl;
 
+import com.google.common.collect.Lists;
 import lombok.Data;
 import org.grizz.game.model.PlayerResponse;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class PlayerResponseImpl implements PlayerResponse {
     private String locationName;
     private String locationDescription;
-    private List<String> locationItems;
-    private List<String> possibleExits;
-    private List<String> playerEvents;
+    private List<String> locationItems = Lists.newArrayList();
+    private List<String> possibleExits = Lists.newArrayList();
+    private List<String> playerEvents = Lists.newArrayList();
 }

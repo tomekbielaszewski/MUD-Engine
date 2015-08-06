@@ -2,6 +2,8 @@ package org.grizz.game.commands.impl;
 
 import org.grizz.game.commands.Command;
 import org.grizz.game.model.PlayerContext;
+import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -20,7 +22,13 @@ public class UnknownCommand implements Command {
     }
 
     @Override
-    public void execute(String command, PlayerContext context) {
-        context.addEvent(env.getProperty("unknown.command.invoced") + " \"" + command + "\"");
+    public PlayerResponse execute(String command, PlayerContext context) {
+        PlayerResponse response = new PlayerResponseImpl();
+
+        String event = env.getProperty("unknown.command.invoced") + " \"" + command + "\"";
+        response.getPlayerEvents().add(event);
+        context.addEvent(env.getProperty("unknown.command.invoced") + " \"" + command + "\""); //TODO: @Deprecated remove this and use PlayerResponse
+
+        return response;
     }
 }

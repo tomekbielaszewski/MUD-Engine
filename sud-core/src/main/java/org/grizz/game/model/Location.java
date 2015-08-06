@@ -1,6 +1,6 @@
 package org.grizz.game.model;
 
-import org.grizz.game.model.repository.ItemStack;
+import org.grizz.game.model.items.ItemStack;
 
 import java.util.List;
 

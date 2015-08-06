@@ -2,7 +2,7 @@ package org.grizz.game.model.repository.impl;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
-import org.grizz.game.model.Item;
+import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.ItemRepo;
 import org.springframework.stereotype.Service;
 

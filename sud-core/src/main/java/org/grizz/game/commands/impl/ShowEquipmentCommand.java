@@ -2,6 +2,8 @@ package org.grizz.game.commands.impl;
 
 import org.grizz.game.commands.Command;
 import org.grizz.game.model.PlayerContext;
+import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,10 @@ public class ShowEquipmentCommand implements Command {
     }
 
     @Override
-    public void execute(String command, PlayerContext playerContext) {
-        equipmentService.show(playerContext);
+    public PlayerResponse execute(String command, PlayerContext playerContext) {
+        PlayerResponse response = new PlayerResponseImpl();
+        equipmentService.show(playerContext/*, response*/); //TODO: pass the PlayerResponse to fill it in
+
+        return response;
     }
 }

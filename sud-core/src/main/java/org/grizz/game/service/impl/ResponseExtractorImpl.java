@@ -1,13 +1,13 @@
 package org.grizz.game.service.impl;
 
 import com.google.common.collect.Lists;
-import org.grizz.game.model.Item;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.PlayerResponseImpl;
+import org.grizz.game.model.items.Item;
+import org.grizz.game.model.items.ItemStack;
 import org.grizz.game.model.repository.ItemRepo;
-import org.grizz.game.model.repository.ItemStack;
 import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.service.ResponseExtractor;
 import org.springframework.beans.factory.annotation.Autowired;

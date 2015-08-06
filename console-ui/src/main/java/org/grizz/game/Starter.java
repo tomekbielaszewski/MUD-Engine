@@ -21,7 +21,7 @@ public class Starter {
 //        System.out.println("Podaj nazwe gracza...");
 //        String player = sc.nextLine();
             String player = "Grizz";
-            String command = "";
+            String command = "ekwipunek";
 
             PlayerResponse response = game.runCommand(command, player);
             System.out.println(formatter.format(response));

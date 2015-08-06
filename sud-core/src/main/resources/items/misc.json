@@ -3,7 +3,25 @@
     "id": "1",
     "name": "Złota moneta",
     "description": "Sporawy, złoty krążek z wizerunkiem jednego z dawno juz nie żyjących władców.",
-    "itemType": "MISC"
+    "itemType": "MISC",
+    "commands": [
+      {
+        "command": "wyrzuć złotą monetę",
+        "scriptId": "1"
+      },
+      {
+        "command": "wyrzuć złotówkę",
+        "scriptId": "1"
+      },
+      {
+        "command": "wyrzuc zlota monete",
+        "scriptId": "1"
+      },
+      {
+        "command": "wyrzuc zlotowke",
+        "scriptId": "1"
+      }
+    ]
   },
   {
     "id": "2",

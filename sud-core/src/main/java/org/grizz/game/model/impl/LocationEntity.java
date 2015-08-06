@@ -2,7 +2,7 @@ package org.grizz.game.model.impl;
 
 import lombok.Data;
 import org.grizz.game.model.Location;
-import org.grizz.game.model.repository.ItemStack;
+import org.grizz.game.model.items.ItemStack;
 
 import java.util.List;
 

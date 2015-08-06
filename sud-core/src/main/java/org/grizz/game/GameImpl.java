@@ -25,12 +25,13 @@ public class GameImpl implements Game {
     @Override
     public PlayerResponse runCommand(String command, String player) {
         PlayerContext context = playerRepository.get(player);
-        commandHandlerBus.execute(command, context);
+        PlayerResponse response = commandHandlerBus.execute(command, context);
 
-        PlayerResponse response = responseExtractor.extract(context);
+        //TODO CommandHandlerBuss should return response, and not extracting it from context
+        PlayerResponse responseTemp = responseExtractor.extract(context);
         resetContext(context);
 
-        return response;
+        return responseTemp;
     }
 
     private void resetContext(PlayerContext context) {
