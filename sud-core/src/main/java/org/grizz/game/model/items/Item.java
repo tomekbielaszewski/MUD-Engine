@@ -12,7 +12,7 @@ public interface Item {
 
     String getName();
 
-    List<ItemScript> getCommands();
+    List<? extends ItemScript> getCommands();
 
     ItemType getItemType();
 }

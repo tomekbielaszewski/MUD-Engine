@@ -1,8 +1,6 @@
 package org.grizz.game.loader.impl;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.InstanceCreator;
 import lombok.SneakyThrows;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +11,6 @@ import org.grizz.game.model.impl.items.ItemScriptEntity;
 import org.grizz.game.model.impl.items.MiscEntity;
 import org.grizz.game.model.impl.items.WeaponEntity;
 import org.grizz.game.model.items.Item;
-import org.grizz.game.model.items.ItemScript;
 import org.grizz.game.model.repository.Repository;
 import org.grizz.game.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +42,7 @@ public class ItemLoader implements Loader {
     }
 
     private void readItems(String _path) throws IOException, URISyntaxException {
-        Gson gson = new GsonBuilder().registerTypeAdapter(ItemScript.class, (InstanceCreator<ItemScript>) type -> ItemScriptEntity.builder().build()).create();
+        Gson gson = new Gson();
         FileUtils.listFilesInFolder(_path)
                 .forEach(path -> {
                     UniversalItem[] itemsArray = null;
@@ -80,6 +77,7 @@ public class ItemLoader implements Loader {
                 .name(item.name)
                 .description(item.description)
                 .itemType(item.itemType)
+                .commands(item.commands)
                 .build();
     }
 
@@ -89,6 +87,7 @@ public class ItemLoader implements Loader {
                 .name(item.name)
                 .description(item.description)
                 .itemType(item.itemType)
+                .commands(item.commands)
                 .build();
     }
 
@@ -98,6 +97,7 @@ public class ItemLoader implements Loader {
                 .name(item.name)
                 .description(item.description)
                 .itemType(item.itemType)
+                .commands(item.commands)
                 .build();
     }
 
@@ -107,6 +107,6 @@ public class ItemLoader implements Loader {
         String name;
         String description;
         ItemType itemType;
-        private List<ItemScript> commands;
+        private List<ItemScriptEntity> commands;
     }
 }
