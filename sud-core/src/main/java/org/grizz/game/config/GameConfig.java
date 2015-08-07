@@ -75,6 +75,10 @@ public class GameConfig {
                                 ItemStackEntity.builder()
                                         .itemId("100") //krótki miecz
                                         .quantity(1)
+                                        .build(),
+                                ItemStackEntity.builder()
+                                        .itemId("5") //patelnia
+                                        .quantity(1)
                                         .build()
                         ))
                         .events(Lists.newArrayList())

@@ -24,7 +24,9 @@ public class CommandHandlerBus {
     private Environment env;
 
     public PlayerResponse execute(String strCommand, PlayerContext context) {
-        final String formattedStrCommand = StringUtils.stripAccents(strCommand.trim().toLowerCase());
+        final String formattedStrCommand = StringUtils.stripAccents(strCommand.trim().toLowerCase())
+                .replaceAll("ł", "l")
+                .replaceAll("Ł", "L");
 
         Command commandHandler = commands.stream()
                 .filter(x -> x.accept(formattedStrCommand, context))

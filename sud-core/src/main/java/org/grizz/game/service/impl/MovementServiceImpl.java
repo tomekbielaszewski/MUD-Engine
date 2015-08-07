@@ -2,6 +2,7 @@ package org.grizz.game.service.impl;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.grizz.game.exception.CantGoThereException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
@@ -13,7 +14,9 @@ import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.service.LocationService;
 import org.grizz.game.service.MovementService;
+import org.grizz.game.service.ScriptRunnerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +32,10 @@ public class MovementServiceImpl implements MovementService {
     private LocationRepo locationRepo;
     @Autowired
     private LocationService locationService;
+
+    @Lazy
+    @Autowired
+    private ScriptRunnerService scriptRunnerService;
 
     @Override
     public void move(@NonNull final Direction dir, @NonNull final PlayerContext playerContext, @NonNull final PlayerResponse response) {
@@ -62,31 +69,81 @@ public class MovementServiceImpl implements MovementService {
     }
 
     @Override
-    public void showCurrentLocation(PlayerContext playerContext, PlayerResponse _response) {
+    public void showCurrentLocation(PlayerContext _context, PlayerResponse _response) {
         PlayerResponseImpl response = (PlayerResponseImpl) _response;
-        Location currentLocation = locationRepo.get(playerContext.getCurrentLocation());
-        List<String> locationExits = locationService.getLocationExits(playerContext);
-        List<Item> locationItems = locationService.getLocationItems(playerContext);
+        Location currentLocation = locationRepo.get(_context.getCurrentLocation());
+        List<String> locationExits = locationService.getLocationExits(_context);
+        List<Item> locationItems = locationService.getLocationItems(_context);
 
         response.setPossibleExits(locationExits);
         response.setLocationItems(locationItems);
         response.setCurrentLocation(currentLocation);
+
+        onShow(currentLocation, _context, _response);
     }
 
     private void move(Supplier<String> locationSupplier, PlayerContext _context, Location currentLocation, PlayerResponse _response) {
         PlayerContextImpl context = (PlayerContextImpl) _context;
         PlayerResponseImpl response = (PlayerResponseImpl) _response;
-        Location targetLocation = locationRepo.get(locationSupplier.get());
 
-        //TODO: Here add events: beforeEnter, onEnter, beforeLeave, onLeave
-        log.info("{} moved from ID[{}] to ID[{}]", context.getName(), currentLocation.getName(), targetLocation.getName());
+        if (beforeLeave(currentLocation, _context, _response)) {
+            onLeave(currentLocation, _context, _response);
 
-        context.setTo(context.copy()
-                        .pastLocation(currentLocation.getId())
-                        .currentLocation(targetLocation.getId())
-                        .build()
-        );
+            Location targetLocation = locationRepo.get(locationSupplier.get());
 
-        showCurrentLocation(_context, response);
+            if (beforeEnter(targetLocation, _context, _response)) {
+
+                context.setTo(context.copy()
+                                .pastLocation(currentLocation.getId())
+                                .currentLocation(targetLocation.getId())
+                                .build()
+                );
+
+                onEnter(targetLocation, _context, _response);
+
+                showCurrentLocation(_context, response);
+                log.info("{} moved from [{}] to [{}]", context.getName(), currentLocation.getName(), targetLocation.getName());
+            } else {
+                log.info("{} was denied to move from [{}] to [{}]", context.getName(), currentLocation.getName(), targetLocation.getName());
+            }
+        } else {
+            log.info("{} was denied to move from [{}]", context.getName(), currentLocation.getName());
+        }
+    }
+
+    //TODO zastąpic dwoma metodami (zwracająca boolean i void) i przekazywac referencje do metody zamiast powtarzac kod jak nizej
+    private boolean beforeLeave(Location location, PlayerContext context, PlayerResponse response) {
+        if (StringUtils.isEmpty(location.getBeforeLeave())) {
+            return true;
+        }
+        return (boolean) scriptRunnerService.execute(location.getBeforeLeave(), context, response);
+    }
+
+    private boolean beforeEnter(Location location, PlayerContext context, PlayerResponse response) {
+        if (StringUtils.isEmpty(location.getBeforeEnter())) {
+            return true;
+        }
+        return (boolean) scriptRunnerService.execute(location.getBeforeEnter(), context, response);
+    }
+
+    private void onLeave(Location location, PlayerContext context, PlayerResponse response) {
+        if (StringUtils.isEmpty(location.getOnLeave())) {
+            return;
+        }
+        scriptRunnerService.execute(location.getOnLeave(), context, response);
+    }
+
+    private void onEnter(Location location, PlayerContext context, PlayerResponse response) {
+        if (StringUtils.isEmpty(location.getOnEnter())) {
+            return;
+        }
+        scriptRunnerService.execute(location.getOnEnter(), context, response);
+    }
+
+    private void onShow(Location location, PlayerContext context, PlayerResponse response) {
+        if (StringUtils.isEmpty(location.getOnShow())) {
+            return;
+        }
+        scriptRunnerService.execute(location.getOnShow(), context, response);
     }
 }

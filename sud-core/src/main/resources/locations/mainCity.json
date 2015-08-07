@@ -4,8 +4,11 @@
     "name": "Opuszczony dom",
     "description": "Znajdujesz się w opuszczonym starym domostwie. Przez nieszczelne drewniane ściany przebijają się pojedyncze promienie słońca tworząc oslepiające słupy światła migoczącego na tumanach duszącego kurzu i pyłu. Jedyne wyjście dostrzegasz na północy.",
     "north": "2",
-    "entryScript": "someID",
-    "leavingScript": "someID2"
+    "beforeEnter": "103",
+    "onEnter": "100",
+    "onShow": "102",
+    "beforeLeave": "100",
+    "onLeave": "100"
   },
 
   {
@@ -16,8 +19,11 @@
     "south": "1",
     "east": "4",
     "west": "3",
-    "entryScript": "someID",
-    "leavingScript": "someID2"
+    "beforeEnter": "100",
+    "onEnter": "100",
+    "onShow": "100",
+    "beforeLeave": "100",
+    "onLeave": "100"
   },
 
   {
@@ -25,8 +31,11 @@
     "name": "Opuszczony dom",
     "description": "Jestes w jednej ze starych, drewnianych chatek w slumsach. Wewnątrz jest ciemno, brudno i wilgotno. Nie chciałbyś tutaj spędzać nocy. Po stopie przebiegł ci szczur cicho popiskując. Jedyne wyjście z chatki prowadzi na wschód.",
     "east": "2",
-    "entryScript": "someID",
-    "leavingScript": "someID2"
+    "beforeEnter": "100",
+    "onEnter": "100",
+    "onShow": "100",
+    "beforeLeave": "100",
+    "onLeave": "100"
   },
 
   {
@@ -34,8 +43,11 @@
     "name": "Opuszczony dom",
     "description": "Dom w slumsach. Rozpadająca się, mała stodoła bardziej przypomina składzik na graty. Pomimo panującego w środku mroku dostrzegasz jakies stare legowisko w kącie. Strasznie tu smierdzi starymi odchodami... Tęsknie spoglądasz na zachodnie wyjście z tej dziury.",
     "west": "2",
-    "entryScript": "someID",
-    "leavingScript": "someID2"
+    "beforeEnter": "100",
+    "onEnter": "100",
+    "onShow": "100",
+    "beforeLeave": "100",
+    "onLeave": "100"
   },
 
   {
@@ -44,8 +56,11 @@
     "description": "Idziesz wąską ścieżką prowadzącą do slumsów. Czujesz dochodzący z południa swąd mieszaniny odchodów, gnijącego jedzenia i niemytych ubrań. Jedynie świeża bryza z miasta z północy powoduje, że jeszcze masz swój ostatni posiłek w żołądku.",
     "north": "6",
     "south": "2",
-    "entryScript": "someID",
-    "leavingScript": "someID2"
+    "beforeEnter": "100",
+    "onEnter": "100",
+    "onShow": "100",
+    "beforeLeave": "100",
+    "onLeave": "100"
   },
 
   {
@@ -54,8 +69,11 @@
     "description": "Jest to lokacja nr 6. Mozliwe wyjscia to poludnie i wschod",
     "south": "5",
     "east": "7",
-    "entryScript": "someID",
-    "leavingScript": "someID2"
+    "beforeEnter": "100",
+    "onEnter": "100",
+    "onShow": "100",
+    "beforeLeave": "100",
+    "onLeave": "100"
   },
 
   {
@@ -64,8 +82,11 @@
     "description": "Jest to lokacja nr 7. Mozliwe wyjscia to polnoc i zachod",
     "north": "8",
     "west": "6",
-    "entryScript": "someID",
-    "leavingScript": "someID2"
+    "beforeEnter": "100",
+    "onEnter": "100",
+    "onShow": "100",
+    "beforeLeave": "100",
+    "onLeave": "100"
   },
 
   {
@@ -73,7 +94,10 @@
     "name": "Lokacja numer 8",
     "description": "Jest to lokacja nr 8. Mozliwe wyjscie jest tylko na poludnie",
     "south": "7",
-    "entryScript": "someID",
-    "leavingScript": "someID2"
+    "beforeEnter": "100",
+    "onEnter": "100",
+    "onShow": "100",
+    "beforeLeave": "100",
+    "onLeave": "100"
   }
 ]

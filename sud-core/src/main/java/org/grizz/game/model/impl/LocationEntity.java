@@ -15,8 +15,11 @@ public class LocationEntity implements Location {
     private String name;
     private String description;
 
-    private String entryScript;
-    private String leavingScript;
+    private String beforeEnter;
+    private String onEnter;
+    private String onShow;
+    private String beforeLeave;
+    private String onLeave;
 
     private String south;
     private String north;

@@ -8,4 +8,6 @@ import org.grizz.game.model.PlayerResponse;
  */
 public interface ScriptRunnerService {
     Object execute(final String command, final String scriptId, final PlayerContext playerContext, final PlayerResponse response);
+
+    Object execute(final String scriptId, final PlayerContext playerContext, final PlayerResponse response);
 }

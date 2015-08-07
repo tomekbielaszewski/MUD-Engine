@@ -37,7 +37,12 @@
     "name": "Zniszczona patelnia",
     "description": "Dziurawa, zniszczona patelnia. Raczej nie nadaje się do użytku.",
     "itemType": "MISC",
-    "commands": []
+    "commands": [
+      {
+        "command": "jebnij patelnia",
+        "scriptId": "0"
+      }
+    ]
   },
   {
     "id": "6",

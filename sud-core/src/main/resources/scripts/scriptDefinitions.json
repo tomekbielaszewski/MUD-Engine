@@ -8,5 +8,25 @@
     "id": "1",
     "name": "Test item script",
     "code": "scripts/js/items/test.js"
+  },
+  {
+    "id": "100",
+    "name": "Always true script",
+    "code": "scripts/js/alwaysTrue.js"
+  },
+  {
+    "id": "101",
+    "name": "Always false script",
+    "code": "scripts/js/alwaysFalse.js"
+  },
+  {
+    "id": "102",
+    "name": "Welcome text script",
+    "code": "scripts/js/locations/startLocationOnShow.js"
+  },
+  {
+    "id": "103",
+    "name": "Cant enter welcome location script",
+    "code": "scripts/js/locations/startLocationBeforeEnter.js"
   }
 ]

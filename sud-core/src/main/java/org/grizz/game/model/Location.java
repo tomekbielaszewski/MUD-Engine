@@ -14,10 +14,6 @@ public interface Location {
 
     String getDescription();
 
-    String getEntryScript();
-
-    String getLeavingScript();
-
     String getSouth();
 
     String getNorth();
@@ -31,4 +27,14 @@ public interface Location {
     String getDown();
 
     List<ItemStack> getItems();
+
+    String getBeforeEnter();
+
+    String getOnEnter();
+
+    String getOnShow();
+
+    String getBeforeLeave();
+
+    String getOnLeave();
 }
