@@ -2,6 +2,7 @@ package org.grizz.game.commands;
 
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,10 @@ public class CommandHandlerBus {
     private Environment env;
 
     public PlayerResponse execute(String strCommand, PlayerContext context) {
-        String formattedStrCommand = strCommand.trim();
-        formattedStrCommand = formattedStrCommand.toLowerCase();
-        //TODO: usunac polskie znaki
+        final String formattedStrCommand = StringUtils.stripAccents(strCommand.trim().toLowerCase());
 
         Command commandHandler = commands.stream()
-                .filter(x -> x.accept(strCommand, context))
+                .filter(x -> x.accept(formattedStrCommand, context))
                 .findFirst()
                 .orElse(unknownCommand);
 
