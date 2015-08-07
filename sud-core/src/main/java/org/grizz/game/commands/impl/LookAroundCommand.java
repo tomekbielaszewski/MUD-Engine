@@ -1,5 +1,6 @@
 package org.grizz.game.commands.impl;
 
+import com.google.common.collect.Lists;
 import org.grizz.game.commands.Command;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
@@ -22,15 +23,8 @@ public class LookAroundCommand implements Command {
 
     @Override
     public boolean accept(final String command) {
-        return "spojrz".equals(command) ||
-                "rozejrz sie".equals(command) ||
-                "gdzie jestem?".equals(command) ||
-                "gdzie ja jestem?".equals(command) ||
-                "gdzie jestem".equals(command) ||
-                "gdzie ja jestem".equals(command) ||
-                "co to za miejsce".equals(command) ||
-                "co to za miejsce?".equals(command) ||
-                "lokalizacja".equals(command);
+        String commands = env.getProperty(getClass().getCanonicalName());
+        return Lists.newArrayList(commands.split(";")).contains(command);
     }
 
     @Override

@@ -25,7 +25,8 @@ import javax.script.ScriptEngineManager;
 @ComponentScan("org.grizz.game")
 @PropertySources({
         @PropertySource("assets.properties"),
-        @PropertySource("strings.properties")
+        @PropertySource("strings.properties"),
+        @PropertySource("command-mapping.properties")
 })
 public class GameConfig {
     private static final String ASSETS_JSON_PATH_LOCATIONS = "assets.json.path.locations";

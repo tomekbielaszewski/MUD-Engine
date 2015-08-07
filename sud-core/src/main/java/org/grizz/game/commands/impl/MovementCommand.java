@@ -1,5 +1,6 @@
 package org.grizz.game.commands.impl;
 
+import com.google.common.collect.Lists;
 import org.grizz.game.commands.Command;
 import org.grizz.game.exception.CantGoThereException;
 import org.grizz.game.model.PlayerContext;
@@ -25,12 +26,8 @@ public class MovementCommand implements Command {
 
     @Override
     public boolean accept(final String command) {
-        return "south".equals(command) ||
-                "north".equals(command) ||
-                "east".equals(command) ||
-                "west".equals(command) ||
-                "up".equals(command) ||
-                "down".equals(command);
+        String commands = env.getProperty(getClass().getCanonicalName());
+        return Lists.newArrayList(commands.split(";")).contains(command);
     }
 
     @Override
