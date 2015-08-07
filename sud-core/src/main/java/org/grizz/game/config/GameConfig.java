@@ -32,7 +32,7 @@ public class GameConfig {
     private static final String ASSETS_JSON_PATH_LOCATIONS_SCRIPTS = "assets.json.path.locations.scripts";
     private static final String ASSETS_JSON_PATH_ITEMS = "assets.json.path.items";
     private static final String ASSETS_JSON_PATH_MOBS = "assets.json.path.mobs";
-    private static final String ASSETS_JSON_PATH_QUESTS = "assets.json.path.quests";
+    private static final String ASSETS_JSON_PATH_SCRIPTS = "assets.json.path.scripts";
 
     @Autowired
     private Environment env;
@@ -47,7 +47,7 @@ public class GameConfig {
     public void initGame() {
         itemLoader().load();
         mobLoader().load();
-        questLoader().load();
+        scriptLoader().load();
         locationLoader().load();
         locationScriptLoader().load();
 
@@ -140,7 +140,7 @@ public class GameConfig {
     }
 
     @Bean
-    public Loader questLoader() {
-        return new QuestLoader(env.getProperty(ASSETS_JSON_PATH_QUESTS));
+    public Loader scriptLoader() {
+        return new ScriptLoader(env.getProperty(ASSETS_JSON_PATH_SCRIPTS));
     }
 }

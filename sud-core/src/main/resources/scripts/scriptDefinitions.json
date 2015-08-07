@@ -1,0 +1,12 @@
+[
+  {
+    "id": "0",
+    "name": "Master script",
+    "code": "scripts/js/master.js"
+  },
+  {
+    "id": "1",
+    "name": "Test item script",
+    "code": "scripts/js/items/test.js"
+  }
+]
