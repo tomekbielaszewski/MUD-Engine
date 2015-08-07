@@ -5,6 +5,5 @@ package org.grizz.game.model.items;
  */
 public interface ItemScript {
     String getCommand();
-
     String getScriptId();
 }

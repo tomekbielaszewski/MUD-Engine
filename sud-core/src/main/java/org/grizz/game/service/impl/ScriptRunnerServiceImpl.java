@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class ScriptRunnerServiceImpl implements ScriptRunnerService {
 
     @Override
-    public void executeItemCommand(String command, String scriptId, PlayerContext playerContext, PlayerResponse response) {
+    public void execute(final String command, final String scriptId, final PlayerContext playerContext, final PlayerResponse response) {
 
     }
 }

@@ -30,32 +30,27 @@ public class PlayerContextImpl implements PlayerContext {
     private String currentLocation;
     private String pastLocation;
 
-    private Map<String, Object> attributes;
+    private Map<String, Object> parameters;
     private List<String> events;
 
     @Override
-    public void addAttribute(String key, Object value) {
-        attributes.put(key, value);
+    public void addParameter(String key, Object value) {
+        parameters.put(key, value);
     }
 
     @Override
-    public Object getAttribute(String key) {
-        return attributes.get(key);
+    public Object getParameter(String key) {
+        return parameters.get(key);
     }
 
     @Override
-    public void removeAttribute(String key) {
-        attributes.remove(key);
+    public void removeParameter(String key) {
+        parameters.remove(key);
     }
 
     @Override
-    public boolean containsAttribute(String key) {
-        return attributes.containsKey(key);
-    }
-
-    @Override
-    public void addEvent(String event) {
-        events.add(event);
+    public boolean containsParameter(String key) {
+        return parameters.containsKey(key);
     }
 
     public PlayerContextImpl.PlayerContextImplBuilder copy() {
@@ -70,8 +65,7 @@ public class PlayerContextImpl implements PlayerContext {
                 .equipment(this.getEquipment())
                 .currentLocation(this.getCurrentLocation())
                 .pastLocation(this.getPastLocation())
-                .attributes(this.getAttributes())
-                .events(this.getEvents());
+                .parameters(this.getParameters());
     }
 
     public void setTo(PlayerContextImpl context) {
@@ -84,8 +78,7 @@ public class PlayerContextImpl implements PlayerContext {
         this.vitality = context.vitality;
         this.currentLocation = context.currentLocation;
         this.pastLocation = context.pastLocation;
-        this.attributes = context.attributes;
-        this.events = context.events;
+        this.parameters = context.parameters;
         this.equipment = context.equipment;
     }
 }

@@ -20,32 +20,17 @@ public class EquipmentServiceImpl implements EquipmentService {
     private ItemRepo itemRepo;
 
     @Override
-    public void show(PlayerContext context) {
-        List<ItemStack> equipment = context.getEquipment();
-
-        for (ItemStack itemStack : equipment) {
-            Item item = itemRepo.get(itemStack.getItemId());
-
-            context.addEvent(formatItemDescription(item, itemStack.getQuantity()));
-        }
-    }
-
-    @Override
     public List<Item> getItemsInEquipment(PlayerContext context) {
         List<ItemStack> equipmentAsItemStack = context.getEquipment();
         List<Item> equipmentAsItems = Lists.newArrayList();
 
         for (ItemStack itemStack : equipmentAsItemStack) {
             Item item = itemRepo.get(itemStack.getItemId());
-            equipmentAsItems.add(item);
+            for (int i = 0; i < itemStack.getQuantity(); i++) {
+                equipmentAsItems.add(item);
+            }
         }
 
         return equipmentAsItems;
-    }
-
-    private String formatItemDescription(Item item, int quantity) {
-        String name = item.getName();
-
-        return String.format("%s x%d", name, quantity);
     }
 }

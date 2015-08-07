@@ -1,8 +1,10 @@
 package org.grizz.game.service.impl;
 
 import org.grizz.game.config.GameConfig;
+import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.model.enums.Direction;
 import org.grizz.game.model.impl.PlayerContextImpl;
-import org.grizz.game.service.Direction;
+import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.service.MovementService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,28 +28,30 @@ public class MovementServiceImplIntegrationTest {
                 .name("TestUser")
                 .currentLocation("1")
                 .build();
-        movementService.move(Direction.NORTH, context);// 2
-        movementService.move(Direction.SOUTH, context);// 1
-        movementService.move(Direction.NORTH, context);// 2
-        movementService.move(Direction.WEST, context);// 3
-        movementService.move(Direction.EAST, context);// 2
-        movementService.move(Direction.EAST, context);// 4
-        movementService.move(Direction.WEST, context);// 2
-        movementService.move(Direction.NORTH, context);// 5
-        movementService.move(Direction.SOUTH, context);// 2
-        movementService.move(Direction.NORTH, context);// 5
-        movementService.move(Direction.NORTH, context);// 6
-        movementService.move(Direction.SOUTH, context);// 5
-        movementService.move(Direction.NORTH, context);// 6
-        movementService.move(Direction.EAST, context);// 7
-        movementService.move(Direction.WEST, context);// 6
-        movementService.move(Direction.EAST, context);// 7
-        movementService.move(Direction.NORTH, context);// 8
-        movementService.move(Direction.SOUTH, context);// 7
-        movementService.move(Direction.WEST, context);// 6
-        movementService.move(Direction.SOUTH, context);// 5
-        movementService.move(Direction.SOUTH, context);// 2
-        movementService.move(Direction.SOUTH, context);// 1
+        PlayerResponse response = new PlayerResponseImpl();
+
+        movementService.move(Direction.NORTH, context, response);// 2
+        movementService.move(Direction.SOUTH, context, response);// 1
+        movementService.move(Direction.NORTH, context, response);// 2
+        movementService.move(Direction.WEST, context, response);// 3
+        movementService.move(Direction.EAST, context, response);// 2
+        movementService.move(Direction.EAST, context, response);// 4
+        movementService.move(Direction.WEST, context, response);// 2
+        movementService.move(Direction.NORTH, context, response);// 5
+        movementService.move(Direction.SOUTH, context, response);// 2
+        movementService.move(Direction.NORTH, context, response);// 5
+        movementService.move(Direction.NORTH, context, response);// 6
+        movementService.move(Direction.SOUTH, context, response);// 5
+        movementService.move(Direction.NORTH, context, response);// 6
+        movementService.move(Direction.EAST, context, response);// 7
+        movementService.move(Direction.WEST, context, response);// 6
+        movementService.move(Direction.EAST, context, response);// 7
+        movementService.move(Direction.NORTH, context, response);// 8
+        movementService.move(Direction.SOUTH, context, response);// 7
+        movementService.move(Direction.WEST, context, response);// 6
+        movementService.move(Direction.SOUTH, context, response);// 5
+        movementService.move(Direction.SOUTH, context, response);// 2
+        movementService.move(Direction.SOUTH, context, response);// 1
 
         Assert.assertEquals("1", context.getCurrentLocation());
     }

@@ -27,7 +27,6 @@ public class UnknownCommand implements Command {
 
         String event = env.getProperty("unknown.command.invoced") + " \"" + command + "\"";
         response.getPlayerEvents().add(event);
-        context.addEvent(env.getProperty("unknown.command.invoced") + " \"" + command + "\""); //TODO: @Deprecated remove this and use PlayerResponse
 
         return response;
     }

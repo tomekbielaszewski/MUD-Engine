@@ -8,4 +8,5 @@ import org.grizz.game.model.LocationScript;
  */
 @Data
 public class LocationScriptEntity implements LocationScript {
+    //TODO: Zmienic na ogolny obiekt skryptu
 }

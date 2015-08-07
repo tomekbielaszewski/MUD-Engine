@@ -34,11 +34,11 @@ public class UseEquipmentItemCommand implements Command {
         PlayerResponse response = new PlayerResponseImpl();
         List<Item> items = equipmentService.getItemsInEquipment(playerContext);
 
-        //TODO: Try to change it with stream
+        //FIXME: Try to change it with stream
         for (Item item : items) {
             for (ItemScript itemScript : item.getCommands()) {
                 if (commandMatch(command, itemScript.getCommand())) {
-                    scriptRunner.executeItemCommand(command, itemScript.getScriptId(), playerContext, response);
+                    scriptRunner.execute(command, itemScript.getScriptId(), playerContext, response);
                     return response;
                 }
             }

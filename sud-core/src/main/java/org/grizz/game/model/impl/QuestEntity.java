@@ -8,4 +8,5 @@ import org.grizz.game.model.Quest;
  */
 @Data
 public class QuestEntity implements Quest {
+    //TODO: Zmienic na ogolny obiekt skryptu
 }

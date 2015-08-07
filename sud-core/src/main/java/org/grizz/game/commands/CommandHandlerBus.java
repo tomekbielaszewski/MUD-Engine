@@ -25,6 +25,7 @@ public class CommandHandlerBus {
     public PlayerResponse execute(String strCommand, PlayerContext context) {
         String formattedStrCommand = strCommand.trim();
         formattedStrCommand = formattedStrCommand.toLowerCase();
+        //TODO: usunac polskie znaki
 
         Command commandHandler = commands.stream()
                 .filter(x -> x.accept(strCommand, context))

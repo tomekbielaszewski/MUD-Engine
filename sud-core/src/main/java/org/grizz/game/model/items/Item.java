@@ -12,6 +12,8 @@ public interface Item {
 
     String getName();
 
+    String getDescription();
+
     List<? extends ItemScript> getCommands();
 
     ItemType getItemType();

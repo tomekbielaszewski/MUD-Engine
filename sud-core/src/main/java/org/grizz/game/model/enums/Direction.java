@@ -1,4 +1,4 @@
-package org.grizz.game.service;
+package org.grizz.game.model.enums;
 
 /**
  * Created by Grizz on 2015-04-26.

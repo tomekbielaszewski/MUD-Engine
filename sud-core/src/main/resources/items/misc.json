@@ -6,14 +6,6 @@
     "itemType": "MISC",
     "commands": [
       {
-        "command": "wyrzuć złotą monetę",
-        "scriptId": "1"
-      },
-      {
-        "command": "wyrzuć złotówkę",
-        "scriptId": "1"
-      },
-      {
         "command": "wyrzuc zlota monete",
         "scriptId": "1"
       },

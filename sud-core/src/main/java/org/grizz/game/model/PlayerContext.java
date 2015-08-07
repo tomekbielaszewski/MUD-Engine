@@ -22,15 +22,11 @@ public interface PlayerContext {
     String getCurrentLocation();
     String getPastLocation();
 
-    void addAttribute(String key, Object value);
-    Object getAttribute(String key);
-    void removeAttribute(String key);
-    boolean containsAttribute(String key);
+    void addParameter(String key, Object value);
 
-    //Dodawany bedzie tu kontekstowy output dla niektorych akcji typu:
-    //"podniosles miecz"
-    //"Te drzwi sa zamkniete..."
-    void addEvent(String event);
+    Object getParameter(String key);
 
-    List<String> getEvents();
+    void removeParameter(String key);
+
+    boolean containsParameter(String key);
 }

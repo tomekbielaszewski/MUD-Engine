@@ -77,7 +77,7 @@ public class GameConfig {
                                         .build()
                         ))
                         .events(Lists.newArrayList())
-                        .attributes(Maps.newHashMap())
+                        .parameters(Maps.newHashMap())
                         .build()
         );
         playerRepository.add(
@@ -86,7 +86,7 @@ public class GameConfig {
                         .currentLocation("1")
                         .equipment(Lists.newArrayList())
                         .events(Lists.newArrayList())
-                        .attributes(Maps.newHashMap())
+                        .parameters(Maps.newHashMap())
                         .build()
         );
         playerRepository.add(
@@ -95,7 +95,7 @@ public class GameConfig {
                         .currentLocation("1")
                         .equipment(Lists.newArrayList())
                         .events(Lists.newArrayList())
-                        .attributes(Maps.newHashMap())
+                        .parameters(Maps.newHashMap())
                         .build()
         );
         locationRepo.get("3").getItems().addAll(Lists.newArrayList(
