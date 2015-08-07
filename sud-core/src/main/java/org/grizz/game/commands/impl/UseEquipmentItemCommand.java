@@ -26,25 +26,33 @@ public class UseEquipmentItemCommand implements Command {
 
     @Override
     public boolean accept(String command, PlayerContext playerContext) {
-        return !playerContext.getEquipment().isEmpty(); //TODO: add command lookup on the items in inventory
+        return !playerContext.getEquipment().isEmpty() &&
+                getItemScript(command, playerContext) != null;
     }
 
     @Override
     public PlayerResponse execute(String command, PlayerContext playerContext) {
         PlayerResponse response = new PlayerResponseImpl();
-        List<Item> items = equipmentService.getItemsInEquipment(playerContext);
 
-        //FIXME: Try to change it with stream
-        for (Item item : items) {
-            for (ItemScript itemScript : item.getCommands()) {
-                if (commandMatch(command, itemScript.getCommand())) {
-                    scriptRunner.execute(command, itemScript.getScriptId(), playerContext, response);
-                    return response;
-                }
-            }
+        ItemScript itemScript = getItemScript(command, playerContext);
+        if (itemScript != null) {
+            scriptRunner.execute(command, itemScript.getScriptId(), playerContext, response);
         }
 
         return response;
+    }
+
+    private ItemScript getItemScript(String command, PlayerContext playerContext) {
+        List<Item> items = equipmentService.getItemsInEquipment(playerContext);
+
+        for (Item item : items) {
+            for (ItemScript itemScript : item.getCommands()) {
+                if (commandMatch(command, itemScript.getCommand())) {
+                    return itemScript;
+                }
+            }
+        }
+        return null;
     }
 
     private boolean commandMatch(String command, String commandDefinition) {
