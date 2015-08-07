@@ -1,0 +1,1 @@
+response.getPlayerEvents().add("Zadziałało!")

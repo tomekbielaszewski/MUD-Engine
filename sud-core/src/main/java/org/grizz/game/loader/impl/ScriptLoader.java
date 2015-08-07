@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.List;
 
 /**
  * Created by Grizz on 2015-04-17.
@@ -38,25 +38,27 @@ public class ScriptLoader implements Loader {
     private void readScripts() throws IOException, URISyntaxException {
         Gson gson = new Gson();
         FileUtils.listFilesInFolder(_path)
-                .stream()
-                .filter(path -> path.endsWith(".json"))
                 .forEach(path -> {
-                    ScriptEntity[] scriptsArray = null;
-                    try {
-                        log.info("Reading: {}", path.toString());
-                        scriptsArray = gson.fromJson(Files.newBufferedReader(path), ScriptEntity[].class);
-                        for (ScriptEntity script : scriptsArray) {
-                            scriptRepo.add(loadScriptCode(script));
+                    if (path.toString().endsWith("json")) {
+                        ScriptEntity[] scriptsArray = null;
+                        try {
+                            log.info("Reading: {}", path.toString());
+                            scriptsArray = gson.fromJson(Files.newBufferedReader(path), ScriptEntity[].class);
+                            for (ScriptEntity script : scriptsArray) {
+                                scriptRepo.add(loadScriptCode(script));
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
                 });
     }
 
-    private Script loadScriptCode(ScriptEntity script) throws IOException {
-        byte[] sourceCodeBytes = Files.readAllBytes(Paths.get(script.getCode()));
-        String sourceCode = String.valueOf(sourceCodeBytes);
+    private Script loadScriptCode(ScriptEntity script) throws IOException, URISyntaxException {
+        List<String> sourceCodeBytes = Files.readAllLines(FileUtils.getFilepath(script.getCode()));
+        String sourceCode = sourceCodeBytes.stream().reduce((s, s2) -> s + "\n" + s2).orElseGet(() -> "");
         script.setCode(sourceCode);
         return script;
     }

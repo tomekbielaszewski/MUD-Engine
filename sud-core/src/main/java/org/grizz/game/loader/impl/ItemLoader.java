@@ -107,6 +107,6 @@ public class ItemLoader implements Loader {
         String name;
         String description;
         ItemType itemType;
-        private List<ItemScriptEntity> commands;
+        List<ItemScriptEntity> commands;
     }
 }

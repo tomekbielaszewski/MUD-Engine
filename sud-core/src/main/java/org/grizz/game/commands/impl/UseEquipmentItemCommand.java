@@ -26,7 +26,7 @@ public class UseEquipmentItemCommand implements Command {
 
     @Override
     public boolean accept(String command, PlayerContext playerContext) {
-        return !playerContext.getEquipment().isEmpty();
+        return !playerContext.getEquipment().isEmpty(); //TODO: add command lookup on the items in inventory
     }
 
     @Override

@@ -20,6 +20,11 @@ public class FileUtils {
                 .collect(Collectors.toList());
     }
 
+    public static Path getFilepath(String filePath) throws IOException, URISyntaxException {
+        URL url = new Dummy().getClass().getClassLoader().getResource(filePath);
+        return Paths.get(url.toURI());
+    }
+
     private static class Dummy {
     }
 }

@@ -4,6 +4,7 @@ import org.grizz.game.commands.CommandHandlerBus;
 import org.grizz.game.commands.impl.LookAroundCommand;
 import org.grizz.game.commands.impl.MovementCommand;
 import org.grizz.game.commands.impl.ShowEquipmentCommand;
+import org.grizz.game.commands.impl.UseEquipmentItemCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,13 +20,15 @@ public class CommandConfig {
     public CommandHandlerBus commandHandlerBus(
             final LookAroundCommand lookAroundCommand,
             final MovementCommand movementCommand,
-            final ShowEquipmentCommand showEquipmentCommand
+            final ShowEquipmentCommand showEquipmentCommand,
+            final UseEquipmentItemCommand useEquipmentItemCommand
     ) {
         CommandHandlerBus commandHandlerBus = new CommandHandlerBus();
 
         commandHandlerBus.addCommand(lookAroundCommand);
         commandHandlerBus.addCommand(movementCommand);
         commandHandlerBus.addCommand(showEquipmentCommand);
+        commandHandlerBus.addCommand(useEquipmentItemCommand);
 
         return commandHandlerBus;
     }

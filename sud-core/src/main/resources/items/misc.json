@@ -6,12 +6,8 @@
     "itemType": "MISC",
     "commands": [
       {
-        "command": "wyrzuc zlota monete",
-        "scriptId": "1"
-      },
-      {
-        "command": "wyrzuc zlotowke",
-        "scriptId": "1"
+        "command": "testowa",
+        "scriptId": "0"
       }
     ]
   },
@@ -19,36 +15,42 @@
     "id": "2",
     "name": "Srebrna moneta",
     "description": "Mały, srebrny krążek z wizerunkiem jednej z Wielkich Kapłanek.",
-    "itemType": "MISC"
+    "itemType": "MISC",
+    "commands": []
   },
   {
     "id": "3",
     "name": "Brązowa moneta",
     "description": "Mały, powycierany, brązowy krążek z ledwo widoczną sylwetką rycerza na koniu.",
-    "itemType": "MISC"
+    "itemType": "MISC",
+    "commands": []
   },
   {
     "id": "4",
     "name": "Srebrny klucz",
     "description": "Lśniący, lekko zadrapany przy oczku klucz. Często używany. Może byc sporo warty, a to co otwiera - jeszcze więcej.",
-    "itemType": "MISC"
+    "itemType": "MISC",
+    "commands": []
   },
   {
     "id": "5",
     "name": "Zniszczona patelnia",
     "description": "Dziurawa, zniszczona patelnia. Raczej nie nadaje się do użytku.",
-    "itemType": "MISC"
+    "itemType": "MISC",
+    "commands": []
   },
   {
     "id": "6",
     "name": "Brudna szmata",
     "description": "Kawałek dziurawego i brudnego materiału.",
-    "itemType": "MISC"
+    "itemType": "MISC",
+    "commands": []
   },
   {
     "id": "7",
     "name": "Zardzewiały klucz",
     "description": "Jest to mały zardzewiały klucz. Widać, że nie był używany od dłuższego czasu.",
-    "itemType": "MISC"
+    "itemType": "MISC",
+    "commands": []
   }
 ]
