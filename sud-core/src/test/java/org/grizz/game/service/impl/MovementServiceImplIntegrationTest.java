@@ -31,8 +31,6 @@ public class MovementServiceImplIntegrationTest {
         PlayerResponse response = new PlayerResponseImpl();
 
         movementService.move(Direction.NORTH, context, response);// 2
-//        movementService.move(Direction.SOUTH, context, response);// 1
-//        movementService.move(Direction.NORTH, context, response);// 2
         movementService.move(Direction.WEST, context, response);// 3
         movementService.move(Direction.EAST, context, response);// 2
         movementService.move(Direction.EAST, context, response);// 4
@@ -51,7 +49,7 @@ public class MovementServiceImplIntegrationTest {
         movementService.move(Direction.WEST, context, response);// 6
         movementService.move(Direction.SOUTH, context, response);// 5
         movementService.move(Direction.SOUTH, context, response);// 2
-//        movementService.move(Direction.SOUTH, context, response);// 1
+        movementService.move(Direction.SOUTH, context, response);// 2
 
         Assert.assertEquals("2", context.getCurrentLocation());
     }
