@@ -1,6 +1,7 @@
 package org.grizz.game.commands.impl;
 
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.commands.Command;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Grizz on 2015-08-08.
  */
+@Slf4j
 @Component
 public class PickUpCommand implements Command {
     @Autowired
@@ -24,17 +26,15 @@ public class PickUpCommand implements Command {
     @Override
     public boolean accept(String command) {
         String commandsStr = env.getProperty(getClass().getCanonicalName());
-        ArrayList<String> commands = Lists.newArrayList(commandsStr.split(";"));
-        List<String> matchedCommands = commands.stream()
-                .filter(comm -> command.matches(comm))
+        ArrayList<String> patterns = Lists.newArrayList(commandsStr.split(";"));
+        List<String> matchedCommands = patterns.stream()
+                .filter(pattern -> command.matches(pattern))
                 .collect(Collectors.toList());
         return !matchedCommands.isEmpty();
     }
 
     @Override
     public PlayerResponse execute(String command, PlayerContext playerContext) {
-
-        System.out.println("DZIALA!!!!");
         return new PlayerResponseImpl();
     }
 }
