@@ -39,6 +39,8 @@ public class PickUpCommand implements Command {
         return false;
     }
 
+    //TODO: Posprzatac tu! Wyciaganie elementow komendy wywalic do jakiegos utilsa. Tutaj ma zostac tylko oddelegowanie sterowania do service'u
+
     @Override
     public PlayerResponse execute(String command, PlayerContext playerContext) {
         PlayerResponse response = new PlayerResponseImpl();
@@ -67,6 +69,7 @@ public class PickUpCommand implements Command {
     }
 
     private void doMultiPickup(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
+        //TODO: implementacja dzialania podnoszenia przedmiotow jako service
         log.info("Multi pickup works! Item name is: [" + itemName + "] with amount of " + amount);
     }
 
