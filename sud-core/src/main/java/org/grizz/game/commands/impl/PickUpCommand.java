@@ -11,7 +11,11 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -25,16 +29,53 @@ public class PickUpCommand implements Command {
 
     @Override
     public boolean accept(String command) {
-        String commandsStr = env.getProperty(getClass().getCanonicalName());
-        ArrayList<String> patterns = Lists.newArrayList(commandsStr.split(";"));
-        List<String> matchedCommands = patterns.stream()
-                .filter(pattern -> command.matches(pattern))
-                .collect(Collectors.toList());
-        return !matchedCommands.isEmpty();
+        try {
+            getMatching(command);
+            log.info("Command [{}] accepted!", command);
+            return true;
+        } catch (NoSuchElementException e) {
+            //expected when no pattern matches given command
+        }
+        return false;
     }
 
     @Override
     public PlayerResponse execute(String command, PlayerContext playerContext) {
-        return new PlayerResponseImpl();
+        PlayerResponse response = new PlayerResponseImpl();
+        Map.Entry<String, String> matching = getMatching(command);
+        Pattern pattern = Pattern.compile(matching.getKey());
+        Matcher matcher = pattern.matcher(matching.getValue());
+        matcher.matches();
+        int capturingGroups = matcher.groupCount();
+        if (capturingGroups == 1) {
+            String itemName = matcher.group(1);
+            doSinglePickup(itemName, playerContext, response);
+        } else if (capturingGroups == 2) {
+            String itemName = matcher.group(1);
+            Integer amount = Integer.valueOf(matcher.group(2));
+            doMultiPickup(itemName, amount, playerContext, response);
+        } else {
+            throw new IllegalArgumentException("There is an error in pattern matching command []! " +
+                    "To many or zero capturing groups!");
+        }
+
+        return response;
+    }
+
+    private void doSinglePickup(String itemName, PlayerContext playerContext, PlayerResponse response) {
+        doMultiPickup(itemName, 1, playerContext, response);
+    }
+
+    private void doMultiPickup(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
+        log.info("Multi pickup works! Item name is: [" + itemName + "] with amount of " + amount);
+    }
+
+    private Map.Entry<String, String> getMatching(String command) {
+        String commandsStr = env.getProperty(getClass().getCanonicalName());
+        ArrayList<String> patterns = Lists.newArrayList(commandsStr.split(";"));
+        Map<String, String> matchingCommands = patterns.stream()
+                .filter(pattern -> command.matches(pattern))
+                .collect(Collectors.toMap(Function.<String>identity(), s -> command));
+        return matchingCommands.entrySet().stream().findFirst().get();
     }
 }
