@@ -26,7 +26,7 @@
   },
   {
     "id": "103",
-    "name": "Cant enter welcome location script",
+    "name": "Cant enter start location script",
     "code": "scripts/js/locations/startLocationBeforeEnter.js"
   }
 ]

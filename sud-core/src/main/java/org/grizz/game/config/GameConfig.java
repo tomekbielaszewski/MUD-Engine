@@ -59,28 +59,29 @@ public class GameConfig {
                 PlayerContextImpl.builder()
                         .name("Grizz")
                         .currentLocation("1")
-                        .equipment(Lists.newArrayList(
-                                ItemStackEntity.builder()
-                                        .itemId("3") //brazowa moneta
-                                        .quantity(54)
-                                        .build(),
-                                ItemStackEntity.builder()
-                                        .itemId("2") //srebrna moneta
-                                        .quantity(21)
-                                        .build(),
-                                ItemStackEntity.builder()
-                                        .itemId("1") //złota moneta
-                                        .quantity(3)
-                                        .build(),
-                                ItemStackEntity.builder()
-                                        .itemId("100") //krótki miecz
-                                        .quantity(1)
-                                        .build(),
-                                ItemStackEntity.builder()
-                                        .itemId("5") //patelnia
-                                        .quantity(1)
-                                        .build()
-                        ))
+                        .equipment(Lists.newArrayList())
+//                        .equipment(Lists.newArrayList(
+//                                ItemStackEntity.builder()
+//                                        .itemId("3") //brazowa moneta
+//                                        .quantity(54)
+//                                        .build(),
+//                                ItemStackEntity.builder()
+//                                        .itemId("2") //srebrna moneta
+//                                        .quantity(21)
+//                                        .build(),
+//                                ItemStackEntity.builder()
+//                                        .itemId("1") //złota moneta
+//                                        .quantity(3)
+//                                        .build(),
+//                                ItemStackEntity.builder()
+//                                        .itemId("100") //krótki miecz
+//                                        .quantity(1)
+//                                        .build(),
+//                                ItemStackEntity.builder()
+//                                        .itemId("5") //patelnia
+//                                        .quantity(1)
+//                                        .build()
+//                        ))
                         .events(Lists.newArrayList())
                         .parameters(Maps.newHashMap())
                         .build()

@@ -1,8 +1,11 @@
 package org.grizz.game.service.impl;
 
 import com.google.common.collect.Lists;
+import org.grizz.game.exception.NoSuchItemException;
+import org.grizz.game.exception.NotEnoughItemsException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
+import org.grizz.game.model.impl.items.ItemStackEntity;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.items.ItemStack;
 import org.grizz.game.model.repository.ItemRepo;
@@ -23,6 +26,12 @@ public class LocationServiceImpl implements LocationService {
     private LocationRepo locationRepo;
     @Autowired
     private ItemRepo itemRepo;
+
+    @Override
+    public Location getCurrentLocation(PlayerContext playerContext) {
+        String currentLocationId = playerContext.getCurrentLocation();
+        return locationRepo.get(currentLocationId);
+    }
 
     @Override
     public List<String> getLocationExits(PlayerContext context) {
@@ -54,5 +63,37 @@ public class LocationServiceImpl implements LocationService {
         }
 
         return locationItems;
+    }
+
+    @Override
+    public void removeItemsFromLocation(Location location, String itemName, int amount) {
+        final Item item;
+
+        try {
+            item = itemRepo.getByName(itemName);
+        } catch (NoSuchItemException e) {
+            throw new NoSuchItemException("there.is.no.such.item.name", e);
+        }
+
+        ItemStack itemStackToRemove = location.getItems().stream()
+                .filter(itemStack -> item.getId().equals(itemStack.getItemId()))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchItemException("no.item.on.location"));
+
+        if (itemStackToRemove.getQuantity() < amount) {
+            throw new NotEnoughItemsException("not.enough.items.on.location");
+        } else {
+            ItemStackEntity itemStackToRemoveEntity = (ItemStackEntity) itemStackToRemove;
+            itemStackToRemoveEntity.setQuantity(itemStackToRemove.getQuantity() - amount);
+
+            if (itemStackToRemoveEntity.getQuantity() == 0) {
+                location.getItems().remove(itemStackToRemove);
+            }
+        }
+    }
+
+    @Override
+    public void addItemToLocation(Location location, ItemStack itemStack) {
+        //TODO zaimplementuj dodawanie itemkow do lokacji
     }
 }

@@ -6,6 +6,7 @@ import org.grizz.game.commands.Command;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.PlayerResponseImpl;
+import org.grizz.game.service.EquipmentService;
 import org.grizz.game.utils.CommandUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -21,6 +22,9 @@ import java.util.List;
 public class PickUpCommand implements Command {
     @Autowired
     private Environment env;
+
+    @Autowired
+    private EquipmentService equipmentService;
 
     @Override
     public boolean accept(String command) {
@@ -57,7 +61,7 @@ public class PickUpCommand implements Command {
     }
 
     private void doMultiPickup(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
-        //TODO: implementacja dzialania podnoszenia przedmiotow jako service
+        equipmentService.pickUpItems(itemName, amount, playerContext, response);
         log.info("Multi pickup works! Item name is: [" + itemName + "] with amount of " + amount);
     }
 
