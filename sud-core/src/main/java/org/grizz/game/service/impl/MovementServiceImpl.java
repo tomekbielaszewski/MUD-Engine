@@ -79,27 +79,26 @@ public class MovementServiceImpl implements MovementService {
         response.setLocationItems(locationItems);
         response.setCurrentLocation(currentLocation);
 
-        onShow(currentLocation, _context, _response);
+        actionScript(currentLocation::getOnShow, _context, _response);
     }
 
     private void move(Supplier<String> locationSupplier, PlayerContext _context, Location currentLocation, PlayerResponse _response) {
         PlayerContextImpl context = (PlayerContextImpl) _context;
         PlayerResponseImpl response = (PlayerResponseImpl) _response;
 
-        if (beforeLeave(currentLocation, _context, _response)) {
-            onLeave(currentLocation, _context, _response);
+        if (predicateScript(currentLocation::getBeforeLeave, _context, _response)) {
+            actionScript(currentLocation::getOnLeave, _context, _response);
 
             Location targetLocation = locationRepo.get(locationSupplier.get());
 
-            if (beforeEnter(targetLocation, _context, _response)) {
-
+            if (predicateScript(targetLocation::getBeforeEnter, _context, _response)) {
                 context.setTo(context.copy()
                                 .pastLocation(currentLocation.getId())
                                 .currentLocation(targetLocation.getId())
                                 .build()
                 );
 
-                onEnter(targetLocation, _context, _response);
+                actionScript(targetLocation::getOnEnter, _context, _response);
 
                 showCurrentLocation(_context, response);
                 log.info("{} moved from [{}] to [{}]", context.getName(), currentLocation.getName(), targetLocation.getName());
@@ -111,39 +110,17 @@ public class MovementServiceImpl implements MovementService {
         }
     }
 
-    //TODO zastąpic dwoma metodami (zwracająca boolean i void) i przekazywac referencje do metody zamiast powtarzac kod jak nizej
-    private boolean beforeLeave(Location location, PlayerContext context, PlayerResponse response) {
-        if (StringUtils.isEmpty(location.getBeforeLeave())) {
+    private boolean predicateScript(Supplier<String> scriptSupplier, PlayerContext context, PlayerResponse response) {
+        if (StringUtils.isEmpty(scriptSupplier.get())) {
             return true;
         }
-        return (boolean) scriptRunnerService.execute(location.getBeforeLeave(), context, response);
+        return (boolean) scriptRunnerService.execute(scriptSupplier.get(), context, response);
     }
 
-    private boolean beforeEnter(Location location, PlayerContext context, PlayerResponse response) {
-        if (StringUtils.isEmpty(location.getBeforeEnter())) {
-            return true;
-        }
-        return (boolean) scriptRunnerService.execute(location.getBeforeEnter(), context, response);
-    }
-
-    private void onLeave(Location location, PlayerContext context, PlayerResponse response) {
-        if (StringUtils.isEmpty(location.getOnLeave())) {
+    private void actionScript(Supplier<String> scriptSupplier, PlayerContext context, PlayerResponse response) {
+        if (StringUtils.isEmpty(scriptSupplier.get())) {
             return;
         }
-        scriptRunnerService.execute(location.getOnLeave(), context, response);
-    }
-
-    private void onEnter(Location location, PlayerContext context, PlayerResponse response) {
-        if (StringUtils.isEmpty(location.getOnEnter())) {
-            return;
-        }
-        scriptRunnerService.execute(location.getOnEnter(), context, response);
-    }
-
-    private void onShow(Location location, PlayerContext context, PlayerResponse response) {
-        if (StringUtils.isEmpty(location.getOnShow())) {
-            return;
-        }
-        scriptRunnerService.execute(location.getOnShow(), context, response);
+        scriptRunnerService.execute(scriptSupplier.get(), context, response);
     }
 }

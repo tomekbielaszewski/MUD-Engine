@@ -17,5 +17,5 @@ public class ArmorEntity implements Armor {
     private String name;
     private String description;
     private ItemType itemType;
-    private List<ItemScriptEntity> commands;
+    private List<CommandScriptEntity> commands;
 }

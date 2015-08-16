@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.model.enums.ItemType;
 import org.grizz.game.model.impl.items.ArmorEntity;
-import org.grizz.game.model.impl.items.ItemScriptEntity;
+import org.grizz.game.model.impl.items.CommandScriptEntity;
 import org.grizz.game.model.impl.items.MiscEntity;
 import org.grizz.game.model.impl.items.WeaponEntity;
 import org.grizz.game.model.items.Item;
@@ -107,6 +107,6 @@ public class ItemLoader implements Loader {
         String name;
         String description;
         ItemType itemType;
-        List<ItemScriptEntity> commands;
+        List<CommandScriptEntity> commands;
     }
 }

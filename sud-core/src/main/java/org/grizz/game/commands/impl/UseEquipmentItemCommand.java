@@ -4,8 +4,8 @@ import org.grizz.game.commands.Command;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.PlayerResponseImpl;
+import org.grizz.game.model.items.CommandScript;
 import org.grizz.game.model.items.Item;
-import org.grizz.game.model.items.ItemScript;
 import org.grizz.game.service.EquipmentService;
 import org.grizz.game.service.ScriptRunnerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,21 +34,21 @@ public class UseEquipmentItemCommand implements Command {
     public PlayerResponse execute(String command, PlayerContext playerContext) {
         PlayerResponse response = new PlayerResponseImpl();
 
-        ItemScript itemScript = getItemScript(command, playerContext);
-        if (itemScript != null) {
-            scriptRunner.execute(command, itemScript.getScriptId(), playerContext, response);
+        CommandScript commandScript = getItemScript(command, playerContext);
+        if (commandScript != null) {
+            scriptRunner.execute(command, commandScript.getScriptId(), playerContext, response);
         }
 
         return response;
     }
 
-    private ItemScript getItemScript(String command, PlayerContext playerContext) {
+    private CommandScript getItemScript(String command, PlayerContext playerContext) {
         List<Item> items = equipmentService.getItemsInEquipment(playerContext);
 
         for (Item item : items) {
-            for (ItemScript itemScript : item.getCommands()) {
-                if (commandMatch(command, itemScript.getCommand())) {
-                    return itemScript;
+            for (CommandScript commandScript : item.getCommands()) {
+                if (commandMatch(command, commandScript.getCommand())) {
+                    return commandScript;
                 }
             }
         }
