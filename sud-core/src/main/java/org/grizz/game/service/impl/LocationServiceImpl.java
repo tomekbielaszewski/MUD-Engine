@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Grizz on 2015-04-27.
@@ -57,7 +58,6 @@ public class LocationServiceImpl implements LocationService {
 
         for (ItemStack item : location.getItems()) {
             for (int i = 0; i < item.getQuantity(); i++) {
-                //TODO: pomyslec nad agregacją itemków. Bo teraz bedzie troche przejebane wchodząc na lokacje ze 100 srebrnymi monetami...
                 locationItems.add(itemRepo.get(item.getItemId()));
             }
         }
@@ -94,6 +94,20 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public void addItemToLocation(Location location, ItemStack itemStack) {
-        //TODO zaimplementuj dodawanie itemkow do lokacji
+        if (itemStack.getQuantity() == 0) {
+            return;
+        }
+
+        List<ItemStack> locationItems = location.getItems();
+        Optional<ItemStack> optionalExistingItemStack = locationItems.stream()
+                .filter(_itemStack -> _itemStack.getItemId().equals(itemStack.getItemId()))
+                .findFirst();
+
+        if (optionalExistingItemStack.isPresent()) {
+            ItemStackEntity existingItemStack = (ItemStackEntity) optionalExistingItemStack.get();
+            existingItemStack.setQuantity(existingItemStack.getQuantity() + itemStack.getQuantity());
+        } else {
+            locationItems.add(itemStack);
+        }
     }
 }
