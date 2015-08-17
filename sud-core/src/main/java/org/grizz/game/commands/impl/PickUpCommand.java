@@ -4,12 +4,12 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.commands.Command;
 import org.grizz.game.exception.GameException;
+import org.grizz.game.exception.GameExceptionHandler;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.service.EquipmentService;
 import org.grizz.game.utils.CommandUtils;
-import org.grizz.game.utils.GameExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -68,11 +68,11 @@ public class PickUpCommand implements Command {
     private void doMultiPickup(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
         try {
             equipmentService.pickUpItems(itemName, amount, playerContext, response);
+            log.info("{} picked up {} of {}", playerContext.getName(), amount, itemName);
         } catch (GameException e) {
             String formattedEvent = exceptionHandler.handle(e);
             response.getPlayerEvents().add(formattedEvent);
         }
-        log.info("Multi pickup works! Item name is: [" + itemName + "] with amount of " + amount);
     }
 
     private String getMatchedPattern(String command) {

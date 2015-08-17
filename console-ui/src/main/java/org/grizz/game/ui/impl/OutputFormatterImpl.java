@@ -1,10 +1,12 @@
 package org.grizz.game.ui.impl;
 
+import com.google.common.collect.Maps;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.ui.OutputFormatter;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Grizz on 2015-04-27.
@@ -65,26 +67,38 @@ public class OutputFormatterImpl implements OutputFormatter {
 
     private void appendVisibleItems(PlayerResponse playerResponse, StringBuilder sb) {
         if (!playerResponse.getLocationItems().isEmpty()) {
+            Map<Item, Integer> countedItems = countItems(playerResponse.getLocationItems());
+
             appendSeparator(sb, 79);
             sb.append("Widzisz tutaj:\n");
-            for (Item item : playerResponse.getLocationItems()) {
-                String itemDescription = String.format("%s: %s", item.getName(), item.getDescription());
+
+            for (Map.Entry<Item, Integer> countedItem : countedItems.entrySet()) {
+                Item item = countedItem.getKey();
+                Integer amount = countedItem.getValue();
+                String itemDescription = String.format("%dx\t\t %s: %s", amount, item.getName(), item.getDescription());
                 sb.append("\t" + itemDescription);
                 sb.append("\n");
             }
+
             sb.setLength(sb.length() - 1);
         }
     }
 
     private void appendEquipmentItems(PlayerResponse playerResponse, StringBuilder sb) {
         if (!playerResponse.getEquipmentItems().isEmpty()) {
+            Map<Item, Integer> countedItems = countItems(playerResponse.getEquipmentItems());
+
             appendSeparator(sb, 79);
             sb.append("W ekwipunku posiadasz:\n");
-            for (Item item : playerResponse.getEquipmentItems()) {
-                String itemDescription = String.format("%s: %s", item.getName(), item.getDescription());
+
+            for (Map.Entry<Item, Integer> countedItem : countedItems.entrySet()) {
+                Item item = countedItem.getKey();
+                Integer amount = countedItem.getValue();
+                String itemDescription = String.format("%dx\t\t %s: %s", amount, item.getName(), item.getDescription());
                 sb.append("\t" + itemDescription);
                 sb.append("\n");
             }
+
             sb.setLength(sb.length() - 1);
         }
     }
@@ -103,5 +117,13 @@ public class OutputFormatterImpl implements OutputFormatter {
         }
     }
 
+    private Map<Item, Integer> countItems(List<Item> equipmentItems) {
+        Map<Item, Integer> countedItems = Maps.newHashMap();
 
+        for (Item item : equipmentItems) {
+            countedItems.merge(item, 1, (v, vv) -> v + vv);
+        }
+
+        return countedItems;
+    }
 }
