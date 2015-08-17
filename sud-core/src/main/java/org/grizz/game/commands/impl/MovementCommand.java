@@ -2,11 +2,12 @@ package org.grizz.game.commands.impl;
 
 import com.google.common.collect.Lists;
 import org.grizz.game.commands.Command;
-import org.grizz.game.exception.CantGoThereException;
+import org.grizz.game.exception.GameException;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.service.MovementService;
+import org.grizz.game.utils.GameExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,9 @@ import static org.grizz.game.model.enums.Direction.*;
 public class MovementCommand implements Command {
     @Autowired
     private Environment env;
+
+    @Autowired
+    private GameExceptionHandler exceptionHandler;
 
     @Autowired
     private MovementService movementService;
@@ -54,9 +58,9 @@ public class MovementCommand implements Command {
                     movementService.move(DOWN, playerContext, response);
                     break;
             }
-        } catch (CantGoThereException e) {
-            String event = env.getProperty("cant.go.there");
-            response.getPlayerEvents().add(event);
+        } catch (GameException e) {
+            String formattedEvent = exceptionHandler.handle(e);
+            response.getPlayerEvents().add(formattedEvent);
         }
 
         return response;

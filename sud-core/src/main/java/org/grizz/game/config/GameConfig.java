@@ -104,7 +104,7 @@ public class GameConfig {
                         .parameters(Maps.newHashMap())
                         .build()
         );
-        locationRepo.get("3").getItems().addAll(Lists.newArrayList(
+        locationRepo.get("1").getItems().addAll(Lists.newArrayList(
                 ItemStackEntity.builder()
                         .itemId("3")
                         .quantity(2)

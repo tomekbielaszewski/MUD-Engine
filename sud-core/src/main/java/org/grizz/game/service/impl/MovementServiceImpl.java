@@ -64,7 +64,7 @@ public class MovementServiceImpl implements MovementService {
             }
         } catch (IllegalArgumentException e) {
             log.warn("{} tried to go from ID[{}] to [{}]: {}", playerContext.getName(), currentLocation.getId(), dir, e.getMessage());
-            throw new CantGoThereException();
+            throw new CantGoThereException("cant.go.there");
         }
     }
 
