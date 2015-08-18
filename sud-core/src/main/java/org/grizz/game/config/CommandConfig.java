@@ -18,6 +18,7 @@ public class CommandConfig {
             final LookAroundCommand lookAroundCommand,
             final MovementCommand movementCommand,
             final PickUpCommand pickUpCommand,
+            final DropCommand dropCommand,
             final ShowEquipmentCommand showEquipmentCommand,
             final UseEquipmentItemCommand useEquipmentItemCommand
     ) {
@@ -26,6 +27,7 @@ public class CommandConfig {
         commandHandlerBus.addCommand(lookAroundCommand);
         commandHandlerBus.addCommand(movementCommand);
         commandHandlerBus.addCommand(pickUpCommand);
+        commandHandlerBus.addCommand(dropCommand);
         commandHandlerBus.addCommand(showEquipmentCommand);
         commandHandlerBus.addCommand(useEquipmentItemCommand);
 

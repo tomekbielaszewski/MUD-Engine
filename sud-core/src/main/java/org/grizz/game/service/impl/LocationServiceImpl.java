@@ -93,7 +93,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public void addItemToLocation(Location location, ItemStack itemStack) {
+    public void addItemsToLocation(Location location, ItemStack itemStack) {
         if (itemStack.getQuantity() == 0) {
             return;
         }

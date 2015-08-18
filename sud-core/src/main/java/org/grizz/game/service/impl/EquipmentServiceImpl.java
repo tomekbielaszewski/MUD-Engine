@@ -2,6 +2,7 @@ package org.grizz.game.service.impl;
 
 import com.google.common.collect.Lists;
 import org.grizz.game.exception.NoSuchItemException;
+import org.grizz.game.exception.NotEnoughItemsException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
@@ -50,7 +51,60 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
+    public void dropItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
+        final Item item = getItem(itemName);
+
+        Location currentLocation = locationService.getCurrentLocation(playerContext);
+        this.removeItems(itemName, amount, playerContext, response);
+        locationService.addItemsToLocation(currentLocation, ItemStackEntity.builder()
+                .itemId(item.getId())
+                .quantity(amount)
+                .build());
+    }
+
+    @Override
     public void addItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
+        final Item item = getItem(itemName);
+
+        ItemStack sameItemStackInEquipment = playerContext.getEquipment().stream()
+                .filter(itemStack -> itemStack.getItemId().equals(item.getId()))
+                .findFirst()
+                .orElse(null);
+
+        if (sameItemStackInEquipment != null) {
+            ItemStackEntity sameItemStackInEquipmentEntity = (ItemStackEntity) sameItemStackInEquipment;
+            sameItemStackInEquipmentEntity.setQuantity(sameItemStackInEquipment.getQuantity() + amount);
+        } else {
+            playerContext.getEquipment().add(
+                    ItemStackEntity.builder()
+                            .itemId(item.getId())
+                            .quantity(amount)
+                            .build());
+        }
+    }
+
+    @Override
+    public void removeItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
+        final Item item = getItem(itemName);
+
+        ItemStack itemStackInEquipment = playerContext.getEquipment().stream()
+                .filter(itemStack -> itemStack.getItemId().equals(item.getId()))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchItemException("you.have.no.such.item"));
+
+        if (itemStackInEquipment.getQuantity() < amount) {
+            throw new NotEnoughItemsException("not.enough.items.in.equipment");
+        } else {
+            ItemStackEntity itemStackInEquipmentEntity = (ItemStackEntity) itemStackInEquipment;
+            itemStackInEquipmentEntity.setQuantity(itemStackInEquipment.getQuantity() - amount);
+
+            if (itemStackInEquipment.getQuantity() == 0) {
+                playerContext.getEquipment().remove(itemStackInEquipment);
+            }
+        }
+    }
+
+    private Item getItem(String itemName) {
         final Item item;
 
         try {
@@ -58,23 +112,7 @@ public class EquipmentServiceImpl implements EquipmentService {
         } catch (NoSuchItemException e) {
             throw new NoSuchItemException("there.is.no.such.item.name", e);
         }
-
-        ItemStack itemsToAdd = ItemStackEntity.builder()
-                .itemId(item.getId())
-                .quantity(amount)
-                .build();
-
-        ItemStack sameItemStackInEquipment = playerContext.getEquipment().stream()
-                .filter(itemStack -> itemStack.getItemId().equals(itemsToAdd.getItemId()))
-                .findFirst()
-                .orElse(null);
-
-        if (sameItemStackInEquipment != null) {
-            ItemStackEntity sameItemStackInEquipmentEntity = (ItemStackEntity) sameItemStackInEquipment;
-            sameItemStackInEquipmentEntity.setQuantity(sameItemStackInEquipment.getQuantity() + itemsToAdd.getQuantity());
-        } else {
-            playerContext.getEquipment().add(itemsToAdd);
-        }
+        return item;
     }
 
 

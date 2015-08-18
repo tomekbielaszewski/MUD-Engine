@@ -17,7 +17,7 @@ public interface LocationService {
 
     void removeItemsFromLocation(Location location, String itemName, int amount);
 
-    void addItemToLocation(Location location, ItemStack itemStack);
+    void addItemsToLocation(Location location, ItemStack itemStack);
 
     Location getCurrentLocation(PlayerContext playerContext);
 }

@@ -46,7 +46,7 @@ public class LocationServiceImplTest {
                 .quantity(10)
                 .build();
 
-        locationService.addItemToLocation(location, itemStack);
+        locationService.addItemsToLocation(location, itemStack);
 
         assertTrue(location.getItems().contains(ItemStackEntity.builder()
                 .itemId("1")
@@ -63,7 +63,7 @@ public class LocationServiceImplTest {
                 .quantity(10)
                 .build();
 
-        locationService.addItemToLocation(location, itemStack);
+        locationService.addItemsToLocation(location, itemStack);
 
         assertTrue(location.getItems().contains(ItemStackEntity.builder()
                 .itemId("3")
@@ -80,7 +80,7 @@ public class LocationServiceImplTest {
                 .quantity(0)
                 .build();
 
-        locationService.addItemToLocation(location, itemStack);
+        locationService.addItemsToLocation(location, itemStack);
 
         assertTrue(location.getItems().contains(ItemStackEntity.builder()
                 .itemId("1")
@@ -97,7 +97,7 @@ public class LocationServiceImplTest {
                 .quantity(0)
                 .build();
 
-        locationService.addItemToLocation(location, itemStack);
+        locationService.addItemsToLocation(location, itemStack);
 
         assertFalse(location.getItems().contains(ItemStackEntity.builder()
                 .itemId("3")
