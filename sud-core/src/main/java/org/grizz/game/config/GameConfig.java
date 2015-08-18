@@ -114,8 +114,36 @@ public class GameConfig {
                         .quantity(1)
                         .build(),
                 ItemStackEntity.builder()
-                        .itemId("102")
-                        .quantity(20)
+                        .itemId("200")
+                        .quantity(1)
+                        .build(),
+                ItemStackEntity.builder()
+                        .itemId("103")
+                        .quantity(1)
+                        .build()
+        ));
+        locationRepo.get("3").getItems().addAll(Lists.newArrayList(
+                ItemStackEntity.builder()
+                        .itemId("7")
+                        .quantity(1)
+                        .build()
+        ));
+        locationRepo.get("4").getItems().addAll(Lists.newArrayList(
+                ItemStackEntity.builder()
+                        .itemId("201")
+                        .quantity(1)
+                        .build(),
+                ItemStackEntity.builder()
+                        .itemId("202")
+                        .quantity(1)
+                        .build(),
+                ItemStackEntity.builder()
+                        .itemId("100")
+                        .quantity(1)
+                        .build(),
+                ItemStackEntity.builder()
+                        .itemId("1")
+                        .quantity(5)
                         .build()
         ));
     }

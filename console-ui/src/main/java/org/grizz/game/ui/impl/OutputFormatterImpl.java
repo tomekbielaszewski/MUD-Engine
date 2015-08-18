@@ -16,13 +16,13 @@ public class OutputFormatterImpl implements OutputFormatter {
     public String format(PlayerResponse playerResponse) {
         StringBuilder sb = new StringBuilder();
 
+        appendPlayerEvents(playerResponse, sb);
+
         appendLocationName(playerResponse, sb);
         appendLocationDescription(playerResponse, sb);
         appendPossibleExits(playerResponse, sb);
         appendVisibleItems(playerResponse, sb);
         appendEquipmentItems(playerResponse, sb);
-
-        appendPlayerEvents(playerResponse, sb);
 
         sb.append("\n\n");
 

@@ -28,5 +28,10 @@
     "id": "103",
     "name": "Cant enter start location script",
     "code": "scripts/js/locations/startLocationBeforeEnter.js"
+  },
+  {
+    "id": "104",
+    "name": "Warrior house is locked, you need a key",
+    "code": "scripts/js/locations/slumsWarriorHouseBeforeEnter.js"
   }
 ]
