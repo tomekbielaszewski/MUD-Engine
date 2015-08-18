@@ -4,8 +4,8 @@ import org.grizz.game.commands.Command;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.PlayerResponseImpl;
+import org.grizz.game.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UnknownCommand implements Command {
     @Autowired
-    private Environment env;
+    private EventService eventService;
 
     @Override
     public boolean accept(String command) {
@@ -25,8 +25,7 @@ public class UnknownCommand implements Command {
     public PlayerResponse execute(String command, PlayerContext context) {
         PlayerResponse response = new PlayerResponseImpl();
 
-        String event = env.getProperty("unknown.command.invoced") + " \"" + command + "\"";
-        response.getPlayerEvents().add(event);
+        response.getPlayerEvents().add(eventService.getEvent("unknown.command.invoced", command));
 
         return response;
     }

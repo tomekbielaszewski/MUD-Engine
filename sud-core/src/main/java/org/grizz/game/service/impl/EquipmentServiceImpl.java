@@ -11,6 +11,7 @@ import org.grizz.game.model.items.Item;
 import org.grizz.game.model.items.ItemStack;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.service.EquipmentService;
+import org.grizz.game.service.EventService;
 import org.grizz.game.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ import java.util.List;
 public class EquipmentServiceImpl implements EquipmentService {
     @Autowired
     private ItemRepo itemRepo;
+
+    @Autowired
+    private EventService eventService;
 
     @Autowired
     private LocationService locationService;
@@ -81,6 +85,8 @@ public class EquipmentServiceImpl implements EquipmentService {
                             .quantity(amount)
                             .build());
         }
+
+        response.getPlayerEvents().add(eventService.getEvent("player.received.items", "" + amount, itemName));
     }
 
     @Override
@@ -101,6 +107,7 @@ public class EquipmentServiceImpl implements EquipmentService {
             if (itemStackInEquipment.getQuantity() == 0) {
                 playerContext.getEquipment().remove(itemStackInEquipment);
             }
+            response.getPlayerEvents().add(eventService.getEvent("player.lost.items", "" + amount, itemName));
         }
     }
 
