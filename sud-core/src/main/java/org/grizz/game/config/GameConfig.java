@@ -82,7 +82,6 @@ public class GameConfig {
 //                                        .quantity(1)
 //                                        .build()
 //                        ))
-                        .events(Lists.newArrayList())
                         .parameters(Maps.newHashMap())
                         .build()
         );
@@ -91,7 +90,6 @@ public class GameConfig {
                         .name("Nebu")
                         .currentLocation("1")
                         .equipment(Lists.newArrayList())
-                        .events(Lists.newArrayList())
                         .parameters(Maps.newHashMap())
                         .build()
         );
@@ -100,7 +98,6 @@ public class GameConfig {
                         .name("Lothar")
                         .currentLocation("1")
                         .equipment(Lists.newArrayList())
-                        .events(Lists.newArrayList())
                         .parameters(Maps.newHashMap())
                         .build()
         );

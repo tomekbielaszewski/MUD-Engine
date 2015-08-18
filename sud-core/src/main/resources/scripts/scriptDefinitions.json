@@ -1,23 +1,13 @@
 [
   {
-    "id": "0",
-    "name": "Master script",
-    "code": "scripts/js/master.js"
-  },
-  {
-    "id": "1",
-    "name": "Test item script",
-    "code": "scripts/js/items/test.js"
-  },
-  {
     "id": "100",
     "name": "Always true script",
     "code": "scripts/js/alwaysTrue.js"
   },
   {
     "id": "101",
-    "name": "Always false script",
-    "code": "scripts/js/alwaysFalse.js"
+    "name": "Gold coin sound",
+    "code": "scripts/js/goldCoinBlink.js"
   },
   {
     "id": "102",

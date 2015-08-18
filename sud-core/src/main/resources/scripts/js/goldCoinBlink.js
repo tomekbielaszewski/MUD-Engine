@@ -1,0 +1,1 @@
+response.getPlayerEvents().add("Dzyń dzyń! Złoto przyjemnie brzmi, nie? ;)");

@@ -31,7 +31,6 @@ public class PlayerContextImpl implements PlayerContext {
     private String pastLocation;
 
     private Map<String, Object> parameters;
-    private List<String> events;
 
     @Override
     public void addParameter(String key, Object value) {

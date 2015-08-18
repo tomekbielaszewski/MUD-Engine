@@ -18,24 +18,14 @@
     "north": "5",
     "south": "1",
     "east": "4",
-    "west": "3",
-    "beforeEnter": "100",
-    "onEnter": "100",
-    "onShow": "100",
-    "beforeLeave": "100",
-    "onLeave": "100"
+    "west": "3"
   },
 
   {
     "id": "3",
     "name": "Opuszczony dom",
     "description": "Jestes w jednej ze starych, drewnianych chatek w slumsach. Wewnątrz jest ciemno, brudno i wilgotno. Nie chciałbyś tutaj spędzać nocy. Po stopie przebiegł ci szczur cicho popiskując. Jedyne wyjście z chatki prowadzi na wschód.",
-    "east": "2",
-    "beforeEnter": "100",
-    "onEnter": "100",
-    "onShow": "100",
-    "beforeLeave": "100",
-    "onLeave": "100"
+    "east": "2"
   },
 
   {
@@ -43,11 +33,7 @@
     "name": "Opuszczony dom",
     "description": "Dom w slumsach. Rozpadająca się, mała stodoła bardziej przypomina składzik na graty. Pomimo panującego w środku mroku dostrzegasz jakies stare legowisko w kącie. Strasznie tu smierdzi starymi odchodami... Tęsknie spoglądasz na zachodnie wyjście z tej dziury.",
     "west": "2",
-    "beforeEnter": "104",
-    "onEnter": "100",
-    "onShow": "100",
-    "beforeLeave": "100",
-    "onLeave": "100"
+    "beforeEnter": "104"
   },
 
   {
@@ -55,12 +41,7 @@
     "name": "Scieżka do slumsów",
     "description": "Idziesz wąską ścieżką prowadzącą do slumsów. Czujesz dochodzący z południa swąd mieszaniny odchodów, gnijącego jedzenia i niemytych ubrań. Jedynie świeża bryza z miasta z północy powoduje, że jeszcze masz swój ostatni posiłek w żołądku.",
     "north": "6",
-    "south": "2",
-    "beforeEnter": "100",
-    "onEnter": "100",
-    "onShow": "100",
-    "beforeLeave": "100",
-    "onLeave": "100"
+    "south": "2"
   },
 
   {
@@ -68,12 +49,7 @@
     "name": "Lokacja numer 6",
     "description": "Jest to lokacja nr 6. Mozliwe wyjscia to poludnie i wschod",
     "south": "5",
-    "east": "7",
-    "beforeEnter": "100",
-    "onEnter": "100",
-    "onShow": "100",
-    "beforeLeave": "100",
-    "onLeave": "100"
+    "east": "7"
   },
 
   {
@@ -81,23 +57,13 @@
     "name": "Lokacja numer 7",
     "description": "Jest to lokacja nr 7. Mozliwe wyjscia to polnoc i zachod",
     "north": "8",
-    "west": "6",
-    "beforeEnter": "100",
-    "onEnter": "100",
-    "onShow": "100",
-    "beforeLeave": "100",
-    "onLeave": "100"
+    "west": "6"
   },
 
   {
     "id": "8",
     "name": "Lokacja numer 8",
     "description": "Jest to lokacja nr 8. Mozliwe wyjscie jest tylko na poludnie",
-    "south": "7",
-    "beforeEnter": "100",
-    "onEnter": "100",
-    "onShow": "100",
-    "beforeLeave": "100",
-    "onLeave": "100"
+    "south": "7"
   }
 ]

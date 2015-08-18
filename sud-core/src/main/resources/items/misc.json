@@ -6,8 +6,8 @@
     "itemType": "MISC",
     "commands": [
       {
-        "command": "testowa",
-        "scriptId": "0"
+        "command": "dzyn-dzyn",
+        "scriptId": "101"
       }
     ]
   },
@@ -37,12 +37,7 @@
     "name": "Zniszczona patelnia",
     "description": "Dziurawa, zniszczona patelnia. Raczej nie nadaje się do użytku.",
     "itemType": "MISC",
-    "commands": [
-      {
-        "command": "jebnij patelnia",
-        "scriptId": "0"
-      }
-    ]
+    "commands": []
   },
   {
     "id": "6",
