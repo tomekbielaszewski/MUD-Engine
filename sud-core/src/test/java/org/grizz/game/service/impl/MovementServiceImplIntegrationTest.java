@@ -1,10 +1,12 @@
 package org.grizz.game.service.impl;
 
+import com.google.common.collect.Lists;
 import org.grizz.game.config.GameConfig;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.enums.Direction;
 import org.grizz.game.model.impl.PlayerContextImpl;
 import org.grizz.game.model.impl.PlayerResponseImpl;
+import org.grizz.game.model.impl.items.ItemStackEntity;
 import org.grizz.game.service.MovementService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,6 +29,12 @@ public class MovementServiceImplIntegrationTest {
         PlayerContextImpl context = PlayerContextImpl.builder()
                 .name("TestUser")
                 .currentLocation("1")
+                .equipment(Lists.newArrayList(
+                        ItemStackEntity.builder()//zardzewialy klucz jest potrzebny aby wejsc na lokacje 4
+                                .itemId("7")
+                                .quantity(1)
+                                .build()
+                ))
                 .build();
         PlayerResponse response = new PlayerResponseImpl();
 
