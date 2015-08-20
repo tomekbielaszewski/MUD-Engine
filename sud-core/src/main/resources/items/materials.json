@@ -1,0 +1,62 @@
+[
+  {
+    "id": "401",
+    "name": "Ruda zelaza",
+    "description": "Niewielka grudka rudy zelaza",
+    "itemType": "MISC"
+  },
+  {
+    "id": "402",
+    "name": "Wegiel",
+    "description": "Grudka czarnego zlota",
+    "itemType": "MISC"
+  },
+  {
+    "id": "403",
+    "name": "Plaski kamien",
+    "description": "Twardy plaski, gladki kamien. Moze byc przydatny przy szlifowaniu i ostrzeniu",
+    "itemType": "MISC"
+  },
+  {
+    "id": "404",
+    "name": "Grudka srebra",
+    "description": "Polyskujaca grudka srebra",
+    "itemType": "MISC"
+  },
+  {
+    "id": "405",
+    "name": "Grudka zlota",
+    "description": "Polyskujaca grudka zlota",
+    "itemType": "MISC"
+  },
+  {
+    "id": "406",
+    "name": "Ruda mithrilu",
+    "description": "Niewielka grudka polyskujacego bialego metalu",
+    "itemType": "MISC"
+  },
+  {
+    "id": "407",
+    "name": "Sztabka zelaza",
+    "description": "Sztabka solidnego zelaza",
+    "itemType": "MISC"
+  },
+  {
+    "id": "408",
+    "name": "Sztabka zlota",
+    "description": "Sztabka zoltego zlota, miesci sie w rece",
+    "itemType": "MISC"
+  },
+  {
+    "id": "409",
+    "name": "Sztabka srebra",
+    "description": "Sztabka srebra, miesci sie na dloni",
+    "itemType": "MISC"
+  },
+  {
+    "id": "410",
+    "name": "Sztabka bialego metalu, niezwykle twarda",
+    "description": "Niewielka grudka rudy zelaza",
+    "itemType": "MISC"
+  }
+]
