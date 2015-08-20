@@ -13,7 +13,7 @@ var recipes = [
 ];
 
 function result() {
-    response.getPlayerEvents().add("Kujesz kujesz i wykuc nie mozesz... :P");
+    //moze uzyc load('file.js') do ladowania kilku skryptow?
     return true;
 }
 result();
