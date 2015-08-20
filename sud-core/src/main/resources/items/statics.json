@@ -1,0 +1,32 @@
+[
+  {
+    "id": "301",
+    "name": "Kowadło",
+    "description": "duże, czarne, żelazne kowadło na którym możesz *wykuć* przydatne przedmioty",
+    "pickUpMessage": "Nie uniesiesz tego...",
+    "itemType": "STATIC",
+    "commands": [
+      {
+        "command": "wykuj ([\\D]+) ([\\d]+)",
+        "scriptId": "105"
+      }
+    ]
+  },
+  {
+    "id": "302",
+    "name": "Ołtarz",
+    "description": "kamienny ołtarz przy którym jak się *pomodlisz* w zamian odzyskasz swoją magiczną siłę",
+    "pickUpMessage": "Nie uniesiesz tego...",
+    "itemType": "STATIC",
+    "commands": [
+      {
+        "command": "modl sie",
+        "scriptId": "106"
+      },
+      {
+        "command": "pomodl sie",
+        "scriptId": "106"
+      }
+    ]
+  }
+]

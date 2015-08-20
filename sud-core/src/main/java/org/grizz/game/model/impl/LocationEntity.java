@@ -31,4 +31,5 @@ public class LocationEntity implements Location {
     private String down;
 
     private List<ItemStack> items;
+    private List<ItemStack> staticItems;
 }

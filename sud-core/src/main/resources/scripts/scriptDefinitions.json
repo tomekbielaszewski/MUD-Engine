@@ -7,7 +7,7 @@
   {
     "id": "101",
     "name": "Gold coin sound",
-    "code": "scripts/js/goldCoinBlink.js"
+    "code": "scripts/js/items/goldCoinBlink.js"
   },
   {
     "id": "102",
@@ -23,5 +23,15 @@
     "id": "104",
     "name": "Warrior house is locked, you need a key",
     "code": "scripts/js/locations/slumsWarriorHouseBeforeEnter.js"
+  },
+  {
+    "id": "105",
+    "name": "Black Smith's anvil crafting script",
+    "code": "scripts/js/items/blackSmithAnvilCraftingScript.js"
+  },
+  {
+    "id": "106",
+    "name": "Relict prayer script",
+    "code": "scripts/js/items/relictPrayer.js"
   }
 ]

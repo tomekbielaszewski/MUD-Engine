@@ -6,5 +6,6 @@ package org.grizz.game.model.enums;
 public enum ItemType {
     WEAPON,
     ARMOR,
-    MISC
+    MISC,
+    STATIC
 }

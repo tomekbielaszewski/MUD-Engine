@@ -6,10 +6,7 @@ import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.model.enums.ItemType;
-import org.grizz.game.model.impl.items.ArmorEntity;
-import org.grizz.game.model.impl.items.CommandScriptEntity;
-import org.grizz.game.model.impl.items.MiscEntity;
-import org.grizz.game.model.impl.items.WeaponEntity;
+import org.grizz.game.model.impl.items.*;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.Repository;
 import org.grizz.game.utils.FileUtils;
@@ -66,6 +63,8 @@ public class ItemLoader implements Loader {
                 return transformArmor(item);
             case MISC:
                 return transformMisc(item);
+            case STATIC:
+                return transformStatic(item);
         }
 
         throw new NotImplementedException();
@@ -101,11 +100,23 @@ public class ItemLoader implements Loader {
                 .build();
     }
 
+    private Item transformStatic(UniversalItem item) {
+        return StaticEntity.builder()
+                .id(item.id)
+                .name(item.name)
+                .description(item.description)
+                .pickUpMessage(item.pickUpMessage)
+                .itemType(item.itemType)
+                .commands(item.commands)
+                .build();
+    }
+
     @Value
     private class UniversalItem implements Item {
         String id;
         String name;
         String description;
+        String pickUpMessage;
         ItemType itemType;
         List<CommandScriptEntity> commands;
     }

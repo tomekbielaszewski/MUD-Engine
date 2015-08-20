@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * Created by Grizz on 2015-04-27.
@@ -54,15 +55,16 @@ public class LocationServiceImpl implements LocationService {
     public List<Item> getLocationItems(PlayerContext context) {
         String currentLocationID = context.getCurrentLocation();
         Location location = locationRepo.get(currentLocationID);
-        List<Item> locationItems = Lists.newArrayList();
 
-        for (ItemStack item : location.getItems()) {
-            for (int i = 0; i < item.getQuantity(); i++) {
-                locationItems.add(itemRepo.get(item.getItemId()));
-            }
-        }
+        return getItems(location::getItems);
+    }
 
-        return locationItems;
+    @Override
+    public List<Item> getLocationStaticItems(PlayerContext context) {
+        String currentLocationID = context.getCurrentLocation();
+        Location location = locationRepo.get(currentLocationID);
+
+        return getItems(location::getStaticItems);
     }
 
     @Override
@@ -109,5 +111,17 @@ public class LocationServiceImpl implements LocationService {
         } else {
             locationItems.add(itemStack);
         }
+    }
+
+    private List<Item> getItems(Supplier<List<ItemStack>> itemSupplier) {
+        List<Item> locationItems = Lists.newArrayList();
+
+        for (ItemStack item : itemSupplier.get()) {
+            for (int i = 0; i < item.getQuantity(); i++) {
+                locationItems.add(itemRepo.get(item.getItemId()));
+            }
+        }
+
+        return locationItems;
     }
 }

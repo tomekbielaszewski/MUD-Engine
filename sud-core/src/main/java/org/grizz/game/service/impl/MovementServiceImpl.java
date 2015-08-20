@@ -74,8 +74,10 @@ public class MovementServiceImpl implements MovementService {
         Location currentLocation = locationRepo.get(_context.getCurrentLocation());
         List<String> locationExits = locationService.getLocationExits(_context);
         List<Item> locationItems = locationService.getLocationItems(_context);
+        List<Item> locationStaticItems = locationService.getLocationStaticItems(_context);
 
         response.setPossibleExits(locationExits);
+        response.setLocationStaticItems(locationStaticItems);
         response.setLocationItems(locationItems);
         response.setCurrentLocation(currentLocation);
 

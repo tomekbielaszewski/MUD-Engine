@@ -45,6 +45,7 @@ public class LocationLoader implements Loader {
                         locationsArray = gson.fromJson(Files.newBufferedReader(path), LocationEntity[].class);
                         for (LocationEntity location : locationsArray) {
                             location.setItems(Lists.newArrayList());
+                            location.setStaticItems(Lists.newArrayList());
                             locationRepo.add(location);
                         }
                     } catch (IOException e) {

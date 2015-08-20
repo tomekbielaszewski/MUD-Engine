@@ -28,6 +28,8 @@ public interface Location {
 
     List<ItemStack> getItems();
 
+    List<ItemStack> getStaticItems();
+
     String getBeforeEnter();
 
     String getOnEnter();

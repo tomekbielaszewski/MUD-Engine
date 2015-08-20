@@ -15,6 +15,7 @@ import java.util.List;
 public class PlayerResponseImpl implements PlayerResponse {
     private Location currentLocation;
     private List<Item> locationItems = Lists.newArrayList();
+    private List<Item> locationStaticItems = Lists.newArrayList();
     private List<Item> equipmentItems = Lists.newArrayList();
     private List<String> possibleExits = Lists.newArrayList();
     private List<String> playerEvents = Lists.newArrayList();

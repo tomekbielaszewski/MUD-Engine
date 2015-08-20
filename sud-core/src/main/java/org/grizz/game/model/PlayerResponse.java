@@ -13,6 +13,8 @@ public interface PlayerResponse {
 
     List<Item> getLocationItems();
 
+    List<Item> getLocationStaticItems();
+
     List<Item> getEquipmentItems();
 
     List<String> getPlayerEvents();

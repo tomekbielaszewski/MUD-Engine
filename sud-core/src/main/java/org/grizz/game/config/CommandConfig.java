@@ -20,7 +20,8 @@ public class CommandConfig {
             final PickUpCommand pickUpCommand,
             final DropCommand dropCommand,
             final ShowEquipmentCommand showEquipmentCommand,
-            final UseEquipmentItemCommand useEquipmentItemCommand
+            final UseEquipmentItemCommand useEquipmentItemCommand,
+            final UseStaticLocationItemCommand useStaticLocationItemCommand
     ) {
         CommandHandlerBus commandHandlerBus = new CommandHandlerBus();
 
@@ -30,6 +31,7 @@ public class CommandConfig {
         commandHandlerBus.addCommand(dropCommand);
         commandHandlerBus.addCommand(showEquipmentCommand);
         commandHandlerBus.addCommand(useEquipmentItemCommand);
+        commandHandlerBus.addCommand(useStaticLocationItemCommand);
 
         return commandHandlerBus;
     }

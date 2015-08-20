@@ -6,7 +6,7 @@ import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.model.items.CommandScript;
 import org.grizz.game.model.items.Item;
-import org.grizz.game.service.EquipmentService;
+import org.grizz.game.service.LocationService;
 import org.grizz.game.service.ScriptRunnerService;
 import org.grizz.game.utils.CommandUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +18,21 @@ import java.util.List;
  * Created by tomasz.bielaszewski on 2015-08-06.
  */
 @Component
-public class UseEquipmentItemCommand implements Command {
+public class UseStaticLocationItemCommand implements Command {
     @Autowired
-    private EquipmentService equipmentService;
+    private LocationService locationService;
 
     @Autowired
     private ScriptRunnerService scriptRunner;
 
     @Override
     public boolean accept(String command, PlayerContext playerContext) {
-        return !playerContext.getEquipment().isEmpty() &&
+        return isStaticItemOnLocationPresent(playerContext) &&
                 getItemScript(command, playerContext) != null;
+    }
+
+    private boolean isStaticItemOnLocationPresent(PlayerContext playerContext) {
+        return !locationService.getCurrentLocation(playerContext).getStaticItems().isEmpty();
     }
 
     @Override
@@ -44,7 +48,7 @@ public class UseEquipmentItemCommand implements Command {
     }
 
     private CommandScript getItemScript(String command, PlayerContext playerContext) {
-        List<Item> items = equipmentService.getItemsInEquipment(playerContext);
+        List<Item> items = locationService.getLocationStaticItems(playerContext);
 
         for (Item item : items) {
             for (CommandScript commandScript : item.getCommands()) {

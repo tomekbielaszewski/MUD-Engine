@@ -119,6 +119,16 @@ public class GameConfig {
                         .quantity(1)
                         .build()
         ));
+        locationRepo.get("1").getStaticItems().addAll(Lists.newArrayList(
+                ItemStackEntity.builder()
+                        .itemId("301")
+                        .quantity(1)
+                        .build(),
+                ItemStackEntity.builder()
+                        .itemId("302")
+                        .quantity(1)
+                        .build()
+        ));
         locationRepo.get("3").getItems().addAll(Lists.newArrayList(
                 ItemStackEntity.builder()
                         .itemId("7")

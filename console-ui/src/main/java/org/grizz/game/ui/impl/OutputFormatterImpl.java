@@ -20,6 +20,7 @@ public class OutputFormatterImpl implements OutputFormatter {
 
         appendLocationName(playerResponse, sb);
         appendLocationDescription(playerResponse, sb);
+        appendLocationStaticItems(playerResponse, sb);
         appendPossibleExits(playerResponse, sb);
         appendVisibleItems(playerResponse, sb);
         appendEquipmentItems(playerResponse, sb);
@@ -48,6 +49,21 @@ public class OutputFormatterImpl implements OutputFormatter {
         if (playerResponse.getCurrentLocation() != null) {
             appendSeparator(sb, 79);
             sb.append(playerResponse.getCurrentLocation().getDescription());
+        }
+    }
+
+    private void appendLocationStaticItems(PlayerResponse playerResponse, StringBuilder sb) {
+        String itemSeparator = " oraz ";
+        if (!playerResponse.getLocationStaticItems().isEmpty()) {
+            sb.append("\n");
+            sb.append("Rozglądając się dookoła zauważyłeś ");
+            for (Item item : playerResponse.getLocationStaticItems()) {
+                sb.append(item.getDescription());
+                sb.append(itemSeparator);
+            }
+
+            sb.setLength(sb.length() - itemSeparator.length());
+            sb.append(".");
         }
     }
 
