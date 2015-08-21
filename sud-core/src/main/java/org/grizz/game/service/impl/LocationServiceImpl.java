@@ -12,6 +12,7 @@ import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -24,6 +25,8 @@ import java.util.function.Supplier;
  */
 @Service
 public class LocationServiceImpl implements LocationService {
+    @Autowired
+    private Environment env;
     @Autowired
     private LocationRepo locationRepo;
     @Autowired
@@ -41,12 +44,12 @@ public class LocationServiceImpl implements LocationService {
         Location location = locationRepo.get(currentLocationID);
         List<String> possibleExits = Lists.newArrayList();
 
-        if (!StringUtils.isEmpty(location.getNorth())) possibleExits.add("north");
-        if (!StringUtils.isEmpty(location.getSouth())) possibleExits.add("south");
-        if (!StringUtils.isEmpty(location.getEast())) possibleExits.add("east");
-        if (!StringUtils.isEmpty(location.getWest())) possibleExits.add("west");
-        if (!StringUtils.isEmpty(location.getUp())) possibleExits.add("up");
-        if (!StringUtils.isEmpty(location.getDown())) possibleExits.add("down");
+        if (!StringUtils.isEmpty(location.getNorth())) possibleExits.add(env.getProperty("exit.north"));
+        if (!StringUtils.isEmpty(location.getSouth())) possibleExits.add(env.getProperty("exit.south"));
+        if (!StringUtils.isEmpty(location.getEast())) possibleExits.add(env.getProperty("exit.east"));
+        if (!StringUtils.isEmpty(location.getWest())) possibleExits.add(env.getProperty("exit.west"));
+        if (!StringUtils.isEmpty(location.getUp())) possibleExits.add(env.getProperty("exit.up"));
+        if (!StringUtils.isEmpty(location.getDown())) possibleExits.add(env.getProperty("exit.down"));
 
         return possibleExits;
     }
