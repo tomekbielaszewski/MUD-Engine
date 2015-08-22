@@ -1,7 +1,7 @@
 package org.grizz.game.service.impl;
 
 import org.grizz.game.config.GameConfig;
-import org.grizz.game.service.MovementService;
+import org.grizz.game.service.complex.MovementService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

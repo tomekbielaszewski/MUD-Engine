@@ -7,7 +7,7 @@ import org.grizz.game.model.enums.Direction;
 import org.grizz.game.model.impl.PlayerContextImpl;
 import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.model.impl.items.ItemStackEntity;
-import org.grizz.game.service.MovementService;
+import org.grizz.game.service.complex.MovementService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

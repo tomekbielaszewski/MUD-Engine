@@ -6,7 +6,7 @@ import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.model.items.Item;
-import org.grizz.game.service.EquipmentService;
+import org.grizz.game.service.simple.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;

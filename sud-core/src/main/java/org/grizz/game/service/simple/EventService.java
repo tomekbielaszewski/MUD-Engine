@@ -1,4 +1,4 @@
-package org.grizz.game.service;
+package org.grizz.game.service.simple;
 
 /**
  * Created by Grizz on 2015-08-18.

@@ -1,13 +1,14 @@
-package org.grizz.game.service.impl;
+package org.grizz.game.service.complex.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.Script;
 import org.grizz.game.model.repository.ScriptRepo;
-import org.grizz.game.service.MovementService;
-import org.grizz.game.service.ScriptRunnerService;
+import org.grizz.game.service.complex.MovementService;
+import org.grizz.game.service.complex.ScriptRunnerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.script.ScriptEngine;
@@ -24,6 +25,7 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
     private ScriptEngine engine;
     @Autowired
     private ScriptRepo scriptRepo;
+    @Lazy
     @Autowired
     private MovementService movementService;
 

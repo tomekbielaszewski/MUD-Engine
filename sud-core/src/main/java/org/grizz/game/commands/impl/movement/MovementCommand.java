@@ -9,7 +9,7 @@ import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.enums.Direction;
 import org.grizz.game.model.impl.PlayerResponseImpl;
-import org.grizz.game.service.MovementService;
+import org.grizz.game.service.complex.MovementService;
 import org.springframework.core.env.Environment;
 
 /**

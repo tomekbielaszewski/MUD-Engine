@@ -1,4 +1,4 @@
-package org.grizz.game.service;
+package org.grizz.game.service.simple;
 
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
@@ -11,10 +11,6 @@ import java.util.List;
  */
 public interface EquipmentService {
     List<Item> getItemsInEquipment(PlayerContext context);
-
-    void pickUpItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response);
-
-    void dropItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response);
 
     void addItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response);
 

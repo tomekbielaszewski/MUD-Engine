@@ -1,4 +1,4 @@
-package org.grizz.game.service;
+package org.grizz.game.service.simple;
 
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;

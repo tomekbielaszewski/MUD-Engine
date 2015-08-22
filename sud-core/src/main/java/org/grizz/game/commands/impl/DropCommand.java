@@ -8,7 +8,7 @@ import org.grizz.game.exception.GameExceptionHandler;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.PlayerResponseImpl;
-import org.grizz.game.service.EquipmentService;
+import org.grizz.game.service.complex.PlayerLocationInteractionService;
 import org.grizz.game.utils.CommandUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -29,7 +29,7 @@ public class DropCommand implements Command {
     private GameExceptionHandler exceptionHandler;
 
     @Autowired
-    private EquipmentService equipmentService;
+    private PlayerLocationInteractionService playerLocationInteractionService;
 
     @Override
     public boolean accept(String command) {
@@ -67,7 +67,7 @@ public class DropCommand implements Command {
 
     private void doMultiDrop(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
         try {
-            equipmentService.dropItems(itemName, amount, playerContext, response);
+            playerLocationInteractionService.dropItems(itemName, amount, playerContext, response);
             log.info("{} dropped {} of {}", playerContext.getName(), amount, itemName);
         } catch (GameException e) {
             String formattedEvent = exceptionHandler.handle(e);

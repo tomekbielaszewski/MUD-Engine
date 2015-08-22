@@ -1,4 +1,4 @@
-package org.grizz.game.service.impl;
+package org.grizz.game.service.simple.impl;
 
 import com.google.common.collect.Lists;
 import org.grizz.game.exception.NoSuchItemException;
@@ -10,7 +10,7 @@ import org.grizz.game.model.items.Item;
 import org.grizz.game.model.items.ItemStack;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.model.repository.LocationRepo;
-import org.grizz.game.service.LocationService;
+import org.grizz.game.service.simple.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;

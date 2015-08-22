@@ -1,4 +1,4 @@
-package org.grizz.game.service.impl;
+package org.grizz.game.service.complex.impl;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -12,11 +12,10 @@ import org.grizz.game.model.impl.PlayerContextImpl;
 import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.LocationRepo;
-import org.grizz.game.service.LocationService;
-import org.grizz.game.service.MovementService;
-import org.grizz.game.service.ScriptRunnerService;
+import org.grizz.game.service.complex.MovementService;
+import org.grizz.game.service.complex.ScriptRunnerService;
+import org.grizz.game.service.simple.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,13 +32,12 @@ public class MovementServiceImpl implements MovementService {
     @Autowired
     private LocationService locationService;
 
-    @Lazy
     @Autowired
     private ScriptRunnerService scriptRunnerService;
 
     @Override
     public void move(@NonNull final Direction dir, @NonNull final PlayerContext playerContext, @NonNull final PlayerResponse response) {
-        Location currentLocation = locationRepo.get(playerContext.getCurrentLocation());
+        Location currentLocation = locationService.getCurrentLocation(playerContext);
 
         try {
             switch (dir) {
@@ -71,7 +69,7 @@ public class MovementServiceImpl implements MovementService {
     @Override
     public void showCurrentLocation(PlayerContext _context, PlayerResponse _response) {
         PlayerResponseImpl response = (PlayerResponseImpl) _response;
-        Location currentLocation = locationRepo.get(_context.getCurrentLocation());
+        Location currentLocation = locationService.getCurrentLocation(_context);
         List<String> locationExits = locationService.getLocationExits(_context);
         List<Item> locationItems = locationService.getLocationItems(_context);
         List<Item> locationStaticItems = locationService.getLocationStaticItems(_context);

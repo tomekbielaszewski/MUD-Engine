@@ -1,4 +1,4 @@
-package org.grizz.game.service;
+package org.grizz.game.service.complex;
 
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;

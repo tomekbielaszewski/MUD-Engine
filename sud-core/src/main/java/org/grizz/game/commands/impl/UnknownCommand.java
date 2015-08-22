@@ -4,7 +4,7 @@ import org.grizz.game.commands.Command;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.PlayerResponseImpl;
-import org.grizz.game.service.EventService;
+import org.grizz.game.service.simple.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

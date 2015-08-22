@@ -1,6 +1,6 @@
-package org.grizz.game.service.impl;
+package org.grizz.game.service.simple.impl;
 
-import org.grizz.game.service.EventService;
+import org.grizz.game.service.simple.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;

@@ -1,18 +1,17 @@
-package org.grizz.game.service.impl;
+package org.grizz.game.service.simple.impl;
 
 import com.google.common.collect.Lists;
 import org.grizz.game.exception.NoSuchItemException;
 import org.grizz.game.exception.NotEnoughItemsException;
-import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.items.ItemStackEntity;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.items.ItemStack;
 import org.grizz.game.model.repository.ItemRepo;
-import org.grizz.game.service.EquipmentService;
-import org.grizz.game.service.EventService;
-import org.grizz.game.service.LocationService;
+import org.grizz.game.service.simple.EquipmentService;
+import org.grizz.game.service.simple.EventService;
+import org.grizz.game.service.simple.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,25 +44,6 @@ public class EquipmentServiceImpl implements EquipmentService {
         }
 
         return equipmentAsItems;
-    }
-
-    @Override
-    public void pickUpItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
-        Location currentLocation = locationService.getCurrentLocation(playerContext);
-        locationService.removeItemsFromLocation(currentLocation, itemName, amount);
-        this.addItems(itemName, amount, playerContext, response);
-    }
-
-    @Override
-    public void dropItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
-        final Item item = getItem(itemName);
-
-        Location currentLocation = locationService.getCurrentLocation(playerContext);
-        this.removeItems(itemName, amount, playerContext, response);
-        locationService.addItemsToLocation(currentLocation, ItemStackEntity.builder()
-                .itemId(item.getId())
-                .quantity(amount)
-                .build());
     }
 
     @Override
