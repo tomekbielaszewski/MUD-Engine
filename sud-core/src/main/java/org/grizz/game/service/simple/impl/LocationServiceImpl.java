@@ -71,7 +71,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public void removeItemsFromLocation(Location location, String itemName, int amount) {
+    public Item removeItemsFromLocation(Location location, String itemName, int amount) {
         final Item item;
 
         try {
@@ -94,6 +94,8 @@ public class LocationServiceImpl implements LocationService {
             if (itemStackToRemoveEntity.getQuantity() == 0) {
                 location.getItems().remove(itemStackToRemove);
             }
+
+            return item;
         }
     }
 

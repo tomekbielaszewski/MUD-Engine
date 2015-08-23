@@ -47,9 +47,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public void addItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
-        final Item item = getItem(itemName);
-
+    public void addItems(Item item, Integer amount, PlayerContext playerContext, PlayerResponse response) {
         ItemStack sameItemStackInEquipment = playerContext.getEquipment().stream()
                 .filter(itemStack -> itemStack.getItemId().equals(item.getId()))
                 .findFirst()
@@ -66,11 +64,11 @@ public class EquipmentServiceImpl implements EquipmentService {
                             .build());
         }
 
-        response.getPlayerEvents().add(eventService.getEvent("player.received.items", "" + amount, itemName));
+        response.getPlayerEvents().add(eventService.getEvent("player.received.items", "" + amount, item.getName()));
     }
 
     @Override
-    public void removeItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
+    public Item removeItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
         final Item item = getItem(itemName);
 
         ItemStack itemStackInEquipment = playerContext.getEquipment().stream()
@@ -88,6 +86,8 @@ public class EquipmentServiceImpl implements EquipmentService {
                 playerContext.getEquipment().remove(itemStackInEquipment);
             }
             response.getPlayerEvents().add(eventService.getEvent("player.lost.items", "" + amount, itemName));
+
+            return item;
         }
     }
 

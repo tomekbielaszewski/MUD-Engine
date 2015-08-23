@@ -1,10 +1,12 @@
 package org.grizz.game.service.complex.impl;
 
+import org.grizz.game.exception.CantMoveStaticItemException;
 import org.grizz.game.exception.NoSuchItemException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.items.ItemStackEntity;
+import org.grizz.game.model.impl.items.StaticEntity;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.service.complex.PlayerLocationInteractionService;
@@ -30,18 +32,23 @@ public class PlayerLocationInteractionServiceImpl implements PlayerLocationInter
     @Override
     public void pickUpItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
         Location currentLocation = locationService.getCurrentLocation(playerContext);
-        locationService.removeItemsFromLocation(currentLocation, itemName, amount);
-        equipmentService.addItems(itemName, amount, playerContext, response);
+        try {
+            Item itemFromLocation = locationService.removeItemsFromLocation(currentLocation, itemName, amount);
+            equipmentService.addItems(itemFromLocation, amount, playerContext, response);
+        } catch (NoSuchItemException e) {
+            Item item = getItem(itemName);
+            if (item instanceof StaticEntity) {
+                throw new CantMoveStaticItemException("cant.pickup.static.item");
+            }
+        }
     }
 
     @Override
     public void dropItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
-        final Item item = getItem(itemName);
-
         Location currentLocation = locationService.getCurrentLocation(playerContext);
-        equipmentService.removeItems(itemName, amount, playerContext, response);
+        Item itemFromEquipment = equipmentService.removeItems(itemName, amount, playerContext, response);
         locationService.addItemsToLocation(currentLocation, ItemStackEntity.builder()
-                .itemId(item.getId())
+                .itemId(itemFromEquipment.getId())
                 .quantity(amount)
                 .build());
     }

@@ -12,7 +12,7 @@ import java.util.List;
 public interface EquipmentService {
     List<Item> getItemsInEquipment(PlayerContext context);
 
-    void addItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response);
+    void addItems(Item item, Integer amount, PlayerContext playerContext, PlayerResponse response);
 
-    void removeItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response);
+    Item removeItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response);
 }
