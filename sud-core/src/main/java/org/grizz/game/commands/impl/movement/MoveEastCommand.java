@@ -5,8 +5,8 @@ import org.grizz.game.exception.GameExceptionHandler;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.service.complex.MovementService;
+import org.grizz.game.service.utils.CommandUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import static org.grizz.game.model.enums.Direction.EAST;
@@ -18,8 +18,8 @@ import static org.grizz.game.model.enums.Direction.EAST;
 @Component
 public class MoveEastCommand extends MovementCommand {
     @Autowired
-    public MoveEastCommand(Environment env, GameExceptionHandler exceptionHandler, MovementService movementService) {
-        super(env, exceptionHandler, movementService);
+    public MoveEastCommand(CommandUtils commandUtils, GameExceptionHandler exceptionHandler, MovementService movementService) {
+        super(commandUtils, exceptionHandler, movementService);
     }
 
     @Override

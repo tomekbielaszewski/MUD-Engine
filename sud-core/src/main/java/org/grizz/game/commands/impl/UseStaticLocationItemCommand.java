@@ -8,7 +8,7 @@ import org.grizz.game.model.items.CommandScript;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.service.complex.ScriptRunnerService;
 import org.grizz.game.service.simple.LocationService;
-import org.grizz.game.utils.CommandUtils;
+import org.grizz.game.service.utils.CommandUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +19,9 @@ import java.util.List;
  */
 @Component
 public class UseStaticLocationItemCommand implements Command {
+    @Autowired
+    private CommandUtils commandUtils;
+
     @Autowired
     private LocationService locationService;
 
@@ -50,18 +53,15 @@ public class UseStaticLocationItemCommand implements Command {
     private CommandScript getItemScript(String command, PlayerContext playerContext) {
         List<Item> items = locationService.getLocationStaticItems(playerContext);
 
+        //TODO stream
         for (Item item : items) {
             for (CommandScript commandScript : item.getCommands()) {
-                if (commandMatch(command, commandScript.getCommand())) {
+                if (commandUtils.isMatching(command, commandScript.getCommand())) {
                     return commandScript;
                 }
             }
         }
         return null;
-    }
-
-    private boolean commandMatch(String command, String commandPattern) {
-        return CommandUtils.isMatching(command, commandPattern);
     }
 
     @Override
