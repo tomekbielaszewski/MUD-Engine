@@ -4,7 +4,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.loader.Loader;
-import org.grizz.game.loader.impl.*;
+import org.grizz.game.loader.impl.ItemLoader;
+import org.grizz.game.loader.impl.LocationLoader;
+import org.grizz.game.loader.impl.MobLoader;
+import org.grizz.game.loader.impl.ScriptLoader;
 import org.grizz.game.model.impl.PlayerContextImpl;
 import org.grizz.game.model.impl.items.ItemStackEntity;
 import org.grizz.game.model.repository.LocationRepo;
@@ -30,7 +33,6 @@ import javax.script.ScriptEngineManager;
 })
 public class GameConfig {
     private static final String ASSETS_JSON_PATH_LOCATIONS = "assets.json.path.locations";
-    private static final String ASSETS_JSON_PATH_LOCATIONS_SCRIPTS = "assets.json.path.locations.scripts";
     private static final String ASSETS_JSON_PATH_ITEMS = "assets.json.path.items";
     private static final String ASSETS_JSON_PATH_MOBS = "assets.json.path.mobs";
     private static final String ASSETS_JSON_PATH_SCRIPTS = "assets.json.path.scripts";
@@ -50,7 +52,6 @@ public class GameConfig {
         mobLoader().load();
         scriptLoader().load();
         locationLoader().load();
-        locationScriptLoader().load();
 
     /*
         Po zaimplementowaniu komunikacji z bazą - usunąć
@@ -163,11 +164,6 @@ public class GameConfig {
     @Bean
     public Loader itemLoader() {
         return new ItemLoader(env.getProperty(ASSETS_JSON_PATH_ITEMS));
-    }
-
-    @Bean
-    public Loader locationScriptLoader() {
-        return new LocationScriptLoader(env.getProperty(ASSETS_JSON_PATH_LOCATIONS_SCRIPTS));
     }
 
     @Bean
