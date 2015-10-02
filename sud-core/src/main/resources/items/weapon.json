@@ -5,10 +5,9 @@
     "description": "Krótkie, lekko uszczerbione, jednoręczne ostrze. Prosty jelec. Zużyta rękojeść. Nic szczególnego.",
     "itemType": "WEAPON",
     "commands": [],
-    "weaponType": "SWORD",
-    "handleType": "ONE_HANDED",
-    "damageMin": 2,
-    "damageMax": 5
+    "weaponType": "SWORD1H",
+    "minDamage": 2,
+    "maxDamage": 5
   },
   {
     "id": "101",
@@ -16,10 +15,9 @@
     "description": "Lekki topór o wyszczerbionym ostrzu. Rękojeść jest solidnie oprawiona w skórę.",
     "itemType": "WEAPON",
     "commands": [],
-    "weaponType": "AXE",
-    "handleType": "ONE_HANDED",
-    "damageMin": 3,
-    "damageMax": 5
+    "weaponType": "AXE1H",
+    "minDamage": 3,
+    "maxDamage": 5
   },
   {
     "id": "102",
@@ -28,9 +26,8 @@
     "itemType": "WEAPON",
     "commands": [],
     "weaponType": "HAMMER",
-    "handleType": "TWO_HANDED",
-    "damageMin": 5,
-    "damageMax": 10
+    "minDamage": 5,
+    "maxDamage": 10
   },
   {
     "id": "103",
@@ -39,8 +36,17 @@
     "itemType": "WEAPON",
     "commands": [],
     "weaponType": "DAGGER",
-    "handleType": "ONE_HANDED",
-    "damageMin": 1,
-    "damageMax": 3
+    "minDamage": 1,
+    "maxDamage": 3
+  },
+  {
+    "id": "104",
+    "name": "Łuk",
+    "description": "hfdoshfjkdfkjds",
+    "itemType": "WEAPON",
+    "commands": [],
+    "weaponType": "BOW",
+    "minDamage": 3,
+    "maxDamage": 5
   }
 ]

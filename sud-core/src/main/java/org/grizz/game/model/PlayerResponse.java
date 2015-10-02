@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface PlayerResponse {
     Location getCurrentLocation();
+
     List<String> getPossibleExits();
 
     List<Item> getLocationItems();

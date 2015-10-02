@@ -6,6 +6,7 @@ import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.model.enums.ItemType;
+import org.grizz.game.model.enums.WeaponType;
 import org.grizz.game.model.impl.items.*;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.Repository;
@@ -77,6 +78,9 @@ public class ItemLoader implements Loader {
                 .description(item.description)
                 .itemType(item.itemType)
                 .commands(item.commands)
+                .weaponType(item.weaponType)
+                .minDamage(item.minDamage)
+                .maxDamage(item.maxDamage)
                 .build();
     }
 
@@ -119,5 +123,8 @@ public class ItemLoader implements Loader {
         String pickUpMessage;
         ItemType itemType;
         List<CommandScriptEntity> commands;
+        WeaponType weaponType;
+        int minDamage;
+        int maxDamage;
     }
 }
