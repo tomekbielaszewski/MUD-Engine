@@ -133,6 +133,8 @@ public class FightAlgorithmTest {
 
     private class Player extends PlayerContextImpl {
         private int hp;
+        private Weapon rangeWeapon;
+        private Weapon meleeWeapon;
 
         public Player(String name, int strength, int dexterity, int intelligence, int wisdom, int charisma, int vitality, int hp, List<ItemStack> equipment, String currentLocation, String pastLocation, Map<String, Object> parameters) {
             super(name, strength, dexterity, intelligence, wisdom, charisma, vitality, equipment, currentLocation, pastLocation, parameters);
@@ -141,10 +143,13 @@ public class FightAlgorithmTest {
             } else {
                 this.hp = hp;
             }
+
+            this.rangeWeapon = getRangeWeapon_();
+            this.meleeWeapon = getMeleeWeapon_();
         }
 
         public boolean hasRangeWeapon() {
-            return getRangeWeapon() != null;
+            return getRangeWeapon_() != null;
         }
 
         ;
@@ -166,7 +171,7 @@ public class FightAlgorithmTest {
             if (this.hp < 0) this.hp = 0;
         }
 
-        public Weapon getRangeWeapon() {
+        private Weapon getRangeWeapon_() {
             return equipmentService.getItemsInEquipment(this)
                     .stream()
                     .filter(item -> item.getItemType().equals(ItemType.WEAPON))
@@ -175,13 +180,21 @@ public class FightAlgorithmTest {
                     .findFirst().orElse(null);
         }
 
-        public Weapon getMeleeWeapon() {
+        private Weapon getMeleeWeapon_() {
             return equipmentService.getItemsInEquipment(this)
                     .stream()
                     .filter(item -> item.getItemType().equals(ItemType.WEAPON))
                     .map(item -> (Weapon) item)
                     .filter(weapon -> !weapon.getWeaponType().isRange())
-                    .findFirst().orElse(getRangeWeapon());
+                    .findFirst().orElse(getRangeWeapon_());
+        }
+
+        public Weapon getRangeWeapon() {
+            return rangeWeapon;
+        }
+
+        public Weapon getMeleeWeapon() {
+            return meleeWeapon;
         }
     }
 }
