@@ -4,9 +4,10 @@ import com.google.common.collect.Lists;
 import org.grizz.game.config.GameConfig;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.enums.Direction;
+import org.grizz.game.model.impl.EquipmentEntity;
 import org.grizz.game.model.impl.PlayerContextImpl;
 import org.grizz.game.model.impl.PlayerResponseImpl;
-import org.grizz.game.model.impl.items.ItemStackEntity;
+import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.service.complex.MovementService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,18 +24,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class MovementServiceImplIntegrationTest {
     @Autowired
     private MovementService movementService;
+    @Autowired
+    private ItemRepo itemRepo;
 
     @Test
     public void mainCityWalkthroughTest() {
         PlayerContextImpl context = PlayerContextImpl.builder()
                 .name("TestUser")
                 .currentLocation("1")
-                .equipment(Lists.newArrayList(
-                        ItemStackEntity.builder()//zardzewialy klucz jest potrzebny aby wejsc na lokacje 4
-                                .itemId("7")
-                                .quantity(1)
-                                .build()
-                ))
+                .equipment(EquipmentEntity.builder()
+                        .backpack(Lists.newArrayList(
+                                itemRepo.getByName("Zardzewiały klucz")
+                        ))
+                        .build())
                 .build();
         PlayerResponse response = new PlayerResponseImpl();
 

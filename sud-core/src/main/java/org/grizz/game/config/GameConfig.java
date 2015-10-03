@@ -8,8 +8,9 @@ import org.grizz.game.loader.impl.ItemLoader;
 import org.grizz.game.loader.impl.LocationLoader;
 import org.grizz.game.loader.impl.MobLoader;
 import org.grizz.game.loader.impl.ScriptLoader;
+import org.grizz.game.model.impl.EquipmentEntity;
 import org.grizz.game.model.impl.PlayerContextImpl;
-import org.grizz.game.model.impl.items.ItemStackEntity;
+import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.model.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,9 @@ public class GameConfig {
     @Autowired
     private LocationRepo locationRepo;
 
+    @Autowired
+    private ItemRepo itemRepo;
+
     @PostConstruct
     public void initGame() {
         itemLoader().load();
@@ -60,29 +64,12 @@ public class GameConfig {
                 PlayerContextImpl.builder()
                         .name("Grizz")
                         .currentLocation("1")
-                        .equipment(Lists.newArrayList())
-//                        .equipment(Lists.newArrayList(
-//                                ItemStackEntity.builder()
-//                                        .itemId("3") //brazowa moneta
-//                                        .quantity(54)
-//                                        .build(),
-//                                ItemStackEntity.builder()
-//                                        .itemId("2") //srebrna moneta
-//                                        .quantity(21)
-//                                        .build(),
-//                                ItemStackEntity.builder()
-//                                        .itemId("1") //złota moneta
-//                                        .quantity(3)
-//                                        .build(),
-//                                ItemStackEntity.builder()
-//                                        .itemId("100") //krótki miecz
-//                                        .quantity(1)
-//                                        .build(),
-//                                ItemStackEntity.builder()
-//                                        .itemId("5") //patelnia
-//                                        .quantity(1)
-//                                        .build()
-//                        ))
+                        .equipment(EquipmentEntity.builder()
+                                .backpack(Lists.newArrayList(
+                                        itemRepo.getByName("Brązowa moneta"),
+                                        itemRepo.getByName("Brudna szmata")
+                                        ))
+                                .build())
                         .parameters(Maps.newHashMap())
                         .build()
         );
@@ -90,7 +77,7 @@ public class GameConfig {
                 PlayerContextImpl.builder()
                         .name("Nebu")
                         .currentLocation("1")
-                        .equipment(Lists.newArrayList())
+                        .equipment(EquipmentEntity.builder().build())
                         .parameters(Maps.newHashMap())
                         .build()
         );
@@ -98,61 +85,33 @@ public class GameConfig {
                 PlayerContextImpl.builder()
                         .name("Lothar")
                         .currentLocation("1")
-                        .equipment(Lists.newArrayList())
+                        .equipment(EquipmentEntity.builder().build())
                         .parameters(Maps.newHashMap())
                         .build()
         );
         locationRepo.get("1").getItems().addAll(Lists.newArrayList(
-                ItemStackEntity.builder()
-                        .itemId("3")
-                        .quantity(2)
-                        .build(),
-                ItemStackEntity.builder()
-                        .itemId("203")
-                        .quantity(1)
-                        .build(),
-                ItemStackEntity.builder()
-                        .itemId("200")
-                        .quantity(1)
-                        .build(),
-                ItemStackEntity.builder()
-                        .itemId("103")
-                        .quantity(1)
-                        .build()
+                itemRepo.getByName("Brązowa moneta"),
+                itemRepo.getByName("Brązowa moneta"),
+                itemRepo.getByName("Napierśnik"),
+                itemRepo.getByName("Lniana koszula"),
+                itemRepo.getByName("Sztylet")
         ));
         locationRepo.get("1").getStaticItems().addAll(Lists.newArrayList(
-                ItemStackEntity.builder()
-                        .itemId("301")
-                        .quantity(1)
-                        .build(),
-                ItemStackEntity.builder()
-                        .itemId("302")
-                        .quantity(1)
-                        .build()
+                itemRepo.getByName("Kowadło"),
+                itemRepo.getByName("Ołtarz")
         ));
         locationRepo.get("3").getItems().addAll(Lists.newArrayList(
-                ItemStackEntity.builder()
-                        .itemId("7")
-                        .quantity(1)
-                        .build()
+                itemRepo.getByName("Zardzewiały klucz")
         ));
         locationRepo.get("4").getItems().addAll(Lists.newArrayList(
-                ItemStackEntity.builder()
-                        .itemId("201")
-                        .quantity(1)
-                        .build(),
-                ItemStackEntity.builder()
-                        .itemId("202")
-                        .quantity(1)
-                        .build(),
-                ItemStackEntity.builder()
-                        .itemId("100")
-                        .quantity(1)
-                        .build(),
-                ItemStackEntity.builder()
-                        .itemId("1")
-                        .quantity(5)
-                        .build()
+                itemRepo.getByName("Kolczuga"),
+                itemRepo.getByName("Napierśnik"),
+                itemRepo.getByName("Krótki miecz"),
+                itemRepo.getByName("Złota moneta"),
+                itemRepo.getByName("Złota moneta"),
+                itemRepo.getByName("Złota moneta"),
+                itemRepo.getByName("Złota moneta"),
+                itemRepo.getByName("Złota moneta")
         ));
     }
 

@@ -3,7 +3,7 @@ package org.grizz.game.model.impl;
 import lombok.Data;
 import lombok.experimental.Builder;
 import org.grizz.game.model.Location;
-import org.grizz.game.model.items.ItemStack;
+import org.grizz.game.model.items.Item;
 
 import java.util.List;
 
@@ -30,6 +30,6 @@ public class LocationEntity implements Location {
     private String up;
     private String down;
 
-    private List<ItemStack> items;
-    private List<ItemStack> staticItems;
+    private List<Item> items;
+    private List<Item> staticItems;
 }

@@ -15,4 +15,5 @@ public class ScriptEntity implements Script {
     private String id;
     private String name;
     private String code;
+    private String path;
 }

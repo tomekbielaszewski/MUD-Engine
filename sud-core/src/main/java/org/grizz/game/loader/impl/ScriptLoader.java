@@ -57,7 +57,7 @@ public class ScriptLoader implements Loader {
     }
 
     private Script loadScriptCode(ScriptEntity script) throws IOException, URISyntaxException {
-        List<String> sourceCodeBytes = Files.readAllLines(FileUtils.getFilepath(script.getCode()));
+        List<String> sourceCodeBytes = Files.readAllLines(FileUtils.getFilepath(script.getPath()));
         String sourceCode = sourceCodeBytes.stream().reduce((s, s2) -> s + "\n" + s2).orElseGet(() -> "");
         script.setCode(sourceCode);
         return script;

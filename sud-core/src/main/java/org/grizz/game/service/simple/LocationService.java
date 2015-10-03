@@ -3,7 +3,6 @@ package org.grizz.game.service.simple;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.items.Item;
-import org.grizz.game.model.items.ItemStack;
 
 import java.util.List;
 
@@ -13,13 +12,13 @@ import java.util.List;
 public interface LocationService {
     List<String> getLocationExits(PlayerContext context);
 
-    List<Item> getLocationItems(PlayerContext context);
+    List<Item> getCurrentLocationItems(PlayerContext context);
 
-    List<Item> getLocationStaticItems(PlayerContext playerContext);
+    List<Item> getCurrentLocationStaticItems(PlayerContext playerContext);
 
-    Item removeItemsFromLocation(Location location, String itemName, int amount);
+    List<Item> removeItemsFromLocation(Location location, String itemName, int amount);
 
-    void addItemsToLocation(Location location, ItemStack itemStack);
+    void addItemsToLocation(Location location, List<Item> items);
 
     Location getCurrentLocation(PlayerContext playerContext);
 }

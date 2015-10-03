@@ -1,14 +1,13 @@
 package org.grizz.game;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.config.GameConfig;
-import org.grizz.game.model.enums.ItemType;
+import org.grizz.game.model.Equipment;
+import org.grizz.game.model.impl.EquipmentEntity;
 import org.grizz.game.model.impl.PlayerContextImpl;
-import org.grizz.game.model.impl.items.ItemStackEntity;
-import org.grizz.game.model.items.ItemStack;
 import org.grizz.game.model.items.Weapon;
+import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.service.simple.EquipmentService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,19 +26,20 @@ import java.util.Map;
 public class FightAlgorithmTest {
     @Autowired
     private EquipmentService equipmentService;
+    @Autowired
+    private ItemRepo itemRepo;
 
     private final int NUMBER_OF_INITIAL_ATTACKS_MODIFIER = 10;
     private final int MAX_ROUNDS = 20;
 
     @Test
     public void testFight() {
-        List<ItemStack> equipment = Lists.newArrayList(
-                ItemStackEntity.builder().itemId("100").quantity(1).build(),
-                ItemStackEntity.builder().itemId("104").quantity(1).build()
-        );
+        Equipment equipment = EquipmentEntity.builder()
+                .meleeWeapon((Weapon) itemRepo.getByName("Krótki miecz"))
+                .build();
 
-        List<ItemStack> grizzEquip = equipment;
-        List<ItemStack> slimeEquip = equipment;
+        Equipment grizzEquip = equipment;
+        Equipment slimeEquip = equipment;
 
         Player attacker = new Player("Grizz", 5, 20, 1, 1, 1, 10, 100, grizzEquip, "", "", Maps.newHashMap());
         Player victim = new Player("Slime", 1, 20, 1, 1, 1, 10, 100, slimeEquip, "", "", Maps.newHashMap());
@@ -133,29 +132,22 @@ public class FightAlgorithmTest {
 
     private class Player extends PlayerContextImpl {
         private int hp;
-        private Weapon rangeWeapon;
-        private Weapon meleeWeapon;
 
-        public Player(String name, int strength, int dexterity, int intelligence, int wisdom, int charisma, int vitality, int hp, List<ItemStack> equipment, String currentLocation, String pastLocation, Map<String, Object> parameters) {
+        public Player(String name, int strength, int dexterity, int intelligence, int wisdom, int charisma, int vitality, int hp, Equipment equipment, String currentLocation, String pastLocation, Map<String, Object> parameters) {
             super(name, strength, dexterity, intelligence, wisdom, charisma, vitality, equipment, currentLocation, pastLocation, parameters);
             if (hp > this.getMaxHP()) {
                 this.hp = this.getMaxHP();
             } else {
                 this.hp = hp;
             }
-
-            this.rangeWeapon = getRangeWeapon_();
-            this.meleeWeapon = getMeleeWeapon_();
         }
 
         public boolean hasRangeWeapon() {
-            return getRangeWeapon_() != null;
+            return getEquipment().getRangeWeapon() != null;
         }
 
-        ;
-
         public int getMaxHP() {
-            return this.getVitality() * 10;
+            return this.getEndurance() * 10;
         }
 
         public boolean isAlive() {
@@ -171,30 +163,12 @@ public class FightAlgorithmTest {
             if (this.hp < 0) this.hp = 0;
         }
 
-        private Weapon getRangeWeapon_() {
-            return equipmentService.getItemsInEquipment(this)
-                    .stream()
-                    .filter(item -> item.getItemType().equals(ItemType.WEAPON))
-                    .map(item -> (Weapon) item)
-                    .filter(weapon -> weapon.getWeaponType().isRange())
-                    .findFirst().orElse(null);
-        }
-
-        private Weapon getMeleeWeapon_() {
-            return equipmentService.getItemsInEquipment(this)
-                    .stream()
-                    .filter(item -> item.getItemType().equals(ItemType.WEAPON))
-                    .map(item -> (Weapon) item)
-                    .filter(weapon -> !weapon.getWeaponType().isRange())
-                    .findFirst().orElse(getRangeWeapon_());
-        }
-
         public Weapon getRangeWeapon() {
-            return rangeWeapon;
+            return getEquipment().getRangeWeapon();
         }
 
         public Weapon getMeleeWeapon() {
-            return meleeWeapon;
+            return getEquipment().getMeleeWeapon();
         }
     }
 }

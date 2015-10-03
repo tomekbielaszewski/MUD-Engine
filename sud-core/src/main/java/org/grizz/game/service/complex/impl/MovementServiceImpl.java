@@ -71,8 +71,8 @@ public class MovementServiceImpl implements MovementService {
         PlayerResponseImpl response = (PlayerResponseImpl) _response;
         Location currentLocation = locationService.getCurrentLocation(_context);
         List<String> locationExits = locationService.getLocationExits(_context);
-        List<Item> locationItems = locationService.getLocationItems(_context);
-        List<Item> locationStaticItems = locationService.getLocationStaticItems(_context);
+        List<Item> locationItems = locationService.getCurrentLocationItems(_context);
+        List<Item> locationStaticItems = locationService.getCurrentLocationStaticItems(_context);
 
         response.setPossibleExits(locationExits);
         response.setLocationStaticItems(locationStaticItems);

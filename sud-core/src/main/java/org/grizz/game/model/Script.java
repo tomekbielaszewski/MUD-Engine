@@ -8,5 +8,7 @@ public interface Script {
 
     String getName();
 
+    String getPath();
+
     String getCode();
 }

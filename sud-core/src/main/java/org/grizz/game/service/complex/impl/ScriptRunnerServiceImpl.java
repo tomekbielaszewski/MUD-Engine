@@ -60,7 +60,7 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
 
     private Object execute(String scriptId, SimpleBindings binding) throws ScriptException {
         Script script = scriptRepo.get(scriptId);
-        log.info("Script [{}] with ID[{}] executed!", script.getName(), script.getId());
+        log.info("Script [{}] described as [{}] executed!", script.getPath(), script.getName());
 
         return engine.eval(script.getCode(), binding);
     }

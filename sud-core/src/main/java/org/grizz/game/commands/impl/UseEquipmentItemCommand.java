@@ -30,7 +30,7 @@ public class UseEquipmentItemCommand implements Command {
 
     @Override
     public boolean accept(String command, PlayerContext playerContext) {
-        return !playerContext.getEquipment().isEmpty() &&
+        return !equipmentService.getItemsInEquipment(playerContext).isEmpty() &&
                 getItemScript(command, playerContext) != null;
     }
 

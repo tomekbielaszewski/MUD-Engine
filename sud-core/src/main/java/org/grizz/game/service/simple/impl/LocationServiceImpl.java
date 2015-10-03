@@ -5,9 +5,7 @@ import org.grizz.game.exception.NoSuchItemException;
 import org.grizz.game.exception.NotEnoughItemsException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
-import org.grizz.game.model.impl.items.ItemStackEntity;
 import org.grizz.game.model.items.Item;
-import org.grizz.game.model.items.ItemStack;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.service.simple.LocationService;
@@ -17,8 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * Created by Grizz on 2015-04-27.
@@ -55,23 +52,17 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public List<Item> getLocationItems(PlayerContext context) {
-        String currentLocationID = context.getCurrentLocation();
-        Location location = locationRepo.get(currentLocationID);
-
-        return getItems(location::getItems);
+    public List<Item> getCurrentLocationItems(PlayerContext context) {
+        return getCurrentLocation(context).getItems();
     }
 
     @Override
-    public List<Item> getLocationStaticItems(PlayerContext context) {
-        String currentLocationID = context.getCurrentLocation();
-        Location location = locationRepo.get(currentLocationID);
-
-        return getItems(location::getStaticItems);
+    public List<Item> getCurrentLocationStaticItems(PlayerContext context) {
+        return getCurrentLocation(context).getStaticItems();
     }
 
     @Override
-    public Item removeItemsFromLocation(Location location, String itemName, int amount) {
+    public List<Item> removeItemsFromLocation(Location location, String itemName, int amount) {
         final Item item;
 
         try {
@@ -80,53 +71,30 @@ public class LocationServiceImpl implements LocationService {
             throw new NoSuchItemException("there.is.no.such.item.name", e);
         }
 
-        ItemStack itemStackToRemove = location.getItems().stream()
-                .filter(itemStack -> item.getId().equals(itemStack.getItemId()))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchItemException("no.item.on.location"));
+        List<Item> itemsOnLocation = location.getItems();
+        List<Item> itemsToRemove = itemsOnLocation.stream()
+                .filter(locationItem -> locationItem.equals(item))
+                .limit(amount)
+                .collect(Collectors.toList());
 
-        if (itemStackToRemove.getQuantity() < amount) {
+        if (itemsToRemove.isEmpty()) { //TODO sprawdzic czy przypadkiem nie bedzie to nullem
+            throw new NoSuchItemException("no.item.on.location");
+        } else if (itemsToRemove.size() < amount) {
             throw new NotEnoughItemsException("not.enough.items.on.location");
         } else {
-            ItemStackEntity itemStackToRemoveEntity = (ItemStackEntity) itemStackToRemove;
-            itemStackToRemoveEntity.setQuantity(itemStackToRemove.getQuantity() - amount);
+            itemsOnLocation.removeAll(itemsToRemove);
 
-            if (itemStackToRemoveEntity.getQuantity() == 0) {
-                location.getItems().remove(itemStackToRemove);
-            }
-
-            return item;
+            return itemsToRemove;
         }
     }
 
     @Override
-    public void addItemsToLocation(Location location, ItemStack itemStack) {
-        if (itemStack.getQuantity() == 0) {
+    public void addItemsToLocation(Location location, List<Item> items) {
+        if (items == null || items.isEmpty()) {
             return;
         }
 
-        List<ItemStack> locationItems = location.getItems();
-        Optional<ItemStack> optionalExistingItemStack = locationItems.stream()
-                .filter(_itemStack -> _itemStack.getItemId().equals(itemStack.getItemId()))
-                .findFirst();
-
-        if (optionalExistingItemStack.isPresent()) {
-            ItemStackEntity existingItemStack = (ItemStackEntity) optionalExistingItemStack.get();
-            existingItemStack.setQuantity(existingItemStack.getQuantity() + itemStack.getQuantity());
-        } else {
-            locationItems.add(itemStack);
-        }
-    }
-
-    private List<Item> getItems(Supplier<List<ItemStack>> itemSupplier) {
-        List<Item> locationItems = Lists.newArrayList();
-
-        for (ItemStack item : itemSupplier.get()) {
-            for (int i = 0; i < item.getQuantity(); i++) {
-                locationItems.add(itemRepo.get(item.getItemId()));
-            }
-        }
-
-        return locationItems;
+        List<Item> locationItems = location.getItems();
+        locationItems.addAll(items);
     }
 }

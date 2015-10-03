@@ -51,7 +51,7 @@ public class UseStaticLocationItemCommand implements Command {
     }
 
     private CommandScript getItemScript(String command, PlayerContext playerContext) {
-        List<Item> items = locationService.getLocationStaticItems(playerContext);
+        List<Item> items = locationService.getCurrentLocationStaticItems(playerContext);
 
         //TODO stream
         for (Item item : items) {

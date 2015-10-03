@@ -1,6 +1,6 @@
 package org.grizz.game.model;
 
-import org.grizz.game.model.items.ItemStack;
+import org.grizz.game.model.items.Item;
 
 import java.util.List;
 
@@ -26,9 +26,9 @@ public interface Location {
 
     String getDown();
 
-    List<ItemStack> getItems();
+    List<Item> getItems();
 
-    List<ItemStack> getStaticItems();
+    List<Item> getStaticItems();
 
     String getBeforeEnter();
 

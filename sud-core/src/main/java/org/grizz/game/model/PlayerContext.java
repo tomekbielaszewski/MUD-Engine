@@ -1,9 +1,5 @@
 package org.grizz.game.model;
 
-import org.grizz.game.model.items.ItemStack;
-
-import java.util.List;
-
 /**
  * Created by tomasz.bielaszewski on 2015-04-23.
  */
@@ -12,12 +8,12 @@ public interface PlayerContext {
 
     int getStrength();
     int getDexterity();
+    int getEndurance();
     int getIntelligence();
     int getWisdom();
     int getCharisma();
-    int getVitality();
 
-    List<ItemStack> getEquipment();
+    Equipment getEquipment();
 
     String getCurrentLocation();
     String getPastLocation();
