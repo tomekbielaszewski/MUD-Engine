@@ -133,8 +133,8 @@ public class FightAlgorithmTest {
     private class Player extends PlayerContextImpl {
         private int hp;
 
-        public Player(String name, int strength, int dexterity, int intelligence, int wisdom, int charisma, int vitality, int hp, Equipment equipment, String currentLocation, String pastLocation, Map<String, Object> parameters) {
-            super(name, strength, dexterity, intelligence, wisdom, charisma, vitality, equipment, currentLocation, pastLocation, parameters);
+        public Player(String name, int strength, int dexterity, int intelligence, int wisdom, int charisma, int endurance, int hp, Equipment equipment, String currentLocation, String pastLocation, Map<String, Object> parameters) {
+            super(name, strength, dexterity, endurance, intelligence, wisdom, charisma, equipment, currentLocation, pastLocation, parameters);
             if (hp > this.getMaxHP()) {
                 this.hp = this.getMaxHP();
             } else {
