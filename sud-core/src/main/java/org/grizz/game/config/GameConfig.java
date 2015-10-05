@@ -113,6 +113,9 @@ public class GameConfig {
                 itemRepo.getByName("Złota moneta"),
                 itemRepo.getByName("Złota moneta")
         ));
+        locationRepo.get("8").getStaticItems().addAll(Lists.newArrayList(
+                itemRepo.getByName("Brama teleportacyjna")
+        ));
     }
 
     @Bean
