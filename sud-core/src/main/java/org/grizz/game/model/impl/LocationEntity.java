@@ -1,5 +1,6 @@
 package org.grizz.game.model.impl;
 
+import com.google.common.collect.Lists;
 import lombok.Data;
 import lombok.experimental.Builder;
 import org.grizz.game.model.Location;
@@ -30,6 +31,6 @@ public class LocationEntity implements Location {
     private String up;
     private String down;
 
-    private List<Item> items;
-    private List<Item> staticItems;
+    private List<Item> items = Lists.newArrayList();
+    private List<Item> staticItems = Lists.newArrayList();
 }
