@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.grizz.game.config.GameConfig;
 import org.grizz.game.exception.InvalidAmountException;
-import org.grizz.game.exception.NoSuchItemException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.impl.LocationEntity;
 import org.grizz.game.model.impl.PlayerContextImpl;
@@ -221,7 +220,7 @@ public class LocationServiceImplTest {
         assertThat(itemsAdded, is(equalTo(itemsOnLocationAfter - itemsOnLocationBefore)));
     }
 
-    @Test(expected = NoSuchItemException.class)
+    @Test(expected = InvalidAmountException.class)
     public void testRemoveItemsFromLocation_noItemsFromEmptyLocation() {
         String id = "1";
         String itemName = "Miecz";
