@@ -39,7 +39,7 @@ public class PlayerLocationInteractionServiceImpl implements PlayerLocationInter
         Location currentLocation = locationService.getCurrentLocation(playerContext);
         try {
             List<Item> itemFromLocation = locationService.removeItemsFromLocation(currentLocation, itemName, amount);
-            equipmentService.addItems(itemFromLocation.stream().findFirst().get(), amount, playerContext, response);
+            equipmentService.addItems(itemFromLocation, playerContext, response);
         } catch (NoSuchItemException e) {
             Item item = getItem(itemName);
             if (item instanceof StaticEntity) {

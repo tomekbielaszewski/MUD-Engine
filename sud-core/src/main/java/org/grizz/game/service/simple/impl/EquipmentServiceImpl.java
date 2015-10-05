@@ -31,13 +31,13 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public void addItems(Item item, Integer amount, PlayerContext player, PlayerResponse response) {
-        if (amount > 0) {
-            for (int i = 0; i < amount; i++) {
-                player.getEquipment().getBackpack().add(item);
-            }
-            response.getPlayerEvents().add(eventService.getEvent("player.received.items", "" + amount, item.getName()));
+    public void addItems(List<Item> items, PlayerContext player, PlayerResponse response) {
+        if (items == null || items.isEmpty()) {
+            return;
         }
+
+        player.getEquipment().getBackpack().addAll(items);
+        response.getPlayerEvents().add(eventService.getEvent("player.received.items", "" + items.size(), items.stream().findFirst().get().getName()));
     }
 
     @Override
@@ -55,7 +55,10 @@ public class EquipmentServiceImpl implements EquipmentService {
         } else if (itemsToRemove.size() < amountToRemove) {
             throw new NotEnoughItemsException("not.enough.items.in.equipment");
         } else {
-            backpack.removeAll(itemsToRemove);
+            for (Item itemToRemove : itemsToRemove) {
+                backpack.remove(itemToRemove);
+            }
+//            backpack.removeAll(itemsToRemove);
             response.getPlayerEvents().add(eventService.getEvent("player.lost.items", "" + amountToRemove, itemName));
 
             return itemsToRemove;

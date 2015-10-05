@@ -43,6 +43,7 @@ public class LocationServiceImplTest {
 
     @Mock
     private LocationRepo locationRepo;
+
     @Mock
     private ItemRepo itemRepo;
 
