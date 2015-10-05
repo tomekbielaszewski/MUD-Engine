@@ -1,11 +1,15 @@
 package org.grizz.game.service.impl;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.grizz.game.config.GameConfig;
+import org.grizz.game.exception.InvalidAmountException;
+import org.grizz.game.exception.NoSuchItemException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.impl.LocationEntity;
 import org.grizz.game.model.impl.PlayerContextImpl;
 import org.grizz.game.model.impl.items.MiscEntity;
+import org.grizz.game.model.impl.items.WeaponEntity;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.model.repository.LocationRepo;
@@ -23,7 +27,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
@@ -59,77 +63,306 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void testAddItemsToLocation_singleItemToEmptyLocation() {
-        LocationEntity locationEntity = LocationEntity.builder().build();
-        List<Item> items = Lists.newArrayList(MiscEntity.builder().id("1").build());
+    public void testAddItemsToLocation_noItemsToEmptyLocation() {
+        String id = "1";
+        LocationEntity locationEntity = LocationEntity.builder()
+                .items(Lists.newArrayList())
+                .staticItems(Lists.newArrayList())
+                .build();
+        long itemsOnLocationBefore = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+        List<Item> items = Lists.newArrayList();
 
         locationService.addItemsToLocation(locationEntity, items);
 
-        assertThat(locationEntity.getItems(), hasItems(items));
+        long itemsAdded = items.stream().filter(i -> i.getId().equals(id)).count();
+        long itemsOnLocationAfter = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        assertThat(itemsAdded, is(equalTo(itemsOnLocationAfter - itemsOnLocationBefore)));
     }
 
-    //TODO: Napisac od nowa testy do tego
-//    @Test
-//    public void addItemToLocation_createNewItemStack() throws Exception {
-//        LocationEntity location = getLocationWithThreeUniqueItems_2PiecesEach();
-//        ItemStackEntity itemStack = ItemStackEntity.builder()
-//                .itemId("3")
-//                .quantity(10)
-//                .build();
-//
-//        locationService.addItemsToLocation(location, itemStack);
-//
-//        assertTrue(location.getItems().contains(ItemStackEntity.builder()
-//                .itemId("3")
-//                .quantity(10)
-//                .build()));
-//        assertTrue(location.getItems().size() == 4);
-//    }
-//
-//    @Test
-//    public void addItemToLocation_addEmptyItemStackToExistingItemStack() throws Exception {
-//        LocationEntity location = getLocationWithThreeItemStacks();
-//        ItemStackEntity itemStack = ItemStackEntity.builder()
-//                .itemId("1")
-//                .quantity(0)
-//                .build();
-//
-//        locationService.addItemsToLocation(location, itemStack);
-//
-//        assertTrue(location.getItems().contains(ItemStackEntity.builder()
-//                .itemId("1")
-//                .quantity(10)
-//                .build()));
-//        assertTrue(location.getItems().size() == 3);
-//    }
-//
-//    @Test
-//    public void addItemToLocation_addEmptyItemStackAsNewItemStack() throws Exception {
-//        LocationEntity location = getLocationWithThreeItemStacks();
-//        ItemStackEntity itemStack = ItemStackEntity.builder()
-//                .itemId("3")
-//                .quantity(0)
-//                .build();
-//
-//        locationService.addItemsToLocation(location, itemStack);
-//
-//        assertFalse(location.getItems().contains(ItemStackEntity.builder()
-//                .itemId("3")
-//                .quantity(0)
-//                .build()));
-//        assertTrue(location.getItems().size() == 3);
-//    }
-
-    private LocationEntity getLocationWithThreeUniqueItems_2PiecesEach() {
-        return LocationEntity.builder()
-                .items(Lists.newArrayList(
-                        itemRepo.get("0"),
-                        itemRepo.get("0"),
-                        itemRepo.get("1"),
-                        itemRepo.get("1"),
-                        itemRepo.get("2"),
-                        itemRepo.get("2")
-                ))
+    @Test
+    public void testAddItemsToLocation_singleItemToEmptyLocation() {
+        String id = "1";
+        LocationEntity locationEntity = LocationEntity.builder()
+                .items(Lists.newArrayList())
+                .staticItems(Lists.newArrayList())
                 .build();
+        long itemsOnLocationBefore = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+        List<Item> items = Lists.newArrayList(MiscEntity.builder().id(id).build());
+
+        locationService.addItemsToLocation(locationEntity, items);
+
+        long itemsAdded = items.stream().filter(i -> i.getId().equals(id)).count();
+        long itemsOnLocationAfter = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        assertThat(itemsAdded, is(equalTo(itemsOnLocationAfter - itemsOnLocationBefore)));
+    }
+
+    @Test
+    public void testAddItemsToLocation_singleItemToNonEmptyLocationWithDifferentItem() {
+        String id = "1";
+        LocationEntity locationEntity = LocationEntity.builder()
+                .items(Lists.newArrayList(MiscEntity.builder().id("2").build()))
+                .staticItems(Lists.newArrayList())
+                .build();
+        long itemsOnLocationBefore = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+        List<Item> items = Lists.newArrayList(MiscEntity.builder().id(id).build());
+
+        locationService.addItemsToLocation(locationEntity, items);
+
+        long itemsAdded = items.stream().filter(i -> i.getId().equals(id)).count();
+        long itemsOnLocationAfter = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        assertThat(itemsAdded, is(equalTo(itemsOnLocationAfter - itemsOnLocationBefore)));
+    }
+
+    @Test
+    public void testAddItemsToLocation_singleItemToNonEmptyLocationWithSameItem() {
+        String id = "1";
+        LocationEntity locationEntity = LocationEntity.builder()
+                .items(Lists.newArrayList(MiscEntity.builder().id(id).build()))
+                .staticItems(Lists.newArrayList())
+                .build();
+        long itemsOnLocationBefore = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+        List<Item> items = Lists.newArrayList(MiscEntity.builder().id(id).build());
+
+        locationService.addItemsToLocation(locationEntity, items);
+
+        long itemsAdded = items.stream().filter(i -> i.getId().equals(id)).count();
+        long itemsOnLocationAfter = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        assertThat(itemsAdded, is(equalTo(itemsOnLocationAfter - itemsOnLocationBefore)));
+    }
+
+    @Test
+    public void testAddItemsToLocation_multipleItemsToEmptyLocation() {
+        String id = "1";
+        LocationEntity locationEntity = LocationEntity.builder()
+                .items(Lists.newArrayList())
+                .staticItems(Lists.newArrayList())
+                .build();
+        long itemsOnLocationBefore = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+        List<Item> items = Lists.newArrayList(
+                MiscEntity.builder().id(id).build(),
+                MiscEntity.builder().id(id).build(),
+                MiscEntity.builder().id(id).build(),
+                MiscEntity.builder().id(id).build(),
+                MiscEntity.builder().id(id).build()
+        );
+
+        locationService.addItemsToLocation(locationEntity, items);
+
+        long itemsAdded = items.stream().filter(i -> i.getId().equals(id)).count();
+        long itemsOnLocationAfter = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        assertThat(itemsAdded, is(equalTo(itemsOnLocationAfter - itemsOnLocationBefore)));
+    }
+
+    @Test
+    public void testAddItemsToLocation_multipleItemsToNonEmptyLocationWithSameItems() {
+        String id = "1";
+        LocationEntity locationEntity = LocationEntity.builder()
+                .items(Lists.newArrayList(
+                        MiscEntity.builder().id(id).build(),
+                        MiscEntity.builder().id(id).build(),
+                        MiscEntity.builder().id(id).build()
+                ))
+                .staticItems(Lists.newArrayList())
+                .build();
+        long itemsOnLocationBefore = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+        List<Item> items = Lists.newArrayList(
+                MiscEntity.builder().id(id).build(),
+                MiscEntity.builder().id(id).build(),
+                MiscEntity.builder().id(id).build(),
+                MiscEntity.builder().id(id).build(),
+                MiscEntity.builder().id(id).build()
+        );
+
+        locationService.addItemsToLocation(locationEntity, items);
+
+        long itemsAdded = items.stream().filter(i -> i.getId().equals(id)).count();
+        long itemsOnLocationAfter = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        assertThat(itemsAdded, is(equalTo(itemsOnLocationAfter - itemsOnLocationBefore)));
+    }
+
+    @Test
+    public void testAddItemsToLocation_multipleItemsToNonEmptyLocationWithDifferentItems() {
+        String id = "1";
+        String id2 = "2";
+        String id3 = "3";
+        LocationEntity locationEntity = LocationEntity.builder()
+                .items(Lists.newArrayList(
+                        MiscEntity.builder().id(id3).build(),
+                        MiscEntity.builder().id(id).build(),
+                        MiscEntity.builder().id(id2).build(),
+                        MiscEntity.builder().id(id).build(),
+                        MiscEntity.builder().id(id2).build(),
+                        MiscEntity.builder().id(id).build(),
+                        MiscEntity.builder().id(id3).build()
+                ))
+                .staticItems(Lists.newArrayList())
+                .build();
+        long itemsOnLocationBefore = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+        List<Item> items = Lists.newArrayList(
+                MiscEntity.builder().id(id).build(),
+                MiscEntity.builder().id(id).build(),
+                MiscEntity.builder().id(id).build(),
+                MiscEntity.builder().id(id).build(),
+                MiscEntity.builder().id(id).build()
+        );
+
+        locationService.addItemsToLocation(locationEntity, items);
+
+        long itemsAdded = items.stream().filter(i -> i.getId().equals(id)).count();
+        long itemsOnLocationAfter = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        assertThat(itemsAdded, is(equalTo(itemsOnLocationAfter - itemsOnLocationBefore)));
+    }
+
+    @Test(expected = NoSuchItemException.class)
+    public void testRemoveItemsFromLocation_noItemsFromEmptyLocation() {
+        String id = "1";
+        String itemName = "Miecz";
+        int itemsRemoved = 0;
+
+        Item item = WeaponEntity.builder().id(id).name(itemName).build();
+        when(itemRepo.getByName(itemName)).thenReturn(item);
+        LocationEntity locationEntity = LocationEntity.builder()
+                .items(Lists.newArrayList())
+                .staticItems(Lists.newArrayList())
+                .build();
+
+        locationService.removeItemsFromLocation(locationEntity, itemName, itemsRemoved);
+    }
+
+    @Test(expected = InvalidAmountException.class)
+    public void testRemoveItemsFromLocation_noItemsFromLocationWithSingleSameItem() {
+        String id = "1";
+        String itemName = "Miecz";
+        int itemsRemoved = 0;
+
+        Item item = WeaponEntity.builder().id(id).name(itemName).build();
+        when(itemRepo.getByName(itemName)).thenReturn(item);
+        LocationEntity locationEntity = LocationEntity.builder()
+                .items(Lists.newArrayList(item))
+                .staticItems(Lists.newArrayList())
+                .build();
+        long itemsOnLocationBefore = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        locationService.removeItemsFromLocation(locationEntity, itemName, itemsRemoved);
+
+        long itemsOnLocationAfter = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        assertThat(itemsRemoved, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
+    }
+
+    @Test
+    public void testRemoveItemsFromLocation_SingleItemFromLocationWithSingleSameItem() {
+        String id = "1";
+        String itemName = "Miecz";
+        int itemsRemoved = 1;
+
+        Item item = WeaponEntity.builder().id(id).name(itemName).build();
+        when(itemRepo.getByName(itemName)).thenReturn(item);
+        LocationEntity locationEntity = LocationEntity.builder()
+                .items(Lists.newArrayList(item))
+                .staticItems(Lists.newArrayList())
+                .build();
+        int itemsOnLocationBefore = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        locationService.removeItemsFromLocation(locationEntity, itemName, itemsRemoved);
+
+        int itemsOnLocationAfter = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        assertThat(itemsRemoved, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
+    }
+
+    @Test
+    public void testRemoveItemsFromLocation_SingleItemFromLocationWithMultipleSameItems() {
+        String id = "1";
+        String itemName = "Miecz";
+        int itemsRemoved = 1;
+
+        Item item = WeaponEntity.builder().id(id).name(itemName).build();
+        when(itemRepo.getByName(itemName)).thenReturn(item);
+        LocationEntity locationEntity = LocationEntity.builder()
+                .items(Lists.newArrayList(
+                        item,
+                        item,
+                        item,
+                        item,
+                        item
+                ))
+                .staticItems(Lists.newArrayList())
+                .build();
+        int itemsOnLocationBefore = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        locationService.removeItemsFromLocation(locationEntity, itemName, itemsRemoved);
+
+        int itemsOnLocationAfter = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        assertThat(itemsRemoved, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
+    }
+
+    @Test
+    public void testRemoveItemsFromLocation_MultipleItemsFromLocationWithMultipleSameItems() {
+        String id = "1";
+        String itemName = "Miecz";
+        int itemsRemoved = 3;
+
+        Item item = WeaponEntity.builder().id(id).name(itemName).build();
+        when(itemRepo.getByName(itemName)).thenReturn(item);
+        LocationEntity locationEntity = LocationEntity.builder()
+                .items(Lists.newArrayList(
+                        item,
+                        item,
+                        item,
+                        item,
+                        item
+                ))
+                .staticItems(Lists.newArrayList())
+                .build();
+        int itemsOnLocationBefore = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        locationService.removeItemsFromLocation(locationEntity, itemName, itemsRemoved);
+
+        int itemsOnLocationAfter = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        assertThat(itemsRemoved, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
+    }
+
+    @Test
+    public void testRemoveItemsFromLocation_MultipleItemsFromLocationWithMultipleVariousItems() {
+        String id = "1";
+        String itemName = "Miecz";
+        int itemsRemoved = 3;
+
+        Item item = WeaponEntity.builder().id(id).name(itemName).build();
+        Item item2 = WeaponEntity.builder().id(RandomStringUtils.random(10)).name(RandomStringUtils.random(10)).build();
+        Item item3 = WeaponEntity.builder().id(RandomStringUtils.random(10)).name(RandomStringUtils.random(10)).build();
+        when(itemRepo.getByName(itemName)).thenReturn(item);
+        LocationEntity locationEntity = LocationEntity.builder()
+                .items(Lists.newArrayList(
+                        item3,
+                        item,
+                        item,
+                        item2,
+                        item,
+                        item2,
+                        item,
+                        item,
+                        item3,
+                        item3
+                ))
+                .staticItems(Lists.newArrayList())
+                .build();
+        int itemsOnLocationBefore = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        locationService.removeItemsFromLocation(locationEntity, itemName, itemsRemoved);
+
+        int itemsOnLocationAfter = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
+
+        assertThat(itemsRemoved, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
     }
 }

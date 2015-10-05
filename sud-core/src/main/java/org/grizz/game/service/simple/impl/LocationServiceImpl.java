@@ -1,6 +1,7 @@
 package org.grizz.game.service.simple.impl;
 
 import com.google.common.collect.Lists;
+import org.grizz.game.exception.InvalidAmountException;
 import org.grizz.game.exception.NoSuchItemException;
 import org.grizz.game.exception.NotEnoughItemsException;
 import org.grizz.game.model.Location;
@@ -63,6 +64,9 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public List<Item> removeItemsFromLocation(Location location, String itemName, int amount) {
+        if (amount == 0) {
+            throw new InvalidAmountException("cant.remove.none.items");
+        }
         final Item item;
 
         try {
@@ -77,12 +81,14 @@ public class LocationServiceImpl implements LocationService {
                 .limit(amount)
                 .collect(Collectors.toList());
 
-        if (itemsToRemove.isEmpty()) { //TODO sprawdzic czy przypadkiem nie bedzie to nullem
+        if (itemsToRemove.isEmpty()) {
             throw new NoSuchItemException("no.item.on.location");
         } else if (itemsToRemove.size() < amount) {
             throw new NotEnoughItemsException("not.enough.items.on.location");
         } else {
-            itemsOnLocation.removeAll(itemsToRemove);
+            for (Item itemToRemove : itemsToRemove) {
+                itemsOnLocation.remove(itemToRemove);
+            }
 
             return itemsToRemove;
         }
