@@ -39,6 +39,7 @@ public class ItemLoader implements Loader {
         readItems(_path);
     }
 
+    //TODO fail fast on loading item with non existing script mapping - script with id 123 does not exist? throw exception!
     private void readItems(String _path) throws IOException, URISyntaxException {
         Gson gson = new Gson();
         FileUtils.listFilesInFolder(_path)

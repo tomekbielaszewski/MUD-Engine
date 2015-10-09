@@ -50,6 +50,7 @@ public class UseEquipmentItemCommand implements Command {
         List<Item> items = equipmentService.getItemsInEquipment(playerContext);
 
         //TODO stream
+        //TODO check for command duplicates on two different items. What to do then?
         for (Item item : items) {
             for (CommandScript commandScript : item.getCommands()) {
                 if (commandUtils.isMatching(command, commandScript.getCommand())) {
