@@ -69,8 +69,8 @@ Następujące komendy wymagają podania parametrów wejściowych:
 ### Walka
 
 ## Skrypty
-### Model skryptów i mapowanie skryptów
-Modelem skryptów jest plik JSON znajdujący się w folderze [`assets.json.path.scripts`](sud-core/src/main/resources/scripts/):
+### pliki konfiguracyjne skryptów i mapowanie skryptów
+Plikiem konfiguracyjnym skryptów jest plik JSON znajdujący się w folderze domyślnym [`scripts`](sud-core/src/main/resources/scripts/) [[*]](#lokalizacje-plikow-gry):
 ```javascript
 [
   {
