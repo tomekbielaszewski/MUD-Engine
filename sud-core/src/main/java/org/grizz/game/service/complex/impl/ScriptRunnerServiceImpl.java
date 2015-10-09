@@ -5,9 +5,14 @@ import org.grizz.game.commands.CommandHandlerBus;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.Script;
+import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.model.repository.ScriptRepo;
+import org.grizz.game.service.complex.PlayerLocationInteractionService;
 import org.grizz.game.service.complex.ScriptRunnerService;
+import org.grizz.game.service.simple.EquipmentService;
+import org.grizz.game.service.simple.LocationService;
+import org.grizz.game.service.utils.CommandUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -32,6 +37,21 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
     @Lazy
     @Autowired
     private LocationRepo locationRepo;
+    @Lazy
+    @Autowired
+    private ItemRepo itemRepo;
+    @Lazy
+    @Autowired
+    private PlayerLocationInteractionService playerLocationInteractionService;
+    @Lazy
+    @Autowired
+    private EquipmentService equipmentService;
+    @Lazy
+    @Autowired
+    private LocationService locationService;
+    @Lazy
+    @Autowired
+    private CommandUtils commandUtils;
 
     @Override
     public Object execute(final String command, final String scriptId, final PlayerContext playerContext, final PlayerResponse response) {
@@ -60,7 +80,12 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
         binding.put("response", response);
 
         binding.put("locationRepo", locationRepo);
+        binding.put("itemRepo", itemRepo);
+        binding.put("playerLocationInteractionService", playerLocationInteractionService);
+        binding.put("equipmentService", equipmentService);
+        binding.put("locationService", locationService);
         binding.put("commandRunner", commandHandlerBus);
+        binding.put("commandUtils", commandUtils);
 
         return binding;
     }

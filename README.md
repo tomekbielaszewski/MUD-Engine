@@ -101,7 +101,12 @@ W każdym odpalonym skrypcie jest dostęp do następujących zmiennych podstawow
 ### Dostęp do serwisów
 Zmienne pod którymi dostępne sa serwisy ułatwiające interakcję ze światem gry:
 - `locationRepo` jest typu org.grizz.game.model.repository. **LocationRepo** - pozwala na pobieranie lokalizacji na podstawie ID
-- `commandRunner` jest typu org.grizz.game.service.complex.impl. **ScriptRunnerServiceImpl** - pozwala na uruchamianie komend
+- `itemRepo` jest typu org.grizz.game.model.repository. **ItemRepo** - pozwala na pobieranie przedmiotów na podstawie ID lub nazwy
+- `playerLocationInteractionService` jest typu org.grizz.game.service.complex.impl. **PlayerLocationInteractionServiceImpl** - upraszcza interakcje gracza z lokacją - podnoszenie, wyrzucanie przedmiotów
+- `equipmentService` jest typu org.grizz.game.service.simple.impl. **EquipmentServiceImpl** - upraszcza interakcje z ekwipunkiem - dodawanie, usuwanie przedmiotów, zakładanie zbroi, uzywanie broni
+- `locationService` jest typu org.grizz.game.service.simple.impl. **PlayerLocationInteractionServiceImpl** - upraszcza interakcje z lokacją - pobieranie obecnej lokacji, lista możliwych wyjść, przedmioty na lokacji (zwykle i statyczne), dodawanie, usuwanie przedmiotów
+- `commandRunner` jest typu org.grizz.game.commands. **CommandHandlerBus** - pozwala na uruchamianie komend
+- `commandUtils` jest typu org.grizz.game.service.util. **CommandUtil** - udostępnia metody pomocne przy parsowaniu komend
  
 //TODO: uzupełnić listę serwisów
 
