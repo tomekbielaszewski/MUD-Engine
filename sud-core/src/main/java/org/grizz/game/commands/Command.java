@@ -13,5 +13,5 @@ public interface Command {
 
     boolean accept(final String command);
 
-    PlayerResponse execute(final String command, final PlayerContext playerContext);
+    PlayerResponse execute(final String command, final PlayerContext playerContext, PlayerResponse response);
 }

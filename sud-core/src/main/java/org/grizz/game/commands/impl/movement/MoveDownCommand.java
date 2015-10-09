@@ -23,7 +23,7 @@ public class MoveDownCommand extends MovementCommand {
     }
 
     @Override
-    public PlayerResponse execute(final String command, final PlayerContext playerContext) {
-        return super.execute(DOWN, playerContext);
+    public PlayerResponse execute(final String command, final PlayerContext playerContext, PlayerResponse response) {
+        return super.execute(DOWN, playerContext, response);
     }
 }

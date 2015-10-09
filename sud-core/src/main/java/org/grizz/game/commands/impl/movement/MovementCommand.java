@@ -7,7 +7,6 @@ import org.grizz.game.exception.GameExceptionHandler;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.enums.Direction;
-import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.service.complex.MovementService;
 import org.grizz.game.service.utils.CommandUtils;
 
@@ -31,8 +30,7 @@ public abstract class MovementCommand implements Command {
         return commandUtils.isAnyMatching(command, getClass().getCanonicalName());
     }
 
-    public PlayerResponse execute(Direction direction, final PlayerContext playerContext) {
-        PlayerResponse response = new PlayerResponseImpl();
+    public PlayerResponse execute(Direction direction, final PlayerContext playerContext, PlayerResponse response) {
         try {
             movementService.move(direction, playerContext, response);
         } catch (GameException e) {

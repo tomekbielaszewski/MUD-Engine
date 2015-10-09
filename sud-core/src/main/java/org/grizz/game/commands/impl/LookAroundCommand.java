@@ -3,7 +3,6 @@ package org.grizz.game.commands.impl;
 import org.grizz.game.commands.Command;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
-import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.service.complex.MovementService;
 import org.grizz.game.service.utils.CommandUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,7 @@ public class LookAroundCommand implements Command {
     }
 
     @Override
-    public PlayerResponse execute(final String command, final PlayerContext playerContext) {
-        PlayerResponse response = new PlayerResponseImpl();
+    public PlayerResponse execute(final String command, final PlayerContext playerContext, PlayerResponse response) {
         movementService.showCurrentLocation(playerContext, response);
         return response;
     }

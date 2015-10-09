@@ -1,12 +1,12 @@
 package org.grizz.game.service.complex.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.grizz.game.commands.CommandHandlerBus;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.Script;
 import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.model.repository.ScriptRepo;
-import org.grizz.game.service.complex.MovementService;
 import org.grizz.game.service.complex.ScriptRunnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -28,7 +28,7 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
     private ScriptRepo scriptRepo;
     @Lazy
     @Autowired
-    private MovementService movementService;
+    private CommandHandlerBus commandHandlerBus;
     @Lazy
     @Autowired
     private LocationRepo locationRepo;
@@ -60,6 +60,7 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
         binding.put("response", response);
 
         binding.put("locationRepo", locationRepo);
+        binding.put("commandRunner", commandHandlerBus);
 
         return binding;
     }

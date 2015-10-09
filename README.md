@@ -101,6 +101,7 @@ W każdym odpalonym skrypcie jest dostęp do następujących zmiennych podstawow
 ### Dostęp do serwisów
 Zmienne pod którymi dostępne sa serwisy ułatwiające interakcję ze światem gry:
 - `locationRepo` jest typu org.grizz.game.model.repository. **LocationRepo** - pozwala na pobieranie lokalizacji na podstawie ID
+- `commandRunner` jest typu org.grizz.game.service.complex.impl. **ScriptRunnerServiceImpl** - pozwala na uruchamianie komend
  
 //TODO: uzupełnić listę serwisów
 

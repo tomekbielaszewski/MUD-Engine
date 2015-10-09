@@ -6,7 +6,6 @@ import org.grizz.game.exception.GameException;
 import org.grizz.game.exception.GameExceptionHandler;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
-import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.service.complex.PlayerLocationInteractionService;
 import org.grizz.game.service.utils.CommandUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +32,7 @@ public class DropCommand implements Command {
     }
 
     @Override
-    public PlayerResponse execute(String command, PlayerContext playerContext) {
-        PlayerResponse response = new PlayerResponseImpl();
-
+    public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
         String matchedPattern = commandUtils.getMatchedPattern(command, getClass().getCanonicalName());
         String[] commandSplit = commandUtils.splitCommand(command, matchedPattern);
 

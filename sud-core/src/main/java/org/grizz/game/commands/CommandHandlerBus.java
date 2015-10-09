@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 
 import java.util.Set;
 
@@ -20,10 +20,11 @@ public class CommandHandlerBus {
     @Autowired
     private Command unknownCommand;
 
-    @Autowired
-    private Environment env;
-
     public PlayerResponse execute(String strCommand, PlayerContext context) {
+        return this.execute(strCommand, context, new PlayerResponseImpl());
+    }
+
+    public PlayerResponse execute(String strCommand, PlayerContext context, PlayerResponse response) {
         final String formattedStrCommand = StringUtils.stripAccents(strCommand.trim().toLowerCase())
                 .replaceAll("ł", "l")
                 .replaceAll("Ł", "L");
@@ -34,7 +35,7 @@ public class CommandHandlerBus {
                 .orElse(unknownCommand);
 
         log.info("{} executed {} using '{}'", context.getName(), commandHandler.getClass().getSimpleName(), formattedStrCommand);
-        return commandHandler.execute(formattedStrCommand, context);
+        return commandHandler.execute(formattedStrCommand, context, response);
     }
 
     public void addCommand(Command command) {

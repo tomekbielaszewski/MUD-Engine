@@ -3,7 +3,6 @@ package org.grizz.game.commands.impl;
 import org.grizz.game.commands.Command;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
-import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.model.items.CommandScript;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.service.complex.ScriptRunnerService;
@@ -39,9 +38,7 @@ public class UseStaticLocationItemCommand implements Command {
     }
 
     @Override
-    public PlayerResponse execute(String command, PlayerContext playerContext) {
-        PlayerResponse response = new PlayerResponseImpl();
-
+    public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
         CommandScript commandScript = getItemScript(command, playerContext);
         if (commandScript != null) {
             scriptRunner.execute(command, commandScript.getScriptId(), playerContext, response);

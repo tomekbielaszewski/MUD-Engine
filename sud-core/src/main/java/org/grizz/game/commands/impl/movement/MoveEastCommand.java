@@ -23,7 +23,7 @@ public class MoveEastCommand extends MovementCommand {
     }
 
     @Override
-    public PlayerResponse execute(final String command, final PlayerContext playerContext) {
-        return super.execute(EAST, playerContext);
+    public PlayerResponse execute(final String command, final PlayerContext playerContext, PlayerResponse response) {
+        return super.execute(EAST, playerContext, response);
     }
 }

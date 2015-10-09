@@ -3,7 +3,6 @@ package org.grizz.game.commands.impl;
 import org.grizz.game.commands.Command;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
-import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.service.simple.EquipmentService;
 import org.grizz.game.service.utils.CommandUtils;
@@ -28,9 +27,7 @@ public class ShowEquipmentCommand implements Command {
     }
 
     @Override
-    public PlayerResponse execute(String command, PlayerContext playerContext) {
-        PlayerResponse response = new PlayerResponseImpl();
-
+    public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
         List<Item> itemsInEquipment = equipmentService.getItemsInEquipment(playerContext);
         response.getEquipmentItems().addAll(itemsInEquipment);
 
