@@ -22,7 +22,7 @@ Lokalizacje plikow gry domyslnie znajdują się pod:
 - Przeciwnicy w folderze `mobs`
 - Skrypty w folderze `scripts`
 
-Przy czym sciezki do folderów można modyfikować przez zmianę ścieżek do nich w pliku `assets.properties`, gdzie:
+Przy czym sciezki do folderów można modyfikować przez zmianę ścieżek do nich w pliku [`assets.properties`](SUD/sud-core/src/main/resources/assets.properties), gdzie:
 - klucz `assets.json.path.locations` to ścieżka do folderu lokacji
 - klucz `assets.json.path.items` to ścieżka do folderu przedmiotów
 - klucz `assets.json.path.mobs` to ścieżka do folderu przeciwników
@@ -46,7 +46,7 @@ Podstawowymi komendami w silniku gry są:
 - Podgląd ekwipunku - `org.grizz.game.commands.impl.ShowEquipmentCommand`
 
 ### Mapowanie komend
-Podstawowe komendy są zmapowane do słów pozwalających na wywołanie ich. Takie mapowanie znajduje się w pliku `command-mapping.properties`. W pliku tym znajdziemy pary klucz wartośc gdzie:
+Podstawowe komendy są zmapowane do słów pozwalających na wywołanie ich. Takie mapowanie znajduje się w pliku [`command-mapping.properties`](SUD/sud-core/src/main/resources/command-mapping.properties). W pliku tym znajdziemy pary klucz wartośc gdzie:
 - kluczem jest - pełna nazwa klasy podstawowej komendy
 - wartością są - słowa zmapowane do tej komendy. Może być ich wiele, muszą wtedy być oddzielone przecinkami. Słowa nie mogą zawierać polskich znaków ani innych liter zawierających 'akcenty'. Spacje przed i po także nie są dozwolone. W przypadku komendy potrzebującej pewnych wartości wejściowych należy wskazać miejsce podawanych danych:
   - `([\\D]+)` - dla danych słownych
@@ -70,7 +70,7 @@ Następujące komendy wymagają podania parametrów wejściowych:
 
 ## Skrypty
 ### Model skryptów i mapowanie skryptów
-Modelem skryptów jest plik JSON znajdujący się w folderze `assets.json.path.scripts`:
+Modelem skryptów jest plik JSON znajdujący się w folderze [`assets.json.path.scripts`](SUD/sud-core/src/main/resources/scripts/):
 ```javascript
 [
   {
@@ -99,7 +99,8 @@ W każdym odpalonym skrypcie jest dostęp do następujących zmiennych podstawow
 
 ### Dostęp do serwisów
 Zmienne pod którymi dostępne sa serwisy ułatwiające interakcję ze światem gry:
-- `` jest typu //TODO: uzupełnić listę serwisów
+- `locationRepo` jest typu org.grizz.game.model.repository. **LocationRepo** - pozwala na pobieranie lokalizacji na podstawie ID
+//TODO: uzupełnić listę serwisów
 
 ### Zwracanie wartości
 Wartość jaką zwróci skrypt jest wartością zwróconą przez ostatnią funkcję w skrypcie. Przykładową konstrukcją zwracającą zawsze wartość true jest:
