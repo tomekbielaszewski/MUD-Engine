@@ -3,7 +3,6 @@ package org.grizz.game.service.impl;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.grizz.game.config.GameConfig;
-import org.grizz.game.exception.InvalidAmountException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.impl.LocationEntity;
 import org.grizz.game.model.impl.PlayerContextImpl;
@@ -220,7 +219,7 @@ public class LocationServiceImplTest {
         assertThat(itemsAdded, is(equalTo(itemsOnLocationAfter - itemsOnLocationBefore)));
     }
 
-    @Test(expected = InvalidAmountException.class)
+    @Test
     public void testRemoveItemsFromLocation_noItemsFromEmptyLocation() {
         String id = "1";
         String itemName = "Miecz";
@@ -236,7 +235,7 @@ public class LocationServiceImplTest {
         locationService.removeItemsFromLocation(locationEntity, itemName, itemsRemoved);
     }
 
-    @Test(expected = InvalidAmountException.class)
+    @Test
     public void testRemoveItemsFromLocation_noItemsFromLocationWithSingleSameItem() {
         String id = "1";
         String itemName = "Miecz";
@@ -248,20 +247,15 @@ public class LocationServiceImplTest {
                 .items(Lists.newArrayList(item))
                 .staticItems(Lists.newArrayList())
                 .build();
-        long itemsOnLocationBefore = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
 
         locationService.removeItemsFromLocation(locationEntity, itemName, itemsRemoved);
-
-        long itemsOnLocationAfter = locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
-
-        assertThat(itemsRemoved, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
     }
 
     @Test
     public void testRemoveItemsFromLocation_SingleItemFromLocationWithSingleSameItem() {
         String id = "1";
         String itemName = "Miecz";
-        int itemsRemoved = 1;
+        int amountToRemove = 1;
 
         Item item = WeaponEntity.builder().id(id).name(itemName).build();
         when(itemRepo.getByName(itemName)).thenReturn(item);
@@ -271,18 +265,19 @@ public class LocationServiceImplTest {
                 .build();
         int itemsOnLocationBefore = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
 
-        locationService.removeItemsFromLocation(locationEntity, itemName, itemsRemoved);
+        List<Item> itemsRemoved = locationService.removeItemsFromLocation(locationEntity, itemName, amountToRemove);
 
         int itemsOnLocationAfter = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
 
-        assertThat(itemsRemoved, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
+        assertThat(amountToRemove, is(equalTo(itemsRemoved.size())));
+        assertThat(amountToRemove, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
     }
 
     @Test
     public void testRemoveItemsFromLocation_SingleItemFromLocationWithMultipleSameItems() {
         String id = "1";
         String itemName = "Miecz";
-        int itemsRemoved = 1;
+        int amountToRemove = 1;
 
         Item item = WeaponEntity.builder().id(id).name(itemName).build();
         when(itemRepo.getByName(itemName)).thenReturn(item);
@@ -298,18 +293,19 @@ public class LocationServiceImplTest {
                 .build();
         int itemsOnLocationBefore = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
 
-        locationService.removeItemsFromLocation(locationEntity, itemName, itemsRemoved);
+        List<Item> itemsRemoved = locationService.removeItemsFromLocation(locationEntity, itemName, amountToRemove);
 
         int itemsOnLocationAfter = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
 
-        assertThat(itemsRemoved, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
+        assertThat(amountToRemove, is(equalTo(itemsRemoved.size())));
+        assertThat(amountToRemove, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
     }
 
     @Test
     public void testRemoveItemsFromLocation_MultipleItemsFromLocationWithMultipleSameItems() {
         String id = "1";
         String itemName = "Miecz";
-        int itemsRemoved = 3;
+        int amountToRemove = 3;
 
         Item item = WeaponEntity.builder().id(id).name(itemName).build();
         when(itemRepo.getByName(itemName)).thenReturn(item);
@@ -325,18 +321,19 @@ public class LocationServiceImplTest {
                 .build();
         int itemsOnLocationBefore = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
 
-        locationService.removeItemsFromLocation(locationEntity, itemName, itemsRemoved);
+        List<Item> itemsRemoved = locationService.removeItemsFromLocation(locationEntity, itemName, amountToRemove);
 
         int itemsOnLocationAfter = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
 
-        assertThat(itemsRemoved, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
+        assertThat(amountToRemove, is(equalTo(itemsRemoved.size())));
+        assertThat(amountToRemove, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
     }
 
     @Test
     public void testRemoveItemsFromLocation_MultipleItemsFromLocationWithMultipleVariousItems() {
         String id = "1";
         String itemName = "Miecz";
-        int itemsRemoved = 3;
+        int amountToRemove = 3;
 
         Item item = WeaponEntity.builder().id(id).name(itemName).build();
         Item item2 = WeaponEntity.builder().id(RandomStringUtils.random(10)).name(RandomStringUtils.random(10)).build();
@@ -359,10 +356,13 @@ public class LocationServiceImplTest {
                 .build();
         int itemsOnLocationBefore = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
 
-        locationService.removeItemsFromLocation(locationEntity, itemName, itemsRemoved);
+        List<Item> itemsRemoved = locationService.removeItemsFromLocation(locationEntity, itemName, amountToRemove);
 
         int itemsOnLocationAfter = (int) locationEntity.getItems().stream().filter(i -> i.getId().equals(id)).count();
 
-        assertThat(itemsRemoved, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
+        assertThat(amountToRemove, is(equalTo(itemsRemoved.size())));
+        assertThat(amountToRemove, is(equalTo(itemsOnLocationBefore - itemsOnLocationAfter)));
     }
+
+    //TODO: Test exception branches in removing and adding items
 }

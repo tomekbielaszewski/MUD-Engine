@@ -28,5 +28,26 @@
         "scriptId": "106"
       }
     ]
+  },
+  {
+    "id": "303",
+    "name": "Brama teleportacyjna",
+    "description": "wielka kamienna brama wewnątrz której polyskuje smolisto czarna tafla wody, ale... w pionie... Mozesz przez nia przejsc",
+    "pickUpMessage": "Nie uniesiesz tego...",
+    "itemType": "STATIC",
+    "commands": [
+      {
+        "command": "przejdz",
+        "scriptId": "107"
+      },
+      {
+        "command": "przejdz przez brame",
+        "scriptId": "107"
+      },
+      {
+        "command": "przekrocz brame",
+        "scriptId": "107"
+      }
+    ]
   }
 ]

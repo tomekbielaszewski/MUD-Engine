@@ -1,5 +1,6 @@
 package org.grizz.game.service.simple.impl;
 
+import com.google.common.collect.Lists;
 import org.grizz.game.exception.NoSuchItemException;
 import org.grizz.game.exception.NotEnoughItemsException;
 import org.grizz.game.model.PlayerContext;
@@ -42,6 +43,9 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public List<Item> removeItems(String itemName, Integer amountToRemove, PlayerContext player, PlayerResponse response) {
+        if (amountToRemove <= 0) {
+            return Lists.newArrayList();
+        }
         final Item item = getItem(itemName);
 
         List<Item> backpack = player.getEquipment().getBackpack();
@@ -58,7 +62,6 @@ public class EquipmentServiceImpl implements EquipmentService {
             for (Item itemToRemove : itemsToRemove) {
                 backpack.remove(itemToRemove);
             }
-//            backpack.removeAll(itemsToRemove);
             response.getPlayerEvents().add(eventService.getEvent("player.lost.items", "" + amountToRemove, itemName));
 
             return itemsToRemove;

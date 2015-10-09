@@ -33,5 +33,10 @@
     "id": "106",
     "name": "Relict prayer script",
     "path": "scripts/js/items/relictPrayer.js"
+  },
+  {
+    "id": "107",
+    "name": "Teleportation gate script - teleports to starting location",
+    "path": "scripts/js/items/teleportationGate.js"
   }
 ]

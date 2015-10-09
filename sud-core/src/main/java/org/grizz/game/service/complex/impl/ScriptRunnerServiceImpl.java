@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.Script;
+import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.model.repository.ScriptRepo;
 import org.grizz.game.service.complex.MovementService;
 import org.grizz.game.service.complex.ScriptRunnerService;
@@ -28,6 +29,9 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
     @Lazy
     @Autowired
     private MovementService movementService;
+    @Lazy
+    @Autowired
+    private LocationRepo locationRepo;
 
     @Override
     public Object execute(final String command, final String scriptId, final PlayerContext playerContext, final PlayerResponse response) {
@@ -54,6 +58,8 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
         binding.put("command", command);
         binding.put("player", playerContext);
         binding.put("response", response);
+
+        binding.put("locationRepo", locationRepo);
 
         return binding;
     }
