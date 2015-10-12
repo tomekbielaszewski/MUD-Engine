@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.impl.LocationEntity;
+import org.grizz.game.model.impl.LocationItemsEntity;
 import org.grizz.game.model.repository.Repository;
 import org.grizz.game.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,14 @@ public class LocationLoader implements Loader {
                         log.info("Reading: {}", path.toString());
                         locationsArray = gson.fromJson(Files.newBufferedReader(path), LocationEntity[].class);
                         for (LocationEntity location : locationsArray) {
-                            location.setItems(Lists.newArrayList());
-                            location.setStaticItems(Lists.newArrayList());
+                            //TODO: load items from mongo
+//                            location.setItems(Lists.newArrayList());
+//                            location.setStaticItems(Lists.newArrayList());
+                            LocationItemsEntity.builder()
+                                    .locationId(location.getId())
+                                    .mobileItems(Lists.newArrayList())
+                                    .staticItems(Lists.newArrayList())
+                                    .build();
                             locationRepo.add(location);
                         }
                     } catch (IOException e) {

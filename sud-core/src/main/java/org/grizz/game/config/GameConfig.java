@@ -1,15 +1,12 @@
 package org.grizz.game.config;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.loader.impl.ItemLoader;
 import org.grizz.game.loader.impl.LocationLoader;
 import org.grizz.game.loader.impl.MobLoader;
 import org.grizz.game.loader.impl.ScriptLoader;
-import org.grizz.game.model.impl.EquipmentEntity;
-import org.grizz.game.model.impl.PlayerContextImpl;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.model.repository.PlayerRepository;
@@ -60,50 +57,21 @@ public class GameConfig {
     /*
         Po zaimplementowaniu komunikacji z bazą - usunąć
      */
-        playerRepository.add(
-                PlayerContextImpl.builder()
-                        .name("Grizz")
-                        .currentLocation("1")
-                        .equipment(EquipmentEntity.builder()
-                                .backpack(Lists.newArrayList(
-                                        itemRepo.getByName("Brązowa moneta"),
-                                        itemRepo.getByName("Brudna szmata")
-                                        ))
-                                .build())
-                        .parameters(Maps.newHashMap())
-                        .build()
-        );
-        playerRepository.add(
-                PlayerContextImpl.builder()
-                        .name("Nebu")
-                        .currentLocation("1")
-                        .equipment(EquipmentEntity.builder().build())
-                        .parameters(Maps.newHashMap())
-                        .build()
-        );
-        playerRepository.add(
-                PlayerContextImpl.builder()
-                        .name("Lothar")
-                        .currentLocation("1")
-                        .equipment(EquipmentEntity.builder().build())
-                        .parameters(Maps.newHashMap())
-                        .build()
-        );
-        locationRepo.get("1").getItems().addAll(Lists.newArrayList(
+        locationRepo.get("1").getItems().getMobileItems().addAll(Lists.newArrayList(
                 itemRepo.getByName("Brązowa moneta"),
                 itemRepo.getByName("Brązowa moneta"),
                 itemRepo.getByName("Napierśnik"),
                 itemRepo.getByName("Lniana koszula"),
                 itemRepo.getByName("Sztylet")
         ));
-        locationRepo.get("1").getStaticItems().addAll(Lists.newArrayList(
+        locationRepo.get("1").getItems().getStaticItems().addAll(Lists.newArrayList(
                 itemRepo.getByName("Kowadło"),
                 itemRepo.getByName("Ołtarz")
         ));
-        locationRepo.get("3").getItems().addAll(Lists.newArrayList(
+        locationRepo.get("3").getItems().getMobileItems().addAll(Lists.newArrayList(
                 itemRepo.getByName("Zardzewiały klucz")
         ));
-        locationRepo.get("4").getItems().addAll(Lists.newArrayList(
+        locationRepo.get("4").getItems().getMobileItems().addAll(Lists.newArrayList(
                 itemRepo.getByName("Kolczuga"),
                 itemRepo.getByName("Napierśnik"),
                 itemRepo.getByName("Krótki miecz"),
@@ -113,7 +81,7 @@ public class GameConfig {
                 itemRepo.getByName("Złota moneta"),
                 itemRepo.getByName("Złota moneta")
         ));
-        locationRepo.get("8").getStaticItems().addAll(Lists.newArrayList(
+        locationRepo.get("8").getItems().getStaticItems().addAll(Lists.newArrayList(
                 itemRepo.getByName("Brama teleportacyjna")
         ));
     }

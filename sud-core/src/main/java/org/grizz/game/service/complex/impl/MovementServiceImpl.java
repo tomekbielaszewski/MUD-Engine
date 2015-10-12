@@ -70,7 +70,7 @@ public class MovementServiceImpl implements MovementService {
     public void showCurrentLocation(PlayerContext _context, PlayerResponse _response) {
         PlayerResponseImpl response = (PlayerResponseImpl) _response;
         Location currentLocation = locationService.getCurrentLocation(_context);
-        List<String> locationExits = locationService.getLocationExits(_context);
+        List<String> locationExits = locationService.getExits(currentLocation);
         List<Item> locationItems = locationService.getCurrentLocationItems(_context);
         List<Item> locationStaticItems = locationService.getCurrentLocationStaticItems(_context);
 

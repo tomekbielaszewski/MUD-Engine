@@ -34,7 +34,7 @@ public class UseStaticLocationItemCommand implements Command {
     }
 
     private boolean isStaticItemOnLocationPresent(PlayerContext playerContext) {
-        return !locationService.getCurrentLocation(playerContext).getStaticItems().isEmpty();
+        return !locationService.getCurrentLocation(playerContext).getItems().getStaticItems().isEmpty();
     }
 
     @Override

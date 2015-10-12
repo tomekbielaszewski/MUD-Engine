@@ -10,15 +10,15 @@ import java.util.List;
  * Created by Grizz on 2015-04-27.
  */
 public interface LocationService {
-    List<String> getLocationExits(PlayerContext context);
+    List<String> getExits(Location location_);
 
     List<Item> getCurrentLocationItems(PlayerContext context);
 
     List<Item> getCurrentLocationStaticItems(PlayerContext playerContext);
 
-    List<Item> removeItemsFromLocation(Location location, String itemName, int amount);
+    List<Item> removeItems(Location location, String itemName, int amount);
 
-    void addItemsToLocation(Location location, List<Item> items);
+    void addItems(Location location, List<Item> items);
 
     Location getCurrentLocation(PlayerContext playerContext);
 }

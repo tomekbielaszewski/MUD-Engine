@@ -20,7 +20,7 @@ public class GameImpl implements Game {
 
     @Override
     public PlayerResponse runCommand(String command, String player) {
-        PlayerContext context = playerRepository.get(player);
+        PlayerContext context = playerRepository.findByName(player);
         PlayerResponseImpl response = (PlayerResponseImpl) commandHandlerBus.execute(command, context);
         return response;
     }

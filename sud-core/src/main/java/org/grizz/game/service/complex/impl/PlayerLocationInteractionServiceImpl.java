@@ -38,7 +38,7 @@ public class PlayerLocationInteractionServiceImpl implements PlayerLocationInter
         }
         Location currentLocation = locationService.getCurrentLocation(playerContext);
         try {
-            List<Item> itemFromLocation = locationService.removeItemsFromLocation(currentLocation, itemName, amount);
+            List<Item> itemFromLocation = locationService.removeItems(currentLocation, itemName, amount);
             equipmentService.addItems(itemFromLocation, playerContext, response);
         } catch (NoSuchItemException e) {
             Item item = getItem(itemName);
@@ -56,7 +56,7 @@ public class PlayerLocationInteractionServiceImpl implements PlayerLocationInter
         }
         Location currentLocation = locationService.getCurrentLocation(playerContext);
         List<Item> itemsFromEquipment = equipmentService.removeItems(itemName, amount, playerContext, response);
-        locationService.addItemsToLocation(currentLocation, itemsFromEquipment);
+        locationService.addItems(currentLocation, itemsFromEquipment);
     }
 
     private Item getItem(String itemName) {

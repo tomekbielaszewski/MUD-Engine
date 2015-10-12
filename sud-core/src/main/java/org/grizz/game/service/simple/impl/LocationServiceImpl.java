@@ -36,9 +36,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public List<String> getLocationExits(PlayerContext context) {
-        String currentLocationID = context.getCurrentLocation();
-        Location location = locationRepo.get(currentLocationID);
+    public List<String> getExits(Location location) {
         List<String> possibleExits = Lists.newArrayList();
 
         if (!StringUtils.isEmpty(location.getNorth())) possibleExits.add(env.getProperty("exit.north"));
@@ -53,16 +51,16 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public List<Item> getCurrentLocationItems(PlayerContext context) {
-        return getCurrentLocation(context).getItems();
+        return getCurrentLocation(context).getItems().getMobileItems();
     }
 
     @Override
     public List<Item> getCurrentLocationStaticItems(PlayerContext context) {
-        return getCurrentLocation(context).getStaticItems();
+        return getCurrentLocation(context).getItems().getStaticItems();
     }
 
     @Override
-    public List<Item> removeItemsFromLocation(Location location, String itemName, int amount) {
+    public List<Item> removeItems(Location location, String itemName, int amount) {
         if (amount == 0) {
             return Lists.newArrayList();
         }
@@ -74,7 +72,7 @@ public class LocationServiceImpl implements LocationService {
             throw new NoSuchItemException("there.is.no.such.item.name", e);
         }
 
-        List<Item> itemsOnLocation = location.getItems();
+        List<Item> itemsOnLocation = location.getItems().getMobileItems();
         List<Item> itemsToRemove = itemsOnLocation.stream()
                 .filter(locationItem -> locationItem.equals(item))
                 .limit(amount)
@@ -94,12 +92,12 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public void addItemsToLocation(Location location, List<Item> items) {
+    public void addItems(Location location, List<Item> items) {
         if (items == null || items.isEmpty()) {
             return;
         }
 
-        List<Item> locationItems = location.getItems();
+        List<Item> locationItems = location.getItems().getMobileItems();
         locationItems.addAll(items);
     }
 }

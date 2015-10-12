@@ -1,9 +1,5 @@
 package org.grizz.game.model;
 
-import org.grizz.game.model.items.Item;
-
-import java.util.List;
-
 /**
  * Created by Grizz on 2015-04-21.
  */
@@ -26,9 +22,7 @@ public interface Location {
 
     String getDown();
 
-    List<Item> getItems();
-
-    List<Item> getStaticItems();
+    LocationItems getItems();
 
     String getBeforeEnter();
 
