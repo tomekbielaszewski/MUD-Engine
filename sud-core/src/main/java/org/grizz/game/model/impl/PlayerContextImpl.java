@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Builder;
 import org.grizz.game.model.Equipment;
 import org.grizz.game.model.PlayerContext;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 @Data
 @Builder
 @AllArgsConstructor
+@Document(collection = "players")
 public class PlayerContextImpl implements PlayerContext {
     private String name;
 
@@ -49,34 +51,5 @@ public class PlayerContextImpl implements PlayerContext {
     @Override
     public boolean containsParameter(String key) {
         return parameters.containsKey(key);
-    }
-
-    public PlayerContextImpl.PlayerContextImplBuilder copy() {
-        return PlayerContextImpl.builder()
-                .name(this.getName())
-                .strength(this.getStrength())
-                .dexterity(this.getDexterity())
-                .intelligence(this.getIntelligence())
-                .wisdom(this.getWisdom())
-                .charisma(this.getCharisma())
-                .endurance(this.getEndurance())
-                .equipment(this.getEquipment())
-                .currentLocation(this.getCurrentLocation())
-                .pastLocation(this.getPastLocation())
-                .parameters(this.getParameters());
-    }
-
-    public void setTo(PlayerContextImpl context) {
-        this.name = context.name;
-        this.strength = context.strength;
-        this.dexterity = context.dexterity;
-        this.intelligence = context.intelligence;
-        this.wisdom = context.wisdom;
-        this.charisma = context.charisma;
-        this.endurance = context.endurance;
-        this.currentLocation = context.currentLocation;
-        this.pastLocation = context.pastLocation;
-        this.parameters = context.parameters;
-        this.equipment = context.equipment;
     }
 }

@@ -92,11 +92,8 @@ public class MovementServiceImpl implements MovementService {
             Location targetLocation = locationRepo.get(locationSupplier.get());
 
             if (predicateScript(targetLocation::getBeforeEnter, _context, _response)) {
-                context.setTo(context.copy()
-                                .pastLocation(currentLocation.getId())
-                                .currentLocation(targetLocation.getId())
-                                .build()
-                );
+                context.setPastLocation(currentLocation.getId());
+                context.setCurrentLocation(targetLocation.getId());
 
                 actionScript(targetLocation::getOnEnter, _context, _response);
 
