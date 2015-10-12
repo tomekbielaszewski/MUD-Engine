@@ -9,10 +9,14 @@ import org.grizz.game.loader.impl.MobLoader;
 import org.grizz.game.loader.impl.ScriptLoader;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.model.repository.LocationRepo;
-import org.grizz.game.model.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import javax.annotation.PostConstruct;
 import javax.script.ScriptEngine;
@@ -22,7 +26,8 @@ import javax.script.ScriptEngineManager;
  * Hello world!
  */
 @Slf4j
-@Configuration
+@SpringBootApplication
+@EnableMongoRepositories("org.grizz.game.model.repository")
 @ComponentScan("org.grizz.game")
 @PropertySources({
         @PropertySource("assets.properties"),
@@ -37,9 +42,6 @@ public class GameConfig {
 
     @Autowired
     private Environment env;
-
-    @Autowired
-    private PlayerRepository playerRepository;
 
     @Autowired
     private LocationRepo locationRepo;

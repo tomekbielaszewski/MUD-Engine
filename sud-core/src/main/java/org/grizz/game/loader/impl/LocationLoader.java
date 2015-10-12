@@ -48,11 +48,12 @@ public class LocationLoader implements Loader {
                             //TODO: load items from mongo
 //                            location.setItems(Lists.newArrayList());
 //                            location.setStaticItems(Lists.newArrayList());
-                            LocationItemsEntity.builder()
+                            LocationItemsEntity itemsEntity = LocationItemsEntity.builder()
                                     .locationId(location.getId())
                                     .mobileItems(Lists.newArrayList())
                                     .staticItems(Lists.newArrayList())
                                     .build();
+                            location.setItems(itemsEntity);
                             locationRepo.add(location);
                         }
                     } catch (IOException e) {

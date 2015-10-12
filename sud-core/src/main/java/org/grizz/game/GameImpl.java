@@ -1,8 +1,12 @@
 package org.grizz.game;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.grizz.game.commands.CommandHandlerBus;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.model.impl.EquipmentEntity;
+import org.grizz.game.model.impl.PlayerContextImpl;
 import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.model.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +23,33 @@ public class GameImpl implements Game {
     private PlayerRepository playerRepository;
 
     @Override
-    public PlayerResponse runCommand(String command, String player) {
-        PlayerContext context = playerRepository.findByName(player);
-        PlayerResponseImpl response = (PlayerResponseImpl) commandHandlerBus.execute(command, context);
+    public PlayerResponse runCommand(String command, String playerName) {
+        PlayerContext player = playerRepository.findByName(playerName);
+        if (player == null) {
+            PlayerContextImpl player_ = PlayerContextImpl.builder()
+                    .name(playerName)
+
+                    .strength(10)
+                    .dexterity(10)
+                    .endurance(10)
+                    .intelligence(10)
+                    .wisdom(10)
+                    .charisma(10)
+
+                    .equipment(EquipmentEntity.builder()
+                            .backpack(Lists.newArrayList())
+                            .build())
+
+                    .currentLocation("1")
+                    .pastLocation("1")
+
+                    .parameters(Maps.newHashMap())
+
+                    .build();
+            player = playerRepository.insert(player_);
+        }
+
+        PlayerResponseImpl response = (PlayerResponseImpl) commandHandlerBus.execute(command, player);
         return response;
     }
 }
