@@ -50,6 +50,7 @@ public class GameImpl implements Game {
         }
 
         PlayerResponseImpl response = (PlayerResponseImpl) commandHandlerBus.execute(command, player);
+        playerRepository.save((PlayerContextImpl) player);
         return response;
     }
 }

@@ -11,6 +11,7 @@ import org.grizz.game.model.impl.items.MiscEntity;
 import org.grizz.game.model.impl.items.WeaponEntity;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.ItemRepo;
+import org.grizz.game.model.repository.LocationItemsRepository;
 import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.service.simple.LocationService;
 import org.grizz.game.service.simple.impl.LocationServiceImpl;
@@ -45,6 +46,9 @@ public class LocationServiceImplTest {
 
     @Mock
     private ItemRepo itemRepo;
+
+    @Mock
+    private LocationItemsRepository locationItemsRepo;
 
     @Before
     public void init() {

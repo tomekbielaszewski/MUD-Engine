@@ -5,8 +5,10 @@ import org.grizz.game.exception.NoSuchItemException;
 import org.grizz.game.exception.NotEnoughItemsException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
+import org.grizz.game.model.impl.LocationItemsEntity;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.ItemRepo;
+import org.grizz.game.model.repository.LocationItemsRepository;
 import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.service.simple.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class LocationServiceImpl implements LocationService {
     private Environment env;
     @Autowired
     private LocationRepo locationRepo;
+    @Autowired
+    private LocationItemsRepository locationItemsRepo;
     @Autowired
     private ItemRepo itemRepo;
 
@@ -87,6 +91,8 @@ public class LocationServiceImpl implements LocationService {
                 itemsOnLocation.remove(itemToRemove);
             }
 
+            locationItemsRepo.save((LocationItemsEntity) location.getItems());
+
             return itemsToRemove;
         }
     }
@@ -99,5 +105,6 @@ public class LocationServiceImpl implements LocationService {
 
         List<Item> locationItems = location.getItems().getMobileItems();
         locationItems.addAll(items);
+        locationItemsRepo.save((LocationItemsEntity) location.getItems());
     }
 }

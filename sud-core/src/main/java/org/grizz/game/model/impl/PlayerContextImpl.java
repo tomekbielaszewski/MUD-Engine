@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Builder;
 import org.grizz.game.model.Equipment;
 import org.grizz.game.model.PlayerContext;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
@@ -17,6 +18,9 @@ import java.util.Map;
 @AllArgsConstructor
 @Document(collection = "players")
 public class PlayerContextImpl implements PlayerContext {
+    @Id
+    private String id;
+
     private String name;
 
     private int strength;

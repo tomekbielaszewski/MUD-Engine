@@ -8,6 +8,7 @@ import org.grizz.game.loader.Loader;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.impl.LocationEntity;
 import org.grizz.game.model.impl.LocationItemsEntity;
+import org.grizz.game.model.repository.LocationItemsRepository;
 import org.grizz.game.model.repository.Repository;
 import org.grizz.game.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class LocationLoader implements Loader {
 
     @Autowired
     private Repository<Location> locationRepo;
+
+    @Autowired
+    private LocationItemsRepository locationItemsRepository;
 
     public LocationLoader(String path) {
         this._path = path;
@@ -45,15 +49,17 @@ public class LocationLoader implements Loader {
                         log.info("Reading: {}", path.toString());
                         locationsArray = gson.fromJson(Files.newBufferedReader(path), LocationEntity[].class);
                         for (LocationEntity location : locationsArray) {
-                            //TODO: load items from mongo
-//                            location.setItems(Lists.newArrayList());
-//                            location.setStaticItems(Lists.newArrayList());
-                            LocationItemsEntity itemsEntity = LocationItemsEntity.builder()
-                                    .locationId(location.getId())
-                                    .mobileItems(Lists.newArrayList())
-                                    .staticItems(Lists.newArrayList())
-                                    .build();
-                            location.setItems(itemsEntity);
+                            LocationItemsEntity locationItems = locationItemsRepository.findByLocationId(location.getId());
+                            if (locationItems == null) {
+                                log.info("Not found location items for location {}. Creating new entity...", location.getName());
+                                locationItems = LocationItemsEntity.builder()
+                                        .locationId(location.getId())
+                                        .mobileItems(Lists.newArrayList())
+                                        .staticItems(Lists.newArrayList())
+                                        .build();
+                                locationItems = locationItemsRepository.insert(locationItems);
+                            }
+                            location.setItems(locationItems);
                             locationRepo.add(location);
                         }
                     } catch (IOException e) {
