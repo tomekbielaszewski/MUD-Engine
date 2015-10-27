@@ -9,8 +9,10 @@ import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.items.StaticEntity;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.ItemRepo;
+import org.grizz.game.service.complex.MultiplayerNotificationService;
 import org.grizz.game.service.complex.PlayerLocationInteractionService;
 import org.grizz.game.service.simple.EquipmentService;
+import org.grizz.game.service.simple.EventService;
 import org.grizz.game.service.simple.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,6 +31,12 @@ public class PlayerLocationInteractionServiceImpl implements PlayerLocationInter
     private EquipmentService equipmentService;
 
     @Autowired
+    private MultiplayerNotificationService notificationService;
+
+    @Autowired
+    private EventService eventService;
+
+    @Autowired
     private ItemRepo itemRepo;
 
     @Override
@@ -40,6 +48,9 @@ public class PlayerLocationInteractionServiceImpl implements PlayerLocationInter
         try {
             List<Item> itemFromLocation = locationService.removeItems(currentLocation, itemName, amount);
             equipmentService.addItems(itemFromLocation, playerContext, response);
+
+            String pickupEvent = eventService.getEvent("multiplayer.event.player.picked.up.items", playerContext.getName(), amount.toString(), itemName);
+            notificationService.broadcast(currentLocation, pickupEvent, playerContext);
         } catch (NoSuchItemException e) {
             Item item = getItem(itemName);
             if (item instanceof StaticEntity) {
@@ -57,6 +68,9 @@ public class PlayerLocationInteractionServiceImpl implements PlayerLocationInter
         Location currentLocation = locationService.getCurrentLocation(playerContext);
         List<Item> itemsFromEquipment = equipmentService.removeItems(itemName, amount, playerContext, response);
         locationService.addItems(currentLocation, itemsFromEquipment);
+
+        String pickupEvent = eventService.getEvent("multiplayer.event.player.drop.items", playerContext.getName(), amount.toString(), itemName);
+        notificationService.broadcast(currentLocation, pickupEvent, playerContext);
     }
 
     private Item getItem(String itemName) {

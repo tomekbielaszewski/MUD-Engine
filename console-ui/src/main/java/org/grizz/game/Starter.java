@@ -1,6 +1,7 @@
 package org.grizz.game;
 
 import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.service.simple.Notifier;
 import org.grizz.game.ui.OutputFormatter;
 import org.grizz.game.ui.impl.OutputFormatterImpl;
 
@@ -13,7 +14,12 @@ public class Starter {
 
     public static void main(String[] args) {
         OutputFormatter formatter = new OutputFormatterImpl();
-        Game game = GameFactory.getInstance();
+        Game game = GameFactory.getInstance(new Notifier() {
+            @Override
+            public void notify(String playerName, String event) {
+                System.out.println(String.format("%s --> %s", playerName, event));
+            }
+        });
 
         Scanner sc = new Scanner(System.in);
 

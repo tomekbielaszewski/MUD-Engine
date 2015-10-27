@@ -8,6 +8,9 @@ import org.grizz.game.loader.impl.MobLoader;
 import org.grizz.game.loader.impl.ScriptLoader;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.model.repository.LocationItemsRepository;
+import org.grizz.game.service.simple.Notifier;
+import org.grizz.game.service.simple.impl.DefaultNotifier;
+import org.grizz.game.service.simple.impl.ProxyNotifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -107,6 +110,17 @@ public class GameConfig {
 //        locationItemsRepository.save(location4);
 //        location8.setId(locationItemsRepository.findByLocationId("8").getId());
 //        locationItemsRepository.save(location8);
+    }
+
+    @Bean
+    public Notifier defaultNotifier() {
+        return new DefaultNotifier();
+    }
+
+
+    @Bean
+    public Notifier proxyNotifier() {
+        return new ProxyNotifier(defaultNotifier());
     }
 
     @Bean
