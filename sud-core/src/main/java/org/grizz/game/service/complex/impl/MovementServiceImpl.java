@@ -13,7 +13,9 @@ import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.service.complex.MovementService;
+import org.grizz.game.service.complex.MultiplayerNotificationService;
 import org.grizz.game.service.complex.ScriptRunnerService;
+import org.grizz.game.service.simple.EventService;
 import org.grizz.game.service.simple.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,12 @@ public class MovementServiceImpl implements MovementService {
 
     @Autowired
     private ScriptRunnerService scriptRunnerService;
+
+    @Autowired
+    private MultiplayerNotificationService notificationService;
+
+    @Autowired
+    private EventService eventService;
 
     @Override
     public void move(@NonNull final Direction dir, @NonNull final PlayerContext playerContext, @NonNull final PlayerResponse response) {
@@ -99,6 +107,12 @@ public class MovementServiceImpl implements MovementService {
 
                 showCurrentLocation(_context, response);
                 log.info("{} moved from [{}] to [{}]", context.getName(), currentLocation.getName(), targetLocation.getName());
+
+                String locationLeaveEvent = eventService.getEvent("multiplayer.event.player.left.location", context.getName());
+                notificationService.broadcast(currentLocation, locationLeaveEvent, context);
+
+                String locationEnterEvent = eventService.getEvent("multiplayer.event.player.entered.location", context.getName());
+                notificationService.broadcast(targetLocation, locationEnterEvent, context);
             } else {
                 log.info("{} was denied to move from [{}] to [{}]", context.getName(), currentLocation.getName(), targetLocation.getName());
             }

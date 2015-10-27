@@ -8,9 +8,11 @@ import org.grizz.game.model.Script;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.model.repository.ScriptRepo;
+import org.grizz.game.service.complex.MultiplayerNotificationService;
 import org.grizz.game.service.complex.PlayerLocationInteractionService;
 import org.grizz.game.service.complex.ScriptRunnerService;
 import org.grizz.game.service.simple.EquipmentService;
+import org.grizz.game.service.simple.EventService;
 import org.grizz.game.service.simple.LocationService;
 import org.grizz.game.service.utils.CommandUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,12 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
     @Lazy
     @Autowired
     private CommandUtils commandUtils;
+    @Lazy
+    @Autowired
+    private MultiplayerNotificationService notificationService;
+    @Lazy
+    @Autowired
+    private EventService eventService;
 
     @Override
     public Object execute(final String command, final String scriptId, final PlayerContext playerContext, final PlayerResponse response) {
@@ -86,6 +94,8 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
         binding.put("locationService", locationService);
         binding.put("commandRunner", commandHandlerBus);
         binding.put("commandUtils", commandUtils);
+        binding.put("notificationService", notificationService);
+        binding.put("eventService", eventService);
 
         return binding;
     }
