@@ -105,7 +105,6 @@ public class OutputFormatterImpl implements OutputFormatter {
             Map<Item, Integer> countedItems = countItems(playerResponse.getEquipmentItems());
 
             appendSeparator(sb, 79);
-            sb.append("W ekwipunku posiadasz:\n");
 
             for (Map.Entry<Item, Integer> countedItem : countedItems.entrySet()) {
                 Item item = countedItem.getKey();
