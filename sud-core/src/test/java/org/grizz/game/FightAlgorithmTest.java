@@ -23,7 +23,7 @@ import java.util.Map;
 @Slf4j
 @ContextConfiguration(classes = {GameConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class FightAlgorithmTest {
+public class FightAlgorithmTest extends AbstractTest {
     @Autowired
     private EquipmentService equipmentService;
     @Autowired

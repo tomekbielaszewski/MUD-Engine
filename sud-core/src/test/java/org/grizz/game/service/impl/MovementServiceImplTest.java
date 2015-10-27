@@ -1,5 +1,6 @@
 package org.grizz.game.service.impl;
 
+import org.grizz.game.AbstractTest;
 import org.grizz.game.config.GameConfig;
 import org.grizz.game.service.complex.MovementService;
 import org.junit.Test;
@@ -13,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @ContextConfiguration(classes = {GameConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class MovementServiceImplTest {
+public class MovementServiceImplTest extends AbstractTest {
     @Autowired
     private MovementService movementService;
 

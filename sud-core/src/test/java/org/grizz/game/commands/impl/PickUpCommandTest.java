@@ -1,6 +1,7 @@
 package org.grizz.game.commands.impl;
 
 import com.google.common.collect.Maps;
+import org.grizz.game.AbstractTest;
 import org.grizz.game.config.GameConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertThat;
  */
 @ContextConfiguration(classes = {GameConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class PickUpCommandTest {
+public class PickUpCommandTest extends AbstractTest {
     @Autowired
     private PickUpCommand command;
 

@@ -1,6 +1,7 @@
 package org.grizz.game.service.impl;
 
 import com.google.common.collect.Lists;
+import org.grizz.game.AbstractTest;
 import org.grizz.game.config.GameConfig;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.enums.Direction;
@@ -21,7 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @ContextConfiguration(classes = {GameConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class MovementServiceImplIntegrationTest {
+public class MovementServiceImplIntegrationTest extends AbstractTest {
     @Autowired
     private MovementService movementService;
     @Autowired
