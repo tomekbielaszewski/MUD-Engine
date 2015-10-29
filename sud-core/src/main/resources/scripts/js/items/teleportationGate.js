@@ -6,6 +6,5 @@ response.getPlayerEvents().add(teleportatioText);
 
 commandRunner.execute("spojrz", player, response);
 
-var playerTeleportEvent = eventService.getEvent("multiplayer.event.player.teleported.to.location", [player.getName()]);
-var targetLocation = locationRepo.get(startingLocationId);
-notificationService.broadcast(targetLocation, playerTeleportEvent, player);
+var playerTeleportEvent = "BUM! " + player.getName() + " nagle sie pojawil na lokacji!";
+notificationService.broadcast(locationRepo.get(startingLocationId), playerTeleportEvent, player);
