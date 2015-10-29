@@ -95,7 +95,6 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
         binding.put("commandRunner", commandHandlerBus);
         binding.put("commandUtils", commandUtils);
         binding.put("notificationService", notificationService);
-        binding.put("eventService", eventService);
 
         return binding;
     }
