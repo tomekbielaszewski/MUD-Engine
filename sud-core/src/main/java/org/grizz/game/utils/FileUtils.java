@@ -52,7 +52,7 @@ public class FileUtils {
 
     public static Path getFilepath(String filePath) throws IOException, URISyntaxException {
         URL url = new Dummy().getClass().getClassLoader().getResource(filePath);
-        log.info("Accessing file: " + url.toString());
+        log.debug("Accessing file: " + url.toString());
         return Paths.get(url.toURI());
     }
 

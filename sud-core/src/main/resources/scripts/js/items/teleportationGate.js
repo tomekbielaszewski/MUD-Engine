@@ -1,3 +1,6 @@
+//@ sourceURL=sud-core/src/main/resources/scripts/js/items/teleportationGate.js
+//line above is for IntelliJ debugging purposes
+
 var startingLocationId = "1";
 var teleportatioText = "Niesmialo dotykasz czarnej pionowej tafli. Czujesz mocne szarpniecie za reke, obraz ciemnieje... Zostałeś wciągnięty wewnatrz bramy...\n"
 

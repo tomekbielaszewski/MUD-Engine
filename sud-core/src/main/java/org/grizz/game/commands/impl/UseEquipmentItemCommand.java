@@ -37,7 +37,7 @@ public class UseEquipmentItemCommand implements Command {
     public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
         CommandScript commandScript = getItemScript(command, playerContext);
         if (commandScript != null) {
-            scriptRunner.execute(command, commandScript.getScriptId(), playerContext, response);
+            scriptRunner.execute(command, commandScript.getCommand(), commandScript.getScriptId(), playerContext, response);
         }
 
         return response;
@@ -46,7 +46,6 @@ public class UseEquipmentItemCommand implements Command {
     private CommandScript getItemScript(String command, PlayerContext playerContext) {
         List<Item> items = equipmentService.getItemsInEquipment(playerContext);
 
-        //TODO stream
         //TODO check for command duplicates on two different items. What to do then?
         for (Item item : items) {
             for (CommandScript commandScript : item.getCommands()) {

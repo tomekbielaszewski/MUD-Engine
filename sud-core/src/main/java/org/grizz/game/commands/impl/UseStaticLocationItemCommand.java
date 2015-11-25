@@ -41,7 +41,7 @@ public class UseStaticLocationItemCommand implements Command {
     public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
         CommandScript commandScript = getItemScript(command, playerContext);
         if (commandScript != null) {
-            scriptRunner.execute(command, commandScript.getScriptId(), playerContext, response);
+            scriptRunner.execute(command, commandScript.getCommand(), commandScript.getScriptId(), playerContext, response);
         }
 
         return response;
@@ -50,7 +50,6 @@ public class UseStaticLocationItemCommand implements Command {
     private CommandScript getItemScript(String command, PlayerContext playerContext) {
         List<Item> items = locationService.getCurrentLocationStaticItems(playerContext);
 
-        //TODO stream
         for (Item item : items) {
             for (CommandScript commandScript : item.getCommands()) {
                 if (commandUtils.isMatching(command, commandScript.getCommand())) {

@@ -28,6 +28,7 @@ public class Starter {
 //        String player = sc.nextLine();
             String player = "Grizz";
             String command = "spojrz";
+//            String command = "wykuj sztabka zlota 1";
 
             PlayerResponse response = game.runCommand(command, player);
             System.out.println(formatter.format(response));

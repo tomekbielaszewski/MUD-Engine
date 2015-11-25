@@ -9,6 +9,10 @@
       {
         "command": "wykuj ([\\D]+) ([\\d]+)",
         "scriptId": "105"
+      },
+      {
+        "command": "wykuj ([\\D]+)",
+        "scriptId": "105"
       }
     ]
   },

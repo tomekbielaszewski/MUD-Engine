@@ -38,7 +38,20 @@ public class EquipmentServiceImpl implements EquipmentService {
         }
 
         player.getEquipment().getBackpack().addAll(items);
+        //FIXME: co jesli player otrzyma liste roznych itemkow? wiadomosc zwrotna bedzie bledna
         response.getPlayerEvents().add(eventService.getEvent("player.received.items", "" + items.size(), items.stream().findFirst().get().getName()));
+    }
+
+    @Override
+    public void addItems(String itemName, Integer amount, PlayerContext player, PlayerResponse response) {
+        Item item = getItem(itemName);
+        List<Item> items = Lists.newArrayList();
+
+        for (int i = 0; i < amount; i++) {
+            items.add(item);
+        }
+
+        this.addItems(items, player, response);
     }
 
     @Override

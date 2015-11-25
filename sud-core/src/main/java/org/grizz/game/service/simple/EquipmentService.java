@@ -14,5 +14,7 @@ public interface EquipmentService {
 
     void addItems(List<Item> items, PlayerContext playerContext, PlayerResponse response);
 
+    void addItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response);
+
     List<Item> removeItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response);
 }
