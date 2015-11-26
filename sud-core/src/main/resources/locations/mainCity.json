@@ -10,7 +10,6 @@
     "beforeLeave": "100",
     "onLeave": "100"
   },
-
   {
     "id": "2",
     "name": "Podworze slumsow",
@@ -20,14 +19,12 @@
     "east": "4",
     "west": "3"
   },
-
   {
     "id": "3",
     "name": "Opuszczony dom",
     "description": "Jestes w jednej ze starych, drewnianych chatek w slumsach. Wewnątrz jest ciemno, brudno i wilgotno. Nie chciałbyś tutaj spędzać nocy. Po stopie przebiegł ci szczur cicho popiskując. Jedyne wyjście z chatki prowadzi na wschód.",
     "east": "2"
   },
-
   {
     "id": "4",
     "name": "Opuszczony dom",
@@ -35,7 +32,6 @@
     "west": "2",
     "beforeEnter": "104"
   },
-
   {
     "id": "5",
     "name": "Scieżka do slumsów",
@@ -43,7 +39,6 @@
     "north": "6",
     "south": "2"
   },
-
   {
     "id": "6",
     "name": "Ścieżka do slumsów",
@@ -51,7 +46,6 @@
     "south": "5",
     "east": "7"
   },
-
   {
     "id": "7",
     "name": "Ścieżka do slumsów",
@@ -59,7 +53,6 @@
     "north": "8",
     "west": "6"
   },
-
   {
     "id": "8",
     "name": "Ścieżka do slumsów",
