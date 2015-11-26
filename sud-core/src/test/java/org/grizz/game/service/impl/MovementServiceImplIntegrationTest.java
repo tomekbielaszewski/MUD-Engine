@@ -2,6 +2,7 @@ package org.grizz.game.service.impl;
 
 import com.google.common.collect.Lists;
 import org.grizz.game.TestContext;
+import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.enums.Direction;
 import org.grizz.game.model.impl.EquipmentEntity;
@@ -40,80 +41,85 @@ public class MovementServiceImplIntegrationTest {
                 .build();
         PlayerResponse response = new PlayerResponseImpl();
 
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("2", context.getCurrentLocation());// 2
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("3", context.getCurrentLocation());// 3
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("2", context.getCurrentLocation());// 2
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("4", context.getCurrentLocation());// 4
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("2", context.getCurrentLocation());// 2
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("5", context.getCurrentLocation());// 5
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("2", context.getCurrentLocation());// 2
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("5", context.getCurrentLocation());// 5
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("6", context.getCurrentLocation());// 6
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("5", context.getCurrentLocation());// 5
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("6", context.getCurrentLocation());// 6
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("7", context.getCurrentLocation());// 7
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("6", context.getCurrentLocation());// 6
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("7", context.getCurrentLocation());// 7
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("8", context.getCurrentLocation());// 8
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("9", context.getCurrentLocation());// 9
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("12", context.getCurrentLocation());// 12
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("13", context.getCurrentLocation());// 13
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("12", context.getCurrentLocation());// 12
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("9", context.getCurrentLocation());// 9
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("10", context.getCurrentLocation());// 10
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("14", context.getCurrentLocation());// 14
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("15", context.getCurrentLocation());// 15
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("16", context.getCurrentLocation());// 16
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("17", context.getCurrentLocation());// 17
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("16", context.getCurrentLocation());// 16
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("15", context.getCurrentLocation());// 15
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("9", context.getCurrentLocation());// 9
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("15", context.getCurrentLocation());// 15
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("14", context.getCurrentLocation());// 14
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("10", context.getCurrentLocation());// 10
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("11", context.getCurrentLocation());// 11
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("19", context.getCurrentLocation());// 19
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("20", context.getCurrentLocation());// 20
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("18", context.getCurrentLocation());// 18
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("11", context.getCurrentLocation());// 11
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("19", context.getCurrentLocation());// 19
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("20", context.getCurrentLocation());// 20
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("21", context.getCurrentLocation());// 21
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("22", context.getCurrentLocation());// 22
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("25", context.getCurrentLocation());// 25
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("26", context.getCurrentLocation());// 26
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("25", context.getCurrentLocation());// 25
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("22", context.getCurrentLocation());// 22
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("23", context.getCurrentLocation());// 23
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("27", context.getCurrentLocation());// 27
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("23", context.getCurrentLocation());// 23
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("24", context.getCurrentLocation());// 24
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("28", context.getCurrentLocation());// 28
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("24", context.getCurrentLocation());// 24
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("23", context.getCurrentLocation());// 23
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("22", context.getCurrentLocation());// 22
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("21", context.getCurrentLocation());// 21
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("20", context.getCurrentLocation());// 20
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("19", context.getCurrentLocation());// 19
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("29", context.getCurrentLocation());// 29
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("32", context.getCurrentLocation());// 32
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("34", context.getCurrentLocation());// 34
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("32", context.getCurrentLocation());// 32
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("33", context.getCurrentLocation());// 33
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("32", context.getCurrentLocation());// 32
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("29", context.getCurrentLocation());// 29
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("30", context.getCurrentLocation());// 30
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("31", context.getCurrentLocation());// 31
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("30", context.getCurrentLocation());// 30
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("29", context.getCurrentLocation());// 29
-        movementService.move(Direction.NORTH, context, response);	Assert.assertEquals("19", context.getCurrentLocation());// 19
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("11", context.getCurrentLocation());// 11
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("10", context.getCurrentLocation());// 10
-        movementService.move(Direction.EAST, context, response);	Assert.assertEquals("9", context.getCurrentLocation());// 9
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("8", context.getCurrentLocation());// 8
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("7", context.getCurrentLocation());// 7
-        movementService.move(Direction.WEST, context, response);	Assert.assertEquals("6", context.getCurrentLocation());// 6
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("5", context.getCurrentLocation());// 5
-        movementService.move(Direction.SOUTH, context, response);	Assert.assertEquals("2", context.getCurrentLocation());// 2
+        move(Direction.NORTH, "2", context, response);
+        move(Direction.WEST, "3", context, response);
+        move(Direction.EAST, "2", context, response);
+        move(Direction.EAST, "4", context, response);
+        move(Direction.WEST, "2", context, response);
+        move(Direction.NORTH, "5", context, response);
+        move(Direction.SOUTH, "2", context, response);
+        move(Direction.NORTH, "5", context, response);
+        move(Direction.NORTH, "6", context, response);
+        move(Direction.SOUTH, "5", context, response);
+        move(Direction.NORTH, "6", context, response);
+        move(Direction.EAST, "7", context, response);
+        move(Direction.WEST, "6", context, response);
+        move(Direction.EAST, "7", context, response);
+        move(Direction.NORTH, "8", context, response);
+        move(Direction.NORTH, "9", context, response);
+        move(Direction.EAST, "12", context, response);
+        move(Direction.EAST, "13", context, response);
+        move(Direction.WEST, "12", context, response);
+        move(Direction.WEST, "9", context, response);
+        move(Direction.WEST, "10", context, response);
+        move(Direction.NORTH, "14", context, response);
+        move(Direction.EAST, "15", context, response);
+        move(Direction.EAST, "16", context, response);
+        move(Direction.EAST, "17", context, response);
+        move(Direction.WEST, "16", context, response);
+        move(Direction.WEST, "15", context, response);
+        move(Direction.SOUTH, "9", context, response);
+        move(Direction.NORTH, "15", context, response);
+        move(Direction.WEST, "14", context, response);
+        move(Direction.SOUTH, "10", context, response);
+        move(Direction.WEST, "11", context, response);
+        move(Direction.WEST, "19", context, response);
+        move(Direction.NORTH, "20", context, response);
+        move(Direction.EAST, "18", context, response);
+        move(Direction.SOUTH, "11", context, response);
+        move(Direction.WEST, "19", context, response);
+        move(Direction.NORTH, "20", context, response);
+        move(Direction.NORTH, "21", context, response);
+        move(Direction.NORTH, "22", context, response);
+        move(Direction.EAST, "25", context, response);
+        move(Direction.SOUTH, "26", context, response);
+        move(Direction.NORTH, "25", context, response);
+        move(Direction.WEST, "22", context, response);
+        move(Direction.NORTH, "23", context, response);
+        move(Direction.EAST, "27", context, response);
+        move(Direction.WEST, "23", context, response);
+        move(Direction.NORTH, "24", context, response);
+        move(Direction.EAST, "28", context, response);
+        move(Direction.WEST, "24", context, response);
+        move(Direction.SOUTH, "23", context, response);
+        move(Direction.SOUTH, "22", context, response);
+        move(Direction.SOUTH, "21", context, response);
+        move(Direction.SOUTH, "20", context, response);
+        move(Direction.SOUTH, "19", context, response);
+        move(Direction.SOUTH, "29", context, response);
+        move(Direction.SOUTH, "32", context, response);
+        move(Direction.SOUTH, "34", context, response);
+        move(Direction.NORTH, "32", context, response);
+        move(Direction.EAST, "33", context, response);
+        move(Direction.WEST, "32", context, response);
+        move(Direction.NORTH, "29", context, response);
+        move(Direction.EAST, "30", context, response);
+        move(Direction.EAST, "31", context, response);
+        move(Direction.WEST, "30", context, response);
+        move(Direction.WEST, "29", context, response);
+        move(Direction.NORTH, "19", context, response);
+        move(Direction.EAST, "11", context, response);
+        move(Direction.EAST, "10", context, response);
+        move(Direction.EAST, "9", context, response);
+        move(Direction.SOUTH, "8", context, response);
+        move(Direction.SOUTH, "7", context, response);
+        move(Direction.WEST, "6", context, response);
+        move(Direction.SOUTH, "5", context, response);
+        move(Direction.SOUTH, "2", context, response);
+    }
+
+    private void move(Direction dir, String targetLocationId, PlayerContext context, PlayerResponse response) {
+        movementService.move(dir, context, response);
+        Assert.assertEquals(targetLocationId, context.getCurrentLocation());
     }
 }
