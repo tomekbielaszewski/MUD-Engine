@@ -8,11 +8,36 @@
     "commands": [
       {
         "command": "wykuj ([\\D]+) ([\\d]+)",
-        "scriptId": "105"
+        "scriptId": "bs-anvil-crafting"
       },
       {
         "command": "wykuj ([\\D]+)",
-        "scriptId": "105"
+        "scriptId": "bs-anvil-crafting"
+      }
+    ]
+  },
+  {
+    "id": "304",
+    "name": "Piec kowalski",
+    "description": "wielki, okopcony piec z którego buchają płomienie. Możesz w nim *przetopić* swoje rudy",
+    "pickUpMessage": "Jak chcesz podnieść gorący wielki piec?!",
+    "itemType": "STATIC",
+    "commands": [
+      {
+        "command": "przetop ([\\D]+) ([\\d]+)",
+        "scriptId": "bs-furnace-crafting"
+      },
+      {
+        "command": "przetop ([\\D]+)",
+        "scriptId": "bs-furnace-crafting"
+      },
+      {
+        "command": "wytop ([\\D]+) ([\\d]+)",
+        "scriptId": "bs-furnace-crafting"
+      },
+      {
+        "command": "wytop ([\\D]+)",
+        "scriptId": "bs-furnace-crafting"
       }
     ]
   },

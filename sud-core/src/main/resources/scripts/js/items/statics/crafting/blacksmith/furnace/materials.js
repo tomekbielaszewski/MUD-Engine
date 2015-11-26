@@ -1,4 +1,4 @@
-//@ sourceURL=sud-core/src/main/resources/scripts/js/items/statics/crafting/blacksmith/materials.js
+//@ sourceURL=sud-core/src/main/resources/scripts/js/items/statics/crafting/blacksmith/furnace/materials.js
 //line above is for IntelliJ debugging purposes
 
 var ironOre = "401";

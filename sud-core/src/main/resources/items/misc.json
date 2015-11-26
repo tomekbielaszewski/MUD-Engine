@@ -52,5 +52,19 @@
     "description": "Jest to mały zardzewiały klucz. Widać, że nie był używany od dłuższego czasu.",
     "itemType": "MISC",
     "commands": []
+  },
+  {
+    "id": "8",
+    "name": "Szczypce kowalskie",
+    "description": "Solidne, żelazne i mocno okopcone szczypce kowalskie. Przydatne podczas przetapiania rudy w piecu.",
+    "itemType": "MISC",
+    "commands": []
+  },
+  {
+    "id": "9",
+    "name": "Młot kowalski",
+    "description": "Ciężki solidny młot kowalski. Przyda się przy wykuwaniu przedmiotów na kowadle.",
+    "itemType": "MISC",
+    "commands": []
   }
 ]

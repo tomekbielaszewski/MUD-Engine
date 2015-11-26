@@ -10,6 +10,11 @@
     "path": "scripts/js/game-utils.js"
   },
   {
+    "id": "crafting",
+    "name": "Crafting library script",
+    "path": "scripts/js/items/statics/crafting/crafting.js"
+  },
+  {
     "id": "100",
     "name": "Always true script",
     "path": "scripts/js/alwaysTrue.js"
@@ -36,19 +41,34 @@
   },
 
   {
-    "id": "105",
+    "id": "bs-anvil-crafting",
     "name": "Black Smith's anvil crafting script",
-    "path": "scripts/js/items/statics/crafting/blacksmith/crafting.js"
+    "path": "scripts/js/items/statics/crafting/blacksmith/anvil/crafting.js"
   },
   {
-    "id": "105-materials",
+    "id": "bs-anvil-materials",
     "name": "Black Smith's anvil crafting materials script",
-    "path": "scripts/js/items/statics/crafting/blacksmith/materials.js"
+    "path": "scripts/js/items/statics/crafting/blacksmith/anvil/materials.js"
   },
   {
-    "id": "105-recipes",
+    "id": "bs-anvil-recipes",
     "name": "Black Smith's anvil crafting recipes script",
-    "path": "scripts/js/items/statics/crafting/blacksmith/recipes.js"
+    "path": "scripts/js/items/statics/crafting/blacksmith/anvil/recipes.js"
+  },
+  {
+    "id": "bs-furnace-crafting",
+    "name": "Black Smith's furnace crafting script",
+    "path": "scripts/js/items/statics/crafting/blacksmith/furnace/crafting.js"
+  },
+  {
+    "id": "bs-furnace-materials",
+    "name": "Black Smith's furnace crafting materials script",
+    "path": "scripts/js/items/statics/crafting/blacksmith/furnace/materials.js"
+  },
+  {
+    "id": "bs-furnace-recipes",
+    "name": "Black Smith's furnace crafting recipes script",
+    "path": "scripts/js/items/statics/crafting/blacksmith/furnace/recipes.js"
   },
 
   {

@@ -11,6 +11,9 @@ function tellPlayer(message) {
 }
 
 function playerHas(itemId, amount) {
+    if (amount === undefined) {
+        amount = 1;
+    }
     var items = equipmentService.getItemsInEquipment(player);
     var itemsMatching = items.stream()
         .filter(function (item) {

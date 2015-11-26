@@ -64,8 +64,29 @@
   },
   {
     "id": "410",
-    "name": "Mithril",
+    "name": "Sztabka mithrilu",
     "description": "Sztabka bialego metalu, niezwykle twarda",
+    "itemType": "MISC",
+    "commands": []
+  },
+  {
+    "id": "411",
+    "name": "Skórzane pasy",
+    "description": "Pasy wycięte z garbowanej skóry",
+    "itemType": "MISC",
+    "commands": []
+  },
+  {
+    "id": "412",
+    "name": "Drewniany trzonek",
+    "description": "Oszlifowany, poręczny, drewniany trzonek",
+    "itemType": "MISC",
+    "commands": []
+  },
+  {
+    "id": "413",
+    "name": "Żelazny drut",
+    "description": "Długi na kilka metrów, zawinięty, żelazny drut",
     "itemType": "MISC",
     "commands": []
   }

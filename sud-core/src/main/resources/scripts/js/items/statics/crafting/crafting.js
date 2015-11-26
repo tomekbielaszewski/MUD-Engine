@@ -1,11 +1,10 @@
-//@ sourceURL=sud-core/src/main/resources/scripts/js/items/statics/crafting/blacksmith/crafting.js
+//@ sourceURL=sud-core/src/main/resources/scripts/js/items/statics/crafting/crafting.js
 //line above is for IntelliJ debugging purposes
-loadScript("105-materials");
-loadScript("105-recipes");
 
 function itemIsOnRecipesList(item) {
     for (i = 0; i < recipes.length; i++) {
-        if (recipes[i].name === item) {
+        var recipe = recipes[i];
+        if (recipe.name === item) {
             return true;
         }
     }
@@ -49,7 +48,7 @@ function giveCraftedItem(recipe, amount) {
 }
 
 function informAboutSuccessfulCrafting(recipe, amount) {
-    tellPlayer("Udało Ci się stworzyć " + recipe.name + " w ilości " + amount + " szt. Przedmiot znajdziesz w swoim ekwipunku")
+    tellPlayer("Udało Ci się stworzyć " + recipe.name + " w ilości " + amount + "szt. Przedmiot znajdziesz w swoim ekwipunku")
 }
 
 function informAboutInsufficientMaterials(recipe, amount) {
@@ -63,6 +62,8 @@ function informThatItemIsUnknown(item) {
 function craft(item, amount) {
     if (amount <= 0) {
         tellPlayer("Jak chcesz stworzyć taką liczbę przedmiotów?!")
+    } else if (!doesPlayerHaveRequiredTools()) {
+        informThatPlayerHasNoRequiredTools();
     } else {
         if (itemIsOnRecipesList(item)) {
             var recipe = getRecipe(item);
@@ -79,11 +80,3 @@ function craft(item, amount) {
         }
     }
 }
-
-interpretCommand(function (commandSplit) {
-    var itemName = commandSplit[0];
-    var amount = commandSplit.length > 2 ? commandSplit[1] : 1;
-
-    logger.info("{} is crafting {}x {}", [player.getName(), amount, itemName]);
-    craft(itemName, amount);
-});
