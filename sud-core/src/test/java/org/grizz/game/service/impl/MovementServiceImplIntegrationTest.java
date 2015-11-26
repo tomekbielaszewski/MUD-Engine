@@ -1,8 +1,7 @@
 package org.grizz.game.service.impl;
 
 import com.google.common.collect.Lists;
-import org.grizz.game.AbstractTest;
-import org.grizz.game.config.GameConfig;
+import org.grizz.game.TestContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.enums.Direction;
 import org.grizz.game.model.impl.EquipmentEntity;
@@ -11,7 +10,6 @@ import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.service.complex.MovementService;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +19,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * Created by tomasz.bielaszewski on 2015-04-27.
  */
-@ContextConfiguration(classes = {GameConfig.class})
+@ContextConfiguration(classes = {TestContext.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class MovementServiceImplIntegrationTest extends AbstractTest {
+public class MovementServiceImplIntegrationTest {
     @Autowired
     private MovementService movementService;
     @Autowired
     private ItemRepo itemRepo;
 
     @Test
-    @Ignore //FIXME: Some problem with embeded mongo....
+//    @Ignore //FIXME: Some problem with embeded mongo....
     public void mainCityWalkthroughTest() {
         PlayerContextImpl context = PlayerContextImpl.builder()
                 .name("TestUser")

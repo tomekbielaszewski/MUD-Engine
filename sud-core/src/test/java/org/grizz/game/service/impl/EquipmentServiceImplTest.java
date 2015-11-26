@@ -2,8 +2,7 @@ package org.grizz.game.service.impl;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.grizz.game.AbstractTest;
-import org.grizz.game.config.GameConfig;
+import org.grizz.game.TestContext;
 import org.grizz.game.exception.NoSuchItemException;
 import org.grizz.game.exception.NotEnoughItemsException;
 import org.grizz.game.model.PlayerContext;
@@ -36,9 +35,9 @@ import static org.mockito.Mockito.when;
 /**
  * Created by tomasz.bielaszewski on 2015-10-05.
  */
-@ContextConfiguration(classes = {GameConfig.class})
+@ContextConfiguration(classes = {TestContext.class})
 @RunWith(MockitoJUnitRunner.class)
-public class EquipmentServiceImplTest extends AbstractTest {
+public class EquipmentServiceImplTest {
     @InjectMocks
     private EquipmentService equipmentService = new EquipmentServiceImpl();
 

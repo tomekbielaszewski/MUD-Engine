@@ -1,8 +1,7 @@
 package org.grizz.game.commands.impl;
 
 import com.google.common.collect.Maps;
-import org.grizz.game.AbstractTest;
-import org.grizz.game.config.GameConfig;
+import org.grizz.game.TestContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,9 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by Grizz on 2015-08-11.
  */
-@ContextConfiguration(classes = {GameConfig.class})
+@ContextConfiguration(classes = {TestContext.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class PickUpCommandTest extends AbstractTest {
+public class PickUpCommandTest {
     @Autowired
     private PickUpCommand command;
 

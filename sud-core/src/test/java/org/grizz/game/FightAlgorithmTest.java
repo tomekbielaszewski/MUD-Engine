@@ -2,7 +2,6 @@ package org.grizz.game;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
-import org.grizz.game.config.GameConfig;
 import org.grizz.game.model.Equipment;
 import org.grizz.game.model.impl.EquipmentEntity;
 import org.grizz.game.model.impl.PlayerContextImpl;
@@ -21,9 +20,9 @@ import java.util.Map;
  * Created by Grizz on 2015-10-01.
  */
 @Slf4j
-@ContextConfiguration(classes = {GameConfig.class})
+@ContextConfiguration(classes = {TestContext.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class FightAlgorithmTest extends AbstractTest {
+public class FightAlgorithmTest {
     @Autowired
     private EquipmentService equipmentService;
     @Autowired

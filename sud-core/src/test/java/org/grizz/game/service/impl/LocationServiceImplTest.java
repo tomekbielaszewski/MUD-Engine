@@ -2,8 +2,7 @@ package org.grizz.game.service.impl;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.grizz.game.AbstractTest;
-import org.grizz.game.config.GameConfig;
+import org.grizz.game.TestContext;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.impl.LocationEntity;
 import org.grizz.game.model.impl.LocationItemsEntity;
@@ -36,9 +35,9 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Grizz on 2015-08-17.
  */
-@ContextConfiguration(classes = {GameConfig.class})
+@ContextConfiguration(classes = {TestContext.class})
 @RunWith(MockitoJUnitRunner.class)
-public class LocationServiceImplTest extends AbstractTest {
+public class LocationServiceImplTest {
     @InjectMocks
     private LocationService locationService = new LocationServiceImpl();
 
