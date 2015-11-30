@@ -9,8 +9,6 @@ import java.util.List;
  */
 public interface LocationItems {
     String getLocationId();
-
     List<Item> getMobileItems();
-
     List<Item> getStaticItems();
 }
