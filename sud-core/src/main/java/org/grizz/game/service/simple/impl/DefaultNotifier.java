@@ -1,5 +1,6 @@
 package org.grizz.game.service.simple.impl;
 
+import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.service.simple.Notifier;
 
 /**
@@ -7,7 +8,7 @@ import org.grizz.game.service.simple.Notifier;
  */
 public class DefaultNotifier implements Notifier {
     @Override
-    public void notify(String playerName, String event) {
+    public void notify(String playerName, PlayerResponse response) {
         //Do nothing...
     }
 }

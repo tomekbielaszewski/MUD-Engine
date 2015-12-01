@@ -7,6 +7,7 @@ import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.Script;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.model.repository.LocationRepo;
+import org.grizz.game.model.repository.PlayerRepository;
 import org.grizz.game.model.repository.ScriptRepo;
 import org.grizz.game.service.complex.MultiplayerNotificationService;
 import org.grizz.game.service.complex.PlayerLocationInteractionService;
@@ -52,6 +53,9 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
     private ItemRepo itemRepo;
     @Lazy
     @Autowired
+    private PlayerRepository playerRepo;
+    @Lazy
+    @Autowired
     private PlayerLocationInteractionService playerLocationInteractionService;
     @Lazy
     @Autowired
@@ -95,6 +99,7 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
 
         binding.put("locationRepo", locationRepo);
         binding.put("itemRepo", itemRepo);
+        binding.put("playerRepo", playerRepo);
         binding.put("scriptRepo", scriptRepo);
         binding.put("playerLocationInteractionService", playerLocationInteractionService);
         binding.put("equipmentService", equipmentService);

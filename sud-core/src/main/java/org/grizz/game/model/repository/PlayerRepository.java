@@ -11,6 +11,7 @@ import java.util.List;
  */
 public interface PlayerRepository extends MongoRepository<PlayerContextImpl, String> {
     PlayerContext findByName(String name);
+    PlayerContext findByNameIgnoreCase(String name);
 
     List<PlayerContext> findByCurrentLocation(String id);
 }

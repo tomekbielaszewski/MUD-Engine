@@ -31,7 +31,7 @@ public class LocationRepoImpl implements LocationRepo {
     public Location get(String id) {
         if(locations.containsKey(id)) {
             return locations.get(id);
-        } else {
+        } else { //TODO: custom exception
             throw new IllegalArgumentException("No such location: " + id);
         }
     }

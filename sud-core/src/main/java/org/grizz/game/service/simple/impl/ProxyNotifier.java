@@ -1,6 +1,7 @@
 package org.grizz.game.service.simple.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.service.simple.Notifier;
 
 /**
@@ -21,7 +22,7 @@ public class ProxyNotifier implements Notifier {
     }
 
     @Override
-    public void notify(String playerName, String event) {
-        delegatedNotifier.notify(playerName, event);
+    public void notify(String playerName, PlayerResponse response) {
+        delegatedNotifier.notify(playerName, response);
     }
 }

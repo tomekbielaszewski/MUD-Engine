@@ -16,8 +16,10 @@ public class Starter {
         OutputFormatter formatter = new OutputFormatterImpl();
         Game game = GameFactory.getInstance(new Notifier() {
             @Override
-            public void notify(String playerName, String event) {
-                System.out.println(String.format("%s --> %s", playerName, event));
+            public void notify(String playerName, PlayerResponse response) {
+                System.out.println(String.format("########## %s ############", playerName));
+                System.out.println(formatter.format(response));
+                System.out.println(String.format("########## EOF %s ########", playerName));
             }
         });
 

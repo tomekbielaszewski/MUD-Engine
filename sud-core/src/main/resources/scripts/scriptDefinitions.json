@@ -5,6 +5,11 @@
     "path": "scripts/js/master-script.js"
   },
   {
+    "id": "authorization-check",
+    "name": "Authorization check script",
+    "path": "scripts/js/authorization-check.js"
+  },
+  {
     "id": "game-utils",
     "name": "Game utilities script",
     "path": "scripts/js/game-utils.js"

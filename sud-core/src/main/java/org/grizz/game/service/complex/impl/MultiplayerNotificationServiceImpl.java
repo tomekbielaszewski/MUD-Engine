@@ -2,6 +2,8 @@ package org.grizz.game.service.complex.impl;
 
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
+import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.model.repository.PlayerRepository;
 import org.grizz.game.service.complex.MultiplayerNotificationService;
 import org.grizz.game.service.simple.Notifier;
@@ -33,6 +35,13 @@ public class MultiplayerNotificationServiceImpl implements MultiplayerNotificati
 
     @Override
     public void send(PlayerContext player, String event) {
-        proxyNotifier.notify(player.getName(), event);
+        PlayerResponseImpl response = new PlayerResponseImpl();
+        response.getPlayerEvents().add(event);
+        proxyNotifier.notify(player.getName(), response);
+    }
+
+    @Override
+    public void send(PlayerContext player, PlayerResponse response) {
+        proxyNotifier.notify(player.getName(), response);
     }
 }
