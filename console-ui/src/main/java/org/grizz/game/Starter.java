@@ -18,7 +18,10 @@ public class Starter {
             @Override
             public void notify(String playerName, PlayerResponse response) {
                 System.out.println(String.format("########## %s ############", playerName));
-                System.out.println(formatter.format(response));
+                String output = formatter.format(response);
+                output = output.replaceAll("\n", "\n# ");
+                output = "# " + output;
+                System.out.println(output);
                 System.out.println(String.format("########## EOF %s ########", playerName));
             }
         });
