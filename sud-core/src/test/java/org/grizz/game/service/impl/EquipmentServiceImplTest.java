@@ -509,6 +509,4 @@ public class EquipmentServiceImplTest {
 
         equipmentService.removeItems(itemName, amount, context, response);
     }
-
-    //TODO: Refactor tests - move all repeating code to single method
 }

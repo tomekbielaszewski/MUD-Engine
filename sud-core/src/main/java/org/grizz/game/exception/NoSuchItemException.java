@@ -8,7 +8,7 @@ public class NoSuchItemException extends GameException {
         super(message);
     }
 
-    public NoSuchItemException(String message, Throwable cause) {
-        super(message, cause);
+    public NoSuchItemException(String message, String... params) {
+        super(message, params);
     }
 }

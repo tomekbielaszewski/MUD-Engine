@@ -4,8 +4,10 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.model.Location;
+import org.grizz.game.model.Script;
 import org.grizz.game.model.impl.LocationEntity;
 import org.grizz.game.model.impl.LocationItemsEntity;
 import org.grizz.game.model.repository.LocationItemsRepository;
@@ -26,6 +28,8 @@ public class LocationLoader implements Loader {
 
     @Autowired
     private Repository<Location> locationRepo;
+    @Autowired
+    private Repository<Script> scriptRepo;
 
     @Autowired
     private LocationItemsRepository locationItemsRepository;
@@ -59,6 +63,7 @@ public class LocationLoader implements Loader {
                                         .build();
                                 locationItems = locationItemsRepository.insert(locationItems);
                             }
+                            failFastOnScriptMissing(location);
                             location.setItems(locationItems);
                             locationRepo.add(location);
                         }
@@ -66,5 +71,19 @@ public class LocationLoader implements Loader {
                         e.printStackTrace();
                     }
                 });
+    }
+
+    private void failFastOnScriptMissing(LocationEntity location) {
+        checkScript(location.getBeforeEnter());
+        checkScript(location.getOnEnter());
+        checkScript(location.getOnShow());
+        checkScript(location.getBeforeLeave());
+        checkScript(location.getOnLeave());
+    }
+
+    private void checkScript(String scriptId) {
+        if (!StringUtils.isEmpty(scriptId)) {
+            scriptRepo.get(scriptId);
+        }
     }
 }

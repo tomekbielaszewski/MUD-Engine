@@ -8,7 +8,7 @@ public class CantGoThereException extends GameException {
         super(message);
     }
 
-    public CantGoThereException(String message, Throwable cause) {
-        super(message, cause);
+    public CantGoThereException(String message, String... params) {
+        super(message, params);
     }
 }

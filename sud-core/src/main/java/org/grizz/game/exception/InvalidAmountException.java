@@ -8,7 +8,7 @@ public class InvalidAmountException extends GameException {
         super(message);
     }
 
-    public InvalidAmountException(String message, Throwable cause) {
-        super(message, cause);
+    public InvalidAmountException(String message, String... params) {
+        super(message, params);
     }
 }

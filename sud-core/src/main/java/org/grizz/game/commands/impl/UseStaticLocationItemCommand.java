@@ -3,15 +3,9 @@ package org.grizz.game.commands.impl;
 import org.grizz.game.commands.Command;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
-import org.grizz.game.model.items.CommandScript;
-import org.grizz.game.model.items.Item;
-import org.grizz.game.service.complex.ScriptRunnerService;
-import org.grizz.game.service.simple.LocationService;
-import org.grizz.game.service.utils.CommandUtils;
+import org.grizz.game.service.complex.PlayerLocationInteractionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * Created by tomasz.bielaszewski on 2015-08-06.
@@ -19,45 +13,17 @@ import java.util.List;
 @Component
 public class UseStaticLocationItemCommand implements Command {
     @Autowired
-    private CommandUtils commandUtils;
-
-    @Autowired
-    private LocationService locationService;
-
-    @Autowired
-    private ScriptRunnerService scriptRunner;
+    private PlayerLocationInteractionService locationInteractionService;
 
     @Override
     public boolean accept(String command, PlayerContext playerContext) {
-        return isStaticItemOnLocationPresent(playerContext) &&
-                getItemScript(command, playerContext) != null;
-    }
-
-    private boolean isStaticItemOnLocationPresent(PlayerContext playerContext) {
-        return !locationService.getCurrentLocation(playerContext).getItems().getStaticItems().isEmpty();
+        return locationInteractionService.canExecuteItemCommand(command, playerContext);
     }
 
     @Override
     public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
-        CommandScript commandScript = getItemScript(command, playerContext);
-        if (commandScript != null) {
-            scriptRunner.execute(command, commandScript.getCommand(), commandScript.getScriptId(), playerContext, response);
-        }
-
+        locationInteractionService.executeItemCommand(command, playerContext, response);
         return response;
-    }
-
-    private CommandScript getItemScript(String command, PlayerContext playerContext) {
-        List<Item> items = locationService.getCurrentLocationStaticItems(playerContext);
-
-        for (Item item : items) {
-            for (CommandScript commandScript : item.getCommands()) {
-                if (commandUtils.isMatching(command, commandScript.getCommand())) {
-                    return commandScript;
-                }
-            }
-        }
-        return null;
     }
 
     @Override

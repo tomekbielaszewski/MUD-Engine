@@ -27,6 +27,20 @@ public class EquipmentServiceImpl implements EquipmentService {
     private EventService eventService;
 
     @Override
+    public void showEquipment(PlayerContext player, PlayerResponse response) {
+        List<Item> itemsInEquipment = getItemsInEquipment(player);
+        response.getEquipmentItems().addAll(itemsInEquipment);
+
+        String equipmentTitle;
+        if (itemsInEquipment.isEmpty()) {
+            equipmentTitle = eventService.getEvent("equipment.empty");
+        } else {
+            equipmentTitle = eventService.getEvent("equipment.title");
+        }
+        response.getPlayerEvents().add(equipmentTitle);
+    }
+
+    @Override
     public List<Item> getItemsInEquipment(PlayerContext context) {
         return context.getEquipment().getBackpack();
     }
@@ -44,7 +58,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public void addItems(String itemName, Integer amount, PlayerContext player, PlayerResponse response) {
-        Item item = getItem(itemName);
+        Item item = itemRepo.getByName(itemName);
         List<Item> items = Lists.newArrayList();
 
         for (int i = 0; i < amount; i++) {
@@ -59,7 +73,7 @@ public class EquipmentServiceImpl implements EquipmentService {
         if (amountToRemove <= 0) {
             return Lists.newArrayList();
         }
-        final Item item = getItem(itemName);
+        final Item item = itemRepo.getByName(itemName);
 
         List<Item> backpack = player.getEquipment().getBackpack();
         List<Item> itemsToRemove = backpack.stream()
@@ -80,17 +94,4 @@ public class EquipmentServiceImpl implements EquipmentService {
             return itemsToRemove;
         }
     }
-
-    private Item getItem(String itemName) {
-        final Item item;
-
-        try {
-            item = itemRepo.getByName(itemName);
-        } catch (NoSuchItemException e) {
-            throw new NoSuchItemException("there.is.no.such.item.name", e);
-        }
-        return item;
-    }
-
-
 }

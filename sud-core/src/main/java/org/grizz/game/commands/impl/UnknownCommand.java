@@ -22,7 +22,7 @@ public class UnknownCommand implements Command {
 
     @Override
     public PlayerResponse execute(String command, PlayerContext context, PlayerResponse response) {
-        response.getPlayerEvents().add(eventService.getEvent("unknown.command.invoced", command));
+        response.getPlayerEvents().add(eventService.getEvent("unknown.command.invoked", command));
         return response;
     }
 }

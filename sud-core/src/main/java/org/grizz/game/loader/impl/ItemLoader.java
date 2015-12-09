@@ -5,9 +5,11 @@ import lombok.SneakyThrows;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.loader.Loader;
+import org.grizz.game.model.Script;
 import org.grizz.game.model.enums.ItemType;
 import org.grizz.game.model.enums.WeaponType;
 import org.grizz.game.model.impl.items.*;
+import org.grizz.game.model.items.CommandScript;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.Repository;
 import org.grizz.game.utils.FileUtils;
@@ -29,6 +31,9 @@ public class ItemLoader implements Loader {
     @Autowired
     private Repository<Item> itemRepo;
 
+    @Autowired
+    private Repository<Script> scriptRepo;
+
     public ItemLoader(String path) {
         this._path = path;
     }
@@ -39,7 +44,6 @@ public class ItemLoader implements Loader {
         readItems(_path);
     }
 
-    //TODO fail fast on loading item with non existing script mapping - script with id 123 does not exist? throw exception!
     private void readItems(String _path) throws IOException, URISyntaxException {
         Gson gson = new Gson();
         FileUtils.listFilesInFolder(_path)
@@ -49,7 +53,11 @@ public class ItemLoader implements Loader {
                         log.info("Reading: {}", path.toString());
                         itemsArray = gson.fromJson(Files.newBufferedReader(path), UniversalItem[].class);
                         for (UniversalItem item : itemsArray) {
-                            itemRepo.add(transformItem(item));
+                            Item transformedItem = transformItem(item);
+                            itemRepo.add(transformedItem);
+                            for (CommandScript commandScript : transformedItem.getCommands()) {
+                                scriptRepo.get(commandScript.getScriptId());
+                            }
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

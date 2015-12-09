@@ -4,6 +4,8 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.grizz.game.exception.CantGoThereException;
+import org.grizz.game.exception.GameExceptionHandler;
+import org.grizz.game.exception.NoSuchLocationException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
@@ -43,6 +45,9 @@ public class MovementServiceImpl implements MovementService {
     @Autowired
     private EventService eventService;
 
+    @Autowired
+    private GameExceptionHandler gameExceptionHandler;
+
     @Override
     public void move(@NonNull final Direction dir, @NonNull final PlayerContext playerContext, @NonNull final PlayerResponse response) {
         Location currentLocation = locationService.getCurrentLocation(playerContext);
@@ -68,8 +73,9 @@ public class MovementServiceImpl implements MovementService {
                     move(currentLocation::getDown, playerContext, currentLocation, response);
                     break;
             }
-        } catch (IllegalArgumentException e) {
-            log.warn("{} tried to go from ID[{}] to [{}]: {}", playerContext.getName(), currentLocation.getId(), dir, e.getMessage());
+        } catch (NoSuchLocationException e) {
+            String exceptionMessage = gameExceptionHandler.handle(e);
+            log.warn("{} tried to go from ID[{}] to [{}]: {}", playerContext.getName(), currentLocation.getId(), dir, exceptionMessage);
             throw new CantGoThereException("cant.go.there");
         }
     }

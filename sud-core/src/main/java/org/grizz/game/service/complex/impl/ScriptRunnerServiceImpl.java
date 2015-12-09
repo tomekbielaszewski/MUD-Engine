@@ -115,7 +115,7 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
 
     private Object execute(String scriptId, SimpleBindings binding) throws ScriptException {
         Script masterScript = scriptRepo.get(MASTER_SCRIPT_ID);
-        Script script = scriptRepo.get(scriptId);
+        Script script = scriptRepo.get(scriptId);//TODO: Dobrze by bylo powiadomic admina o braku skryptu...
         log.info("Script [{}] described as [{}] executed!", script.getPath(), script.getName());
 
         binding.put("scriptId", scriptId);

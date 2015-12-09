@@ -2,10 +2,12 @@ package org.grizz.game.service.complex.impl;
 
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import org.grizz.game.exception.NoSuchItemException;
+import org.grizz.game.exception.CantGiveStaticItemException;
+import org.grizz.game.exception.InvalidAmountException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.model.enums.ItemType;
 import org.grizz.game.model.impl.PlayerContextImpl;
 import org.grizz.game.model.impl.PlayerResponseImpl;
 import org.grizz.game.model.items.Item;
@@ -58,16 +60,14 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Override
     public void teleport(String player, String targetLocationId, PlayerContext admin, PlayerResponse adminResponse) {
         if(isAuthorized(admin, adminResponse)) {
-            Location targetLocation = null;
+            Location targetLocation = locationRepo.get(targetLocationId);
 
-            try {
-                targetLocation = locationRepo.get(targetLocationId);
-            } catch (IllegalArgumentException e) {
-                String event = eventService.getEvent("admin.command.location.not.found", targetLocationId);
-                adminResponse.getPlayerEvents().add(event);
-                return;
+            PlayerContext teleportedPlayer;
+            if (admin.getName().equalsIgnoreCase(player)) {
+                teleportedPlayer = admin;
+            } else {
+                teleportedPlayer = playerRepo.findByNameIgnoreCase(player);
             }
-            PlayerContext teleportedPlayer = playerRepo.findByNameIgnoreCase(player);
 
             if (teleportedPlayer == null) {
                 String event = eventService.getEvent("admin.command.player.not.found", player);
@@ -92,11 +92,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         notifyPlayersOnTargetLocation(teleportedPlayer);
         notifyTeleportingAdmin(teleportedPlayer, targetLocation, adminResponse);
 
-        if(teleportedPlayer.getName().equals(admin.getName())) { //self teleport?
-            PlayerContextImpl _admin = (PlayerContextImpl) admin;
-            _admin.setCurrentLocation(teleportedPlayer.getCurrentLocation());
-            _admin.setPastLocation(teleportedPlayer.getPastLocation());
-        } else {
+        if (!teleportedPlayer.getName().equalsIgnoreCase(admin.getName())) {
             playerRepo.save(teleportedPlayer);
         }
     }
@@ -127,16 +123,21 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Override
     public void give(String player, int amount, String itemName, PlayerContext admin, PlayerResponse adminResponse) {
         if(isAuthorized(admin, adminResponse)) {
-            Item item;
-
-            try {
-                item = itemRepo.getByName(itemName);
-            } catch (NoSuchItemException e) {
-                String event = eventService.getEvent("there.is.no.such.item.name", itemName);
-                adminResponse.getPlayerEvents().add(event);
-                return;
+            if (amount < 1) {
+                throw new InvalidAmountException("admin.command.cant.give.none.items");
             }
-            PlayerContext receiver = playerRepo.findByNameIgnoreCase(player);
+
+            Item item = itemRepo.getByName(itemName);
+            if (ItemType.STATIC.equals(item.getItemType())) {
+                throw new CantGiveStaticItemException("admin.command.cant.give.static.item");
+            }
+
+            PlayerContext receiver;
+            if (admin.getName().equalsIgnoreCase(player)) {
+                receiver = admin;
+            } else {
+                receiver = playerRepo.findByNameIgnoreCase(player);
+            }
 
             if (receiver == null) {
                 String event = eventService.getEvent("admin.command.player.not.found", player);
@@ -153,13 +154,15 @@ public class AdministratorServiceImpl implements AdministratorService {
         for (int i = 0; i < amount; i++) {
             items.add(item);
         }
+
         PlayerResponseImpl receiverResponse = new PlayerResponseImpl();
         equipmentService.addItems(items, receiver, receiverResponse);
 
         notifyReceiver(receiver, receiverResponse, admin);
 
-        if(!receiver.getName().equals(admin.getName())) {
-            notifyGivingAdmin(admin, adminResponse, receiver);
+        if (!receiver.getName().equalsIgnoreCase(admin.getName())) {
+            notifyGivingAdmin(adminResponse, receiver);
+            playerRepo.save(receiver);
         }
     }
 
@@ -169,14 +172,9 @@ public class AdministratorServiceImpl implements AdministratorService {
         multiplayerNotificationService.send(receiver, receiverResponse);
     }
 
-    private void notifyGivingAdmin(PlayerContext admin, PlayerResponse adminResponse, PlayerContextImpl receiver) {
+    private void notifyGivingAdmin(PlayerResponse adminResponse, PlayerContextImpl receiver) {
         String itemsGivenEvent = eventService.getEvent("admin.command.items.given.to", receiver.getName());
         adminResponse.getPlayerEvents().add(itemsGivenEvent);
-    }
-
-    @Override
-    public void give(int amount, String itemName, PlayerContext admin, PlayerResponse adminResponse) {
-        this.give(admin.getName(), amount, itemName, admin, adminResponse);
     }
 
     @Override

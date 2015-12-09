@@ -9,7 +9,6 @@ import org.grizz.game.model.PlayerResponse;
 public interface AdministratorService {
     void teleport(String player, String targetLocationId, PlayerContext admin, PlayerResponse adminResponse);
     void give(String player, int amount, String itemName, PlayerContext admin, PlayerResponse adminResponse);
-    void give(int amount, String itemName, PlayerContext admin, PlayerResponse adminResponse);
     void put(String locationId, int amount, String itemName, PlayerContext admin, PlayerResponse adminResponse);
     void put(int amount, String itemName, PlayerContext admin, PlayerResponse adminResponse);
 }

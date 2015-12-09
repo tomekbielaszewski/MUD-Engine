@@ -2,7 +2,6 @@ package org.grizz.game.commands.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.commands.Command;
-import org.grizz.game.exception.GameException;
 import org.grizz.game.exception.GameExceptionHandler;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
@@ -56,12 +55,7 @@ public class PickUpCommand implements Command {
     }
 
     private void doMultiPickup(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
-        try {
-            playerLocationInteractionService.pickUpItems(itemName, amount, playerContext, response);
-            log.info("{} picked up {} of {}", playerContext.getName(), amount, itemName);
-        } catch (GameException e) {
-            String formattedEvent = exceptionHandler.handle(e);
-            response.getPlayerEvents().add(formattedEvent);
-        }
+        playerLocationInteractionService.pickUpItems(itemName, amount, playerContext, response);
+        log.info("{} picked up {} of {}", playerContext.getName(), amount, itemName);
     }
 }

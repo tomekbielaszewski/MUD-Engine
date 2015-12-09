@@ -53,9 +53,9 @@ public class GameConfig {
 
     @PostConstruct
     public void initGame() {
+        scriptLoader().load();
         itemLoader().load();
         mobLoader().load();
-        scriptLoader().load();
         locationLoader().load();
 
     /*

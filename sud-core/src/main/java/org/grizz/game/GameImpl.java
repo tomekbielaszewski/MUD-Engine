@@ -3,6 +3,8 @@ package org.grizz.game;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.grizz.game.commands.CommandHandlerBus;
+import org.grizz.game.exception.GameException;
+import org.grizz.game.exception.GameExceptionHandler;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.impl.EquipmentEntity;
@@ -19,8 +21,12 @@ import org.springframework.stereotype.Service;
 public class GameImpl implements Game {
     @Autowired
     private CommandHandlerBus commandHandlerBus;
+
     @Autowired
     private PlayerRepository playerRepository;
+
+    @Autowired
+    private GameExceptionHandler exceptionHandler;
 
     @Override
     public PlayerResponse runCommand(String command, String playerName) {
@@ -49,8 +55,15 @@ public class GameImpl implements Game {
             player = playerRepository.insert(player_);
         }
 
-        PlayerResponseImpl response = (PlayerResponseImpl) commandHandlerBus.execute(command, player);
-        playerRepository.save((PlayerContextImpl) player);
+        PlayerResponseImpl response = new PlayerResponseImpl();
+        try {
+            response = (PlayerResponseImpl) commandHandlerBus.execute(command, player);
+            playerRepository.save((PlayerContextImpl) player);
+        } catch (GameException e) {
+            String exceptionMessage = exceptionHandler.handle(e);
+            response.getPlayerEvents().add(exceptionMessage);
+        }
+
         return response;
     }
 }

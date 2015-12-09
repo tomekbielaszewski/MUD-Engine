@@ -10,4 +10,8 @@ public interface PlayerLocationInteractionService {
     public void pickUpItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response);
 
     public void dropItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response);
+
+    void executeItemCommand(String command, PlayerContext player, PlayerResponse response);
+
+    boolean canExecuteItemCommand(String command, PlayerContext player);
 }

@@ -8,7 +8,7 @@ public class NotEnoughItemsException extends GameException {
         super(message);
     }
 
-    public NotEnoughItemsException(String message, Throwable cause) {
-        super(message, cause);
+    public NotEnoughItemsException(String message, String... params) {
+        super(message, params);
     }
 }

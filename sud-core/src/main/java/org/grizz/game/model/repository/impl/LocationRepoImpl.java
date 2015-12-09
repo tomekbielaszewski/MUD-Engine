@@ -2,6 +2,7 @@ package org.grizz.game.model.repository.impl;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import org.grizz.game.exception.NoSuchLocationException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.repository.LocationRepo;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,8 @@ public class LocationRepoImpl implements LocationRepo {
     public Location get(String id) {
         if(locations.containsKey(id)) {
             return locations.get(id);
-        } else { //TODO: custom exception
-            throw new IllegalArgumentException("No such location: " + id);
+        } else {
+            throw new NoSuchLocationException("no.such.location", id);
         }
     }
 }

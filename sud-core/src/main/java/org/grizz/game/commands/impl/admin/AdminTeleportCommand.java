@@ -32,6 +32,12 @@ public class AdminTeleportCommand implements Command {
         if (commandSplit.length == 2) {
             String playerName = commandSplit[0];
             String locationId = commandSplit[1];
+
+            administratorService.teleport(playerName, locationId, playerContext, response);
+        } else if (commandSplit.length == 1) {
+            String playerName = commandSplit[0];
+            String locationId = playerContext.getCurrentLocation();
+
             administratorService.teleport(playerName, locationId, playerContext, response);
         } else {
             throw new IllegalArgumentException("There is an error in pattern matching command []! " +

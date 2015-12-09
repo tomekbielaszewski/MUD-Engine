@@ -1,7 +1,7 @@
 package org.grizz.game.exception;
 
+import org.grizz.game.service.simple.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,13 +10,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class GameExceptionHandler {
     @Autowired
-    private Environment env;
+    private EventService eventService;
 
     public String handle(GameException e) {
         String message = e.getMessage();
-        Throwable cause = e.getCause();
-        String causeMessage = cause != null ? cause.getMessage() : "";
-        String formattedMessage = String.format(env.getProperty(message), causeMessage);
-        return formattedMessage;
+        return eventService.getEvent(message, e.getParams());
     }
 }

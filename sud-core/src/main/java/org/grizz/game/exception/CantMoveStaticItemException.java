@@ -8,7 +8,7 @@ public class CantMoveStaticItemException extends GameException {
         super(message);
     }
 
-    public CantMoveStaticItemException(String message, Throwable cause) {
-        super(message, cause);
+    public CantMoveStaticItemException(String message, String... params) {
+        super(message, params);
     }
 }

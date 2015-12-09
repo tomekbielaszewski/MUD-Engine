@@ -1,10 +1,12 @@
 package org.grizz.game.service.simple.impl;
 
 import com.google.common.collect.Lists;
+import org.grizz.game.exception.CantRemoveStaticItemException;
 import org.grizz.game.exception.NoSuchItemException;
 import org.grizz.game.exception.NotEnoughItemsException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.PlayerContext;
+import org.grizz.game.model.enums.ItemType;
 import org.grizz.game.model.impl.LocationItemsEntity;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.ItemRepo;
@@ -68,12 +70,10 @@ public class LocationServiceImpl implements LocationService {
         if (amount == 0) {
             return Lists.newArrayList();
         }
-        final Item item;
+        final Item item = itemRepo.getByName(itemName);
 
-        try {
-            item = itemRepo.getByName(itemName);
-        } catch (NoSuchItemException e) {
-            throw new NoSuchItemException("there.is.no.such.item.name", e);
+        if (ItemType.STATIC.equals(item.getItemType())) {
+            throw new CantRemoveStaticItemException("cant.remove.static.item", item.getName());
         }
 
         List<Item> itemsOnLocation = location.getItems().getMobileItems();

@@ -2,7 +2,6 @@ package org.grizz.game.commands.impl.movement;
 
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.commands.Command;
-import org.grizz.game.exception.GameException;
 import org.grizz.game.exception.GameExceptionHandler;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
@@ -31,13 +30,7 @@ public abstract class MovementCommand implements Command {
     }
 
     public PlayerResponse execute(Direction direction, final PlayerContext playerContext, PlayerResponse response) {
-        try {
-            movementService.move(direction, playerContext, response);
-        } catch (GameException e) {
-            String formattedEvent = exceptionHandler.handle(e);
-            response.getPlayerEvents().add(formattedEvent);
-        }
-
+        movementService.move(direction, playerContext, response);
         return response;
     }
 }

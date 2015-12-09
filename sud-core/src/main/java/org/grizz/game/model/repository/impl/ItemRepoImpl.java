@@ -34,7 +34,7 @@ public class ItemRepoImpl implements ItemRepo {
         if (items.containsKey(id)) {
             return items.get(id);
         } else {
-            throw new NoSuchItemException(id);
+            throw new NoSuchItemException("no.such.item", id);
         }
     }
 
@@ -53,7 +53,7 @@ public class ItemRepoImpl implements ItemRepo {
                     return itemNameFromRepo.equalsIgnoreCase(formattedItemName);
                 })
                 .findFirst()
-                .orElseThrow(() -> new NoSuchItemException(itemName));
+                .orElseThrow(() -> new NoSuchItemException("there.is.no.such.item.name", itemName));
 
         return matchingItemEntry.getValue();
     }
