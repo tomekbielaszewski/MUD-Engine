@@ -2,9 +2,8 @@ package org.grizz.game.config.converters;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import org.bson.types.ObjectId;
+import org.grizz.game.model.impl.EquipmentEntity;
 import org.grizz.game.model.impl.ItemStack;
-import org.grizz.game.model.impl.LocationItemsEntity;
 import org.grizz.game.model.items.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -17,19 +16,25 @@ import java.util.stream.Collectors;
  * Created by Grizz on 2015-11-27.
  */
 @Service
-public class LocationItemsWriteConverter implements Converter<LocationItemsEntity, DBObject> {
+public class EquipmentWriteConverter implements Converter<EquipmentEntity, DBObject> {
     @Autowired
     private ItemListToItemStackConverter itemListToItemStackConverter;
     @Autowired
     private ItemStackWriteConverter itemStackConverter;
 
     @Override
-    public DBObject convert(LocationItemsEntity source) {
+    public DBObject convert(EquipmentEntity source) {
         DBObject dbo = new BasicDBObject();
-        dbo.put("_id", new ObjectId(source.getId()));
-        dbo.put("locationId", source.getLocationId());
-        dbo.put("staticItems", convert(source.getStaticItems()));
-        dbo.put("mobileItems", convert(source.getMobileItems()));
+
+        dbo.put("head", getItemId(source.getHeadItem()));
+        dbo.put("torso", getItemId(source.getTorsoItem()));
+        dbo.put("hands", getItemId(source.getHandsItem()));
+        dbo.put("legs", getItemId(source.getLegsItem()));
+        dbo.put("feet", getItemId(source.getFeetItem()));
+        dbo.put("melee", getItemId(source.getMeleeWeapon()));
+        dbo.put("range", getItemId(source.getRangeWeapon()));
+        dbo.put("backpack", convert(source.getBackpack()));
+
         return dbo;
     }
 
@@ -40,5 +45,9 @@ public class LocationItemsWriteConverter implements Converter<LocationItemsEntit
                 .collect(Collectors.toList());
 
         return dbObjects;
+    }
+
+    private String getItemId(Item item) {
+        return item == null ? null : item.getId();
     }
 }

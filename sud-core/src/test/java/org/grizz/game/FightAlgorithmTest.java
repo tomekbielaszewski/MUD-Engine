@@ -133,7 +133,7 @@ public class FightAlgorithmTest {
         private int hp;
 
         public Player(String name, int strength, int dexterity, int intelligence, int wisdom, int charisma, int endurance, int hp, Equipment equipment, String currentLocation, String pastLocation, Map<String, Object> parameters) {
-            super("", name, strength, dexterity, endurance, intelligence, wisdom, charisma, equipment, currentLocation, pastLocation, parameters);
+            super("", name, strength, dexterity, endurance, intelligence, wisdom, charisma, (EquipmentEntity) equipment, currentLocation, pastLocation, parameters);
             if (hp > this.getMaxHP()) {
                 this.hp = this.getMaxHP();
             } else {

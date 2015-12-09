@@ -5,6 +5,7 @@ import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.ui.OutputFormatter;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -133,7 +134,12 @@ public class OutputFormatterImpl implements OutputFormatter {
     }
 
     private Map<Item, Integer> countItems(List<Item> equipmentItems) {
-        Map<Item, Integer> countedItems = Maps.newHashMap();
+        Map<Item, Integer> countedItems = Maps.newTreeMap(new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
 
         for (Item item : equipmentItems) {
             countedItems.merge(item, 1, (v, vv) -> v + vv);

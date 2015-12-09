@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * Created by Grizz on 2015-11-30.
  */
 @Component
-public class AdminGiveItemCommand implements Command {
+public class AdminPutItemCommand implements Command {
     @Autowired
     private CommandUtils commandUtils;
 
@@ -29,17 +29,15 @@ public class AdminGiveItemCommand implements Command {
         String matchedPattern = commandUtils.getMatchedPattern(command, getClass().getCanonicalName());
         String[] commandSplit = commandUtils.splitCommand(command, matchedPattern);
 
-        if (commandSplit.length == 2) {
+        if (commandSplit.length == 1) {
             String itemName = commandSplit[0];
-            String playerName = commandSplit[1];
 
-            administratorService.give(playerName, itemName, 1, playerContext, response);
-        } else if (commandSplit.length == 3) {
+            administratorService.put(itemName, 1, playerContext, response);
+        } else if (commandSplit.length == 2) {
             int amount = Integer.parseInt(commandSplit[0]);
             String itemName = commandSplit[1];
-            String playerName = commandSplit[2];
 
-            administratorService.give(playerName, itemName, amount, playerContext, response);
+            administratorService.put(itemName, amount, playerContext, response);
         } else {
             throw new IllegalArgumentException("There is an error in pattern matching command []! " +
                     "To many or zero capturing groups!");

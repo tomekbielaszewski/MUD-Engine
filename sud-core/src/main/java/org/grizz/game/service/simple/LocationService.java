@@ -21,4 +21,6 @@ public interface LocationService {
     void addItems(Location location, List<Item> items);
 
     Location getCurrentLocation(PlayerContext playerContext);
+
+    void saveLocationState(Location location);
 }

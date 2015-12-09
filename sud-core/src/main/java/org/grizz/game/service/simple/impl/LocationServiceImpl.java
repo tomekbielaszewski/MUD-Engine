@@ -91,7 +91,7 @@ public class LocationServiceImpl implements LocationService {
                 itemsOnLocation.remove(itemToRemove);
             }
 
-            locationItemsRepo.save((LocationItemsEntity) location.getItems());
+            saveLocationState(location);
 
             return itemsToRemove;
         }
@@ -105,6 +105,11 @@ public class LocationServiceImpl implements LocationService {
 
         List<Item> locationItems = location.getItems().getMobileItems();
         locationItems.addAll(items);
+        saveLocationState(location);
+    }
+
+    @Override
+    public void saveLocationState(Location location) {
         locationItemsRepo.save((LocationItemsEntity) location.getItems());
     }
 }

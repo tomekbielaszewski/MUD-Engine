@@ -3,7 +3,6 @@ package org.grizz.game.model.impl;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Builder;
-import org.grizz.game.model.Equipment;
 import org.grizz.game.model.PlayerContext;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -30,7 +29,7 @@ public class PlayerContextImpl implements PlayerContext {
     private int wisdom;
     private int charisma;
 
-    private Equipment equipment;
+    private EquipmentEntity equipment;
 
     private String currentLocation;
     private String pastLocation;

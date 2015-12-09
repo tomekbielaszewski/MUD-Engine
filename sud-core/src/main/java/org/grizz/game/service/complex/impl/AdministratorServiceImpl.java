@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.exception.CantGiveStaticItemException;
 import org.grizz.game.exception.InvalidAmountException;
 import org.grizz.game.model.Location;
+import org.grizz.game.model.LocationItems;
 import org.grizz.game.model.PlayerContext;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.enums.ItemType;
@@ -20,6 +21,7 @@ import org.grizz.game.service.complex.MultiplayerNotificationService;
 import org.grizz.game.service.complex.ScriptRunnerService;
 import org.grizz.game.service.simple.EquipmentService;
 import org.grizz.game.service.simple.EventService;
+import org.grizz.game.service.simple.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +43,9 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Autowired
     private EquipmentService equipmentService;
+
+    @Autowired
+    private LocationService locationService;
 
     @Autowired
     private LocationRepo locationRepo;
@@ -121,7 +126,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public void give(String player, int amount, String itemName, PlayerContext admin, PlayerResponse adminResponse) {
+    public void give(String player, String itemName, int amount, PlayerContext admin, PlayerResponse adminResponse) {
         if(isAuthorized(admin, adminResponse)) {
             if (amount < 1) {
                 throw new InvalidAmountException("admin.command.cant.give.none.items");
@@ -178,15 +183,47 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public void put(String locationId, int amount, String itemName, PlayerContext admin, PlayerResponse adminResponse) {
+    public void put(String itemName, int amount, PlayerContext admin, PlayerResponse adminResponse) {
         if(isAuthorized(admin, adminResponse)) {
+            if (amount < 1) {
+                throw new InvalidAmountException("admin.command.cant.put.none.items");
+            }
 
+            Item item = itemRepo.getByName(itemName);
+
+            Location targetLocation = locationRepo.get(admin.getCurrentLocation());
+
+            log.info("{} put [{}]x{} on [{}]", admin.getName(), itemName, amount, targetLocation.getName());
+            put(item, amount, targetLocation, admin, adminResponse);
         }
     }
 
-    @Override
-    public void put(int amount, String itemName, PlayerContext admin, PlayerResponse adminResponse) {
-        this.put(admin.getCurrentLocation(), amount, itemName, admin, adminResponse);
+    private void put(Item item, int amount, Location targetLocation, PlayerContext admin, PlayerResponse adminResponse) {
+        List<Item> items = Lists.newArrayList();
+        for (int i = 0; i < amount; i++) {
+            items.add(item);
+        }
+
+        if (ItemType.STATIC.equals(item.getItemType())) {
+            LocationItems locationItems = targetLocation.getItems();
+            locationItems.getStaticItems().addAll(items);
+            locationService.saveLocationState(targetLocation);
+        } else {
+            locationService.addItems(targetLocation, items);
+        }
+
+        notifyPlayersOnLocation(targetLocation, admin);
+        notifyAdmin(item.getName(), String.valueOf(amount), adminResponse);
+    }
+
+    private void notifyPlayersOnLocation(Location location, PlayerContext sender) {
+        String broadcastEvent = eventService.getEvent("admin.command.item.put.notification.broadcast");
+        multiplayerNotificationService.broadcast(location, broadcastEvent, sender);
+    }
+
+    private void notifyAdmin(String itemName, String amount, PlayerResponse admin) {
+        String event = eventService.getEvent("admin.command.item.put.notification", amount, itemName);
+        admin.getPlayerEvents().add(event);
     }
 
     private boolean isAuthorized(PlayerContext player, PlayerResponse response) {

@@ -24,7 +24,7 @@ public class LocationItemsReadConverter implements Converter<DBObject, LocationI
         return LocationItemsEntity.builder()
                 .id(source.get("_id").toString())
                 .locationId((String) source.get("locationId"))
-                .staticItems((List<Item>) source.get("staticItems"))
+                .staticItems(convert((List<DBObject>) source.get("staticItems")))
                 .mobileItems(convert((List<DBObject>) source.get("mobileItems")))
                 .build();
     }
@@ -34,8 +34,8 @@ public class LocationItemsReadConverter implements Converter<DBObject, LocationI
         mobileItemsAsDBObject.stream()
                 .forEach(dbObject -> {
                     Integer amount = (Integer) dbObject.get("amount");
+                    Item item = itemRepo.get((String) dbObject.get("id"));
                     for (int i = 0; i < amount; i++) {
-                        Item item = itemRepo.get((String) dbObject.get("id"));
                         items.add(item);
                     }
                 });

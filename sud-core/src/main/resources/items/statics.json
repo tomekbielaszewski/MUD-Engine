@@ -61,7 +61,7 @@
   {
     "id": "303",
     "name": "Brama teleportacyjna",
-    "description": "wielka kamienna brama wewnątrz której polyskuje smolisto czarna tafla wody, ale... w pionie... Mozesz przez nia przejsc",
+    "description": "wielką kamienną bramę wewnątrz której polyskuje smolisto czarna tafla wody, ale... w pionie... Mozesz przez nia przejsc",
     "pickUpMessage": "Nie uniesiesz tego...",
     "itemType": "STATIC",
     "commands": [

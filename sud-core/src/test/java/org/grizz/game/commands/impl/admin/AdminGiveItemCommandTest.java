@@ -73,48 +73,48 @@ public class AdminGiveItemCommandTest {
     @Test
     public void testExecute() {
         command.execute("daj mlot bojowy graczowi Grizz", context, response);
-        verify(administratorService).give("Grizz", 1, "mlot bojowy", context, response);
+        verify(administratorService).give("Grizz", "mlot bojowy", 1, context, response);
     }
 
     @Test
     public void testExecute2() {
         command.execute("daj 2 mlot bojowy graczowi Grizz", context, response);
-        verify(administratorService).give("Grizz", 2, "mlot bojowy", context, response);
+        verify(administratorService).give("Grizz", "mlot bojowy", 2, context, response);
     }
 
     @Test
     public void testExecute3() {
         command.execute("daj mlot bojowy graczowi Grizz-lol", context, response);
-        verify(administratorService).give("Grizz-lol", 1, "mlot bojowy", context, response);
+        verify(administratorService).give("Grizz-lol", "mlot bojowy", 1, context, response);
     }
 
     @Test
     public void testExecute4() {
         command.execute("daj 2 mlot bojowy graczowi Grizz-lol", context, response);
-        verify(administratorService).give("Grizz-lol", 2, "mlot bojowy", context, response);
+        verify(administratorService).give("Grizz-lol", "mlot bojowy", 2, context, response);
     }
 
     @Test
     public void testExecute5() {
         command.execute("daj 22 mlot bojowy graczowi Grizz-lol", context, response);
-        verify(administratorService).give("Grizz-lol", 22, "mlot bojowy", context, response);
+        verify(administratorService).give("Grizz-lol", "mlot bojowy", 22, context, response);
     }
 
     @Test
     public void testExecute6() {
         command.execute("daj mlot bojowy graczowi Grizz_lol", context, response);
-        verify(administratorService).give("Grizz_lol", 1, "mlot bojowy", context, response);
+        verify(administratorService).give("Grizz_lol", "mlot bojowy", 1, context, response);
     }
 
     @Test
     public void testExecute7() {
         command.execute("daj 2 mlot bojowy graczowi Grizz_lol", context, response);
-        verify(administratorService).give("Grizz_lol", 2, "mlot bojowy", context, response);
+        verify(administratorService).give("Grizz_lol", "mlot bojowy", 2, context, response);
     }
 
     @Test
     public void testExecute8() {
         command.execute("daj 22 mlot bojowy graczowi Grizz_lol", context, response);
-        verify(administratorService).give("Grizz_lol", 22, "mlot bojowy", context, response);
+        verify(administratorService).give("Grizz_lol", "mlot bojowy", 22, context, response);
     }
 }
