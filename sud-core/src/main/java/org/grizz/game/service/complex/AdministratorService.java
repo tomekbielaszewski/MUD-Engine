@@ -12,4 +12,6 @@ public interface AdministratorService {
     void give(String player, String itemName, int amount, PlayerContext admin, PlayerResponse adminResponse);
 
     void put(String itemName, int amount, PlayerContext admin, PlayerResponse adminResponse);
+
+    void showPlayerList(PlayerResponse adminResponse);
 }

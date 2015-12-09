@@ -57,4 +57,29 @@ public class CommandUtils {
 
         return commandSplit;
     }
+
+    public boolean hasVariable(String variableName, String command, String pattern) {
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(command);
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException("Pattern does not match the command and cannot split it!");
+        }
+        try {
+            matcher.group(variableName);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    public String getVariable(String variableName, String command, String pattern) {
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(command);
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException("Pattern does not match the command and cannot split it!");
+        }
+        String group = matcher.group(variableName);
+
+        return group;
+    }
 }

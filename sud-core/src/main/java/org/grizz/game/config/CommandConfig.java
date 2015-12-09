@@ -4,6 +4,7 @@ import org.grizz.game.commands.CommandHandlerBus;
 import org.grizz.game.commands.impl.*;
 import org.grizz.game.commands.impl.admin.AdminGiveItemCommand;
 import org.grizz.game.commands.impl.admin.AdminPutItemCommand;
+import org.grizz.game.commands.impl.admin.AdminShowPlayerListCommand;
 import org.grizz.game.commands.impl.admin.AdminTeleportCommand;
 import org.grizz.game.commands.impl.movement.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class CommandConfig {
             final AdminTeleportCommand adminTeleportCommand,
             final AdminGiveItemCommand adminGiveItemCommand,
             final AdminPutItemCommand adminPutItemCommand,
+            final AdminShowPlayerListCommand adminShowPlayerListCommand,
             final UseEquipmentItemCommand useEquipmentItemCommand,
             final UseStaticLocationItemCommand useStaticLocationItemCommand
     ) {
@@ -50,6 +52,7 @@ public class CommandConfig {
         commandHandlerBus.addCommand(adminTeleportCommand);
         commandHandlerBus.addCommand(adminGiveItemCommand);
         commandHandlerBus.addCommand(adminPutItemCommand);
+        commandHandlerBus.addCommand(adminShowPlayerListCommand);
         commandHandlerBus.addCommand(useEquipmentItemCommand);
         commandHandlerBus.addCommand(useStaticLocationItemCommand);
 

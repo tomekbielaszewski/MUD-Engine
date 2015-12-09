@@ -35,12 +35,13 @@ public class DropCommand implements Command {
         String matchedPattern = commandUtils.getMatchedPattern(command, getClass().getCanonicalName());
         String[] commandSplit = commandUtils.splitCommand(command, matchedPattern);
 
-        if (commandSplit.length == 1) {
-            String itemName = commandSplit[0];
+        if (commandSplit.length == 1 && commandUtils.hasVariable("itemName", command, matchedPattern)) {
+            String itemName = commandUtils.getVariable("itemName", command, matchedPattern);
             doSingleDrop(itemName, playerContext, response);
-        } else if (commandSplit.length == 2) {
-            String itemName = commandSplit[0];
-            Integer amount = Integer.valueOf(commandSplit[1]);
+        } else if (commandSplit.length == 2 && commandUtils.hasVariable("itemName", command, matchedPattern)
+                && commandUtils.hasVariable("amount", command, matchedPattern)) {
+            String itemName = commandUtils.getVariable("itemName", command, matchedPattern);
+            Integer amount = Integer.valueOf(commandUtils.getVariable("amount", command, matchedPattern));
             doMultiDrop(itemName, amount, playerContext, response);
         } else {
             throw new IllegalArgumentException("There is an error in pattern matching command []! " +
