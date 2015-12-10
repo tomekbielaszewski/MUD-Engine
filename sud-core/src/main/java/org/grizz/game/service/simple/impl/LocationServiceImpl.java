@@ -12,6 +12,7 @@ import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.model.repository.LocationItemsRepository;
 import org.grizz.game.model.repository.LocationRepo;
+import org.grizz.game.model.repository.PlayerRepository;
 import org.grizz.game.service.simple.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -30,6 +31,8 @@ public class LocationServiceImpl implements LocationService {
     private Environment env;
     @Autowired
     private LocationRepo locationRepo;
+    @Autowired
+    private PlayerRepository playerRepo;
     @Autowired
     private LocationItemsRepository locationItemsRepo;
     @Autowired
@@ -53,6 +56,16 @@ public class LocationServiceImpl implements LocationService {
         if (!StringUtils.isEmpty(location.getDown())) possibleExits.add(env.getProperty("exit.down"));
 
         return possibleExits;
+    }
+
+    @Override
+    public List<String> getPlayersOnLocation(Location location) {
+        List<PlayerContext> players = playerRepo.findByCurrentLocation(location.getId());
+        List<String> playerNicks = players.stream()
+                .map(player -> player.getName())
+                .collect(Collectors.toList());
+
+        return playerNicks;
     }
 
     @Override

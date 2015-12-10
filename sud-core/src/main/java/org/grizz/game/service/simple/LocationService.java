@@ -12,6 +12,8 @@ import java.util.List;
 public interface LocationService {
     List<String> getExits(Location location_);
 
+    List<String> getPlayersOnLocation(Location location);
+
     List<Item> getCurrentLocationItems(PlayerContext context);
 
     List<Item> getCurrentLocationStaticItems(PlayerContext playerContext);

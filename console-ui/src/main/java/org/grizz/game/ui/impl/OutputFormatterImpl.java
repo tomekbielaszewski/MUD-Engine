@@ -22,6 +22,7 @@ public class OutputFormatterImpl implements OutputFormatter {
         appendLocationName(playerResponse, sb);
         appendLocationDescription(playerResponse, sb);
         appendLocationStaticItems(playerResponse, sb);
+        appendPlayersOnLocation(playerResponse, sb);
         appendPossibleExits(playerResponse, sb);
         appendVisibleItems(playerResponse, sb);
         appendEquipmentItems(playerResponse, sb);
@@ -65,6 +66,25 @@ public class OutputFormatterImpl implements OutputFormatter {
 
             sb.setLength(sb.length() - itemSeparator.length());
             sb.append(".");
+        }
+    }
+
+    private void appendPlayersOnLocation(PlayerResponse playerResponse, StringBuilder sb) {
+        List<String> players = playerResponse.getPlayersOnLocation();
+        if (!players.isEmpty()) {
+            appendSeparator(sb, 79);
+            if (players.size() > 1) {
+                sb.append("Obok ciebie stoją ");
+                for (String player : players) {
+                    sb.append(player);
+                    sb.append(", ");
+                }
+                sb.setLength(sb.length() - 2);
+            } else {
+                sb.append("Obok ciebie stoi ");
+                sb.append(players.get(0));
+                sb.append(".");
+            }
         }
     }
 

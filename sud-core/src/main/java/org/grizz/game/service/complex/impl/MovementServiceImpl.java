@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * Created by Grizz on 2015-04-26.
@@ -33,6 +34,7 @@ import java.util.function.Supplier;
 public class MovementServiceImpl implements MovementService {
     @Autowired
     private LocationRepo locationRepo;
+
     @Autowired
     private LocationService locationService;
 
@@ -85,10 +87,16 @@ public class MovementServiceImpl implements MovementService {
         PlayerResponseImpl response = (PlayerResponseImpl) _response;
         Location currentLocation = locationService.getCurrentLocation(_context);
         List<String> locationExits = locationService.getExits(currentLocation);
+        List<String> players = locationService.getPlayersOnLocation(currentLocation);
         List<Item> locationItems = locationService.getCurrentLocationItems(_context);
         List<Item> locationStaticItems = locationService.getCurrentLocationStaticItems(_context);
 
+        List<String> playersExceptCurrent = players.stream()
+                .filter(playerName -> !playerName.equals(_context.getName()))
+                .collect(Collectors.toList());
+
         response.setPossibleExits(locationExits);
+        response.setPlayersOnLocation(playersExceptCurrent);
         response.setLocationStaticItems(locationStaticItems);
         response.setLocationItems(locationItems);
         response.setCurrentLocation(currentLocation);

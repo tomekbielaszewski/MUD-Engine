@@ -19,4 +19,5 @@ public class PlayerResponseImpl implements PlayerResponse {
     private List<Item> equipmentItems = Lists.newArrayList();
     private List<String> possibleExits = Lists.newArrayList();
     private List<String> playerEvents = Lists.newArrayList();
+    private List<String> playersOnLocation = Lists.newArrayList();
 }
