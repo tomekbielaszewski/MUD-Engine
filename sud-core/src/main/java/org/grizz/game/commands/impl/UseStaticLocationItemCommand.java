@@ -22,7 +22,7 @@ public class UseStaticLocationItemCommand implements Command {
 
     @Override
     public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
-        locationInteractionService.executeItemCommand(command, playerContext, response);
+        locationInteractionService.executeStaticItemCommand(command, playerContext, response);
         return response;
     }
 

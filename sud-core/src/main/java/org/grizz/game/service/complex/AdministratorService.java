@@ -13,5 +13,5 @@ public interface AdministratorService {
 
     void put(String itemName, int amount, PlayerContext admin, PlayerResponse adminResponse);
 
-    void showPlayerList(PlayerResponse adminResponse);
+    void showPlayerList(PlayerContext admin, PlayerResponse adminResponse);
 }

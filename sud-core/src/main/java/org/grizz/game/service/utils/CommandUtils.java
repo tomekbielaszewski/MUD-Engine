@@ -82,4 +82,12 @@ public class CommandUtils {
 
         return group;
     }
+
+    public String getVariableOrDefaultValue(String variableName, String defaultValue, String command, String pattern) {
+        if (hasVariable(variableName, command, pattern)) {
+            return getVariable(variableName, command, pattern);
+        } else {
+            return defaultValue;
+        }
+    }
 }

@@ -11,7 +11,7 @@ public interface PlayerLocationInteractionService {
 
     public void dropItems(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response);
 
-    void executeItemCommand(String command, PlayerContext player, PlayerResponse response);
+    void executeStaticItemCommand(String command, PlayerContext player, PlayerResponse response);
 
     boolean canExecuteItemCommand(String command, PlayerContext player);
 }

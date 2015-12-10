@@ -84,7 +84,7 @@ public class PlayerLocationInteractionServiceImpl implements PlayerLocationInter
     }
 
     @Override
-    public void executeItemCommand(String command, PlayerContext player, PlayerResponse response) {
+    public void executeStaticItemCommand(String command, PlayerContext player, PlayerResponse response) {
         List<Item> staticItemsOnLocation = locationService.getCurrentLocationStaticItems(player);
         CommandScript matchingCommandScript = getMatchingCommandScript(command, staticItemsOnLocation);
         if (matchingCommandScript != null) {

@@ -26,7 +26,7 @@ public class AdminShowPlayerListCommand implements Command {
 
     @Override
     public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
-        administratorService.showPlayerList(response);
+        administratorService.showPlayerList(playerContext, response);
 
         return response;
     }

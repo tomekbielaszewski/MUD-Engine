@@ -199,22 +199,24 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public void showPlayerList(PlayerResponse adminResponse) {
-        List<PlayerContextImpl> allPlayers = playerRepo.findAll();
+    public void showPlayerList(PlayerContext admin, PlayerResponse adminResponse) {
+        if (isAuthorized(admin, adminResponse)) {
+            List<PlayerContextImpl> allPlayers = playerRepo.findAll();
 
-        String playerListTitle = eventService.getEvent("admin.command.player.list.title");
-        List<String> playerList = Lists.newArrayList();
+            String playerListTitle = eventService.getEvent("admin.command.player.list.title");
+            List<String> playerList = Lists.newArrayList();
 
-        for (PlayerContextImpl player : allPlayers) {
-            String playerName = player.getName();
-            String playerLocationId = player.getCurrentLocation();
-            String playerLocation = locationRepo.get(playerLocationId).getName();
-            String playerDescription = eventService.getEvent("admin.command.player.list.row", playerName, playerLocation, playerLocationId);
-            playerList.add(playerDescription);
+            for (PlayerContextImpl player : allPlayers) {
+                String playerName = player.getName();
+                String playerLocationId = player.getCurrentLocation();
+                String playerLocation = locationRepo.get(playerLocationId).getName();
+                String playerDescription = eventService.getEvent("admin.command.player.list.row", playerName, playerLocation, playerLocationId);
+                playerList.add(playerDescription);
+            }
+
+            adminResponse.getPlayerEvents().add(playerListTitle);
+            adminResponse.getPlayerEvents().addAll(playerList);
         }
-
-        adminResponse.getPlayerEvents().add(playerListTitle);
-        adminResponse.getPlayerEvents().addAll(playerList);
     }
 
     private void put(Item item, int amount, Location targetLocation, PlayerContext admin, PlayerResponse adminResponse) {

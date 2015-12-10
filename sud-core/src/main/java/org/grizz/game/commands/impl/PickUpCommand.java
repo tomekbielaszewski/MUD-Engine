@@ -33,29 +33,15 @@ public class PickUpCommand implements Command {
     @Override
     public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
         String matchedPattern = commandUtils.getMatchedPattern(command, getClass().getCanonicalName());
-        String[] commandSplit = commandUtils.splitCommand(command, matchedPattern);
 
-        if (commandSplit.length == 1) {
-            String itemName = commandSplit[0];
-            doSinglePickup(itemName, playerContext, response);
-        } else if (commandSplit.length == 2) {
-            String itemName = commandSplit[0];
-            Integer amount = Integer.valueOf(commandSplit[1]);
-            doMultiPickup(itemName, amount, playerContext, response);
-        } else {
-            throw new IllegalArgumentException("There is an error in pattern matching command []! " +
-                    "To many or zero capturing groups!");
-        }
+        String itemName = commandUtils.getVariable("itemName", command, matchedPattern);
+        String amountStr = commandUtils.getVariableOrDefaultValue("amount", "1", command, matchedPattern);
 
-        return response;
-    }
+        Integer amount = Integer.valueOf(amountStr);
 
-    private void doSinglePickup(String itemName, PlayerContext playerContext, PlayerResponse response) {
-        doMultiPickup(itemName, 1, playerContext, response);
-    }
-
-    private void doMultiPickup(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
         playerLocationInteractionService.pickUpItems(itemName, amount, playerContext, response);
         log.info("{} picked up {} of {}", playerContext.getName(), amount, itemName);
+
+        return response;
     }
 }

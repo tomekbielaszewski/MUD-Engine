@@ -33,30 +33,15 @@ public class DropCommand implements Command {
     @Override
     public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
         String matchedPattern = commandUtils.getMatchedPattern(command, getClass().getCanonicalName());
-        String[] commandSplit = commandUtils.splitCommand(command, matchedPattern);
 
-        if (commandSplit.length == 1 && commandUtils.hasVariable("itemName", command, matchedPattern)) {
-            String itemName = commandUtils.getVariable("itemName", command, matchedPattern);
-            doSingleDrop(itemName, playerContext, response);
-        } else if (commandSplit.length == 2 && commandUtils.hasVariable("itemName", command, matchedPattern)
-                && commandUtils.hasVariable("amount", command, matchedPattern)) {
-            String itemName = commandUtils.getVariable("itemName", command, matchedPattern);
-            Integer amount = Integer.valueOf(commandUtils.getVariable("amount", command, matchedPattern));
-            doMultiDrop(itemName, amount, playerContext, response);
-        } else {
-            throw new IllegalArgumentException("There is an error in pattern matching command []! " +
-                    "To many or zero capturing groups!");
-        }
+        String itemName = commandUtils.getVariable("itemName", command, matchedPattern);
+        String amountStr = commandUtils.getVariableOrDefaultValue("amount", "1", command, matchedPattern);
 
-        return response;
-    }
+        Integer amount = Integer.valueOf(amountStr);
 
-    private void doSingleDrop(String itemName, PlayerContext playerContext, PlayerResponse response) {
-        doMultiDrop(itemName, 1, playerContext, response);
-    }
-
-    private void doMultiDrop(String itemName, Integer amount, PlayerContext playerContext, PlayerResponse response) {
         playerLocationInteractionService.dropItems(itemName, amount, playerContext, response);
         log.info("{} dropped {} of {}", playerContext.getName(), amount, itemName);
+
+        return response;
     }
 }

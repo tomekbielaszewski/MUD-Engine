@@ -27,23 +27,14 @@ public class AdminGiveItemCommand implements Command {
     @Override
     public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
         String matchedPattern = commandUtils.getMatchedPattern(command, getClass().getCanonicalName());
-        String[] commandSplit = commandUtils.splitCommand(command, matchedPattern);
 
-        if (commandSplit.length == 2) {
-            String itemName = commandSplit[0];
-            String playerName = commandSplit[1];
+        String itemName = commandUtils.getVariable("itemName", command, matchedPattern);
+        String amountStr = commandUtils.getVariableOrDefaultValue("amount", "1", command, matchedPattern);
+        String playerName = commandUtils.getVariableOrDefaultValue("playerName", playerContext.getName(), command, matchedPattern);
 
-            administratorService.give(playerName, itemName, 1, playerContext, response);
-        } else if (commandSplit.length == 3) {
-            int amount = Integer.parseInt(commandSplit[0]);
-            String itemName = commandSplit[1];
-            String playerName = commandSplit[2];
+        int amount = Integer.parseInt(amountStr);
 
-            administratorService.give(playerName, itemName, amount, playerContext, response);
-        } else {
-            throw new IllegalArgumentException("There is an error in pattern matching command []! " +
-                    "To many or zero capturing groups!");
-        }
+        administratorService.give(playerName, itemName, amount, playerContext, response);
 
         return response;
     }

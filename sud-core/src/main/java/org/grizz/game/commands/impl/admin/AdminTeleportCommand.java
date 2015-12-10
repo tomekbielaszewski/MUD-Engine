@@ -27,22 +27,11 @@ public class AdminTeleportCommand implements Command {
     @Override
     public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
         String matchedPattern = commandUtils.getMatchedPattern(command, getClass().getCanonicalName());
-        String[] commandSplit = commandUtils.splitCommand(command, matchedPattern);
 
-        if (commandSplit.length == 2) {
-            String playerName = commandSplit[0];
-            String locationId = commandSplit[1];
+        String playerName = commandUtils.getVariable("playerName", command, matchedPattern);
+        String locationId = commandUtils.getVariableOrDefaultValue("locationId", playerContext.getCurrentLocation(), command, matchedPattern);
 
-            administratorService.teleport(playerName, locationId, playerContext, response);
-        } else if (commandSplit.length == 1) {
-            String playerName = commandSplit[0];
-            String locationId = playerContext.getCurrentLocation();
-
-            administratorService.teleport(playerName, locationId, playerContext, response);
-        } else {
-            throw new IllegalArgumentException("There is an error in pattern matching command []! " +
-                    "To many or zero capturing groups!");
-        }
+        administratorService.teleport(playerName, locationId, playerContext, response);
 
         return response;
     }
