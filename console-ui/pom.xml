@@ -4,19 +4,19 @@
 
     <parent>
         <groupId>org.grizz</groupId>
-        <artifactId>SUD</artifactId>
+        <artifactId>MUD-Engine</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <groupId>org.grizz</groupId>
-    <artifactId>SUD-console</artifactId>
+    <artifactId>MUD-Engine-console</artifactId>
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>org.grizz</groupId>
-            <artifactId>SUD-core</artifactId>
+            <artifactId>MUD-Engine-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

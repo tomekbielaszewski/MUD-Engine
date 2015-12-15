@@ -22,7 +22,7 @@ Lokalizacje plikow gry domyslnie znajdują się pod:
 - Przeciwnicy w folderze `mobs`
 - Skrypty w folderze `scripts`
 
-Przy czym sciezki do folderów można modyfikować przez zmianę ścieżek do nich w pliku [`assets.properties`](sud-core/src/main/resources/assets.properties), gdzie:
+Przy czym sciezki do folderów można modyfikować przez zmianę ścieżek do nich w pliku [`assets.properties`](mud-core/src/main/resources/assets.properties), gdzie:
 - klucz `assets.json.path.locations` to ścieżka do folderu lokacji
 - klucz `assets.json.path.items` to ścieżka do folderu przedmiotów
 - klucz `assets.json.path.mobs` to ścieżka do folderu przeciwników
@@ -46,7 +46,7 @@ Podstawowymi komendami w silniku gry są:
 - Podgląd ekwipunku - `org.grizz.game.commands.impl.ShowEquipmentCommand`
 
 ### Mapowanie komend
-Podstawowe komendy są zmapowane do słów pozwalających na wywołanie ich. Takie mapowanie znajduje się w pliku [`command-mapping.properties`](sud-core/src/main/resources/command-mapping.properties). W pliku tym znajdziemy pary klucz wartośc gdzie:
+Podstawowe komendy są zmapowane do słów pozwalających na wywołanie ich. Takie mapowanie znajduje się w pliku [`command-mapping.properties`](mud-core/src/main/resources/command-mapping.properties). W pliku tym znajdziemy pary klucz wartośc gdzie:
 - kluczem jest - pełna nazwa klasy podstawowej komendy
 - wartością są - słowa zmapowane do tej komendy. Może być ich wiele, muszą wtedy być oddzielone przecinkami. Słowa nie mogą zawierać polskich znaków ani innych liter zawierających 'akcenty'. Spacje przed i po także nie są dozwolone. W przypadku komendy potrzebującej pewnych wartości wejściowych należy wskazać miejsce podawanych danych:
   - `([\\D]+)` - dla danych słownych
@@ -70,7 +70,7 @@ Następujące komendy wymagają podania parametrów wejściowych:
 
 ## Skrypty
 ### pliki konfiguracyjne skryptów i mapowanie skryptów
-Plikiem konfiguracyjnym skryptów jest plik JSON znajdujący się w folderze domyślnym [`scripts`](sud-core/src/main/resources/scripts/) [[*]](#lokalizacje-plikow-gry):
+Plikiem konfiguracyjnym skryptów jest plik JSON znajdujący się w folderze domyślnym [`scripts`](mud-core/src/main/resources/scripts/) [[*]](#lokalizacje-plikow-gry):
 ```javascript
 [
   {
@@ -122,7 +122,7 @@ alwaysTrue();
 
 ## Przedmioty
 ### Model przedmiotów
-Pliki JSON opisujące właściwości przedmiotów znajdują się w folderze domyślnym [`items`](sud-core/src/main/resources/items/) [[*]](#lokalizacje-plikow-gry). Przykładowy wpis w pliku:
+Pliki JSON opisujące właściwości przedmiotów znajdują się w folderze domyślnym [`items`](mud-core/src/main/resources/items/) [[*]](#lokalizacje-plikow-gry). Przykładowy wpis w pliku:
 ```javascript
 [
   {

@@ -9,15 +9,21 @@
     </parent>
 
     <groupId>org.grizz</groupId>
-    <artifactId>MUD-Engine-mirko</artifactId>
+    <artifactId>MUD-Engine-core</artifactId>
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
-            <groupId>org.grizz</groupId>
-            <artifactId>MUD-Engine-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.fakemongo</groupId>
+            <artifactId>fongo</artifactId>
+            <version>1.6.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
