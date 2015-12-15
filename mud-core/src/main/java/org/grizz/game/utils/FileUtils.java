@@ -50,10 +50,19 @@ public class FileUtils {
                 .collect(Collectors.toList());
     }
 
-    public static Path getFilepath(String filePath) throws IOException, URISyntaxException {
+    public static Path getFilepath(String filePath) throws IOException {
         URL url = new Dummy().getClass().getClassLoader().getResource(filePath);
-        log.debug("Accessing file: " + url.toString());
-        return Paths.get(url.toURI());
+        if(url == null) {
+            throw new IOException("Problem loading file ["+filePath+"]");
+        }
+        log.debug("Accessing file: " + filePath);
+        Path path = null;
+        try {
+            path = Paths.get(url.toURI());
+        } catch (URISyntaxException e) {
+            throw new IOException(e);
+        }
+        return path;
     }
 
     private static class Dummy {

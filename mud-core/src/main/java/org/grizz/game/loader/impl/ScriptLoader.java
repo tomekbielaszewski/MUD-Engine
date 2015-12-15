@@ -3,6 +3,7 @@ package org.grizz.game.loader.impl;
 import com.google.gson.Gson;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.grizz.game.exception.ScriptLoadingException;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.model.Script;
 import org.grizz.game.model.impl.ScriptEntity;
@@ -44,6 +45,7 @@ public class ScriptLoader implements Loader {
                             log.info("Reading: {}", path.toString());
                             scriptsArray = gson.fromJson(Files.newBufferedReader(path), ScriptEntity[].class);
                             for (ScriptEntity script : scriptsArray) {
+                                checkScriptPath(script);
                                 scriptRepo.add(script);
                             }
                         } catch (IOException e) {
@@ -51,5 +53,14 @@ public class ScriptLoader implements Loader {
                         }
                     }
                 });
+    }
+
+    private void checkScriptPath(Script script) {
+        String path = script.getPath();
+        try {
+            FileUtils.getFilepath(path);
+        } catch (IOException e) {
+            throw new ScriptLoadingException("Problem loading script file ["+path+"]", e);
+        }
     }
 }

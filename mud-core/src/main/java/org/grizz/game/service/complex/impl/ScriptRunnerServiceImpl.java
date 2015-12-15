@@ -126,8 +126,6 @@ public class ScriptRunnerServiceImpl implements ScriptRunnerService {
             return eval;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

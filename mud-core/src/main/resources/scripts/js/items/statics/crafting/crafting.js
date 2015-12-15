@@ -19,7 +19,7 @@ function getRecipe(item) {
     }
 }
 
-function playerIsAbleToCraft(recipe, amountOfItems) {
+function playerHasMaterials(recipe, amountOfItems) {
     var hasAllIngredients = true;
 
     for (i = 0; i < recipe.ingredients.length; i++) {
@@ -68,7 +68,7 @@ function craft(item, amount) {
         if (itemIsOnRecipesList(item)) {
             var recipe = getRecipe(item);
 
-            if (playerIsAbleToCraft(recipe, amount)) {
+            if (playerHasMaterials(recipe, amount)) {
                 takeMaterialsFromPlayer(recipe, amount);
                 giveCraftedItem(recipe, amount);
                 informAboutSuccessfulCrafting(recipe, amount);

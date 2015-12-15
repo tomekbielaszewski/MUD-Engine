@@ -55,14 +55,18 @@ public class ItemLoader implements Loader {
                         for (UniversalItem item : itemsArray) {
                             Item transformedItem = transformItem(item);
                             itemRepo.add(transformedItem);
-                            for (CommandScript commandScript : transformedItem.getCommands()) {
-                                scriptRepo.get(commandScript.getScriptId());
-                            }
+                            checkItemScripts(transformedItem);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
+    }
+
+    private void checkItemScripts(Item item) {
+        for (CommandScript commandScript : item.getCommands()) {
+            scriptRepo.get(commandScript.getScriptId());
+        }
     }
 
     private Item transformItem(UniversalItem item) {
