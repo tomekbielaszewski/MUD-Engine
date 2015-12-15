@@ -26,7 +26,9 @@ public class LocationItemsWriteConverter implements Converter<LocationItemsEntit
     @Override
     public DBObject convert(LocationItemsEntity source) {
         DBObject dbo = new BasicDBObject();
-        dbo.put("_id", new ObjectId(source.getId()));
+        if(source.getId() != null) {
+            dbo.put("_id", new ObjectId(source.getId()));
+        }
         dbo.put("locationId", source.getLocationId());
         dbo.put("staticItems", convert(source.getStaticItems()));
         dbo.put("mobileItems", convert(source.getMobileItems()));
