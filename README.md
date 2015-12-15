@@ -12,6 +12,7 @@
 6. [Przedmioty](#przedmioty)
 7. [Lokacje](#lokacje)
 8. [Teksty powiadomień](#teksty-powiadomień)
+9. [Administrator](#administrator)
 
 ## Wstęp
 
@@ -31,8 +32,8 @@ Przy czym sciezki do folderów można modyfikować przez zmianę ścieżek do ni
 ## Komendy
 Jedyny sposób interakcji ze światem odbywa się przez komendy wywoływane przez gracza. Silnik posiada zaimplementowane podstawowe komendy jak i pozwala na implementację własnych - powiązanych z przedmiotami.
 
-### Podstawowe komendy
-Podstawowymi komendami w silniku gry są:
+### Wbudowane komendy
+Komendy wbudowane dostępne dla wszystkich graczy:
 - Przechodzenie po lokacjach
   - Na północ - `org.grizz.game.commands.impl.movement.MoveNorthCommand`
   - Na południe - `org.grizz.game.commands.impl.movement.MoveSouthCommand`
@@ -45,22 +46,40 @@ Podstawowymi komendami w silniku gry są:
 - Podnoszenie przedmiotów - `org.grizz.game.commands.impl.PickUpCommand`
 - Podgląd ekwipunku - `org.grizz.game.commands.impl.ShowEquipmentCommand`
 
+Komendy wbudowane dostępne dla administratorów:
+- Teleportacja graczy - `org.grizz.game.commands.impl.admin.AdminTeleportCommand`
+- Tworzenie przedmiotów i przekazywanie ich graczom (tylko mobilne przedmioty) - `org.grizz.game.commands.impl.admin.AdminGiveItemCommand`
+- Tworzenie przedmiotow i wyrzucanie ich na lokacji (statyczne i mobilne przedmioty) - `org.grizz.game.commands.impl.admin.AdminPutItemCommand`
+- Wyświetlanie listy graczy - `org.grizz.game.commands.impl.admin.AdminShowPlayerListCommand`
+
 ### Mapowanie komend
-Podstawowe komendy są zmapowane do słów pozwalających na wywołanie ich. Takie mapowanie znajduje się w pliku [`command-mapping.properties`](mud-core/src/main/resources/command-mapping.properties). W pliku tym znajdziemy pary klucz wartośc gdzie:
+Wbudowane komendy są zmapowane do słów pozwalających na wywołanie ich. Takie mapowanie znajduje się w pliku [`command-mapping.properties`](mud-core/src/main/resources/command-mapping.properties). W pliku tym znajdziemy pary klucz wartośc gdzie:
 - kluczem jest - pełna nazwa klasy podstawowej komendy
-- wartością są - słowa zmapowane do tej komendy. Może być ich wiele, muszą wtedy być oddzielone przecinkami. Słowa nie mogą zawierać polskich znaków ani innych liter zawierających 'akcenty'. Spacje przed i po także nie są dozwolone. W przypadku komendy potrzebującej pewnych wartości wejściowych należy wskazać miejsce podawanych danych:
-  - `([\\D]+)` - dla danych słownych
-  - `([\\d]+)` - dla danych liczbowych
-Przy czym **kolejność parametrów** komend jest **ważna**
+- wartością są - słowa zmapowane do tej komendy. Może być ich wiele, muszą wtedy być oddzielone średnikami. Słowa nie mogą zawierać polskich znaków ani innych liter zawierających 'akcenty'. Spacje przed i po także nie są dozwolone (przed dopasowywanie wprowadzona przez uzytkownika komenda jest trimowana i usuwane są akcenty). W przypadku komendy potrzebującej pewnych wartości wejściowych należy opisac typ i nazwę wprowadzanego parametru:
+  - `(?<word>[\\D]+)` - dla danych słownych
+  - `(?<amount>[\\d]+)` - dla danych liczbowych
+  - `(?<playerName>[\\w-]{4,})` - dla nicków
+Gdzie `word`, `amount` oraz `playerName` to nazwy parametrów komendy
 
 ### Parametry komend
-Następujące komendy wymagają podania parametrów wejściowych:
-- `PickUpCommand` - parametry:
-  - `([\\D]+)` - Nazwa przedmiotu, który chcesz podnieść i umieścić w ekwipunku
-  - `([\\d]+)` - [Opcjonalny, wartość domyślna = 1] Liczba przedmiotów, które chcesz podnieść i umieścić w ekwipunku
-- `DropCommand` - parametry:
-  - `([\\D]+)` - Nazwa przedmiotu, który chcesz wyrzucić i umieścić na bierzącej lokacji
-  - `([\\d]+)` - [Opcjonalny, wartość domyślna = 1] Liczba przedmiotów, które chcesz wyrzucić i umieścić na bierzącej lokacji
+Komendy wymagające podania parametrów wejściowych:
+- `PickUpCommand` - parametry (nazwa i typ):
+  - `(?<itemName>[\\D]+)` - Nazwa przedmiotu, który chcesz podnieść i umieścić w ekwipunku
+  - `(?<amount>[\\d]+)` - [Opcjonalny, wartość domyślna = 1] Liczba przedmiotów, które chcesz podnieść i umieścić w ekwipunku
+- `DropCommand` - parametry (nazwa i typ):
+  - `(?<itemName>[\\D]+)` - Nazwa przedmiotu, który chcesz wyrzucić i umieścić na bierzącej lokacji
+  - `(?<amount>[\\d]+)` - [Opcjonalny, wartość domyślna = 1] Liczba przedmiotów, które chcesz wyrzucić i umieścić na bierzącej lokacji
+- `AdminTeleportCommand` - parametry (nazwa i typ):
+  - `(?<playerName>[\\w-]{4,})` - Nazwa gracza, którego chcesz teleportować
+  - `(?<locationId>[\\w-]+)` - [Opcjonalny, wartość domyślna = obecna lokacja administratora] ID lokacji na jaką gracz ma być teleportowany
+- `AdminGiveItemCommand` - parametry (nazwa i typ):
+  - `(?<playerName>[\\w-]{4,})` - Nazwa gracza, który ma otrzymać przedmiot
+  - `(?<itemName>[\\D]+)` - Nazwa przedmiotu
+  - `(?<amount>[\\d]+)` - [Opcjonalny, wartość domyślna = 1] Liczba przedmiotów, którą ma otrzymać gracz
+- `AdminPutItemCommand` - parametry (nazwa i typ):
+  - `(?<itemName>[\\D]+)` - Nazwa przedmiotu, który chcesz umieścić na bierzącej lokacji
+  - `(?<amount>[\\d]+)` - [Opcjonalny, wartość domyślna = 1] Liczba przedmiotów, które chcesz umieścić na bierzącej lokacji
+  
 
 ## Gracz
 ### Statystyki/karta gracza
@@ -97,18 +116,21 @@ W każdym odpalonym skrypcie jest dostęp do następujących zmiennych podstawow
 - `player` jest typu org.grizz.game.model. **PlayerContext** - pozwala na dostęp do wszystkich statystyk gracza, jego ekwipunku, parametrów, obecnej lokalizacji,
 - `response` jest typu org.grizz.game.model. **PlayerResponse** - udostępnia obiekt odpowiedzi
 - `command` jest typu java.lang. **String** - wartością jest wywołana przez gracza komenda
+- `commandPattern` jest typu java.lang. **String** - wartością jest wzorzec dopasowany do wywołanej komendy
 
 ### Dostęp do serwisów
 Zmienne pod którymi dostępne sa serwisy ułatwiające interakcję ze światem gry:
 - `locationRepo` jest typu org.grizz.game.model.repository. **LocationRepo** - pozwala na pobieranie lokalizacji na podstawie ID
 - `itemRepo` jest typu org.grizz.game.model.repository. **ItemRepo** - pozwala na pobieranie przedmiotów na podstawie ID lub nazwy
+- `playerRepo` jest typu org.grizz.game.model.repository. **PlayerRepository** - pozwala na pobieranie graczy na podstawie nicku
+- `scriptRepo` jest typu org.grizz.game.model.repository. **ScriptRepo** - pozwala na pobieranie skryptów za pomocą ID
 - `playerLocationInteractionService` jest typu org.grizz.game.service.complex.impl. **PlayerLocationInteractionServiceImpl** - upraszcza interakcje gracza z lokacją - podnoszenie, wyrzucanie przedmiotów
 - `equipmentService` jest typu org.grizz.game.service.simple.impl. **EquipmentServiceImpl** - upraszcza interakcje z ekwipunkiem - dodawanie, usuwanie przedmiotów, zakładanie zbroi, uzywanie broni
 - `locationService` jest typu org.grizz.game.service.simple.impl. **PlayerLocationInteractionServiceImpl** - upraszcza interakcje z lokacją - pobieranie obecnej lokacji, lista możliwych wyjść, przedmioty na lokacji (zwykle i statyczne), dodawanie, usuwanie przedmiotów
 - `commandRunner` jest typu org.grizz.game.commands. **CommandHandlerBus** - pozwala na uruchamianie komend
 - `commandUtils` jest typu org.grizz.game.service.util. **CommandUtil** - udostępnia metody pomocne przy parsowaniu komend
- 
-//TODO: uzupełnić listę serwisów
+- `notificationService` jest typu org.grizz.game.service.complex. **MultiplayerNotificationService** - Pozwala na interakcje między graczami w postaci przesyłania powiadomień
+- `logger` jest typu org.slf4j. **Logger** - jest to logger pozwalający na logowanie aktywności skryptu do konsoli silnika
 
 ### Zwracanie wartości
 Wartość jaką zwróci skrypt jest wartością zwróconą przez ostatnią funkcję w skrypcie. Przykładową konstrukcją zwracającą zawsze wartość true jest:
@@ -119,6 +141,11 @@ function alwaysTrue() {
 }
 alwaysTrue();
 ```
+
+### Skrypty specjalne
+#### Master script
+#### Skrypty pomocnicze
+#### Skrypt administratorski
 
 ## Przedmioty
 ### Model przedmiotów
@@ -182,3 +209,7 @@ Istnieją obecnie 4 typy przedmiotów - [`WEAPON`,`ARMOR`,`MISC`,`STATIC`]. Niek
 
 ## Teksty powiadomień
 ### Klucze wiadomości
+
+## Administrator
+### Nadawanie praw administratora
+### Komendy administratora
