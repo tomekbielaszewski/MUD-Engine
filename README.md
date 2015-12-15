@@ -5,16 +5,22 @@
 
 # Spis treści
 1. [Wstęp](#wstęp)
-2. [Lokalizacje plikow gry](#lokalizacje-plikow-gry)
-3. [Komendy](#komendy)
-4. [Gracz](#gracz)
-5. [Skrypty](#skrypty)
-6. [Przedmioty](#przedmioty)
-7. [Lokacje](#lokacje)
-8. [Teksty powiadomień](#teksty-powiadomień)
-9. [Administrator](#administrator)
+1. [Instalacja](#instalacja)
+1. [Pierwsze uruchomienie](#pierwsze-uruchomienie)
+1. [Lokalizacje plikow gry](#lokalizacje-plikow-gry)
+1. [Komendy](#komendy)
+1. [Gracz](#gracz)
+1. [Skrypty](#skrypty)
+1. [Przedmioty](#przedmioty)
+1. [Lokacje](#lokacje)
+1. [Teksty powiadomień](#teksty-powiadomień)
+1. [Administrator](#administrator)
 
 ## Wstęp
+
+## Instalacja
+
+## Pierwsze uruchomienie
 
 ## Lokalizacje plikow gry
 Lokalizacje plikow gry domyslnie znajdują się pod:
