@@ -5,8 +5,7 @@
 
 # Spis treści
 1. [Wstęp](#wstęp)
-1. [Instalacja](#instalacja)
-1. [Pierwsze uruchomienie](#pierwsze-uruchomienie)
+1. [Instalacja, konfiguracja i pierwsze uruchomienie](#instalacja-konfiguracja-i-pierwsze-uruchomienie)
 1. [Lokalizacje plikow gry](#lokalizacje-plikow-gry)
 1. [Komendy](#komendy)
 1. [Gracz](#gracz)
@@ -17,10 +16,31 @@
 1. [Administrator](#administrator)
 
 ## Wstęp
+MUD-Engine jak sama nazwa wskazuje jest silnikiem do tworzenia gier typu MUD, czyli Multi User Dungeon. Interakcja z grami tego typu odbywa się wyłącznie za pomocą komend i czytania opisów.
+Silnik w całości napisany jest w Javie, natomiast skryptowany jest w JavaScripcie, a definicje przedmiotów, lokacji itp sa zapisane jako JSON. Zmienne elementy gry, takie jak model gracza czy przedmioty na lokacjach, zapisywane są w bazie MongoDB.
 
-## Instalacja
+## Instalacja, konfiguracja i pierwsze uruchomienie
+Silnik budowany jest z myślą o zachowaniu minimalnych zależności i minimalnej konfiguracji, więc do działania wymaga jedynie Javy 8 i MongoDB 3.
 
-## Pierwsze uruchomienie
+### Wymagana/zalecana konfiguracja to
+#### Plik application.properties (opcjonalne)
+Jest to plik szeroko opisany w dokumentacji Spring Boot. Zalecana konfiguracja to:
+- logging.level.org.springframework=INFO
+- logging.file=mud-engine.log
+- banner.location=classpath:banner.txt
+- spring.data.mongodb.database=mud-engine
+
+#### Plik assets.properties (wymagane)
+W tym pliku definiujemy lokalizacje główne dla wszystkich assetów (lokacje, moby, itemy, skrypty)
+Więcej info patrz -> [Lokalizacje plikow gry](#lokalizacje-plikow-gry)
+
+#### Plik command-mapping.properties (wymagane)
+W pliku znajduje się mapowanie komend do klas implementujących ich działanie. Tzw komendy wbudowane.
+Więcej info patrz -> [Komendy](#komendy)
+ 
+#### Plik strings.properties (wymagane)
+W pliku znajdują się wszystkie komunikaty występujące w silniku
+Więcej info patrz -> [Teksty powiadomień](#teksty-powiadomień)
 
 ## Lokalizacje plikow gry
 Lokalizacje plikow gry domyslnie znajdują się pod:
