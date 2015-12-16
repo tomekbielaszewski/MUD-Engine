@@ -14,7 +14,7 @@ function informThatPlayerHasNoRequiredTools() {
     tellPlayer("Aby korzystać z pieca musisz mieć szczypce kowalskie!");
 }
 
-interpretCommand(function (commandSplit) {
+interpretCommand(function (commandSplit) { //TODO zmien na pobieranie zmiennych z patterna
     var itemName = commandSplit[0];
     var amount = commandSplit.length == 2 ? commandSplit[1] : 1;
 

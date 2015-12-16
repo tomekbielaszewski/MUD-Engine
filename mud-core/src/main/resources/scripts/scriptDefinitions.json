@@ -61,6 +61,11 @@
     "path": "scripts/js/items/statics/crafting/blacksmith/anvil/recipes.js"
   },
   {
+    "id": "bs-anvil-listing",
+    "name": "Black Smith's anvil crafting listing recipes script",
+    "path": "scripts/js/items/statics/crafting/blacksmith/anvil/listing.js"
+  },
+  {
     "id": "bs-furnace-crafting",
     "name": "Black Smith's furnace crafting script",
     "path": "scripts/js/items/statics/crafting/blacksmith/furnace/crafting.js"
@@ -74,6 +79,11 @@
     "id": "bs-furnace-recipes",
     "name": "Black Smith's furnace crafting recipes script",
     "path": "scripts/js/items/statics/crafting/blacksmith/furnace/recipes.js"
+  },
+  {
+    "id": "bs-furnace-listing",
+    "name": "Black Smith's furnace crafting listing recipes script",
+    "path": "scripts/js/items/statics/crafting/blacksmith/furnace/listing.js"
   },
 
   {

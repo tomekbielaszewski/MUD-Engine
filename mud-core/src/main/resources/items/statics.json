@@ -13,6 +13,14 @@
       {
         "command": "wykuj ([\\D]+)",
         "scriptId": "bs-anvil-crafting"
+      },
+      {
+        "command": "co moge wykuc",
+        "scriptId": "bs-anvil-listing"
+      },
+      {
+        "command": "co moge wykuc\\?",
+        "scriptId": "bs-anvil-listing"
       }
     ]
   },
@@ -38,6 +46,22 @@
       {
         "command": "wytop ([\\D]+)",
         "scriptId": "bs-furnace-crafting"
+      },
+      {
+        "command": "co moge przetopic",
+        "scriptId": "bs-furnace-listing"
+      },
+      {
+        "command": "co moge wytopic",
+        "scriptId": "bs-furnace-listing"
+      },
+      {
+        "command": "co moge przetopic\\?",
+        "scriptId": "bs-furnace-listing"
+      },
+      {
+        "command": "co moge wytopic\\?",
+        "scriptId": "bs-furnace-listing"
       }
     ]
   },

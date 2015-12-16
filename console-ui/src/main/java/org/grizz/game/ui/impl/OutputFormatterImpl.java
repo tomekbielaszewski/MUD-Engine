@@ -130,7 +130,7 @@ public class OutputFormatterImpl implements OutputFormatter {
             for (Map.Entry<Item, Integer> countedItem : countedItems.entrySet()) {
                 Item item = countedItem.getKey();
                 Integer amount = countedItem.getValue();
-                String itemDescription = String.format("%dx\t\t %s: %s", amount, item.getName(), item.getDescription());
+                String itemDescription = String.format("%-7s %s: %s", amount+"x", item.getName(), item.getDescription());
                 sb.append("\t" + itemDescription);
                 sb.append("\n");
             }

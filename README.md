@@ -105,7 +105,6 @@ Komendy wymagające podania parametrów wejściowych:
 - `AdminPutItemCommand` - parametry (nazwa i typ):
   - `(?<itemName>[\\D]+)` - Nazwa przedmiotu, który chcesz umieścić na bierzącej lokacji
   - `(?<amount>[\\d]+)` - [Opcjonalny, wartość domyślna = 1] Liczba przedmiotów, które chcesz umieścić na bierzącej lokacji
-  
 
 ## Gracz
 ### Statystyki/karta gracza
@@ -206,6 +205,7 @@ W przypadku przedmiotów innych typów niż `MISC` dostępne są także dodatkow
 ### Komendy, mapowanie i skryptowanie komend
 Jak opisano wyżej - przedmioty można oskryptować, za pomocą zmapowania skryptu w pliku konfiguracyjnym JSON. W przypadku zmapowania komendy przedmiotu do nieistniejącego skryptu - zostanie wyrzucony wyjątek podczas uruchamiania gry. Jednak jeśli zostanie zmapowanych kilka identycznych komend do różnych skryptów - nie jest gwarantowane który skrypt zostanie uruchomiony.
 Skrypty uruchamiane na przedmiotach nie oczekują zwrócenia żadnej wartości, także [taka](#zwracanie-wartości) konstrukcja nie ma w tym przypadku zastosowania.
+
 ### Rodzaje przedmiotów
 Istnieją obecnie 4 typy przedmiotów - [`WEAPON`,`ARMOR`,`MISC`,`STATIC`]. Niektóre typy, oprócz zmiennych podstawowych [`id`,`name`,`description`,`itemType`,`commands`], posiadają także dodatkowe zmienne:
 - `WEAPON` przedmioty opisujące broń możliwą do trzymania w rękach:

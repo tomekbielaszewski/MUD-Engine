@@ -80,3 +80,29 @@ function craft(item, amount) {
         }
     }
 }
+
+//######## listing recipes ########
+
+var titleRowPattern = "%1$s\n------------";
+var itemDescRowPattern = "[%1$-20s]: \"%2$s\""; //Krótki miecz: Krótkie, lekko uszczerbione, jednoręczne ostrze. Prosty jelec. Zużyta rękojeść. Nic szczególnego.
+var ingredientRowPattern = "     %1$-3s %2$s"    //    2x Sztabka żelaza
+
+function printList(title, recipes) {
+
+    tellPlayer(format(titleRowPattern, title));
+
+    for (var i = 0; i < recipes.length; i++) {
+        var recipe = recipes[i];
+        var item = itemRepo.get(recipe.id);
+
+        tellPlayer(format(itemDescRowPattern, item.getName(), item.getDescription()));
+
+        for (var j = 0; j < recipe.ingredients.length; j++) {
+            var ingredient = recipe.ingredients[j];
+            var amount = ingredient.amount + "x"
+            var item = itemRepo.get(ingredient.id);
+
+            tellPlayer(format(ingredientRowPattern, amount, item.getName()));
+        }
+    }
+}
