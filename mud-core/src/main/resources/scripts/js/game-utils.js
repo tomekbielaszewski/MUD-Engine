@@ -11,11 +11,6 @@ function format() {
     return java.lang.String.format(string, args);
 }
 
-function interpretCommand(executor) {
-    var commandSplit = commandUtils.splitCommand(command, commandPattern);
-    executor(commandSplit);
-}
-
 function tellPlayer(message) {
     response.getPlayerEvents().add(message);
 }

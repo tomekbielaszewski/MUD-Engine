@@ -7,11 +7,11 @@
     "itemType": "STATIC",
     "commands": [
       {
-        "command": "wykuj ([\\D]+) ([\\d]+)",
+        "command": "wykuj (?<itemName>[\\D]+) (?<amount>[\\d]+)",
         "scriptId": "bs-anvil-crafting"
       },
       {
-        "command": "wykuj ([\\D]+)",
+        "command": "wykuj (?<itemName>[\\D]+)",
         "scriptId": "bs-anvil-crafting"
       },
       {
@@ -32,19 +32,19 @@
     "itemType": "STATIC",
     "commands": [
       {
-        "command": "przetop ([\\D]+) ([\\d]+)",
+        "command": "przetop (?<itemName>[\\D]+) (?<amount>[\\d]+)",
         "scriptId": "bs-furnace-crafting"
       },
       {
-        "command": "przetop ([\\D]+)",
+        "command": "przetop (?<itemName>[\\D]+)",
         "scriptId": "bs-furnace-crafting"
       },
       {
-        "command": "wytop ([\\D]+) ([\\d]+)",
+        "command": "wytop (?<itemName>[\\D]+) (?<amount>[\\d]+)",
         "scriptId": "bs-furnace-crafting"
       },
       {
-        "command": "wytop ([\\D]+)",
+        "command": "wytop (?<itemName>[\\D]+)",
         "scriptId": "bs-furnace-crafting"
       },
       {

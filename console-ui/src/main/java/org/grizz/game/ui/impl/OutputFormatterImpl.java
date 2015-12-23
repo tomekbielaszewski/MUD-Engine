@@ -17,8 +17,9 @@ public class OutputFormatterImpl implements OutputFormatter {
     public String format(PlayerResponse playerResponse) {
         StringBuilder sb = new StringBuilder();
 
-        appendPlayerEvents(playerResponse, sb);
+        appendSeparator("#", sb, 79);
 
+        appendPlayerEvents(playerResponse, sb);
         appendLocationName(playerResponse, sb);
         appendLocationDescription(playerResponse, sb);
         appendLocationStaticItems(playerResponse, sb);
@@ -27,15 +28,21 @@ public class OutputFormatterImpl implements OutputFormatter {
         appendVisibleItems(playerResponse, sb);
         appendEquipmentItems(playerResponse, sb);
 
+        appendSeparator("#", sb, 79);
+
         sb.append("\n\n");
 
         return sb.toString();
     }
 
     private void appendSeparator(StringBuilder sb, int width) {
+        appendSeparator("-", sb, width);
+    }
+
+    private void appendSeparator(String sign, StringBuilder sb, int width) {
         sb.append("\n");
         for (int i = 0; i < width; i++) {
-            sb.append("-");
+            sb.append(sign);
         }
         sb.append("\n");
     }

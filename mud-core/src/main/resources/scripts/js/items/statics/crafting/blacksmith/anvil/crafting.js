@@ -14,10 +14,8 @@ function informThatPlayerHasNoRequiredTools() {
     tellPlayer("Aby korzystać z kowadła musisz mieć młot kowalski!");
 }
 
-interpretCommand(function (commandSplit) { //TODO zmien na pobieranie zmiennych z patterna
-    var itemName = commandSplit[0];
-    var amount = commandSplit.length == 2 ? commandSplit[1] : 1;
+var itemName = commandUtils.getVariable("itemName", command, commandPattern);
+var amount = commandUtils.getVariableOrDefaultValue("amount", "1", command, commandPattern);
 
-    logger.info("{} is crafting {}x {} on anvil", [player.getName(), amount, itemName]);
-    craft(itemName, amount);
-});
+logger.info("{} is crafting {}x {} on anvil", [player.getName(), amount, itemName]);
+craft(itemName, amount);
