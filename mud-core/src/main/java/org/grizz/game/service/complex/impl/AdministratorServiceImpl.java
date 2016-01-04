@@ -68,10 +68,13 @@ public class AdministratorServiceImpl implements AdministratorService {
             Location targetLocation = locationRepo.get(targetLocationId);
 
             PlayerContext teleportedPlayer;
+            PlayerResponse teleportedPlayerResponse;
             if (admin.getName().equalsIgnoreCase(player)) {
                 teleportedPlayer = admin;
+                teleportedPlayerResponse = adminResponse;
             } else {
                 teleportedPlayer = playerRepo.findByNameIgnoreCase(player);
+                teleportedPlayerResponse = new PlayerResponseImpl();
             }
 
             if (teleportedPlayer == null) {
@@ -79,7 +82,7 @@ public class AdministratorServiceImpl implements AdministratorService {
                 adminResponse.getPlayerEvents().add(event);
             } else {
                 log.info("Teleporting [{}] to [{}]", player, targetLocationId);
-                teleport((PlayerContextImpl) teleportedPlayer, targetLocation, admin, adminResponse);
+                teleport((PlayerContextImpl) teleportedPlayer, teleportedPlayerResponse, targetLocation, admin, adminResponse);
             }
 
         } else {
@@ -87,42 +90,26 @@ public class AdministratorServiceImpl implements AdministratorService {
         }
     }
 
-    private void teleport(PlayerContextImpl teleportedPlayer, Location targetLocation, PlayerContext admin, PlayerResponse adminResponse) {
-        String currentLocation = teleportedPlayer.getCurrentLocation();
-        teleportedPlayer.setPastLocation(currentLocation);
-        teleportedPlayer.setCurrentLocation(targetLocation.getId());
-
-        notifyTeleportedPlayer(teleportedPlayer, targetLocation, admin);
-        notifyPlayersOnPastLocation(teleportedPlayer);
-        notifyPlayersOnTargetLocation(teleportedPlayer);
-        notifyTeleportingAdmin(teleportedPlayer, targetLocation, adminResponse);
+    private void teleport(PlayerContextImpl teleportedPlayer, PlayerResponse teleportedPlayerResponse, Location targetLocation, PlayerContext admin, PlayerResponse adminResponse) {
+        movementService.teleport(targetLocation.getId(), teleportedPlayer, teleportedPlayerResponse);
+        teleportNotifications(teleportedPlayer, teleportedPlayerResponse, targetLocation, admin, adminResponse);
 
         if (!teleportedPlayer.getName().equalsIgnoreCase(admin.getName())) {
             playerRepo.save(teleportedPlayer);
+            multiplayerNotificationService.send(teleportedPlayer, teleportedPlayerResponse);
         }
     }
 
-    private void notifyTeleportingAdmin(PlayerContextImpl teleportedPlayer, Location targetLocation, PlayerResponse adminResponse) {
-        String adminEvent = eventService.getEvent("admin.command.success.teleportation.notification", teleportedPlayer.getName(), targetLocation.getName());
-        adminResponse.getPlayerEvents().add(adminEvent);
-    }
-
-    private void notifyPlayersOnTargetLocation(PlayerContextImpl teleportedPlayer) {
-        String playersOnTargetLocationEvent = eventService.getEvent("admin.command.player.teleportation.notification.broadcast.in", teleportedPlayer.getName());
-        multiplayerNotificationService.broadcast(locationRepo.get(teleportedPlayer.getCurrentLocation()), playersOnTargetLocationEvent, teleportedPlayer);
-    }
-
-    private void notifyPlayersOnPastLocation(PlayerContextImpl teleportedPlayer) {
+    private void teleportNotifications(PlayerContextImpl teleportedPlayer, PlayerResponse teleportedPlayerResponse, Location targetLocation, PlayerContext admin, PlayerResponse adminResponse) {
+        String teleportedPlayerNotification = eventService.getEvent("admin.command.player.teleportation.notification", admin.getName(), targetLocation.getName());
         String playersOnSourceLocationEvent = eventService.getEvent("admin.command.player.teleportation.notification.broadcast.out", teleportedPlayer.getName());
-        multiplayerNotificationService.broadcast(locationRepo.get(teleportedPlayer.getPastLocation()), playersOnSourceLocationEvent, teleportedPlayer);
-    }
+        String playersOnTargetLocationEvent = eventService.getEvent("admin.command.player.teleportation.notification.broadcast.in", teleportedPlayer.getName());
+        String adminNotification = eventService.getEvent("admin.command.success.teleportation.notification", teleportedPlayer.getName(), targetLocation.getName());
 
-    private void notifyTeleportedPlayer(PlayerContextImpl teleportedPlayer, Location targetLocation, PlayerContext admin) {
-        PlayerResponse teleportedPlayerResponse = new PlayerResponseImpl();
-        movementService.showCurrentLocation(teleportedPlayer, teleportedPlayerResponse);
-        String playerEvent = eventService.getEvent("admin.command.player.teleportation.notification", admin.getName(), targetLocation.getName());
-        teleportedPlayerResponse.getPlayerEvents().add(playerEvent);
-        multiplayerNotificationService.send(teleportedPlayer, teleportedPlayerResponse);
+        teleportedPlayerResponse.getPlayerEvents().add(teleportedPlayerNotification);
+        adminResponse.getPlayerEvents().add(adminNotification);
+        multiplayerNotificationService.broadcast(locationRepo.get(teleportedPlayer.getCurrentLocation()), playersOnTargetLocationEvent, teleportedPlayer);
+        multiplayerNotificationService.broadcast(locationRepo.get(teleportedPlayer.getPastLocation()), playersOnSourceLocationEvent, teleportedPlayer);
     }
 
     @Override
@@ -138,10 +125,13 @@ public class AdministratorServiceImpl implements AdministratorService {
             }
 
             PlayerContext receiver;
+            PlayerResponse receiverResponse;
             if (admin.getName().equalsIgnoreCase(player)) {
                 receiver = admin;
+                receiverResponse = adminResponse;
             } else {
                 receiver = playerRepo.findByNameIgnoreCase(player);
+                receiverResponse = new PlayerResponseImpl();
             }
 
             if (receiver == null) {
@@ -149,37 +139,35 @@ public class AdministratorServiceImpl implements AdministratorService {
                 adminResponse.getPlayerEvents().add(event);
             } else {
                 log.info("{} gave [{}]x{} to [{}]", admin.getName(), itemName, amount, player);
-                give((PlayerContextImpl) receiver, amount, item, admin, adminResponse);
+                give((PlayerContextImpl) receiver, (PlayerResponseImpl) receiverResponse, amount, item, admin, adminResponse);
             }
         }
     }
 
-    private void give(PlayerContextImpl receiver, int amount, Item item, PlayerContext admin, PlayerResponse adminResponse) {
+    private void give(PlayerContextImpl receiver, PlayerResponseImpl receiverResponse, int amount, Item item, PlayerContext admin, PlayerResponse adminResponse) {
         List<Item> items = Lists.newArrayList();
         for (int i = 0; i < amount; i++) {
             items.add(item);
         }
 
-        PlayerResponseImpl receiverResponse = new PlayerResponseImpl();
         equipmentService.addItems(items, receiver, receiverResponse);
-
-        notifyReceiver(receiver, receiverResponse, admin);
+        giveNotifications(receiver, receiverResponse, admin, adminResponse);
 
         if (!receiver.getName().equalsIgnoreCase(admin.getName())) {
-            notifyGivingAdmin(adminResponse, receiver);
             playerRepo.save(receiver);
         }
     }
 
-    private void notifyReceiver(PlayerContextImpl receiver, PlayerResponseImpl receiverResponse, PlayerContext admin) {
-        String itemsReceivedEvent = eventService.getEvent("admin.command.items.received.from", admin.getName());
-        receiverResponse.getPlayerEvents().add(itemsReceivedEvent);
-        multiplayerNotificationService.send(receiver, receiverResponse);
-    }
+    private void giveNotifications(PlayerContextImpl receiver, PlayerResponseImpl receiverResponse, PlayerContext admin, PlayerResponse adminResponse) {
+        if (!receiver.getName().equalsIgnoreCase(admin.getName())) {
+            String itemsReceivedEvent = eventService.getEvent("admin.command.items.received.from", admin.getName());
+            String itemsGivenEvent = eventService.getEvent("admin.command.items.given.to", receiver.getName());
 
-    private void notifyGivingAdmin(PlayerResponse adminResponse, PlayerContextImpl receiver) {
-        String itemsGivenEvent = eventService.getEvent("admin.command.items.given.to", receiver.getName());
-        adminResponse.getPlayerEvents().add(itemsGivenEvent);
+            receiverResponse.getPlayerEvents().add(itemsReceivedEvent);
+            adminResponse.getPlayerEvents().add(itemsGivenEvent);
+
+            multiplayerNotificationService.send(receiver, receiverResponse);
+        }
     }
 
     @Override
@@ -196,6 +184,31 @@ public class AdministratorServiceImpl implements AdministratorService {
             log.info("{} put [{}]x{} on [{}]", admin.getName(), itemName, amount, targetLocation.getName());
             put(item, amount, targetLocation, admin, adminResponse);
         }
+    }
+
+    private void put(Item item, int amount, Location targetLocation, PlayerContext admin, PlayerResponse adminResponse) {
+        List<Item> items = Lists.newArrayList();
+        for (int i = 0; i < amount; i++) {
+            items.add(item);
+        }
+
+        if (ItemType.STATIC.equals(item.getItemType())) {
+            LocationItems locationItems = targetLocation.getItems();
+            locationItems.getStaticItems().addAll(items);
+            locationService.saveLocationState(targetLocation);
+        } else {
+            locationService.addItems(targetLocation, items);
+        }
+
+        putNotifications(item.getName(), amount, targetLocation, admin, adminResponse);
+    }
+
+    private void putNotifications(String itemName, int amount, Location targetLocation, PlayerContext admin, PlayerResponse adminResponse) {
+        String itemPutLocationNotification = eventService.getEvent("admin.command.item.put.notification.broadcast");
+        String adminNotification = eventService.getEvent("admin.command.item.put.notification", String.valueOf(amount), itemName);
+
+        multiplayerNotificationService.broadcast(targetLocation, itemPutLocationNotification, admin);
+        adminResponse.getPlayerEvents().add(adminNotification);
     }
 
     @Override
@@ -217,34 +230,6 @@ public class AdministratorServiceImpl implements AdministratorService {
             adminResponse.getPlayerEvents().add(playerListTitle);
             adminResponse.getPlayerEvents().addAll(playerList);
         }
-    }
-
-    private void put(Item item, int amount, Location targetLocation, PlayerContext admin, PlayerResponse adminResponse) {
-        List<Item> items = Lists.newArrayList();
-        for (int i = 0; i < amount; i++) {
-            items.add(item);
-        }
-
-        if (ItemType.STATIC.equals(item.getItemType())) {
-            LocationItems locationItems = targetLocation.getItems();
-            locationItems.getStaticItems().addAll(items);
-            locationService.saveLocationState(targetLocation);
-        } else {
-            locationService.addItems(targetLocation, items);
-        }
-
-        notifyPlayersOnLocation(targetLocation, admin);
-        notifyAdmin(item.getName(), String.valueOf(amount), adminResponse);
-    }
-
-    private void notifyPlayersOnLocation(Location location, PlayerContext sender) {
-        String broadcastEvent = eventService.getEvent("admin.command.item.put.notification.broadcast");
-        multiplayerNotificationService.broadcast(location, broadcastEvent, sender);
-    }
-
-    private void notifyAdmin(String itemName, String amount, PlayerResponse admin) {
-        String event = eventService.getEvent("admin.command.item.put.notification", amount, itemName);
-        admin.getPlayerEvents().add(event);
     }
 
     private boolean isAuthorized(PlayerContext player, PlayerResponse response) {

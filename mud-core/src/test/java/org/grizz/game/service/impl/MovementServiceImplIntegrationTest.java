@@ -119,7 +119,7 @@ public class MovementServiceImplIntegrationTest {
     }
 
     private void move(Direction dir, String targetLocationId, PlayerContext context, PlayerResponse response) {
-        movementService.move(dir, context, response);
+        movementService.moveRunningScripts(dir, context, response);
         Assert.assertEquals(targetLocationId, context.getCurrentLocation());
     }
 }

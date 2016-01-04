@@ -51,28 +51,28 @@ public class MovementServiceImpl implements MovementService {
     private GameExceptionHandler gameExceptionHandler;
 
     @Override
-    public void move(@NonNull final Direction dir, @NonNull final PlayerContext playerContext, @NonNull final PlayerResponse response) {
+    public void moveRunningScripts(@NonNull final Direction dir, @NonNull final PlayerContext playerContext, @NonNull final PlayerResponse response) {
         Location currentLocation = locationService.getCurrentLocation(playerContext);
 
         try {
             switch (dir) {
                 case NORTH:
-                    move(currentLocation::getNorth, playerContext, currentLocation, response);
+                    moveRunningScripts(currentLocation.getNorth(), playerContext, currentLocation, response);
                     break;
                 case SOUTH:
-                    move(currentLocation::getSouth, playerContext, currentLocation, response);
+                    moveRunningScripts(currentLocation.getSouth(), playerContext, currentLocation, response);
                     break;
                 case EAST:
-                    move(currentLocation::getEast, playerContext, currentLocation, response);
+                    moveRunningScripts(currentLocation.getEast(), playerContext, currentLocation, response);
                     break;
                 case WEST:
-                    move(currentLocation::getWest, playerContext, currentLocation, response);
+                    moveRunningScripts(currentLocation.getWest(), playerContext, currentLocation, response);
                     break;
                 case UP:
-                    move(currentLocation::getUp, playerContext, currentLocation, response);
+                    moveRunningScripts(currentLocation.getUp(), playerContext, currentLocation, response);
                     break;
                 case DOWN:
-                    move(currentLocation::getDown, playerContext, currentLocation, response);
+                    moveRunningScripts(currentLocation.getDown(), playerContext, currentLocation, response);
                     break;
             }
         } catch (NoSuchLocationException e) {
@@ -83,16 +83,29 @@ public class MovementServiceImpl implements MovementService {
     }
 
     @Override
-    public void showCurrentLocation(PlayerContext _context, PlayerResponse _response) {
+    public void teleport(@NonNull final String targetLocationId, @NonNull final PlayerContext _context, @NonNull final PlayerResponse _response) {
+        PlayerContextImpl context = (PlayerContextImpl) _context;
         PlayerResponseImpl response = (PlayerResponseImpl) _response;
-        Location currentLocation = locationService.getCurrentLocation(_context);
+
+        Location currentLocation = locationService.getCurrentLocation(context);
+        Location targetLocation = locationRepo.get(targetLocationId);
+
+        move(currentLocation, targetLocation, context, response);
+    }
+
+    @Override
+    public void showCurrentLocation(PlayerContext _context, PlayerResponse _response) {
+        PlayerContextImpl context = (PlayerContextImpl) _context;
+        PlayerResponseImpl response = (PlayerResponseImpl) _response;
+
+        Location currentLocation = locationService.getCurrentLocation(context);
         List<String> locationExits = locationService.getExits(currentLocation);
         List<String> players = locationService.getPlayersOnLocation(currentLocation);
-        List<Item> locationItems = locationService.getCurrentLocationItems(_context);
-        List<Item> locationStaticItems = locationService.getCurrentLocationStaticItems(_context);
+        List<Item> locationItems = locationService.getCurrentLocationItems(context);
+        List<Item> locationStaticItems = locationService.getCurrentLocationStaticItems(context);
 
         List<String> playersExceptCurrent = players.stream()
-                .filter(playerName -> !playerName.equals(_context.getName()))
+                .filter(playerName -> !playerName.equals(context.getName()))
                 .collect(Collectors.toList());
 
         response.setPossibleExits(locationExits);
@@ -101,38 +114,44 @@ public class MovementServiceImpl implements MovementService {
         response.setLocationItems(locationItems);
         response.setCurrentLocation(currentLocation);
 
-        actionScript(currentLocation::getOnShow, _context, _response);
+        actionScript(currentLocation::getOnShow, context, response);
     }
 
-    private void move(Supplier<String> locationSupplier, PlayerContext _context, Location currentLocation, PlayerResponse _response) {
+    private void moveRunningScripts(String targetLocationId, PlayerContext _context, Location currentLocation, PlayerResponse _response) {
         PlayerContextImpl context = (PlayerContextImpl) _context;
         PlayerResponseImpl response = (PlayerResponseImpl) _response;
 
-        if (predicateScript(currentLocation::getBeforeLeave, _context, _response)) {
-            actionScript(currentLocation::getOnLeave, _context, _response);
+        if (predicateScript(currentLocation::getBeforeLeave, context, response)) {
+            actionScript(currentLocation::getOnLeave, context, response);
 
-            Location targetLocation = locationRepo.get(locationSupplier.get());
+            Location targetLocation = locationRepo.get(targetLocationId);
 
-            if (predicateScript(targetLocation::getBeforeEnter, _context, _response)) {
-                context.setPastLocation(currentLocation.getId());
-                context.setCurrentLocation(targetLocation.getId());
-
-                actionScript(targetLocation::getOnEnter, _context, _response);
-
-                showCurrentLocation(_context, response);
-                log.info("{} moved from [{}] to [{}]", context.getName(), currentLocation.getName(), targetLocation.getName());
-
-                String locationLeaveEvent = eventService.getEvent("multiplayer.event.player.left.location", context.getName());
-                notificationService.broadcast(currentLocation, locationLeaveEvent, context);
-
-                String locationEnterEvent = eventService.getEvent("multiplayer.event.player.entered.location", context.getName());
-                notificationService.broadcast(targetLocation, locationEnterEvent, context);
+            if (predicateScript(targetLocation::getBeforeEnter, context, response)) {
+                actionScript(targetLocation::getOnEnter, context, response);
+                move(currentLocation, targetLocation, context, response);
+                broadcastMovement(currentLocation, targetLocation, context);
             } else {
                 log.info("{} was denied to move from [{}] to [{}]", context.getName(), currentLocation.getName(), targetLocation.getName());
             }
         } else {
             log.info("{} was denied to move from [{}]", context.getName(), currentLocation.getName());
         }
+    }
+
+    private void move(Location currentLocation, Location targetLocation, PlayerContextImpl context, PlayerResponseImpl response) {
+        context.setPastLocation(currentLocation.getId());
+        context.setCurrentLocation(targetLocation.getId());
+
+        showCurrentLocation(context, response);
+        log.info("{} moved from [{}] to [{}]", context.getName(), currentLocation.getName(), targetLocation.getName());
+    }
+
+    private void broadcastMovement(Location currentLocation, Location targetLocation, PlayerContextImpl context) {
+        String locationLeaveEvent = eventService.getEvent("multiplayer.event.player.left.location", context.getName());
+        notificationService.broadcast(currentLocation, locationLeaveEvent, context);
+
+        String locationEnterEvent = eventService.getEvent("multiplayer.event.player.entered.location", context.getName());
+        notificationService.broadcast(targetLocation, locationEnterEvent, context);
     }
 
     private boolean predicateScript(Supplier<String> scriptSupplier, PlayerContext context, PlayerResponse response) {

@@ -30,7 +30,7 @@ public abstract class MovementCommand implements Command {
     }
 
     public PlayerResponse execute(Direction direction, final PlayerContext playerContext, PlayerResponse response) {
-        movementService.move(direction, playerContext, response);
+        movementService.moveRunningScripts(direction, playerContext, response);
         return response;
     }
 }
