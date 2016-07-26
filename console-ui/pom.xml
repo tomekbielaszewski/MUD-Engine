@@ -38,7 +38,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>org.grizz.game.Starter</mainClass>
+                            <mainClass>old.org.grizz.game.Starter</mainClass>
                         </manifest>
                     </archive>
 

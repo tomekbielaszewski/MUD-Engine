@@ -2,21 +2,18 @@ package org.grizz.game;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.grizz.game.commands.CommandHandlerBus;
-import org.grizz.game.exception.GameException;
-import org.grizz.game.exception.GameExceptionHandler;
-import org.grizz.game.model.PlayerContext;
-import org.grizz.game.model.PlayerResponse;
-import org.grizz.game.model.impl.EquipmentEntity;
-import org.grizz.game.model.impl.PlayerContextImpl;
-import org.grizz.game.model.impl.PlayerResponseImpl;
-import org.grizz.game.model.repository.PlayerRepository;
+import old.org.grizz.game.commands.CommandHandlerBus;
+import old.org.grizz.game.exception.GameException;
+import old.org.grizz.game.exception.GameExceptionHandler;
+import old.org.grizz.game.model.PlayerContext;
+import old.org.grizz.game.model.PlayerResponse;
+import old.org.grizz.game.model.impl.EquipmentEntity;
+import old.org.grizz.game.model.impl.PlayerContextImpl;
+import old.org.grizz.game.model.impl.PlayerResponseImpl;
+import old.org.grizz.game.model.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by Grizz on 2015-04-17.
- */
 @Service
 public class GameImpl implements Game {
     @Autowired

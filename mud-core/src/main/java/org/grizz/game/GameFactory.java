@@ -1,14 +1,11 @@
 package org.grizz.game;
 
-import org.grizz.game.config.GameConfig;
-import org.grizz.game.service.simple.Notifier;
-import org.grizz.game.service.simple.impl.ProxyNotifier;
+import old.org.grizz.game.config.GameConfig;
+import old.org.grizz.game.service.simple.Notifier;
+import old.org.grizz.game.service.simple.impl.ProxyNotifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-/**
- * Created by tomasz.bielaszewski on 2015-04-28.
- */
 public class GameFactory {
     private static Game INSTANCE;
 
