@@ -3,6 +3,7 @@ package org.grizz.game.command.engine;
 import com.google.common.collect.Lists;
 import junit.framework.TestCase;
 import org.grizz.game.command.Command;
+import org.grizz.game.command.provider.CommandsProvider;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
 import org.junit.Test;
