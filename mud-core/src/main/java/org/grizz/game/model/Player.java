@@ -4,6 +4,7 @@ public class Player {
     private Object location;
     private Object equipment;
     private Object backpack;
+    private String name;
 
     public Object getLocation() {
         return location;
@@ -15,5 +16,9 @@ public class Player {
 
     public Object getBackpack() {
         return backpack;
+    }
+
+    public String getName() {
+        return name;
     }
 }

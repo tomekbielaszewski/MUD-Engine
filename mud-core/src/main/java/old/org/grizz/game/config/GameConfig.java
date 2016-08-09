@@ -24,9 +24,6 @@ import javax.annotation.PostConstruct;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-/**
- * Hello world!
- */
 @Slf4j
 @SpringBootApplication
 @EnableMongoRepositories("old.org.grizz.game.model.repository")

@@ -1,10 +1,9 @@
-package old.org.grizz.game.loader.impl;
+package org.grizz.game.loader.impl;
 
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import old.org.grizz.game.loader.Loader;
 import old.org.grizz.game.model.Location;
 import old.org.grizz.game.model.Script;
 import old.org.grizz.game.model.impl.LocationEntity;
@@ -13,15 +12,13 @@ import old.org.grizz.game.model.repository.LocationItemsRepository;
 import old.org.grizz.game.model.repository.Repository;
 import old.org.grizz.game.utils.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.grizz.game.loader.Loader;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 
-/**
- * Created by Grizz on 2015-04-17.
- */
 @Slf4j
 public class LocationLoader implements Loader {
     private final String _path;
