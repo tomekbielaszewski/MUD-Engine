@@ -1,8 +1,8 @@
 package org.grizz.game;
 
-import old.org.grizz.game.config.GameConfig;
 import old.org.grizz.game.service.simple.Notifier;
 import old.org.grizz.game.service.simple.impl.ProxyNotifier;
+import org.grizz.game.config.GameConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 

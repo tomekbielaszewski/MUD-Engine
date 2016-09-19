@@ -1,17 +1,22 @@
 package org.grizz.game.command.engine;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.grizz.game.command.Command;
 import org.grizz.game.command.provider.CommandsProvider;
+import org.grizz.game.command.provider.SystemCommandsProvider;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.HashSet;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -29,13 +34,21 @@ public class CommandHandlerTest extends TestCase {
     private final Command notMatching = notMatchingCommand();
 
     @Mock
-    private CommandsProvider commandsProvider;
+    private SystemCommandsProvider commandsProvider;
+
+    @Spy
+    private HashSet<CommandsProvider> commandsProviders = Sets.newHashSet();
 
     @Mock
     private Command unknownCommand;
 
     @InjectMocks
     private CommandHandler commandHandler = new CommandHandler();
+
+    @Before
+    public void setUp() {
+        commandsProviders.add(commandsProvider);
+    }
 
     @Test
     public void executesFirstCommandWhenMatching() {

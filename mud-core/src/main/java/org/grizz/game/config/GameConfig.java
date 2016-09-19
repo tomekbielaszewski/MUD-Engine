@@ -1,33 +1,25 @@
-package old.org.grizz.game.config;
+package org.grizz.game.config;
 
-import lombok.extern.slf4j.Slf4j;
-import old.org.grizz.game.loader.Loader;
-import old.org.grizz.game.loader.impl.ItemLoader;
-import old.org.grizz.game.loader.impl.LocationLoader;
-import old.org.grizz.game.loader.impl.MobLoader;
-import old.org.grizz.game.loader.impl.ScriptLoader;
-import old.org.grizz.game.model.repository.ItemRepo;
-import old.org.grizz.game.model.repository.LocationItemsRepository;
 import old.org.grizz.game.service.simple.Notifier;
 import old.org.grizz.game.service.simple.impl.DefaultNotifier;
 import old.org.grizz.game.service.simple.impl.ProxyNotifier;
+import org.grizz.game.loader.Loader;
+import org.grizz.game.loader.impl.ItemLoader;
+import org.grizz.game.loader.impl.LocationLoader;
+import org.grizz.game.loader.impl.MobLoader;
+import org.grizz.game.loader.impl.ScriptLoader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import javax.annotation.PostConstruct;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-@Slf4j
-@SpringBootApplication
-@EnableMongoRepositories("old.org.grizz.game.model.repository")
-@ComponentScan("old.org.grizz.game")
+@Configuration
 @PropertySources({
         @PropertySource("assets.properties"),
         @PropertySource("strings.properties"),
@@ -41,12 +33,6 @@ public class GameConfig {
 
     @Autowired
     private Environment env;
-
-    @Autowired
-    private LocationItemsRepository locationItemsRepository;
-
-    @Autowired
-    private ItemRepo itemRepo;
 
     @PostConstruct
     public void initGame() {
