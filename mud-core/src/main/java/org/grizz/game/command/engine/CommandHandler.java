@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @Service
 public class CommandHandler {
 
-    @Autowired
     private Set<CommandsProvider> commandsProviders;
 
     @Autowired
@@ -32,5 +31,10 @@ public class CommandHandler {
                 .orElse(unknownCommand);
         command.execute(strCommand, player, response);
         return response;
+    }
+
+    @Autowired
+    public void setCommandsProviders(Set<CommandsProvider> commandsProviders) {
+        this.commandsProviders = commandsProviders;
     }
 }
