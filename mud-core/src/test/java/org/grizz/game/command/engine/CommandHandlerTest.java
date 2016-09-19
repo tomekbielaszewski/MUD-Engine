@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.HashSet;
+import java.util.Set;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -36,9 +36,6 @@ public class CommandHandlerTest extends TestCase {
     @Mock
     private SystemCommandsProvider commandsProvider;
 
-    @Spy
-    private HashSet<CommandsProvider> commandsProviders = Sets.newHashSet();
-
     @Mock
     private Command unknownCommand;
 
@@ -47,7 +44,8 @@ public class CommandHandlerTest extends TestCase {
 
     @Before
     public void setUp() {
-        commandsProviders.add(commandsProvider);
+        Set<CommandsProvider> commandsProviders = Sets.newHashSet(commandsProvider);
+        commandHandler.setCommandsProviders(commandsProviders);
     }
 
     @Test
