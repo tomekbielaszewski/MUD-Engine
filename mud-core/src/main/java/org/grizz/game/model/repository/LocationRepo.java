@@ -2,8 +2,8 @@ package org.grizz.game.model.repository;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
-import old.org.grizz.game.exception.NoSuchLocationException;
-import old.org.grizz.game.model.Location;
+import org.grizz.game.exception.NoSuchLocationException;
+import org.grizz.game.model.Location;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;

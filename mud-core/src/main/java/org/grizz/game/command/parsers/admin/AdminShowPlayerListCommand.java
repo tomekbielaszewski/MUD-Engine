@@ -1,30 +1,32 @@
 package org.grizz.game.command.parsers.admin;
 
-import old.org.grizz.game.commands.Command;
-import old.org.grizz.game.model.PlayerContext;
-import old.org.grizz.game.model.PlayerResponse;
-import old.org.grizz.game.service.complex.AdministratorService;
-import old.org.grizz.game.service.utils.CommandUtils;
+import org.grizz.game.command.executors.AdminShowPlayerListCommandExecutor;
+import org.grizz.game.command.parsers.CommandParser;
+import org.grizz.game.model.Player;
+import org.grizz.game.model.PlayerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AdminShowPlayerListCommand implements Command {
-    @Autowired
-    private CommandUtils commandUtils;
+public class AdminShowPlayerListCommand extends CommandParser {
 
     @Autowired
-    private AdministratorService administratorService;
+    private AdminShowPlayerListCommandExecutor adminCommand;
 
-    @Override
-    public boolean accept(String command) {
-        return commandUtils.isAnyMatching(command, getClass().getCanonicalName());
+    @Autowired
+    public AdminShowPlayerListCommand(Environment env) {
+        super(env);
     }
 
     @Override
-    public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
-        administratorService.showPlayerList(playerContext, response);
+    public boolean accept(String command) {
+        return isAnyMatching(command, getClass().getCanonicalName());
+    }
 
+    @Override
+    public PlayerResponse execute(String command, Player admin, PlayerResponse response) {
+        adminCommand.showPlayerList(admin, response);
         return response;
     }
 }

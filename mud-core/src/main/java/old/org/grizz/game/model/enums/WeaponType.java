@@ -2,9 +2,6 @@ package old.org.grizz.game.model.enums;
 
 import lombok.Getter;
 
-/**
- * Created by tomasz.bielaszewski on 2015-10-02.
- */
 public enum WeaponType {
     SWORD1H(false, true),
     SWORD2H(false, false),

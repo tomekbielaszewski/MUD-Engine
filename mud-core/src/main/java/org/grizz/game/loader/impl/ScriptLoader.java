@@ -3,12 +3,11 @@ package org.grizz.game.loader.impl;
 import com.google.gson.Gson;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import old.org.grizz.game.exception.ScriptLoadingException;
-import old.org.grizz.game.model.Script;
-import old.org.grizz.game.model.impl.ScriptEntity;
-import old.org.grizz.game.model.repository.Repository;
-import old.org.grizz.game.utils.FileUtils;
+import org.grizz.game.exception.ScriptLoadingException;
 import org.grizz.game.loader.Loader;
+import org.grizz.game.model.Script;
+import org.grizz.game.model.repository.Repository;
+import org.grizz.game.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
@@ -37,11 +36,11 @@ public class ScriptLoader implements Loader {
         FileUtils.listFilesInFolder(_path)
                 .forEach(path -> {
                     if (path.toString().endsWith("json")) {
-                        ScriptEntity[] scriptsArray = null;
+                        Script[] scriptsArray = null;
                         try {
                             log.info("Reading: {}", path.toString());
-                            scriptsArray = gson.fromJson(Files.newBufferedReader(path), ScriptEntity[].class);
-                            for (ScriptEntity script : scriptsArray) {
+                            scriptsArray = gson.fromJson(Files.newBufferedReader(path), Script[].class);
+                            for (Script script : scriptsArray) {
                                 checkScriptPath(script);
                                 scriptRepo.add(script);
                             }

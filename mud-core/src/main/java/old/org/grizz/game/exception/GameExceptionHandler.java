@@ -4,9 +4,6 @@ import old.org.grizz.game.service.simple.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by Grizz on 2015-08-17.
- */
 @Component
 public class GameExceptionHandler {
     @Autowired

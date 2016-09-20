@@ -1,34 +1,37 @@
 package org.grizz.game.command.parsers.admin;
 
-import old.org.grizz.game.commands.Command;
-import old.org.grizz.game.model.PlayerContext;
-import old.org.grizz.game.model.PlayerResponse;
-import old.org.grizz.game.service.complex.AdministratorService;
-import old.org.grizz.game.service.utils.CommandUtils;
+import org.grizz.game.command.executors.AdminTeleportCommandExecutor;
+import org.grizz.game.command.parsers.CommandParser;
+import org.grizz.game.model.Player;
+import org.grizz.game.model.PlayerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AdminTeleportCommand implements Command {
-    @Autowired
-    private CommandUtils commandUtils;
+public class AdminTeleportCommand extends CommandParser {
 
     @Autowired
-    private AdministratorService administratorService;
+    private AdminTeleportCommandExecutor adminCommand;
 
-    @Override
-    public boolean accept(String command) {
-        return commandUtils.isAnyMatching(command, getClass().getCanonicalName());
+    @Autowired
+    public AdminTeleportCommand(Environment env) {
+        super(env);
     }
 
     @Override
-    public PlayerResponse execute(String command, PlayerContext playerContext, PlayerResponse response) {
-        String matchedPattern = commandUtils.getMatchedPattern(command, getClass().getCanonicalName());
+    public boolean accept(String command) {
+        return isAnyMatching(command, getClass().getCanonicalName());
+    }
 
-        String playerName = commandUtils.getVariable("playerName", command, matchedPattern);
-        String locationId = commandUtils.getVariableOrDefaultValue("locationId", playerContext.getCurrentLocation(), command, matchedPattern);
+    @Override
+    public PlayerResponse execute(String command, Player admin, PlayerResponse response) {
+        String matchedPattern = getMatchedPattern(command, getClass().getCanonicalName());
 
-        administratorService.teleport(playerName, locationId, playerContext, response);
+        String playerName = getVariable("playerName", command, matchedPattern);
+        String locationId = getVariableOrDefaultValue("locationId", admin.getLocation(), command, matchedPattern);
+
+        adminCommand.teleport(playerName, locationId, admin, response);
 
         return response;
     }

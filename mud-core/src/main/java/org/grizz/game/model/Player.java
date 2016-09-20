@@ -1,12 +1,13 @@
 package org.grizz.game.model;
 
+
 public class Player {
-    private Object location;
+    private String location;
     private Object equipment;
     private Object backpack;
     private String name;
 
-    public Object getLocation() {
+    public String getLocation() {
         return location;
     }
 

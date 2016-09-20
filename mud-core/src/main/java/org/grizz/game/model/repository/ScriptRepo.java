@@ -2,8 +2,8 @@ package org.grizz.game.model.repository;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
-import old.org.grizz.game.exception.NoSuchScriptException;
-import old.org.grizz.game.model.Script;
+import org.grizz.game.exception.NoSuchScriptException;
+import org.grizz.game.model.Script;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;

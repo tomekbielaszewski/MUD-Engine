@@ -4,15 +4,11 @@ import com.google.gson.Gson;
 import lombok.SneakyThrows;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import old.org.grizz.game.model.Script;
-import old.org.grizz.game.model.enums.ItemType;
-import old.org.grizz.game.model.enums.WeaponType;
-import old.org.grizz.game.model.impl.items.*;
-import old.org.grizz.game.model.items.CommandScript;
-import old.org.grizz.game.model.items.Item;
-import old.org.grizz.game.model.repository.Repository;
-import old.org.grizz.game.utils.FileUtils;
 import org.grizz.game.loader.Loader;
+import org.grizz.game.model.Script;
+import org.grizz.game.model.items.*;
+import org.grizz.game.model.repository.Repository;
+import org.grizz.game.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -82,11 +78,10 @@ public class ItemLoader implements Loader {
     }
 
     private Item transformWeapon(UniversalItem item) {
-        return WeaponEntity.builder()
+        return Weapon.builder()
                 .id(item.id)
                 .name(item.name)
                 .description(item.description)
-                .itemType(item.itemType)
                 .commands(item.commands)
                 .weaponType(item.weaponType)
                 .minDamage(item.minDamage)
@@ -95,32 +90,29 @@ public class ItemLoader implements Loader {
     }
 
     private Item transformArmor(UniversalItem item) {
-        return ArmorEntity.builder()
+        return Armor.builder()
                 .id(item.id)
                 .name(item.name)
                 .description(item.description)
-                .itemType(item.itemType)
                 .commands(item.commands)
                 .build();
     }
 
     private Item transformMisc(UniversalItem item) {
-        return MiscEntity.builder()
+        return Misc.builder()
                 .id(item.id)
                 .name(item.name)
                 .description(item.description)
-                .itemType(item.itemType)
                 .commands(item.commands)
                 .build();
     }
 
     private Item transformStatic(UniversalItem item) {
-        return StaticEntity.builder()
+        return Static.builder()
                 .id(item.id)
                 .name(item.name)
                 .description(item.description)
                 .pickUpMessage(item.pickUpMessage)
-                .itemType(item.itemType)
                 .commands(item.commands)
                 .build();
     }
@@ -132,7 +124,7 @@ public class ItemLoader implements Loader {
         String description;
         String pickUpMessage;
         ItemType itemType;
-        List<CommandScriptEntity> commands;
+        List<CommandScript> commands;
         WeaponType weaponType;
         int minDamage;
         int maxDamage;

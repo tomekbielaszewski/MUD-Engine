@@ -2,9 +2,9 @@ package org.grizz.game.model.repository;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
-import old.org.grizz.game.exception.NoSuchItemException;
-import old.org.grizz.game.model.items.Item;
 import org.apache.commons.lang3.StringUtils;
+import org.grizz.game.exception.NoSuchItemException;
+import org.grizz.game.model.items.Item;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;

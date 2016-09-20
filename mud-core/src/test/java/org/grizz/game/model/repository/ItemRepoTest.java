@@ -1,24 +1,13 @@
 package org.grizz.game.model.repository;
 
-import old.org.grizz.game.exception.NoSuchItemException;
-import old.org.grizz.game.model.impl.items.CommandScriptEntity;
-import old.org.grizz.game.model.impl.items.MiscEntity;
-import old.org.grizz.game.model.items.CommandScript;
-import old.org.grizz.game.model.items.Item;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.core.Is;
-import org.junit.Assert;
+import org.grizz.game.exception.NoSuchItemException;
+import org.grizz.game.model.items.Item;
+import org.grizz.game.model.items.Misc;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Predicate;
-
-import static java.util.function.Predicate.isEqual;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.Is.is;
@@ -133,7 +122,7 @@ public class ItemRepoTest {
     }
 
     private Item dummyItem(String id, String name) {
-        return MiscEntity.builder()
+        return Misc.builder()
                 .id(id)
                 .name(name)
                 .build();
