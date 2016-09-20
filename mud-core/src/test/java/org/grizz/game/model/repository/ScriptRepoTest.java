@@ -1,11 +1,7 @@
 package org.grizz.game.model.repository;
 
-import old.org.grizz.game.exception.NoSuchLocationException;
-import old.org.grizz.game.exception.NoSuchScriptException;
-import old.org.grizz.game.model.Location;
-import old.org.grizz.game.model.Script;
-import old.org.grizz.game.model.impl.LocationEntity;
-import old.org.grizz.game.model.impl.ScriptEntity;
+import org.grizz.game.exception.NoSuchScriptException;
+import org.grizz.game.model.Script;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -69,7 +65,7 @@ public class ScriptRepoTest {
     }
 
     private Script dummyScript(String id) {
-        return ScriptEntity.builder()
+        return Script.builder()
                 .id(id)
                 .build();
     }

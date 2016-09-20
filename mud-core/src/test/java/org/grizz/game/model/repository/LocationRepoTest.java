@@ -1,16 +1,11 @@
 package org.grizz.game.model.repository;
 
-import old.org.grizz.game.exception.NoSuchItemException;
-import old.org.grizz.game.exception.NoSuchLocationException;
-import old.org.grizz.game.model.Location;
-import old.org.grizz.game.model.impl.LocationEntity;
-import old.org.grizz.game.model.impl.items.MiscEntity;
-import old.org.grizz.game.model.items.Item;
+import org.grizz.game.exception.NoSuchLocationException;
+import org.grizz.game.model.Location;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
@@ -70,7 +65,7 @@ public class LocationRepoTest {
     }
 
     private Location dummyLocation(String id) {
-        return LocationEntity.builder()
+        return Location.builder()
                 .id(id)
                 .build();
     }
