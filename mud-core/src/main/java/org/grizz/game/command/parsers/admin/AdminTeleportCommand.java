@@ -1,6 +1,6 @@
 package org.grizz.game.command.parsers.admin;
 
-import org.grizz.game.command.executors.AdminTeleportCommandExecutor;
+import org.grizz.game.command.executors.admin.AdminTeleportCommandExecutor;
 import org.grizz.game.command.parsers.CommandParser;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
@@ -29,7 +29,7 @@ public class AdminTeleportCommand extends CommandParser {
         String matchedPattern = getMatchedPattern(command, getClass().getCanonicalName());
 
         String playerName = getVariable("playerName", command, matchedPattern);
-        String locationId = getVariableOrDefaultValue("locationId", admin.getLocation(), command, matchedPattern);
+        String locationId = getVariableOrDefaultValue("locationId", admin.getCurrentLocation(), command, matchedPattern);
 
         adminCommand.teleport(playerName, locationId, admin, response);
 

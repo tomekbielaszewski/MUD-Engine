@@ -1,6 +1,6 @@
 package org.grizz.game.exception;
 
-import old.org.grizz.game.service.simple.EventService;
+import org.grizz.game.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

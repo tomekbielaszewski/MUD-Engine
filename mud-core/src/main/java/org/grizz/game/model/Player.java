@@ -1,25 +1,50 @@
 package org.grizz.game.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.experimental.Builder;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Map;
+
+@Data
+@Builder
+@AllArgsConstructor
+@Document(collection = "players")
 public class Player {
-    private String location;
-    private Object equipment;
-    private Object backpack;
+    @Id
+    private String id;
+
     private String name;
 
-    public String getLocation() {
-        return location;
+    private int strength;
+    private int dexterity;
+    private int endurance;
+    private int intelligence;
+    private int wisdom;
+    private int charisma;
+
+    private Equipment equipment;
+
+    private String currentLocation;
+    private String pastLocation;
+
+    private Map<String, Object> parameters;
+
+    public void addParameter(String key, Object value) {
+        parameters.put(key, value);
     }
 
-    public Object getEquipment() {
-        return equipment;
+    public Object getParameter(String key) {
+        return parameters.get(key);
     }
 
-    public Object getBackpack() {
-        return backpack;
+    public void removeParameter(String key) {
+        parameters.remove(key);
     }
 
-    public String getName() {
-        return name;
+    public boolean containsParameter(String key) {
+        return parameters.containsKey(key);
     }
 }

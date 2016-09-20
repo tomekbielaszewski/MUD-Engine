@@ -92,7 +92,7 @@ public class CommandHandlerTest extends TestCase {
     }
 
     private Player dummyPlayer() {
-        return new Player();
+        return Player.builder().build();
     }
 
     private PlayerResponse dummyResponse() {

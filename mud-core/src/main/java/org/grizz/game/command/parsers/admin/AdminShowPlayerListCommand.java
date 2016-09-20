@@ -1,6 +1,6 @@
 package org.grizz.game.command.parsers.admin;
 
-import org.grizz.game.command.executors.AdminShowPlayerListCommandExecutor;
+import org.grizz.game.command.executors.admin.AdminShowPlayerListCommandExecutor;
 import org.grizz.game.command.parsers.CommandParser;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;

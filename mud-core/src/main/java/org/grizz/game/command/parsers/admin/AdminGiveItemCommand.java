@@ -34,6 +34,8 @@ public class AdminGiveItemCommand extends CommandParser {
 
         int amount = Integer.parseInt(amountStr);
 
-        return adminCommand.give(playerName, itemName, amount, admin, response);
+        adminCommand.give(playerName, itemName, amount, admin, response);
+
+        return response;
     }
 }
