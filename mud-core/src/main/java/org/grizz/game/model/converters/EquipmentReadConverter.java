@@ -1,6 +1,5 @@
 package org.grizz.game.model.converters;
 
-import com.google.common.collect.Lists;
 import com.mongodb.DBObject;
 import org.apache.commons.lang3.StringUtils;
 import org.grizz.game.model.Equipment;
@@ -18,6 +17,9 @@ import java.util.List;
 public class EquipmentReadConverter implements Converter<DBObject, Equipment> {
     @Autowired
     private ItemRepo itemRepo;
+
+    @Autowired
+    private DBItemPackToItemListConverter itemListConverter;
 
     @Override
     public Equipment convert(DBObject source) {
@@ -38,21 +40,8 @@ public class EquipmentReadConverter implements Converter<DBObject, Equipment> {
                 .feetItem((Armor) getItem(feet))
                 .meleeWeapon((Weapon) getItem(melee))
                 .rangeWeapon((Weapon) getItem(range))
-                .backpack(convert(backpack))
+                .backpack(itemListConverter.convert(backpack))
                 .build();
-    }
-
-    private List<Item> convert(List<DBObject> itemsAsDBObject) {
-        List<Item> items = Lists.newArrayList();
-        itemsAsDBObject.stream()
-                .forEach(dbObject -> {
-                    Integer amount = (Integer) dbObject.get("amount");
-                    Item item = itemRepo.get((String) dbObject.get("id"));
-                    for (int i = 0; i < amount; i++) {
-                        items.add(item);
-                    }
-                });
-        return items;
     }
 
     private Item getItem(String id) {
