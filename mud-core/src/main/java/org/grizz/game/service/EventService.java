@@ -14,7 +14,8 @@ public class EventService {
     public String getEvent(String messageKey, String... params) {
         String unformattedEvent = env.getProperty(messageKey);
         if (unformattedEvent == null) {
-            log.error("Key [{}] message missing! Add it to strings.properties!");
+            log.error("Key [{}] message missing! Add it to strings.properties!", messageKey);
+            return messageKey;
         }
         return String.format(unformattedEvent, params);
     }

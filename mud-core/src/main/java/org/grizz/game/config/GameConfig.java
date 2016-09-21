@@ -1,8 +1,5 @@
 package org.grizz.game.config;
 
-import old.org.grizz.game.service.simple.Notifier;
-import old.org.grizz.game.service.simple.impl.DefaultNotifier;
-import old.org.grizz.game.service.simple.impl.ProxyNotifier;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.loader.impl.ItemLoader;
 import org.grizz.game.loader.impl.LocationLoader;
@@ -21,7 +18,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
 @SpringBootApplication
-@ComponentScan("org.grizz.game") //TODO delete that!
+@ComponentScan("org.grizz.game")
 @EnableMongoRepositories("org.grizz.game.model.repository")
 @PropertySources({
         @PropertySource("assets.properties"),
@@ -41,16 +38,6 @@ public class GameConfig {
         scriptLoader().load();
         itemLoader().load();
         locationLoader().load();
-    }
-
-    @Bean
-    public Notifier defaultNotifier() {
-        return new DefaultNotifier();
-    }
-
-    @Bean
-    public Notifier proxyNotifier() {
-        return new ProxyNotifier(defaultNotifier());
     }
 
     @Bean

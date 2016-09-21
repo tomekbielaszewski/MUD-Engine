@@ -22,14 +22,21 @@ public class CommandHandler {
     private Command unknownCommand;
 
     public PlayerResponse execute(String strCommand, Player player, PlayerResponse response) {
+        log.debug("Collecting commands for {}", player.getName());
         List<Command> commands = commandsProviders.stream()
                 .flatMap(provider -> provider.provide(player).stream())
                 .collect(Collectors.toList());
+
+        log.debug("Collected {} commands for {}", commands.size(), player.getName());
         Command command = commands.stream()
                 .filter(c -> c.accept(strCommand))
                 .findFirst()
                 .orElse(unknownCommand);
+
+        log.debug("{} is executing command [{}] in {}", player.getName(), strCommand, command.getClass().getCanonicalName());
         command.execute(strCommand, player, response);
+
+        log.debug("Returning response for {}", player.getName());
         return response;
     }
 

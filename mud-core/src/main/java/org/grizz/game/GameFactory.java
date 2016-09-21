@@ -1,8 +1,8 @@
 package org.grizz.game;
 
-import old.org.grizz.game.service.simple.Notifier;
-import old.org.grizz.game.service.simple.impl.ProxyNotifier;
 import org.grizz.game.config.GameConfig;
+import org.grizz.game.service.notifier.Notifier;
+import org.grizz.game.service.notifier.ProxyNotifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -20,9 +20,10 @@ public class GameFactory {
 
     public static Game getInstance(Notifier customNotifier) {
         if (INSTANCE == null) {
+            System.out.println();
             ConfigurableApplicationContext context = SpringApplication.run(GameConfig.class);
-            Notifier playerNotifier = context.getBean("proxyNotifier", Notifier.class);
-            ((ProxyNotifier) playerNotifier).setNotifier(customNotifier);
+            context.getBean("proxyNotifier", ProxyNotifier.class)
+                    .setNotifier(customNotifier);
             INSTANCE = context.getBean(Game.class);
         }
 

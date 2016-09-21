@@ -1,8 +1,10 @@
 package org.grizz.game;
 
-import junit.framework.TestCase;
 import org.grizz.game.command.engine.CommandHandler;
+import org.grizz.game.exception.GameExceptionHandler;
+import org.grizz.game.exception.PlayerDoesNotExist;
 import org.grizz.game.model.Player;
+import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.repository.PlayerRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,15 +18,16 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GameTest extends TestCase {
+public class GameTest {
     private static final String NAME = "name";
     private static final String COMMAND = "command";
 
     @Mock
     private CommandHandler commandHandler;
-
     @Mock
     private PlayerRepository playerRepository;
+    @Mock
+    private GameExceptionHandler exceptionHandler;
 
     @InjectMocks
     private Game game = new Game();
@@ -37,6 +40,15 @@ public class GameTest extends TestCase {
         game.runCommand(COMMAND, NAME);
 
         verify(commandHandler).execute(eq(COMMAND), eq(player), any());
+    }
+
+    @Test
+    public void callsExceptionHandlerWhenPlayerNotFound() {
+        when(playerRepository.findByName(NAME)).thenReturn(null);
+
+        PlayerResponse response = game.runCommand(COMMAND, NAME);
+
+        verify(exceptionHandler).handle(any(PlayerDoesNotExist.class), eq(response));
     }
 
     private Player dummyPlayer() {
