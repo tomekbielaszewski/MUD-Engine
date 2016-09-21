@@ -1,6 +1,5 @@
 package org.grizz.game.command.parsers.admin;
 
-import org.grizz.game.command.executors.admin.AdminPutItemCommandExecutor;
 import org.grizz.game.command.executors.admin.AdminShowPlayerListCommandExecutor;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
@@ -11,12 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.env.Environment;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AdminShowPlayerListCommandTest {
