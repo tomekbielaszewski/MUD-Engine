@@ -18,7 +18,7 @@ public class LocationItemsReadConverter implements Converter<DBObject, LocationI
     public LocationItems convert(DBObject source) {
         return LocationItems.builder()
                 .id(source.get("_id").toString())
-                .locationId((String) source.get("locationId"))
+                .locationId(source.get("locationId").toString())
                 .staticItems(itemListConverter.convert((List<DBObject>) source.get("staticItems")))
                 .mobileItems(itemListConverter.convert((List<DBObject>) source.get("mobileItems")))
                 .build();

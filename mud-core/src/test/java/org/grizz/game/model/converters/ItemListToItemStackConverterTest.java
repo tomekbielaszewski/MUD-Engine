@@ -9,13 +9,14 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.junit.Assert.assertThat;
 
 public class ItemListToItemStackConverterTest {
-    private final String ID_1 = "id1";
-    private final String ID_2 = "id2";
-    private final String NAME_1 = "name1";
-    private final String NAME_2 = "name2";
+    private static final String ID_1 = "id1";
+    private static final String ID_2 = "id2";
+    private static final String NAME_1 = "name1";
+    private static final String NAME_2 = "name2";
 
     private ItemListToItemStackConverter converter = new ItemListToItemStackConverter();
 
@@ -77,7 +78,7 @@ public class ItemListToItemStackConverterTest {
     public void passedEmptyItemList() throws Exception {
         List<ItemStack> itemStacks = converter.convert(Lists.newArrayList());
 
-        assertThat(itemStacks, hasSize(0));
+        assertThat(itemStacks, is(empty()));
     }
 
     private Item dummyItem(String id, String name) {
