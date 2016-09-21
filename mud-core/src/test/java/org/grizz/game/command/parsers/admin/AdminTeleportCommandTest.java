@@ -140,6 +140,7 @@ public class AdminTeleportCommandTest {
         Player player = Player.builder().currentLocation(DEFAULT_LOCATION_ID).build();
         PlayerResponse response = new PlayerResponse();
 
+        reset(adminCommandExecutor);
         command.execute(userCommand, player, response);
         verify(adminCommandExecutor).teleport(expectedPlayerName, expectedLocationId, player, response);
         verifyNoMoreInteractions(adminCommandExecutor);

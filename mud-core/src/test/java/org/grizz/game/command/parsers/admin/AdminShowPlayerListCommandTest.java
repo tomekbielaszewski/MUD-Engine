@@ -40,6 +40,7 @@ public class AdminShowPlayerListCommandTest {
         Player player = Player.builder().build();
         PlayerResponse response = new PlayerResponse();
 
+        reset(adminCommandExecutor);
         command.execute("lista graczy", player, response);
         verify(adminCommandExecutor).showPlayerList(player, response);
         verifyNoMoreInteractions(adminCommandExecutor);

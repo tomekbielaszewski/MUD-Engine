@@ -54,6 +54,7 @@ public class AdminPutItemCommandTest {
         Player player = Player.builder().build();
         PlayerResponse response = new PlayerResponse();
 
+        reset(adminCommandExecutor);
         command.execute(userCommand, player, response);
         verify(adminCommandExecutor).put(expectedItemName, expectedAmount, player, response);
         verifyNoMoreInteractions(adminCommandExecutor);

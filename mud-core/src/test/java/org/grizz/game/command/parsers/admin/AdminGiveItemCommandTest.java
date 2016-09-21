@@ -74,6 +74,7 @@ public class AdminGiveItemCommandTest {
         Player player = Player.builder().name(DEFAULT_PLAYER_NAME).build();
         PlayerResponse response = new PlayerResponse();
 
+        reset(adminCommandExecutor);
         command.execute(userCommand, player, response);
         verify(adminCommandExecutor).give(expectedPlayerName, expectedItemName, expectedAmount, player, response);
         verifyNoMoreInteractions(adminCommandExecutor);
