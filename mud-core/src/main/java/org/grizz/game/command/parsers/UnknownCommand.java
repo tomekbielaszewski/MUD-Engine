@@ -23,7 +23,7 @@ public class UnknownCommand extends CommandParser {
 
     @Override
     public PlayerResponse execute(String command, Player player, PlayerResponse response) {
-        unknownCommand.execute(command, response);
+        unknownCommand.execute(command);
         return response;
     }
 }

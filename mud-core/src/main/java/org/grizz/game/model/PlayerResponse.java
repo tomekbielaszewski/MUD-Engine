@@ -9,6 +9,7 @@ import java.util.List;
 public class PlayerResponse {
     private List<String> playerEvents = Lists.newArrayList();
     private Location currentLocation;
+    private List<String> players;
 
     public List<String> getPlayerEvents() {
         return playerEvents;
@@ -16,5 +17,9 @@ public class PlayerResponse {
 
     public Location getCurrentLocation() {
         return currentLocation;
+    }
+
+    public List<String> getPlayers() {
+        return players;
     }
 }
