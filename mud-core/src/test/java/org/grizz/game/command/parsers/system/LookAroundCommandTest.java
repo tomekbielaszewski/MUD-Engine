@@ -30,6 +30,7 @@ public class LookAroundCommandTest {
         when(environment.getProperty(command.getClass().getCanonicalName()))
                 .thenReturn("spojrz;" +
                         "rozejrz sie;" +
+                        "rozejrzyj sie;" +
                         "gdzie jestem\\?;" +
                         "gdzie ja jestem\\?;" +
                         "gdzie jestem;" +
@@ -43,6 +44,7 @@ public class LookAroundCommandTest {
     public void testAccept() throws Exception {
         assertTrue(command.accept("spojrz"));
         assertTrue(command.accept("rozejrz sie"));
+        assertTrue(command.accept("rozejrzyj sie"));
         assertTrue(command.accept("gdzie jestem?"));
         assertTrue(command.accept("gdzie ja jestem?"));
         assertTrue(command.accept("gdzie jestem"));

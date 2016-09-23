@@ -16,7 +16,9 @@ public abstract class CommandParser implements Command {
     }
 
     protected List<String> getCommandPatterns(String key) {
-        String[] commandPatternsArray = env.getProperty(key)
+        String commandPatterns = env.getProperty(key);
+        if (commandPatterns == null) throw new IllegalStateException("command " + key + " has no mapping!");
+        String[] commandPatternsArray = commandPatterns
                 .split(";");
         return Lists.newArrayList(commandPatternsArray);
     }
