@@ -31,6 +31,7 @@ public class Game {
             }
 
             commandHandlerBus.execute(command, player, response);
+            playerRepository.save(player);
         } catch (GameException e) {
             exceptionHandler.handle(e, response);
         }
