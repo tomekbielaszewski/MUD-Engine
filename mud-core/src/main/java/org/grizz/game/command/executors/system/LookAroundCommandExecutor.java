@@ -26,6 +26,11 @@ public class LookAroundCommandExecutor {
     private void notifyAboutCurrentLocation(Player player, PlayerResponse response) {
         Location location = locationRepo.get(player.getCurrentLocation());
         response.setCurrentLocation(location);
+        runOnShowScript(location, player, response);
+    }
+
+    private void runOnShowScript(Location location, Player player, PlayerResponse response) {
+
     }
 
     private void notifyAboutPlayersOnLocation(Player player, PlayerResponse response) {

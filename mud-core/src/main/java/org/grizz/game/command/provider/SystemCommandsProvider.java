@@ -14,9 +14,21 @@ public class SystemCommandsProvider implements CommandsProvider {
 
     @Autowired
     public void setCommands(
-            Command lookAroundCommand
+            Command lookAroundCommand,
+            Command northMoveCommand,
+            Command southMoveCommand,
+            Command westMoveCommand,
+            Command eastMoveCommand,
+            Command upMoveCommand,
+            Command downMoveCommand
     ) {
         commands.add(lookAroundCommand);
+        commands.add(northMoveCommand);
+        commands.add(southMoveCommand);
+        commands.add(westMoveCommand);
+        commands.add(eastMoveCommand);
+        commands.add(upMoveCommand);
+        commands.add(downMoveCommand);
     }
 
     @Override

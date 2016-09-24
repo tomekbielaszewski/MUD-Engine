@@ -2,6 +2,7 @@ package org.grizz.game.command.provider;
 
 import org.grizz.game.command.Command;
 import org.grizz.game.command.parsers.system.LookAroundCommand;
+import org.grizz.game.command.parsers.system.movement.*;
 import org.grizz.game.model.Player;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,13 +21,26 @@ import static org.junit.Assert.assertThat;
 public class SystemCommandsProviderTest {
     @Mock
     private LookAroundCommand lookAroundCommand;
+    @Mock
+    private NorthMoveCommand northMoveCommand;
+    @Mock
+    private SouthMoveCommand southMoveCommand;
+    @Mock
+    private WestMoveCommand westMoveCommand;
+    @Mock
+    private EastMoveCommand eastMoveCommand;
+    @Mock
+    private DownMoveCommand downMoveCommand;
+    @Mock
+    private UpMoveCommand upMoveCommand;
 
     @InjectMocks
     private SystemCommandsProvider commandsProvider = new SystemCommandsProvider();
 
     @Before
     public void setUp() throws Exception {
-        commandsProvider.setCommands(lookAroundCommand);
+        commandsProvider.setCommands(lookAroundCommand, northMoveCommand, southMoveCommand, westMoveCommand,
+                eastMoveCommand, upMoveCommand, downMoveCommand);
     }
 
     @Test
@@ -35,9 +49,15 @@ public class SystemCommandsProviderTest {
 
         List<Command> result = commandsProvider.provide(player);
 
-        assertThat(result, hasSize(1));
+        assertThat(result, hasSize(7));
         assertThat(result, hasItems(
-                lookAroundCommand
+                lookAroundCommand,
+                northMoveCommand,
+                southMoveCommand,
+                westMoveCommand,
+                eastMoveCommand,
+                upMoveCommand,
+                downMoveCommand
         ));
     }
 }
