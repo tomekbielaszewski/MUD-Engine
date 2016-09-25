@@ -70,7 +70,7 @@ public class LookAroundCommandExecutorTest {
     }
 
     @Test
-    public void callsScriptRunnerToRunOnShowScript() throws Exception {
+    public void callsOnShowScript() throws Exception {
         throw new NotImplementedException();
     }
 
