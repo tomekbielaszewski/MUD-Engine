@@ -23,10 +23,10 @@ public class SystemScriptBindingProvider {
         String[] beanNames = context.getBeanDefinitionNames();
         for (String beanName : beanNames) {
             Object bean = context.getBean(beanName);
-            String canonicalName = bean.getClass().getCanonicalName();
+            String fullServiceName = bean.getClass().getCanonicalName();
 
-            for (String servicePackage : scriptEngineServicePackages) {
-                if (canonicalName.startsWith(servicePackage)) {
+            for (String whiteListedPackage : scriptEngineServicePackages) {
+                if (fullServiceName.startsWith(whiteListedPackage)) {
                     bindings.add(ScriptBinding.builder().name(beanName).object(bean).build());
                 }
             }
