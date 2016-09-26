@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -63,6 +64,11 @@ public class GameTest {
 
         verify(exceptionHandler).handle(any(PlayerDoesNotExist.class), eq(response));
         verify(playerRepository, never()).save(any(Player.class));
+    }
+
+    @Test
+    public void callsExceptionHandlerWhenScriptExceptionThrown() throws Exception {
+        throw new NotImplementedException();
     }
 
     private Player dummyPlayer() {

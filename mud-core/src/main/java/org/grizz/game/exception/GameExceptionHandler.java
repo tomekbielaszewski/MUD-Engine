@@ -15,4 +15,9 @@ public class GameExceptionHandler {
         String event = eventService.getEvent(message, e.getParams());
         playerResponse.getPlayerEvents().add(event);
     }
+
+    public void handleLocalized(GameException e, PlayerResponse playerResponse) {
+        String message = e.getMessage();
+        playerResponse.getPlayerEvents().add(message);
+    }
 }

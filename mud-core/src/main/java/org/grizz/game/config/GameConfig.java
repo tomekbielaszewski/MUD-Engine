@@ -23,7 +23,8 @@ import javax.script.ScriptEngineManager;
 @PropertySources({
         @PropertySource("assets.properties"),
         @PropertySource("strings.properties"),
-        @PropertySource("command-mapping.properties")
+        @PropertySource("command-mapping.properties"),
+        @PropertySource("script-runner.properties")
 })
 public class GameConfig {
     private static final String ASSETS_JSON_PATH_LOCATIONS = "assets.json.path.locations";

@@ -80,11 +80,11 @@ public class LocationLoader implements Loader {
     }
 
     private void failFastOnScriptMissing(Location location) {
-        checkScript(location.getBeforeEnter());
-        checkScript(location.getOnEnter());
-        checkScript(location.getOnShow());
-        checkScript(location.getBeforeLeave());
-        checkScript(location.getOnLeave());
+        checkScript(location.getBeforeEnterScript());
+        checkScript(location.getOnEnterScript());
+        checkScript(location.getOnShowScript());
+        checkScript(location.getBeforeLeaveScript());
+        checkScript(location.getOnLeaveScript());
     }
 
     private void checkScript(String scriptId) {

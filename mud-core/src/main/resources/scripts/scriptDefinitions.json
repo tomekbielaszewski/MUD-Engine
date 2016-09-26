@@ -1,6 +1,6 @@
 [
   {
-    "id": "master",
+    "id": "master-script",
     "name": "Master script",
     "path": "scripts/js/master-script.js"
   },

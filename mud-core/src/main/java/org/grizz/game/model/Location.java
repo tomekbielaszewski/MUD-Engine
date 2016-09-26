@@ -10,11 +10,11 @@ public class Location {
     private String name;
     private String description;
 
-    private String beforeEnter;
-    private String onEnter;
-    private String onShow;
-    private String beforeLeave;
-    private String onLeave;
+    private String beforeEnterScript;
+    private String onEnterScript;
+    private String onShowScript;
+    private String beforeLeaveScript;
+    private String onLeaveScript;
 
     private String south;
     private String north;
