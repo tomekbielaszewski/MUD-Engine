@@ -38,7 +38,7 @@ public class LookAroundCommandExecutor {
     }
 
     private void runOnShowScript(Location location, Player player, PlayerResponse response) {
-        if (StringUtils.isNotEmpty(location.getOnShowScript())) return;
+        if (StringUtils.isEmpty(location.getOnShowScript())) return;
         Script script = scriptRepo.get(location.getOnShowScript());
         scriptRunner.execute(script, player, response);
     }
