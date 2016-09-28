@@ -8,11 +8,15 @@ import org.grizz.game.model.Location;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.repository.LocationRepo;
+import org.grizz.game.model.repository.ScriptRepo;
 import org.grizz.game.service.EventService;
 import org.grizz.game.service.notifier.MultiplayerNotificationService;
+import org.grizz.game.service.script.ScriptRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -27,6 +31,10 @@ public class MoveCommandExecutor {
     private EventService eventService;
     @Autowired
     private MultiplayerNotificationService notificationService;
+    @Autowired
+    private ScriptRunner scriptRunner;
+    @Autowired
+    private ScriptRepo scriptRepo;
 
     public void move(Direction direction, Player player, PlayerResponse response) {
         Location sourceLocation = locationRepo.get(player.getCurrentLocation());
@@ -37,16 +45,16 @@ public class MoveCommandExecutor {
 
         Location targetLocation = locationRepo.get(targetLocationId);
 
-        runMovementScripts();
-        move(sourceLocation, targetLocation, player, response);
-        broadcastMovement(sourceLocation, targetLocation, direction, player);
+        if (playerCanMove(sourceLocation, targetLocation, player, response)) {
+            move(sourceLocation, targetLocation, player, response);
+            broadcastMovement(sourceLocation, targetLocation, direction, player);
+        }
+        lookAroundCommandExecutor.lookAround(player, response);
     }
 
     private void move(Location sourceLocation, Location targetLocation, Player player, PlayerResponse response) {
         player.setPastLocation(sourceLocation.getId());
         player.setCurrentLocation(targetLocation.getId());
-
-        lookAroundCommandExecutor.lookAround(player, response);
     }
 
     private void broadcastMovement(Location sourceLocation, Location targetLocation, Direction direction, Player player) {
@@ -57,10 +65,25 @@ public class MoveCommandExecutor {
         notificationService.broadcast(targetLocation, locationEnterEvent, player);
     }
 
-    private void runMovementScripts() {
-        //if before leave script allows to leave location. Not - > throw exception
-        //on leave script
-        //if on enter script allows to enter location. Not - > throw exception
-        //on enter script
+    private boolean playerCanMove(Location sourceLocation, Location targetLocation, Player player, PlayerResponse response) {
+        if (runMovementEventScript(sourceLocation.getBeforeLeaveScript(), player, response)) {
+            runMovementEventScript(sourceLocation.getOnLeaveScript(), player, response);
+            if (runMovementEventScript(targetLocation.getBeforeEnterScript(), player, response)) {
+                runMovementEventScript(targetLocation.getOnEnterScript(), player, response);
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean runMovementEventScript(String id, Player player, PlayerResponse response) {
+        boolean allowMovementByDefault = true;
+        Optional<Boolean> optionalResponse = Optional.ofNullable(id)
+                .map(scriptId -> scriptRepo.get(scriptId))
+                .map(script -> scriptRunner.execute(script, player, response, Boolean.class));
+        return optionalResponse.orElse(allowMovementByDefault);
     }
 }
