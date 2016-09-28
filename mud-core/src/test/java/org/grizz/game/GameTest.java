@@ -3,6 +3,7 @@ package org.grizz.game;
 import org.grizz.game.command.engine.CommandHandler;
 import org.grizz.game.exception.GameException;
 import org.grizz.game.exception.GameExceptionHandler;
+import org.grizz.game.exception.GameScriptException;
 import org.grizz.game.exception.PlayerDoesNotExist;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
@@ -12,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -68,7 +68,14 @@ public class GameTest {
 
     @Test
     public void callsExceptionHandlerWhenScriptExceptionThrown() throws Exception {
-        throw new NotImplementedException();
+        Player player = dummyPlayer();
+        when(playerRepository.findByName(NAME)).thenReturn(player);
+        when(commandHandler.execute(eq(COMMAND), eq(player), any())).thenThrow(new GameScriptException(""));
+
+        PlayerResponse response = game.runCommand(COMMAND, NAME);
+
+        verify(exceptionHandler).handleLocalized(any(GameScriptException.class), eq(response));
+        verify(playerRepository, never()).save(any(Player.class));
     }
 
     private Player dummyPlayer() {

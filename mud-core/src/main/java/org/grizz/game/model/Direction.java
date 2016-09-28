@@ -16,7 +16,7 @@ public enum Direction {
         this.directionResolver = directionResolver;
     }
 
-    public String from(Location location) {
+    public String goFrom(Location location) {
         return directionResolver.apply(location);
     }
 }

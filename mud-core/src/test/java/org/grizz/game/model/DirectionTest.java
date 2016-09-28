@@ -11,7 +11,7 @@ public class DirectionTest {
     public void fromLocationToSouth() throws Exception {
         Location location = Location.builder().south("southId").build();
 
-        String targetId = Direction.SOUTH.from(location);
+        String targetId = Direction.SOUTH.goFrom(location);
 
         assertThat(targetId, is("southId"));
     }
@@ -20,7 +20,7 @@ public class DirectionTest {
     public void fromLocationToNorth() throws Exception {
         Location location = Location.builder().north("northId").build();
 
-        String targetId = Direction.NORTH.from(location);
+        String targetId = Direction.NORTH.goFrom(location);
 
         assertThat(targetId, is("northId"));
     }
@@ -29,7 +29,7 @@ public class DirectionTest {
     public void fromLocationToWest() throws Exception {
         Location location = Location.builder().west("westId").build();
 
-        String targetId = Direction.WEST.from(location);
+        String targetId = Direction.WEST.goFrom(location);
 
         assertThat(targetId, is("westId"));
     }
@@ -38,7 +38,7 @@ public class DirectionTest {
     public void fromLocationToEast() throws Exception {
         Location location = Location.builder().east("eastId").build();
 
-        String targetId = Direction.EAST.from(location);
+        String targetId = Direction.EAST.goFrom(location);
 
         assertThat(targetId, is("eastId"));
     }
@@ -47,7 +47,7 @@ public class DirectionTest {
     public void fromLocationToUp() throws Exception {
         Location location = Location.builder().up("upId").build();
 
-        String targetId = Direction.UP.from(location);
+        String targetId = Direction.UP.goFrom(location);
 
         assertThat(targetId, is("upId"));
     }
@@ -56,7 +56,7 @@ public class DirectionTest {
     public void fromLocationToDown() throws Exception {
         Location location = Location.builder().down("downId").build();
 
-        String targetId = Direction.DOWN.from(location);
+        String targetId = Direction.DOWN.goFrom(location);
 
         assertThat(targetId, is("downId"));
     }
@@ -65,7 +65,7 @@ public class DirectionTest {
     public void fromLocationToDeniedDirection() throws Exception {
         Location location = Location.builder().build();
 
-        String targetId = Direction.SOUTH.from(location);
+        String targetId = Direction.SOUTH.goFrom(location);
 
         assertThat(targetId, is(nullValue()));
     }

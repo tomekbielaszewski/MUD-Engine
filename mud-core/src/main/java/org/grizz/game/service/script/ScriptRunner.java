@@ -40,7 +40,7 @@ public class ScriptRunner {
     private Script masterScript;
 
     @PostConstruct
-    private void init() {
+    public void init() {
         masterScript = scriptRepo.get(masterScriptId);
     }
 

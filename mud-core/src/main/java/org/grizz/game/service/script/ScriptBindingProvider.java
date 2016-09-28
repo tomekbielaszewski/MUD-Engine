@@ -19,7 +19,7 @@ public class ScriptBindingProvider {
     private SystemScriptBindingProvider systemScriptBindingsProvider;
 
     @PostConstruct
-    private void initSystemBindings() {
+    public void initSystemBindings() {
         SYSTEM_BINDINGS.addAll(systemScriptBindingsProvider.provide());
     }
 

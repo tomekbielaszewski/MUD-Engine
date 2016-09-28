@@ -38,7 +38,7 @@ public class MoveCommandExecutor {
 
     public void move(Direction direction, Player player, PlayerResponse response) {
         Location sourceLocation = locationRepo.get(player.getCurrentLocation());
-        String targetLocationId = direction.from(sourceLocation);
+        String targetLocationId = direction.goFrom(sourceLocation);
 
         if (StringUtils.isBlank(targetLocationId))
             throw new CantGoThereException("cant.go.there", env.getProperty("go.to." + direction.name().toLowerCase()));
@@ -66,13 +66,10 @@ public class MoveCommandExecutor {
     }
 
     private boolean playerCanMove(Location sourceLocation, Location targetLocation, Player player, PlayerResponse response) {
-        if (runMovementEventScript(sourceLocation.getBeforeLeaveScript(), player, response)) {
+        if (runMovementEventScript(sourceLocation.getBeforeLeaveScript(), player, response) &&
+                runMovementEventScript(targetLocation.getBeforeEnterScript(), player, response)) {
             runMovementEventScript(sourceLocation.getOnLeaveScript(), player, response);
-            if (runMovementEventScript(targetLocation.getBeforeEnterScript(), player, response)) {
-                runMovementEventScript(targetLocation.getOnEnterScript(), player, response);
-            } else {
-                return false;
-            }
+            runMovementEventScript(targetLocation.getOnEnterScript(), player, response);
         } else {
             return false;
         }

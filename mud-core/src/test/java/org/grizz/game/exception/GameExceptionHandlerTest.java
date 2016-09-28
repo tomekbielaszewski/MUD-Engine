@@ -7,12 +7,12 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GameExceptionHandlerTest {
@@ -40,6 +40,13 @@ public class GameExceptionHandlerTest {
 
     @Test
     public void handlesAlreadyLocalizedExceptionWithoutUseOfEventService() throws Exception {
-        throw new NotImplementedException();
+        PlayerResponse response = new PlayerResponse();
+        GameException exception = new GameScriptException(EXCEPTION_MESSAGE);
+
+        exceptionHandler.handleLocalized(exception, response);
+
+        assertThat(response.getPlayerEvents(), hasSize(1));
+        assertThat(response.getPlayerEvents(), hasItem(EXCEPTION_MESSAGE));
+        verify(eventService, never()).getEvent(any());
     }
 }
