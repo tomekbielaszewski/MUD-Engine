@@ -38,8 +38,8 @@ public class LookAroundCommandExecutor {
 
     private void runOnShowScript(Location location, Player player, PlayerResponse response) {
         Optional.ofNullable(location.getOnShowScript())
-                .map(s -> scriptRepo.get(location.getOnShowScript()))
-                .ifPresent(s -> scriptRunner.execute(s, player, response));
+                .map(scriptId -> scriptRepo.get(scriptId))
+                .ifPresent(script -> scriptRunner.execute(script, player, response));
     }
 
     private void notifyAboutPlayersOnLocation(Player player, PlayerResponse response) {
