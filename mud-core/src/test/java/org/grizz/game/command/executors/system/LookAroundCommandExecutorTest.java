@@ -20,8 +20,9 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LookAroundCommandExecutorTest {
@@ -79,7 +80,7 @@ public class LookAroundCommandExecutorTest {
     }
 
     @Test
-    public void callsOnShowScript() throws Exception {
+    public void callsOnShowScriptWhenPresent() throws Exception {
         PlayerResponse response = new PlayerResponse();
         Player player = dummyPlayer(PLAYER_ID, PLAYER_NAME, LOCATION_ID);
         Location location = Location.builder().id(LOCATION_ID).onShowScript(SCRIPT_ID).build();
@@ -91,6 +92,19 @@ public class LookAroundCommandExecutorTest {
 
         verify(scriptRepo).get(SCRIPT_ID);
         verify(scriptRunner).execute(script, player, response);
+    }
+
+    @Test
+    public void doesNotTryToRunOnShowScriptWhenAbsent() throws Exception {
+        PlayerResponse response = new PlayerResponse();
+        Player player = dummyPlayer(PLAYER_ID, PLAYER_NAME, LOCATION_ID);
+        Location location = Location.builder().id(LOCATION_ID).build();
+        when(locationRepo.get(LOCATION_ID)).thenReturn(location);
+
+        executor.lookAround(player, response);
+
+        verify(scriptRepo, never()).get(SCRIPT_ID);
+        verify(scriptRunner, never()).execute(any(), eq(player), eq(response));
     }
 
     private Player dummyPlayer(String id, String name, String location) {

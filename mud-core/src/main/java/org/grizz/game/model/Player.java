@@ -18,12 +18,12 @@ public class Player {
 
     private String name;
 
-    private int strength;
-    private int dexterity;
-    private int endurance;
-    private int intelligence;
-    private int wisdom;
-    private int charisma;
+    private Integer strength;
+    private Integer dexterity;
+    private Integer endurance;
+    private Integer intelligence;
+    private Integer wisdom;
+    private Integer charisma;
 
     private Equipment equipment;
 

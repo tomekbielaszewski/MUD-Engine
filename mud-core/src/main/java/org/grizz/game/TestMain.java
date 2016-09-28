@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 public class TestMain {
     public static void main(String[] args) {
-        Game game = GameFactory.getInstance((playerName, response) -> System.out.println(playerName + ": " + response.toString()));
-        game.runCommand("lista graczy", "grizz");
-
+        Game game = GameFactory.getInstance(
+                (playerName, response) -> System.out.println(playerName + ": " + response.toString())
+        );
         Scanner sc = new Scanner(System.in);
 
         try {

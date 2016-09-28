@@ -1,10 +1,8 @@
 package org.grizz.game.command.executors.system;
 
-import org.apache.commons.lang3.StringUtils;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
-import org.grizz.game.model.Script;
 import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.model.repository.PlayerRepository;
 import org.grizz.game.model.repository.ScriptRepo;
@@ -13,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,9 +37,9 @@ public class LookAroundCommandExecutor {
     }
 
     private void runOnShowScript(Location location, Player player, PlayerResponse response) {
-        if (StringUtils.isEmpty(location.getOnShowScript())) return;
-        Script script = scriptRepo.get(location.getOnShowScript());
-        scriptRunner.execute(script, player, response);
+        Optional.ofNullable(location.getOnShowScript())
+                .map(s -> scriptRepo.get(location.getOnShowScript()))
+                .ifPresent(s -> scriptRunner.execute(s, player, response));
     }
 
     private void notifyAboutPlayersOnLocation(Player player, PlayerResponse response) {
