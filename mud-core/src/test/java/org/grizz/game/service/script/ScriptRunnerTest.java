@@ -33,6 +33,7 @@ public class ScriptRunnerTest {
     public void setUp() throws Exception {
         ReflectionTestUtils.setField(scriptRunner, "masterScriptId", MASTER_SCRIPT_ID);
         when(scriptRepo.get(MASTER_SCRIPT_ID)).thenReturn(MASTER_SCRIPT);
+        scriptRunner.init();
     }
 
     @Test
