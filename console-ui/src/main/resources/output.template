@@ -1,0 +1,8 @@
+<#include "/separator.template">
+<#include "/events.template">
+<#include "/separator.template">
+<#include "/location.template">
+<#include "/separator.template">
+<#-- <#include "/equipment.template"> -->
+<#include "/separator.template">
+

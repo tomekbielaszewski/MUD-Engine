@@ -1,0 +1,4 @@
+<#list response.players>
+<#include "/separator.template">
+Obok ciebie stoją <#items as player>${player}<#sep>, </#sep></#items>
+</#list>
