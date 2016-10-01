@@ -18,7 +18,7 @@ import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) throws IOException {
-        Template template = getFreemarkerTemplate("output.template");
+        Template template = getFreemarkerTemplate("output.ftl");
 
         Game game = GameFactory.getInstance(
                 (playerName, response) -> print(template, response)

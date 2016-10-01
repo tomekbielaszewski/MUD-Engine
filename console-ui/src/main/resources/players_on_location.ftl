@@ -1,4 +1,4 @@
 <#list response.players>
-<#include "/separator.template">
+    <#include "/separator.ftl">
 Obok ciebie stoją <#items as player>${player}<#sep>, </#sep></#items>
 </#list>

@@ -1,9 +1,0 @@
-<#if response.currentLocation??>
-**${response.currentLocation.name}**
-
-${response.currentLocation.description}
-<#include "/static_items.template">
-<#include "/players_on_location.template">
-<#include "/location_exits.template">
-<#include "/location_items.template">
-</#if>

@@ -1,4 +1,4 @@
-<#include "/separator.template">
+<#include "/separator.ftl">
 <#if response.currentLocation.north??>north</#if>
 <#if response.currentLocation.south??>south</#if>
 <#if response.currentLocation.east??>east</#if>
