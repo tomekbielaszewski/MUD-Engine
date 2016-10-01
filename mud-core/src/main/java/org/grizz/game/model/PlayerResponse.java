@@ -10,16 +10,5 @@ public class PlayerResponse {
     private List<String> playerEvents = Lists.newArrayList();
     private Location currentLocation;
     private List<String> players;
-
-    public List<String> getPlayerEvents() {
-        return playerEvents;
-    }
-
-    public Location getCurrentLocation() {
-        return currentLocation;
-    }
-
-    public List<String> getPlayers() {
-        return players;
-    }
+    private Equipment equipment;
 }
