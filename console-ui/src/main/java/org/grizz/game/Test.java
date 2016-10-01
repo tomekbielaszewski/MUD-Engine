@@ -6,12 +6,14 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.model.converters.ItemListToItemStackConverter;
 import org.grizz.game.utils.FileUtils;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Test {
@@ -39,6 +41,11 @@ public class Test {
     private static void print(Template template, PlayerResponse response) {
         HashMap<Object, Object> model = Maps.newHashMap();
         model.put("response", response);
+
+        Optional.ofNullable(response.getEquipment())
+                .map(eq -> eq.getBackpack())
+                .ifPresent(backpack -> model.put("backpack", new ItemListToItemStackConverter().convert(backpack)));
+
         Writer writer = new OutputStreamWriter(System.out);
         try {
             template.process(model, writer);

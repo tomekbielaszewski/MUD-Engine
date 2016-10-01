@@ -9,11 +9,12 @@ Stopy: <#if eq.feetItem??>${eq.feetItem.name}<#else>pusto</#if>
 Broń ręczna: <#if eq.meleeWeapon??>${eq.meleeWeapon.name}<#else>pusto</#if>
 Broń miotana: <#if eq.meleeWeapon??>${eq.meleeWeapon.name}<#else>pusto</#if>
 
-<#list eq.backpack>
+<#list backpack?sort_by("name")>
 W plecaku masz:
 <#items as item>
-${item?counter}. ${item.name}<#sep>,
+${item?counter}. ${item.name} x${item.amount}<#sep>,
 </#sep>
 </#items>
+
 </#list>
 </#if>
