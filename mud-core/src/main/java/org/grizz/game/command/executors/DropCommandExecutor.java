@@ -5,9 +5,8 @@ import org.grizz.game.model.PlayerResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ShowEquipmentCommandExecutor {
+public class DropCommandExecutor {
+    public void drop(String itemName, int amount, Player player, PlayerResponse response) {
 
-    public void showEquipment(Player player, PlayerResponse response) {
-        response.setEquipment(player.getEquipment());
     }
 }

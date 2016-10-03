@@ -14,12 +14,12 @@ import org.grizz.game.service.notifier.MultiplayerNotificationService;
 import org.grizz.game.service.script.ScriptRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Slf4j
-@Service
+@Component
 public class MoveCommandExecutor {
     @Autowired
     private LocationRepo locationRepo;

@@ -8,13 +8,13 @@ import org.grizz.game.model.repository.PlayerRepository;
 import org.grizz.game.model.repository.ScriptRepo;
 import org.grizz.game.service.script.ScriptRunner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 public class LookAroundCommandExecutor {
     @Autowired
     private LocationRepo locationRepo;
