@@ -2,14 +2,18 @@ package org.grizz.game.command.executors;
 
 import com.google.common.collect.Lists;
 import org.grizz.game.command.executors.admin.AdminGiveItemCommandExecutor;
+import org.grizz.game.exception.CantGiveStaticItemException;
+import org.grizz.game.exception.InvalidAmountException;
 import org.grizz.game.model.Equipment;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.items.Armor;
 import org.grizz.game.model.items.Item;
+import org.grizz.game.service.EventService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.CoreMatchers.everyItem;
@@ -26,6 +30,9 @@ public class AdminGiveItemCommandExecutorTest {
     private static final String ADMIN_NAME = "admin";
     private static final String ITEM_NAME = "someItem";
 
+    @Mock
+    private EventService eventService;
+
     @InjectMocks
     private AdminGiveItemCommandExecutor executor = new AdminGiveItemCommandExecutor();
 
@@ -41,6 +48,22 @@ public class AdminGiveItemCommandExecutorTest {
         assertThat(player.getEquipment().getBackpack(), hasSize(1));
         assertThat(player.getEquipment().getBackpack(), hasItem(item));
         assertThat(adminResponse.getPlayerEvents(), is(not(empty())));
+    }
+
+    @Test(expected = InvalidAmountException.class)
+    public void playerCannotReceivesZeroItems() throws Exception {
+        PlayerResponse adminResponse = new PlayerResponse();
+        Player admin = dummyPlayer(ADMIN_NAME);
+
+        executor.give(PLAYER_NAME, ITEM_NAME, 0, admin, adminResponse);
+    }
+
+    @Test(expected = CantGiveStaticItemException.class)
+    public void playerCannotReceivesStaticItems() throws Exception {
+        PlayerResponse adminResponse = new PlayerResponse();
+        Player admin = dummyPlayer(ADMIN_NAME);
+
+        executor.give(PLAYER_NAME, ITEM_NAME, 0, admin, adminResponse);
     }
 
     @Test
