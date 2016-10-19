@@ -1,6 +1,7 @@
 package org.grizz.game.command.provider;
 
 import org.grizz.game.command.Command;
+import org.grizz.game.command.parsers.system.DropCommand;
 import org.grizz.game.command.parsers.system.LookAroundCommand;
 import org.grizz.game.command.parsers.system.ShowEquipmentCommand;
 import org.grizz.game.command.parsers.system.movement.*;
@@ -36,6 +37,8 @@ public class SystemCommandsProviderTest {
     private UpMoveCommand upMoveCommand;
     @Mock
     private ShowEquipmentCommand showEquipmentCommand;
+    @Mock
+    private DropCommand dropCommand;
 
     @InjectMocks
     private SystemCommandsProvider commandsProvider = new SystemCommandsProvider();
@@ -43,7 +46,7 @@ public class SystemCommandsProviderTest {
     @Before
     public void setUp() throws Exception {
         commandsProvider.setCommands(lookAroundCommand, northMoveCommand, southMoveCommand, westMoveCommand,
-                eastMoveCommand, upMoveCommand, downMoveCommand, showEquipmentCommand);
+                eastMoveCommand, upMoveCommand, downMoveCommand, showEquipmentCommand, dropCommand);
     }
 
     @Test
@@ -52,7 +55,7 @@ public class SystemCommandsProviderTest {
 
         List<Command> result = commandsProvider.provide(player);
 
-        assertThat(result, hasSize(8));
+        assertThat(result, hasSize(9));
         assertThat(result, hasItems(
                 lookAroundCommand,
                 northMoveCommand,
@@ -61,7 +64,8 @@ public class SystemCommandsProviderTest {
                 eastMoveCommand,
                 upMoveCommand,
                 downMoveCommand,
-                showEquipmentCommand
+                showEquipmentCommand,
+                dropCommand
         ));
     }
 }

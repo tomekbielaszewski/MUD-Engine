@@ -21,7 +21,7 @@ public class Test {
         Template template = getFreemarkerTemplate("output.ftl");
 
         Game game = GameFactory.getInstance(
-                (playerName, response) -> print(template, response)
+                (playerName, response) -> print(playerName, template, response)
         );
         Scanner sc = new Scanner(System.in);
 
@@ -31,20 +31,25 @@ public class Test {
 
             do {
                 PlayerResponse response = game.runCommand(command, player);
-                print(template, response);
+                print(player, template, response);
             } while (!(command = sc.nextLine()).equals("q"));
         } finally {
             sc.close();
         }
     }
 
-    private static void print(Template template, PlayerResponse response) {
+    private static void print(String playerName, Template template, PlayerResponse response) {
         HashMap<Object, Object> model = Maps.newHashMap();
         model.put("response", response);
+        model.put("player", playerName);
 
         Optional.ofNullable(response.getEquipment())
                 .map(eq -> eq.getBackpack())
                 .ifPresent(backpack -> model.put("backpack", new ItemListToItemStackConverter().convert(backpack)));
+
+        Optional.ofNullable(response.getCurrentLocation())
+                .map(location -> location.getItems().getMobileItems())
+                .ifPresent(items -> model.put("locationItems", new ItemListToItemStackConverter().convert(items)));
 
         Writer writer = new OutputStreamWriter(System.out);
         try {

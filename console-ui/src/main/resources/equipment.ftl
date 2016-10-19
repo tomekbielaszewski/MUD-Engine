@@ -17,4 +17,5 @@ ${item?counter}. ${item.name} x${item.amount}<#sep>,
 </#items>
 
 </#list>
+<#include "/separator.ftl">
 </#if>

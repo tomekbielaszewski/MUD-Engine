@@ -32,13 +32,19 @@ public class DropCommandExecutor {
         validateAmount(amount);
 
         Location location = locationRepo.get(player.getCurrentLocation());
-        dropItems(itemName, amount, player, location);
+        dropItems(itemName, amount, player, location, response);
 
+        notifyPlayer(itemName, amount, response);
         broadcastItemDrop(itemName, amount, location, player);
     }
 
-    private void dropItems(String itemName, int amount, Player player, Location location) {
-        List<Item> namedItemsFromBackpack = equipmentService.takeOutItems(itemName, amount, player);
+    private void notifyPlayer(String itemName, Integer amount, PlayerResponse response) {
+        String dropEvent = eventService.getEvent("event.player.drop.items", amount.toString(), itemName);
+        response.getPlayerEvents().add(dropEvent);
+    }
+
+    private void dropItems(String itemName, int amount, Player player, Location location, PlayerResponse response) {
+        List<Item> namedItemsFromBackpack = equipmentService.takeOutItems(itemName, amount, player, response);
         locationService.dropItems(namedItemsFromBackpack, location);
     }
 
@@ -47,7 +53,7 @@ public class DropCommandExecutor {
     }
 
     private void broadcastItemDrop(String itemName, Integer amount, Location location, Player player) {
-        String pickupEvent = eventService.getEvent("multiplayer.event.player.drop.items", player.getName(), amount.toString(), itemName);
-        notificationService.broadcast(location, pickupEvent, player);
+        String dropEvent = eventService.getEvent("multiplayer.event.player.drop.items", player.getName(), amount.toString(), itemName);
+        notificationService.broadcast(location, dropEvent, player);
     }
 }

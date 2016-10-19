@@ -20,6 +20,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,8 +30,10 @@ import static org.mockito.Mockito.when;
 public class DropCommandExecutorTest {
     private static final String ITEM_NAME = "item name";
     private static final String LOCATION_ID = "location id";
-    private static final String DROP_EVENT_KEY = "multiplayer.event.player.drop.items";
+    private static final String MULTIPLAYER_DROP_EVENT_KEY = "multiplayer.event.player.drop.items";
     private static final String PLAYER_NAME = "player name";
+    private static final String MULTIPLAYER_DROP_EVENT = "multiplayer drop event";
+    private static final String DROP_EVENT_KEY = "event.player.drop.items";
     private static final String DROP_EVENT = "drop event";
 
     @Mock
@@ -53,11 +58,11 @@ public class DropCommandExecutorTest {
         PlayerResponse response = new PlayerResponse();
         Location location = dummyLocation();
         when(locationRepo.get(LOCATION_ID)).thenReturn(location);
-        when(equipmentService.takeOutItems(ITEM_NAME, amount, player)).thenReturn(itemsFromEquipment);
+        when(equipmentService.takeOutItems(ITEM_NAME, amount, player, response)).thenReturn(itemsFromEquipment);
 
         commandExecutor.drop(ITEM_NAME, amount, player, response);
 
-        verify(equipmentService).takeOutItems(ITEM_NAME, amount, player);
+        verify(equipmentService).takeOutItems(ITEM_NAME, amount, player, response);
         verify(locationService).dropItems(itemsFromEquipment, location);
     }
 
@@ -67,13 +72,30 @@ public class DropCommandExecutorTest {
         String amountStr = "2";
         Player player = dummyPlayer();
         Location location = dummyLocation();
-        when(eventService.getEvent(DROP_EVENT_KEY, PLAYER_NAME, amountStr, ITEM_NAME)).thenReturn(DROP_EVENT);
+        when(eventService.getEvent(MULTIPLAYER_DROP_EVENT_KEY, PLAYER_NAME, amountStr, ITEM_NAME)).thenReturn(MULTIPLAYER_DROP_EVENT);
         when(locationRepo.get(LOCATION_ID)).thenReturn(location);
 
         commandExecutor.drop(ITEM_NAME, amount, player, new PlayerResponse());
 
-        verify(eventService).getEvent(DROP_EVENT_KEY, PLAYER_NAME, amountStr, ITEM_NAME);
-        verify(notificationService).broadcast(location, DROP_EVENT, player);
+        verify(eventService).getEvent(MULTIPLAYER_DROP_EVENT_KEY, PLAYER_NAME, amountStr, ITEM_NAME);
+        verify(notificationService).broadcast(location, MULTIPLAYER_DROP_EVENT, player);
+    }
+
+    @Test
+    public void notifiesPlayer() throws Exception {
+        int amount = 2;
+        String amountStr = "2";
+        Player player = dummyPlayer();
+        Location location = dummyLocation();
+        PlayerResponse response = new PlayerResponse();
+        when(eventService.getEvent(DROP_EVENT_KEY, amountStr, ITEM_NAME)).thenReturn(DROP_EVENT);
+        when(locationRepo.get(LOCATION_ID)).thenReturn(location);
+
+        commandExecutor.drop(ITEM_NAME, amount, player, response);
+
+        verify(eventService).getEvent(DROP_EVENT_KEY, amountStr, ITEM_NAME);
+        assertThat(response.getPlayerEvents(), hasSize(1));
+        assertThat(response.getPlayerEvents(), hasItem(DROP_EVENT));
     }
 
     @Test(expected = InvalidAmountException.class)

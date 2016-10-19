@@ -21,7 +21,8 @@ public class SystemCommandsProvider implements CommandsProvider {
             Command eastMoveCommand,
             Command upMoveCommand,
             Command downMoveCommand,
-            Command showEquipmentCommand
+            Command showEquipmentCommand,
+            Command dropCommand
     ) {
         commands.add(lookAroundCommand);
         commands.add(northMoveCommand);
@@ -31,6 +32,7 @@ public class SystemCommandsProvider implements CommandsProvider {
         commands.add(upMoveCommand);
         commands.add(downMoveCommand);
         commands.add(showEquipmentCommand);
+        commands.add(dropCommand);
     }
 
     @Override
