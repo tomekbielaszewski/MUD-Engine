@@ -38,6 +38,10 @@ public class EquipmentService {
         return itemsFromBackpack;
     }
 
+    public void insertItems(List<Item> itemsToPickUp, Player player, PlayerResponse response) {
+
+    }
+
     private void validateItemType(Item itemTemplate) {
         if (ItemType.STATIC.equals(itemTemplate.getItemType())) {
             throw new CantOwnStaticItemException("cant.own.static.item");

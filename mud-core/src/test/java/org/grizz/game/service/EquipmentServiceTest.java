@@ -19,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
@@ -176,6 +177,11 @@ public class EquipmentServiceTest {
         expectedException.expect(CantOwnStaticItemException.class);
 
         equipmentService.takeOutItems(STATIC_ITEM_NAME, 1, player, response);
+    }
+
+    @Test
+    public void insertItems() throws Exception {
+        throw new NotImplementedException();
     }
 
     private Item dummyStaticItem() {
