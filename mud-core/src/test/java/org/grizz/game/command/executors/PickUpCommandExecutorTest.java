@@ -1,32 +1,39 @@
 package org.grizz.game.command.executors;
 
 import com.google.common.collect.Lists;
+import org.grizz.game.exception.InvalidAmountException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.items.Armor;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.service.EquipmentService;
+import org.grizz.game.service.EventService;
 import org.grizz.game.service.LocationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PickUpCommandExecutorTest {
     private static final String ITEM_NAME = "item";
+    private static final String PICK_UP_EVENT = "pick up event";
+    private static final String PICK_UP_EVENT_KEY = "event.player.pick.items";
     @Mock
     private LocationService locationService;
     @Mock
     private EquipmentService equipmentService;
+    @Mock
+    private EventService eventService;
 
     @InjectMocks
     private PickUpCommandExecutor commandExecutor = new PickUpCommandExecutor();
@@ -47,17 +54,26 @@ public class PickUpCommandExecutorTest {
 
     @Test
     public void notifiesPlayerAboutPickedUpItems() throws Exception {
-        throw new NotImplementedException();
+        Player player = dummyPlayer();
+        Location location = dummyLocation();
+        PlayerResponse response = new PlayerResponse();
+        List<Item> itemsToPickUp = Lists.newArrayList(dummyItem());
+        when(locationService.pickItems(ITEM_NAME, 1, location)).thenReturn(itemsToPickUp);
+
+        commandExecutor.pickUp(ITEM_NAME, 1, player, response);
+
+        verify(eventService).getEvent(PICK_UP_EVENT_KEY, ITEM_NAME, "1");
+        assertThat(response.getPlayerEvents(), hasItem(PICK_UP_EVENT));
     }
 
-    @Test
+    @Test(expected = InvalidAmountException.class)
     public void throwsExceptionWhenPickingUpZeroItems() throws Exception {
-        throw new NotImplementedException();
+        commandExecutor.pickUp(ITEM_NAME, 0, dummyPlayer(), new PlayerResponse());
     }
 
-    @Test
+    @Test(expected = InvalidAmountException.class)
     public void throwsExceptionWhenPickingUpNegativeNumberOfItems() throws Exception {
-        throw new NotImplementedException();
+        commandExecutor.pickUp(ITEM_NAME, -1, dummyPlayer(), new PlayerResponse());
     }
 
     private Player dummyPlayer() {
