@@ -7,6 +7,7 @@ import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.items.Armor;
 import org.grizz.game.model.items.Item;
+import org.grizz.game.model.repository.LocationRepo;
 import org.grizz.game.service.EquipmentService;
 import org.grizz.game.service.EventService;
 import org.grizz.game.service.LocationService;
@@ -27,11 +28,14 @@ import static org.mockito.Mockito.when;
 public class PickUpCommandExecutorTest {
     private static final String ITEM_NAME = "item";
     private static final String PICK_UP_EVENT = "pick up event";
-    private static final String PICK_UP_EVENT_KEY = "event.player.pick.items";
+    private static final String PICK_UP_EVENT_KEY = "event.player.picked.up.items";
+    private static final String LOCATION_ID = "location id";
     @Mock
     private LocationService locationService;
     @Mock
     private EquipmentService equipmentService;
+    @Mock
+    private LocationRepo locationRepo;
     @Mock
     private EventService eventService;
 
@@ -45,6 +49,7 @@ public class PickUpCommandExecutorTest {
         PlayerResponse response = new PlayerResponse();
         List<Item> itemsToPickUp = Lists.newArrayList(dummyItem());
         when(locationService.pickItems(ITEM_NAME, 1, location)).thenReturn(itemsToPickUp);
+        when(locationRepo.get(LOCATION_ID)).thenReturn(location);
 
         commandExecutor.pickUp(ITEM_NAME, 1, player, response);
 
@@ -59,10 +64,12 @@ public class PickUpCommandExecutorTest {
         PlayerResponse response = new PlayerResponse();
         List<Item> itemsToPickUp = Lists.newArrayList(dummyItem());
         when(locationService.pickItems(ITEM_NAME, 1, location)).thenReturn(itemsToPickUp);
+        when(locationRepo.get(LOCATION_ID)).thenReturn(location);
+        when(eventService.getEvent(PICK_UP_EVENT_KEY)).thenReturn(PICK_UP_EVENT);
 
         commandExecutor.pickUp(ITEM_NAME, 1, player, response);
 
-        verify(eventService).getEvent(PICK_UP_EVENT_KEY, ITEM_NAME, "1");
+        verify(eventService).getEvent(PICK_UP_EVENT_KEY);
         assertThat(response.getPlayerEvents(), hasItem(PICK_UP_EVENT));
     }
 
@@ -77,7 +84,9 @@ public class PickUpCommandExecutorTest {
     }
 
     private Player dummyPlayer() {
-        return Player.builder().build();
+        return Player.builder()
+                .currentLocation(LOCATION_ID)
+                .build();
     }
 
     private Location dummyLocation() {

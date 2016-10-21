@@ -39,6 +39,8 @@ public class SystemCommandsProviderTest {
     private ShowEquipmentCommand showEquipmentCommand;
     @Mock
     private DropCommand dropCommand;
+    @Mock
+    private DropCommand pickUpCommand;
 
     @InjectMocks
     private SystemCommandsProvider commandsProvider = new SystemCommandsProvider();
@@ -46,7 +48,7 @@ public class SystemCommandsProviderTest {
     @Before
     public void setUp() throws Exception {
         commandsProvider.setCommands(lookAroundCommand, northMoveCommand, southMoveCommand, westMoveCommand,
-                eastMoveCommand, upMoveCommand, downMoveCommand, showEquipmentCommand, dropCommand);
+                eastMoveCommand, upMoveCommand, downMoveCommand, showEquipmentCommand, dropCommand, pickUpCommand);
     }
 
     @Test
@@ -55,7 +57,7 @@ public class SystemCommandsProviderTest {
 
         List<Command> result = commandsProvider.provide(player);
 
-        assertThat(result, hasSize(9));
+        assertThat(result, hasSize(10));
         assertThat(result, hasItems(
                 lookAroundCommand,
                 northMoveCommand,
@@ -65,7 +67,8 @@ public class SystemCommandsProviderTest {
                 upMoveCommand,
                 downMoveCommand,
                 showEquipmentCommand,
-                dropCommand
+                dropCommand,
+                pickUpCommand
         ));
     }
 }
