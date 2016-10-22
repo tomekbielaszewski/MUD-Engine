@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -69,18 +69,15 @@ public class LocationService {
 
     private List<Item> removeItemsFromLocation(Item itemToRemove, int amount, Location location) {
         List<Item> mobileItems = location.getItems().getMobileItems();
-        long amountOfMatchingItems = mobileItems.stream()
+        List<Item> matchingItems = mobileItems.stream()
                 .filter(i -> i.getName().equals(itemToRemove.getName()))
-                .count();
-        if (amountOfMatchingItems == 0) throw new NoSuchItemException("");
-        if (amountOfMatchingItems < amount) throw new NotEnoughItemsException("");
+                .limit(amount)
+                .collect(Collectors.toList());
+        if (matchingItems.size() == 0) throw new NoSuchItemException("");
+        if (matchingItems.size() < amount) throw new NotEnoughItemsException("");
 
-        List<Item> removedItems = Lists.newArrayList();
-        IntStream.range(0, amount).forEach(i -> {
-            mobileItems.remove(itemToRemove);
-            removedItems.add(itemToRemove);
-        });
-        return removedItems;
+        matchingItems.forEach(mobileItems::remove);
+        return matchingItems;
     }
 
     private void saveLocationItems(Location location) {
