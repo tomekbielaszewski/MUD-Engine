@@ -59,7 +59,7 @@ public class EquipmentServiceTest {
         when(itemRepo.getByName(ITEM_NAME)).thenReturn(dummyItem(ITEM_NAME));
         when(eventService.getEvent(ITEM_REMOVE_EVENT_KEY, "1", ITEM_NAME)).thenReturn(ITEM_REMOVE_EVENT);
 
-        List<Item> result = equipmentService.takeOutItems(ITEM_NAME, 1, player, response);
+        List<Item> result = equipmentService.removeItems(ITEM_NAME, 1, player, response);
 
         assertThat(player.getEquipment().getBackpack(), hasSize(2));
         assertThat(player.getEquipment().getBackpack(), hasItems(
@@ -84,7 +84,7 @@ public class EquipmentServiceTest {
         when(itemRepo.getByName(ITEM_NAME)).thenReturn(dummyItem(ITEM_NAME));
         when(eventService.getEvent(ITEM_REMOVE_EVENT_KEY, "2", ITEM_NAME)).thenReturn(ITEM_REMOVE_EVENT);
 
-        List<Item> result = equipmentService.takeOutItems(ITEM_NAME, 2, player, response);
+        List<Item> result = equipmentService.removeItems(ITEM_NAME, 2, player, response);
 
         assertThat(player.getEquipment().getBackpack(), hasSize(2));
         assertThat(player.getEquipment().getBackpack(), hasItems(
@@ -109,7 +109,7 @@ public class EquipmentServiceTest {
         when(itemRepo.getByName(ITEM_NAME)).thenReturn(dummyItem(ITEM_NAME));
         when(eventService.getEvent(ITEM_REMOVE_EVENT_KEY, "3", ITEM_NAME)).thenReturn(ITEM_REMOVE_EVENT);
 
-        List<Item> result = equipmentService.takeOutItems(ITEM_NAME, 3, player, response);
+        List<Item> result = equipmentService.removeItems(ITEM_NAME, 3, player, response);
 
         assertThat(player.getEquipment().getBackpack(), hasSize(0));
         assertThat(result, hasSize(3));
@@ -129,7 +129,7 @@ public class EquipmentServiceTest {
         when(itemRepo.getByName(ITEM_NAME)).thenReturn(dummyItem(ITEM_NAME));
         expectedException.expect(NotEnoughItemsException.class);
 
-        equipmentService.takeOutItems(ITEM_NAME, 3, player, response);
+        equipmentService.removeItems(ITEM_NAME, 3, player, response);
 
         assertThat(player.getEquipment().getBackpack(), hasSize(2));
         assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(ITEM_NAME)));
@@ -145,7 +145,7 @@ public class EquipmentServiceTest {
         when(itemRepo.getByName(ITEM_NAME)).thenReturn(dummyItem(ITEM_NAME));
         expectedException.expect(NoSuchItemException.class);
 
-        equipmentService.takeOutItems(ITEM_NAME, 1, player, response);
+        equipmentService.removeItems(ITEM_NAME, 1, player, response);
 
         assertThat(player.getEquipment().getBackpack(), hasSize(2));
         assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(NOT_RELEVANT_ITEM_NAME)));
@@ -157,7 +157,7 @@ public class EquipmentServiceTest {
         PlayerResponse response = new PlayerResponse();
         expectedException.expect(InvalidAmountException.class);
 
-        equipmentService.takeOutItems(ITEM_NAME, -1, player, response);
+        equipmentService.removeItems(ITEM_NAME, -1, player, response);
     }
 
     @Test
@@ -166,7 +166,7 @@ public class EquipmentServiceTest {
         PlayerResponse response = new PlayerResponse();
         expectedException.expect(InvalidAmountException.class);
 
-        equipmentService.takeOutItems(ITEM_NAME, 0, player, response);
+        equipmentService.removeItems(ITEM_NAME, 0, player, response);
     }
 
     @Test
@@ -176,7 +176,7 @@ public class EquipmentServiceTest {
         when(itemRepo.getByName(STATIC_ITEM_NAME)).thenReturn(dummyStaticItem());
         expectedException.expect(CantOwnStaticItemException.class);
 
-        equipmentService.takeOutItems(STATIC_ITEM_NAME, 1, player, response);
+        equipmentService.removeItems(STATIC_ITEM_NAME, 1, player, response);
     }
 
     @Test

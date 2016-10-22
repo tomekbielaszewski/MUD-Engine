@@ -58,12 +58,12 @@ public class DropCommandExecutorTest {
         PlayerResponse response = new PlayerResponse();
         Location location = dummyLocation();
         when(locationRepo.get(LOCATION_ID)).thenReturn(location);
-        when(equipmentService.takeOutItems(ITEM_NAME, amount, player, response)).thenReturn(itemsFromEquipment);
+        when(equipmentService.removeItems(ITEM_NAME, amount, player, response)).thenReturn(itemsFromEquipment);
 
         commandExecutor.drop(ITEM_NAME, amount, player, response);
 
-        verify(equipmentService).takeOutItems(ITEM_NAME, amount, player, response);
-        verify(locationService).dropItems(itemsFromEquipment, location);
+        verify(equipmentService).removeItems(ITEM_NAME, amount, player, response);
+        verify(locationService).addItems(itemsFromEquipment, location);
     }
 
     @Test

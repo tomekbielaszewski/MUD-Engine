@@ -43,7 +43,7 @@ public class LocationServiceTest {
         Location location = dummyLocation(Lists.newArrayList());
         List<Item> items = dummyItems(ITEM_1, ITEM_2, ITEM_3);
 
-        locationService.dropItems(items, location);
+        locationService.addItems(items, location);
 
         assertThat(location.getItems().getMobileItems(), hasSize(3));
         assertThat(location.getItems().getMobileItems(), hasItems(
@@ -60,7 +60,7 @@ public class LocationServiceTest {
         Location location = dummyLocation(Lists.newArrayList(dummyItems(ITEM_4, ITEM_5)));
         List<Item> items = dummyItems(ITEM_1, ITEM_2, ITEM_3);
 
-        locationService.dropItems(items, location);
+        locationService.addItems(items, location);
 
         assertThat(location.getItems().getMobileItems(), hasSize(5));
         assertThat(location.getItems().getMobileItems(), hasItems(
@@ -79,7 +79,7 @@ public class LocationServiceTest {
         Location location = dummyLocation(Lists.newArrayList());
         List<Item> items = dummyItems(ITEM_1);
 
-        locationService.dropItems(items, location);
+        locationService.addItems(items, location);
 
         assertThat(location.getItems().getMobileItems(), hasSize(1));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_1)));
@@ -92,7 +92,7 @@ public class LocationServiceTest {
         Location location = dummyLocation(Lists.newArrayList(dummyItems(ITEM_4, ITEM_5)));
         List<Item> items = dummyItems(ITEM_1);
 
-        locationService.dropItems(items, location);
+        locationService.addItems(items, location);
 
         assertThat(location.getItems().getMobileItems(), hasSize(3));
         assertThat(location.getItems().getMobileItems(), hasItems(
@@ -109,7 +109,7 @@ public class LocationServiceTest {
         Location location = dummyLocation(Lists.newArrayList());
         List<Item> items = Lists.newArrayList();
 
-        locationService.dropItems(items, location);
+        locationService.addItems(items, location);
     }
 
     @Test(expected = CantDropStaticItemException.class)
@@ -119,7 +119,7 @@ public class LocationServiceTest {
                 Static.builder().build()
         );
 
-        locationService.dropItems(items, location);
+        locationService.addItems(items, location);
     }
 
     @Test

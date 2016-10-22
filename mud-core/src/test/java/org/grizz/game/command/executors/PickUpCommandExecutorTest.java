@@ -48,13 +48,13 @@ public class PickUpCommandExecutorTest {
         Location location = dummyLocation();
         PlayerResponse response = new PlayerResponse();
         List<Item> itemsToPickUp = Lists.newArrayList(dummyItem());
-        when(locationService.pickItems(ITEM_NAME, 1, location)).thenReturn(itemsToPickUp);
+        when(locationService.removeItems(ITEM_NAME, 1, location)).thenReturn(itemsToPickUp);
         when(locationRepo.get(LOCATION_ID)).thenReturn(location);
 
         commandExecutor.pickUp(ITEM_NAME, 1, player, response);
 
-        verify(locationService).pickItems(ITEM_NAME, 1, location);
-        verify(equipmentService).insertItems(itemsToPickUp, player, response);
+        verify(locationService).removeItems(ITEM_NAME, 1, location);
+        verify(equipmentService).addItems(itemsToPickUp, player, response);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class PickUpCommandExecutorTest {
         Location location = dummyLocation();
         PlayerResponse response = new PlayerResponse();
         List<Item> itemsToPickUp = Lists.newArrayList(dummyItem());
-        when(locationService.pickItems(ITEM_NAME, 1, location)).thenReturn(itemsToPickUp);
+        when(locationService.removeItems(ITEM_NAME, 1, location)).thenReturn(itemsToPickUp);
         when(locationRepo.get(LOCATION_ID)).thenReturn(location);
         when(eventService.getEvent(PICK_UP_EVENT_KEY)).thenReturn(PICK_UP_EVENT);
 

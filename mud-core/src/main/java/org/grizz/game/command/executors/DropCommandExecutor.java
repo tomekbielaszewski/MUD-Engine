@@ -39,8 +39,8 @@ public class DropCommandExecutor {
     }
 
     private void dropItems(String itemName, int amount, Player player, Location location, PlayerResponse response) {
-        List<Item> namedItemsFromBackpack = equipmentService.takeOutItems(itemName, amount, player, response);
-        locationService.dropItems(namedItemsFromBackpack, location);
+        List<Item> namedItemsFromBackpack = equipmentService.removeItems(itemName, amount, player, response);
+        locationService.addItems(namedItemsFromBackpack, location);
     }
 
     private void validateAmount(int amount) {

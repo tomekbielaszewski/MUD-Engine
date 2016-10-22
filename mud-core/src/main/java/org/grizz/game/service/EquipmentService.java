@@ -22,7 +22,7 @@ public class EquipmentService {
     @Autowired
     private EventService eventService;
 
-    public List<Item> takeOutItems(String itemName, int amount, Player player, PlayerResponse response) {
+    public List<Item> removeItems(String itemName, int amount, Player player, PlayerResponse response) {
         if (amount <= 0) {
             throw new InvalidAmountException("cant.take.out.none.items");
         }
@@ -38,7 +38,7 @@ public class EquipmentService {
         return itemsFromBackpack;
     }
 
-    public void insertItems(List<Item> itemsToPickUp, Player player, PlayerResponse response) {
+    public void addItems(List<Item> items, Player player, PlayerResponse response) {
 
     }
 

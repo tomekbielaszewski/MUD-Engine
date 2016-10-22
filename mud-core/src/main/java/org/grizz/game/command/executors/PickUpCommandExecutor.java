@@ -35,8 +35,8 @@ public class PickUpCommandExecutor {
     }
 
     private void pickUpItems(String itemName, int amount, Player player, Location location, PlayerResponse response) {
-        List<Item> items = locationService.pickItems(itemName, amount, location);
-        equipmentService.insertItems(items, player, response);
+        List<Item> items = locationService.removeItems(itemName, amount, location);
+        equipmentService.addItems(items, player, response);
     }
 
     private void validateAmount(int amount) {

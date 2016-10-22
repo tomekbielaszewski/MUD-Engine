@@ -21,11 +21,11 @@ public class LocationService {
     @Autowired
     private LocationItemsRepository locationItemsRepository;
 
-    public List<Item> pickItems(String name, int amount, Location location) {
+    public List<Item> removeItems(String name, int amount, Location location) {
         return Collections.emptyList();
     }
 
-    public void dropItems(List<Item> items, Location location) {
+    public void addItems(List<Item> items, Location location) {
         if(isEmpty(items)) {
             throw new InvalidAmountException("cant.drop.none.items");
         }
