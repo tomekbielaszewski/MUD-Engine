@@ -6,8 +6,10 @@ import org.grizz.game.exception.InvalidAmountException;
 import org.grizz.game.exception.NoSuchItemException;
 import org.grizz.game.exception.NotEnoughItemsException;
 import org.grizz.game.model.Equipment;
+import org.grizz.game.model.ItemStack;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.model.converters.ItemListToItemStackConverter;
 import org.grizz.game.model.items.Armor;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.items.Static;
@@ -19,7 +21,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
@@ -32,10 +33,16 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class EquipmentServiceTest {
     private static final String ITEM_NAME = "item name";
+    private static final String ITEM_NAME_2 = "item name 2";
     private static final String NOT_RELEVANT_ITEM_NAME = "another item name";
     private static final String STATIC_ITEM_NAME = "static item";
     private static final String ITEM_REMOVE_EVENT_KEY = "event.player.lost.items";
     private static final String ITEM_REMOVE_EVENT = "straciles przedmiot...";
+    private static final String ITEMS_RECEIVED_EVENT_KEY_HEADER = "event.player.received.items.header";
+    private static final String ITEMS_RECEIVED_EVENT_KEY_SINGLE_ENTRY = "event.player.received.items.single.entry";
+    private static final String ITEMS_RECEIVED_EVENT_MESSAGE_HEADER = "Otrzymales przedmioty:";
+    private static final String ITEMS_RECEIVED_EVENT_MESSAGE_SINGLE_ENTRY_1 = "przedmiot pierwszy";
+    private static final String ITEMS_RECEIVED_EVENT_MESSAGE_SINGLE_ENTRY_2 = "przedmiot drugi";
 
     @Rule
     public final ExpectedException expectedException = ExpectedException.none();
@@ -44,6 +51,8 @@ public class EquipmentServiceTest {
     private ItemRepo itemRepo;
     @Mock
     private EventService eventService;
+    @Mock
+    private ItemListToItemStackConverter itemStackConverter;
 
     @InjectMocks
     private EquipmentService equipmentService = new EquipmentService();
@@ -120,7 +129,7 @@ public class EquipmentServiceTest {
     }
 
     @Test
-    public void throwsExceptionWhenTakingOutTooManyItemsWhichPlayerHave() throws Exception {
+    public void throwsExceptionWhenRemovingTooManyItemsWhichPlayerHave() throws Exception {
         Player player = dummyPlayer(Lists.newArrayList(
                 dummyItem(ITEM_NAME),
                 dummyItem(ITEM_NAME)
@@ -136,7 +145,7 @@ public class EquipmentServiceTest {
     }
 
     @Test
-    public void throwsExceptionWhenTakingOutItemsWhichPlayerDoNotHave() throws Exception {
+    public void throwsExceptionWhenRemovingItemsWhichPlayerDoNotHave() throws Exception {
         Player player = dummyPlayer(Lists.newArrayList(
                 dummyItem(NOT_RELEVANT_ITEM_NAME),
                 dummyItem(NOT_RELEVANT_ITEM_NAME)
@@ -152,7 +161,7 @@ public class EquipmentServiceTest {
     }
 
     @Test
-    public void throwsExceptionWhenTakingOutNegativeNumberOfItems() throws Exception {
+    public void throwsExceptionWhenRemovingNegativeNumberOfItems() throws Exception {
         Player player = dummyPlayer(Lists.newArrayList());
         PlayerResponse response = new PlayerResponse();
         expectedException.expect(InvalidAmountException.class);
@@ -161,7 +170,7 @@ public class EquipmentServiceTest {
     }
 
     @Test
-    public void throwsExceptionWhenTakingOutZeroItems() throws Exception {
+    public void throwsExceptionWhenRemovingZeroItems() throws Exception {
         Player player = dummyPlayer(Lists.newArrayList());
         PlayerResponse response = new PlayerResponse();
         expectedException.expect(InvalidAmountException.class);
@@ -170,7 +179,7 @@ public class EquipmentServiceTest {
     }
 
     @Test
-    public void throwsExceptionWhenTakingOutStaticItem() throws Exception {
+    public void throwsExceptionWhenRemovingStaticItem() throws Exception {
         Player player = dummyPlayer(Lists.newArrayList());
         PlayerResponse response = new PlayerResponse();
         when(itemRepo.getByName(STATIC_ITEM_NAME)).thenReturn(dummyStaticItem());
@@ -180,8 +189,104 @@ public class EquipmentServiceTest {
     }
 
     @Test
-    public void insertItems() throws Exception {
-        throw new NotImplementedException();
+    public void addsSingleItemToEmptyBackpack() throws Exception {
+        Player player = dummyPlayer(Lists.newArrayList());
+        PlayerResponse response = new PlayerResponse();
+        List<Item> items = dummyItems(ITEM_NAME);
+        when(itemStackConverter.convert(items)).thenReturn(Lists.newArrayList());
+
+        equipmentService.addItems(items, player, response);
+
+        assertThat(player.getEquipment().getBackpack(), hasSize(1));
+        assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(ITEM_NAME)));
+    }
+
+    @Test
+    public void addsSingleItemToNonEmptyBackpack() throws Exception {
+        Player player = dummyPlayer(dummyItems(NOT_RELEVANT_ITEM_NAME));
+        PlayerResponse response = new PlayerResponse();
+        List<Item> items = dummyItems(ITEM_NAME);
+        when(itemStackConverter.convert(items)).thenReturn(Lists.newArrayList());
+
+        equipmentService.addItems(items, player, response);
+
+        assertThat(player.getEquipment().getBackpack(), hasSize(2));
+        assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(ITEM_NAME)));
+        assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(NOT_RELEVANT_ITEM_NAME)));
+    }
+
+    @Test
+    public void addsManyItemsToEmptyBackpack() throws Exception {
+        Player player = dummyPlayer(Lists.newArrayList());
+        PlayerResponse response = new PlayerResponse();
+        List<Item> items = dummyItems(ITEM_NAME, ITEM_NAME, ITEM_NAME);
+        when(itemStackConverter.convert(items)).thenReturn(Lists.newArrayList());
+
+        equipmentService.addItems(items, player, response);
+
+        assertThat(player.getEquipment().getBackpack(), hasSize(3));
+        assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(ITEM_NAME)));
+    }
+
+    @Test
+    public void addsManyItemsToNonEmptyBackpack() throws Exception {
+        Player player = dummyPlayer(dummyItems(NOT_RELEVANT_ITEM_NAME));
+        PlayerResponse response = new PlayerResponse();
+        List<Item> items = dummyItems(ITEM_NAME, ITEM_NAME, ITEM_NAME);
+        when(itemStackConverter.convert(items)).thenReturn(Lists.newArrayList());
+
+        equipmentService.addItems(items, player, response);
+
+        assertThat(player.getEquipment().getBackpack(), hasSize(4));
+        assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(ITEM_NAME)));
+        assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(NOT_RELEVANT_ITEM_NAME)));
+    }
+
+    @Test
+    public void notifiesPlayerAboutEveryItemStackReceived() throws Exception {
+        Player player = dummyPlayer(dummyItems());
+        PlayerResponse response = new PlayerResponse();
+        List<Item> items = dummyItems(ITEM_NAME);
+        when(itemStackConverter.convert(items)).thenReturn(Lists.newArrayList(
+                ItemStack.builder().amount(1).name(ITEM_NAME).build(),
+                ItemStack.builder().amount(2).name(ITEM_NAME_2).build()
+        ));
+        when(eventService.getEvent(ITEMS_RECEIVED_EVENT_KEY_HEADER)).thenReturn(ITEMS_RECEIVED_EVENT_MESSAGE_HEADER);
+        when(eventService.getEvent(ITEMS_RECEIVED_EVENT_KEY_SINGLE_ENTRY, "2", ITEM_NAME_2))
+                .thenReturn(ITEMS_RECEIVED_EVENT_MESSAGE_SINGLE_ENTRY_1);
+        when(eventService.getEvent(ITEMS_RECEIVED_EVENT_KEY_SINGLE_ENTRY, "1", ITEM_NAME))
+                .thenReturn(ITEMS_RECEIVED_EVENT_MESSAGE_SINGLE_ENTRY_2);
+
+        equipmentService.addItems(items, player, response);
+
+        assertThat(response.getPlayerEvents(), hasSize(3));
+        assertThat(response.getPlayerEvents(), hasItems(ITEMS_RECEIVED_EVENT_MESSAGE_HEADER));
+        assertThat(response.getPlayerEvents(), hasItems(ITEMS_RECEIVED_EVENT_MESSAGE_SINGLE_ENTRY_1));
+        assertThat(response.getPlayerEvents(), hasItems(ITEMS_RECEIVED_EVENT_MESSAGE_SINGLE_ENTRY_2));
+    }
+
+    @Test
+    public void throwsExceptionWhenAddingZeroItems() throws Exception {
+        Player player = dummyPlayer(Lists.newArrayList());
+        PlayerResponse response = new PlayerResponse();
+        List<Item> items = dummyItems();
+        expectedException.expect(InvalidAmountException.class);
+
+        equipmentService.addItems(items, player, response);
+
+        assertThat(player.getEquipment().getBackpack(), hasSize(0));
+    }
+
+    @Test
+    public void throwsExceptionWhenAddingStaticItem() throws Exception {
+        Player player = dummyPlayer(Lists.newArrayList());
+        PlayerResponse response = new PlayerResponse();
+        List<Item> items = Lists.newArrayList(dummyStaticItem());
+        expectedException.expect(CantOwnStaticItemException.class);
+
+        equipmentService.addItems(items, player, response);
+
+        assertThat(player.getEquipment().getBackpack(), hasSize(0));
     }
 
     private Item dummyStaticItem() {
@@ -198,5 +303,13 @@ public class EquipmentServiceTest {
 
     private Item dummyItem(String itemName) {
         return Armor.builder().name(itemName).build();
+    }
+
+    private List<Item> dummyItems(String... names) {
+        List<Item> items = Lists.newArrayList();
+        for (int i = 0; i < names.length; i++) {
+            items.add(dummyItem(names[i]));
+        }
+        return items;
     }
 }

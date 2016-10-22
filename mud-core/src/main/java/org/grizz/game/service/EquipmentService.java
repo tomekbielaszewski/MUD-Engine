@@ -4,8 +4,10 @@ import org.grizz.game.exception.CantOwnStaticItemException;
 import org.grizz.game.exception.InvalidAmountException;
 import org.grizz.game.exception.NoSuchItemException;
 import org.grizz.game.exception.NotEnoughItemsException;
+import org.grizz.game.model.ItemStack;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.model.converters.ItemListToItemStackConverter;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.items.ItemType;
 import org.grizz.game.model.repository.ItemRepo;
@@ -21,6 +23,8 @@ public class EquipmentService {
     private ItemRepo itemRepo;
     @Autowired
     private EventService eventService;
+    @Autowired
+    private ItemListToItemStackConverter itemStackConverter;
 
     public List<Item> removeItems(String itemName, int amount, Player player, PlayerResponse response) {
         if (amount <= 0) {
@@ -39,7 +43,31 @@ public class EquipmentService {
     }
 
     public void addItems(List<Item> items, Player player, PlayerResponse response) {
+        if (items.size() == 0) {
+            throw new InvalidAmountException("cant.put.in.backpack.none.items");
+        }
 
+        validateIfStaticItem(items);
+        addItemsTobackpack(items, player);
+        notifyPlayer(items, response);
+    }
+
+    private void notifyPlayer(List<Item> items, PlayerResponse response) {
+        response.getPlayerEvents().add(eventService.getEvent("event.player.received.items.header"));
+        List<ItemStack> stackList = itemStackConverter.convert(items);
+        stackList.forEach(itemStack -> {
+            String receivedItems = eventService.getEvent("event.player.received.items.single.entry", "" + itemStack.getAmount(), itemStack.getName());
+            response.getPlayerEvents().add(receivedItems);
+        });
+    }
+
+    private void addItemsTobackpack(List<Item> items, Player player) {
+        List<Item> backpack = player.getEquipment().getBackpack();
+        backpack.addAll(items);
+    }
+
+    private void validateIfStaticItem(List<Item> items) {
+        items.forEach(this::validateItemType);
     }
 
     private void validateItemType(Item itemTemplate) {

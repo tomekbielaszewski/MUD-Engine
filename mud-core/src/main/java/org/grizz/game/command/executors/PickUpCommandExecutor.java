@@ -45,6 +45,6 @@ public class PickUpCommandExecutor {
 
     private void notifyPlayer(PlayerResponse response) {
         String pickUpEvent = eventService.getEvent("event.player.picked.up.items");
-        response.getPlayerEvents().add(pickUpEvent);
+        response.getPlayerEvents().add(0, pickUpEvent);
     }
 }
