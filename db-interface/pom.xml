@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>org.grizz</groupId>
-    <artifactId>MUD-Engine-mirko</artifactId>
+    <artifactId>MUD-Engine-db-interface</artifactId>
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
 

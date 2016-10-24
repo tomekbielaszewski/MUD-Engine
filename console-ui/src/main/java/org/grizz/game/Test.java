@@ -5,6 +5,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import org.grizz.game.model.Equipment;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.converters.ItemListToItemStackConverter;
 import org.grizz.game.utils.FileUtils;
@@ -23,9 +24,8 @@ public class Test {
         Game game = GameFactory.getInstance(
                 (playerName, response) -> print(playerName, template, response)
         );
-        Scanner sc = new Scanner(System.in);
 
-        try {
+        try (Scanner sc = new Scanner(System.in)) {
             String player = "Grizz";
             String command = "spojrz";
 
@@ -33,8 +33,6 @@ public class Test {
                 PlayerResponse response = game.runCommand(command, player);
                 print(player, template, response);
             } while (!(command = sc.nextLine()).equals("q"));
-        } finally {
-            sc.close();
         }
     }
 
@@ -44,7 +42,7 @@ public class Test {
         model.put("player", playerName);
 
         Optional.ofNullable(response.getEquipment())
-                .map(eq -> eq.getBackpack())
+                .map(Equipment::getBackpack)
                 .ifPresent(backpack -> model.put("backpack", new ItemListToItemStackConverter().convert(backpack)));
 
         Optional.ofNullable(response.getCurrentLocation())
@@ -54,15 +52,13 @@ public class Test {
         Writer writer = new OutputStreamWriter(System.out);
         try {
             template.process(model, writer);
-        } catch (TemplateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (TemplateException | IOException e) {
             e.printStackTrace();
         }
     }
 
     private static Template getFreemarkerTemplate(String templateName) throws IOException {
-        Configuration cfg = new Configuration();
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
         cfg.setDirectoryForTemplateLoading(FileUtils.getFilepath("").toFile());
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);

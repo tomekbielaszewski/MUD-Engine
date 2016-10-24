@@ -82,10 +82,10 @@
             </modules>
         </profile>
         <profile>
-            <id>mirko</id>
+            <id>db</id>
             <modules>
                 <module>./mud-core</module>
-                <module>./mirko-ui</module>
+                <module>./db-interface</module>
             </modules>
         </profile>
     </profiles>
