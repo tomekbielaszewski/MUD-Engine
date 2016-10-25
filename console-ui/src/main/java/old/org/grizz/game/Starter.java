@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 public class Starter {
 
-    public static void main(String[] args) {
+    public static void mainOld(String[] args) {
         OutputFormatter formatter = new OutputFormatterImpl();
         Game game = GameFactory.getInstance(new Notifier() {
             @Override
