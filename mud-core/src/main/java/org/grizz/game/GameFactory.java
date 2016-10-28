@@ -20,7 +20,6 @@ public class GameFactory {
 
     public static Game getInstance(Notifier customNotifier) {
         if (INSTANCE == null) {
-            System.out.println();
             ConfigurableApplicationContext context = SpringApplication.run(GameConfig.class);
             context.getBean("proxyNotifier", ProxyNotifier.class)
                     .setNotifier(customNotifier);

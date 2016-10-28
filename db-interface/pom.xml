@@ -14,6 +14,12 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.23</version>
+        </dependency>
         <dependency>
             <groupId>org.grizz</groupId>
             <artifactId>MUD-Engine-core</artifactId>

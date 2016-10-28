@@ -73,9 +73,6 @@
     <profiles>
         <profile>
             <id>console</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <modules>
                 <module>./mud-core</module>
                 <module>./console-ui</module>
@@ -83,6 +80,9 @@
         </profile>
         <profile>
             <id>db</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <modules>
                 <module>./mud-core</module>
                 <module>./db-interface</module>
