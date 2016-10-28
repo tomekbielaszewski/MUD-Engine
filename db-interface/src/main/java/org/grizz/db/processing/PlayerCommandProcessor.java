@@ -33,7 +33,7 @@ public class PlayerCommandProcessor {
 
         for (RawPlayerResponse rawResponse : rawResponses) {
             ProcessedPlayerResponse processedPlayerResponse = ProcessedPlayerResponse.builder()
-                    .playerCommandId(command.getId())
+                    .playerCommand(command)
                     .receiver(rawResponse.getPlayerName())
                     .response(playerResponseFormatter.format(rawResponse.getPlayerName(), rawResponse.getResponse()))
                     .sent(false)

@@ -26,6 +26,7 @@ public class Starter {
                         .build();
                 playerCommandRepository.save(playerCommand);
             }
+            context.close();
         }
     }
 }

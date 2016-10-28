@@ -22,7 +22,7 @@ public class CommandProcessingTask implements Runnable {
 
     @Override
     public void run() {
-        List<PlayerCommand> commands = playerCommandRepository.findByProcessed(false);//TODO sort by timestamp
+        List<PlayerCommand> commands = playerCommandRepository.findByProcessedOrderByTimestampAsc(false);//TODO sort by timestamp
 
         if(!commands.isEmpty())
             log.info("Fetched {} unprocessed commands", commands.size());

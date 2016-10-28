@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface PlayerCommandRepository extends MongoRepository<PlayerCommand, String> {
-    List<PlayerCommand> findByProcessed(boolean processed);
+    List<PlayerCommand> findByProcessedOrderByTimestampAsc(boolean processed);
 }

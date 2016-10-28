@@ -12,6 +12,6 @@ public class ProcessedPlayerResponse {
     private String id;
     private String receiver;
     private Object response;
-    private String playerCommandId;
+    private PlayerCommand playerCommand;
     private boolean sent;
 }
