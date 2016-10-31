@@ -68,14 +68,18 @@
             <version>1.8.4</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <profiles>
         <profile>
             <id>console</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <modules>
                 <module>./mud-core</module>
                 <module>./console-ui</module>
@@ -83,6 +87,9 @@
         </profile>
         <profile>
             <id>db</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <modules>
                 <module>./mud-core</module>
                 <module>./db-interface</module>
