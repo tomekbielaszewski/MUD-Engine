@@ -23,7 +23,7 @@ import javax.annotation.PostConstruct;
 @SpringBootApplication
 public class MainConfig {
     private static final int SEC = 1000;
-    private static final long REFRESH_DELAY = 10 * SEC;
+    private static final long REFRESH_DELAY = 30 * SEC;
 
     @Autowired
     private ResponseCollector responseCollector;

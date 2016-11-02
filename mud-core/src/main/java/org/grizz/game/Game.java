@@ -30,6 +30,7 @@ public class Game {
 
         try {
             if (player == null) {
+                log.info("Non existing player {} wanted to run command [{}]", playerName, command);
                 throw new PlayerDoesNotExist("player.not.exist", playerName);
             }
 
