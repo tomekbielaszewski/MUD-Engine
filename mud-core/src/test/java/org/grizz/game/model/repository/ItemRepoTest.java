@@ -19,7 +19,7 @@ public class ItemRepoTest {
     private static final String ITEM_NAME_1 = "item 1 name";
     private static final String ITEM_ID_2 = "item 2 id";
     private static final String ITEM_NAME_2 = "item 2 name";
-    private static final String ITEM_NAME_WITH_ACCENTS = "ąęćłóżźĄĘĆŁÓŻŹ";
+    private static final String ITEM_NAME_WITH_ACCENTS = "śćółąęźżńŚĆÓŁĄĘŹŻŃ";
 
     @InjectMocks
     private ItemRepo itemRepo = new ItemRepo();

@@ -2,9 +2,9 @@ package org.grizz.game.model.repository;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.grizz.game.exception.NoSuchItemException;
 import org.grizz.game.model.items.Item;
+import org.grizz.game.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -35,16 +35,12 @@ public class ItemRepo implements Repository<Item> {
     }
 
     public Item getByName(String itemName) {
-        final String formattedItemName = StringUtils.stripAccents(itemName.trim().toLowerCase())
-                .replaceAll("ł", "l")
-                .replaceAll("Ł", "L");
+        final String formattedItemName = StringUtils.stripAccents(itemName);
 
         Map.Entry<String, Item> matchingItemEntry = items.entrySet().stream()
                 .filter(itemEntry -> {
                     String itemNameFromRepo = itemEntry.getValue().getName();
-                    itemNameFromRepo = StringUtils.stripAccents(itemNameFromRepo.trim().toLowerCase())
-                            .replaceAll("ł", "l")
-                            .replaceAll("Ł", "L");
+                    itemNameFromRepo = StringUtils.stripAccents(itemNameFromRepo);
                     return itemNameFromRepo.equalsIgnoreCase(formattedItemName);
                 })
                 .findFirst()

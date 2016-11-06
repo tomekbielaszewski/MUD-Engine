@@ -5,6 +5,7 @@ import org.grizz.game.command.Command;
 import org.grizz.game.command.provider.CommandsProvider;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,14 +28,15 @@ public class CommandHandler {
                 .flatMap(provider -> provider.provide(player).stream())
                 .collect(Collectors.toList());
 
+        String formattedCommand = StringUtils.stripAccents(strCommand);
         log.debug("Collected {} commands for {}", commands.size(), player.getName());
         Command command = commands.stream()
-                .filter(c -> c.accept(strCommand))
+                .filter(c -> c.accept(formattedCommand))
                 .findFirst()
                 .orElse(unknownCommand);
 
-        log.debug("{} is executing command [{}] in {}", player.getName(), strCommand, command.getClass().getCanonicalName());
-        command.execute(strCommand, player, response);
+        log.debug("{} is executing command [{}] in {}", player.getName(), formattedCommand, command.getClass().getCanonicalName());
+        command.execute(formattedCommand, player, response);
 
         log.debug("Returning response for {}", player.getName());
         return response;
