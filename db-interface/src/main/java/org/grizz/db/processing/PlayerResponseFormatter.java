@@ -20,14 +20,15 @@ import java.util.Optional;
 public class PlayerResponseFormatter {
     private Template template = getFreemarkerTemplate("output.ftl");
 
-    public Object format(String playerName, PlayerResponse response) {
-        return format(playerName, response, template);
+    public Object format(String playerName, String command, PlayerResponse response) {
+        return format(playerName, command, response, template);
     }
 
-    private String format(String playerName, PlayerResponse response, Template template) {
+    private String format(String playerName, String command, PlayerResponse response, Template template) {
         HashMap<Object, Object> model = Maps.newHashMap();
         model.put("response", response);
         model.put("player", playerName);
+        model.put("command", command);
 
         Optional.ofNullable(response.getEquipment())
                 .map(Equipment::getBackpack)

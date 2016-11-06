@@ -31,11 +31,6 @@ public class CommandProcessingTask implements Runnable {
             List<ProcessedPlayerResponse> playerResponses = commandProcessor.process(command);
             playerResponseRepository.save(playerResponses);
             playerCommandRepository.save(command);
-
-            for (ProcessedPlayerResponse response : playerResponses) {
-                System.out.println("<--------------------------->");
-                System.out.println(response.getResponse());
-            }
         }
     }
 }

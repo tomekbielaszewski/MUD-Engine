@@ -70,7 +70,7 @@ public class PlayerCommandProcessorTest {
     @Test
     public void returnsProcessedResponse() throws Exception {
         when(responseCollector.getRawResponses()).thenReturn(Lists.newArrayList(RAW_RESPONSE));
-        when(playerResponseFormatter.format(PLAYER_NAME, RESPONSE)).thenReturn(PLAYER_EVENT);
+        when(playerResponseFormatter.format(PLAYER_NAME, COMMAND_STRING, RESPONSE)).thenReturn(PLAYER_EVENT);
 
         List<ProcessedPlayerResponse> processed = playerCommandProcessor.process(COMMAND);
 

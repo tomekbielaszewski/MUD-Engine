@@ -35,7 +35,7 @@ public class PlayerCommandProcessor {
             ProcessedPlayerResponse processedPlayerResponse = ProcessedPlayerResponse.builder()
                     .playerCommand(command)
                     .receiver(rawResponse.getPlayerName())
-                    .response(playerResponseFormatter.format(rawResponse.getPlayerName(), rawResponse.getResponse()))
+                    .response(playerResponseFormatter.format(rawResponse.getPlayerName(), command.getCommand(), rawResponse.getResponse()))
                     .sent(false)
                     .build();
             processedPlayerResponses.add(processedPlayerResponse);

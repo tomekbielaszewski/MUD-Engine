@@ -1,3 +1,4 @@
+> ${command}
 
 @${player}:
 <#include "/separator.ftl">

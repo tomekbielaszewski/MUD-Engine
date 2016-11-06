@@ -20,7 +20,7 @@ public class Starter {
             while (!(command = sc.nextLine()).equals("q")) {
                 PlayerCommand playerCommand = PlayerCommand.builder()
                         .command(command)
-                        .player("Grizz")
+                        .player("Grizwold")
                         .processed(false)
                         .timestamp(System.currentTimeMillis())
                         .build();

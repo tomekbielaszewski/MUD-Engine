@@ -82,7 +82,6 @@
     "name": "Boczna alejka",
     "description": "",
     "north": "18",
-    "south": "",
     "west": "19",
     "east": "10"
   },
@@ -90,8 +89,6 @@
     "id": "12",
     "name": "Wysypisko śmieci",
     "description": "",
-    "north": "",
-    "south": "",
     "west": "9",
     "east": "13"
   },
@@ -99,8 +96,6 @@
     "id": "13",
     "name": "Wysypisko śmieci",
     "description": "",
-    "north": "",
-    "south": "",
     "west": "12",
     "east": "TODO"
   },
@@ -108,16 +103,13 @@
     "id": "14",
     "name": "Strumień ścieków z szaletu miejskiego",
     "description": "",
-    "north": "",
     "south": "10",
-    "west": "",
     "east": "15"
   },
   {
     "id": "15",
     "name": "Strumień ścieków z szaletu miejskiego",
     "description": "",
-    "north": "",
     "south": "9",
     "west": "14",
     "east": "16"
@@ -126,8 +118,6 @@
     "id": "16",
     "name": "Strumień ścieków z szaletu miejskiego",
     "description": "",
-    "north": "",
-    "south": "",
     "west": "15",
     "east": "17"
   },
@@ -135,8 +125,6 @@
     "id": "17",
     "name": "Strumień ścieków z szaletu miejskiego",
     "description": "",
-    "north": "",
-    "south": "",
     "west": "16",
     "east": "TODO"
   },
@@ -144,10 +132,8 @@
     "id": "18",
     "name": "Szalet miejski",
     "description": "",
-    "north": "",
     "south": "11",
-    "west": "20",
-    "east": ""
+    "west": "20"
   },
   {
     "id": "19",
@@ -173,8 +159,7 @@
     "description": "",
     "north": "22",
     "south": "20",
-    "west": "TODO",
-    "east": ""
+    "west": "TODO"
   },
   {
     "id": "22",
@@ -225,17 +210,12 @@
     "id": "34",
     "name": "Aleja Przemysłowa - ślepa uliczka",
     "description": "",
-    "north": "32",
-    "south": "",
-    "west": "",
-    "east": ""
+    "north": "32"
   },
   {
     "id": "30",
     "name": "Pusty dom",
     "description": "",
-    "north": "",
-    "south": "",
     "west": "29",
     "east": "31"
   },
@@ -243,54 +223,37 @@
     "id": "31",
     "name": "Skrytka za szafą",
     "description": "",
-    "north": "",
-    "south": "",
-    "west": "30",
-    "east": ""
+    "west": "30"
   },
   {
     "id": "33",
     "name": "Dom wdowy",
     "description": "",
-    "north": "",
-    "south": "",
-    "west": "32",
-    "east": ""
+    "west": "32"
   },
   {
     "id": "26",
     "name": "Kowal",
     "description": "",
-    "north": "25",
-    "south": "",
-    "west": "",
-    "east": ""
+    "north": "25"
   },
   {
     "id": "25",
     "name": "Kowal",
     "description": "",
-    "north": "",
     "south": "26",
-    "west": "22",
-    "east": ""
+    "west": "22"
   },
   {
     "id": "27",
     "name": "Płatnerz",
     "description": "",
-    "north": "",
-    "south": "",
-    "west": "23",
-    "east": ""
+    "west": "23"
   },
   {
     "id": "28",
     "name": "Zbrojmistrz",
     "description": "",
-    "north": "",
-    "south": "",
-    "west": "24",
-    "east": ""
+    "west": "24"
   }
 ]

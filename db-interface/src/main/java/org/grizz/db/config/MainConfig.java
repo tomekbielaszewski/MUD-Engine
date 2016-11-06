@@ -22,9 +22,6 @@ import javax.annotation.PostConstruct;
 @EnableMongoRepositories("org.grizz.db.model.repository")
 @SpringBootApplication
 public class MainConfig {
-    private static final int SEC = 1000;
-    private static final long REFRESH_DELAY = 30 * SEC;
-
     @Autowired
     private ResponseCollector responseCollector;
     @Autowired
@@ -32,7 +29,7 @@ public class MainConfig {
     @Autowired
     private ProxyNotifier notifier;
 
-    @Scheduled(fixedDelay = REFRESH_DELAY)
+    @Scheduled(cron = "*/5 * * * * *")
     public void scheduled() {
         log.info("tick...");
         commandProcessingTask.run();
