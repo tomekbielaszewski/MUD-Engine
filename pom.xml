@@ -77,23 +77,9 @@
         </dependency>
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>console</id>
-            <modules>
-                <module>./mud-core</module>
-                <module>./console-ui</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>db</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>./mud-core</module>
-                <module>./db-interface</module>
-            </modules>
-        </profile>
-    </profiles>
+
+    <modules>
+        <module>./mud-core</module>
+        <module>./db-interface</module>
+    </modules>
 </project>

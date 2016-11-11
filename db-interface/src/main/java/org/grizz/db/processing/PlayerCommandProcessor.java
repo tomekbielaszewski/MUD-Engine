@@ -6,6 +6,7 @@ import org.grizz.db.model.ProcessedPlayerResponse;
 import org.grizz.db.model.RawPlayerResponse;
 import org.grizz.game.Game;
 import org.grizz.game.model.PlayerResponse;
+import org.grizz.game.service.PlayerResponseFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

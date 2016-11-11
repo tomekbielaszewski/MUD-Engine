@@ -7,7 +7,7 @@ var teleportatioText = "Niesmialo dotykasz czarnej pionowej tafli. Czujesz mocne
 player.setCurrentLocation(startingLocationId);
 response.getPlayerEvents().add(teleportatioText);
 
-commandRunner.execute("spojrz", player, response);
+commandHandler.execute("spojrz", player, response);
 
 var playerTeleportEvent = "BUM! " + player.getName() + " nagle sie pojawil na lokacji!";
-notificationService.broadcast(locationRepo.get(startingLocationId), playerTeleportEvent, player);
+multiplayerNotificationService.broadcast(locationRepo.get(startingLocationId), playerTeleportEvent, player);

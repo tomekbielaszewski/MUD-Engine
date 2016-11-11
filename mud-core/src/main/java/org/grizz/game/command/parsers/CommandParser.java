@@ -3,8 +3,12 @@ package org.grizz.game.command.parsers;
 import com.google.common.collect.Lists;
 import org.grizz.game.command.Command;
 import org.springframework.core.env.Environment;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,5 +93,15 @@ public abstract class CommandParser implements Command {
         } else {
             return defaultValue;
         }
+    }
+
+    protected Set<String> getVariableNames(String pattern) {
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Method namedGroups = ReflectionUtils.findMethod(Pattern.class, "namedGroups");
+        ReflectionUtils.makeAccessible(namedGroups);
+        Object namedGroupsMap = ReflectionUtils.invokeMethod(namedGroups, compiledPattern);
+        Set<String> variableNames = ((Map<String, Integer>) namedGroupsMap).keySet();
+
+        return variableNames;
     }
 }

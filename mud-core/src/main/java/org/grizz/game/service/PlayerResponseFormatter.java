@@ -1,4 +1,4 @@
-package org.grizz.db.processing;
+package org.grizz.game.service;
 
 import com.google.common.collect.Maps;
 import freemarker.template.Configuration;
@@ -20,11 +20,16 @@ import java.util.Optional;
 public class PlayerResponseFormatter {
     private Template template = getFreemarkerTemplate("output.ftl");
 
-    public Object format(String playerName, String command, PlayerResponse response) {
+    public String format(String playerName, String command, PlayerResponse response) {
         return format(playerName, command, response, template);
     }
 
     private String format(String playerName, String command, PlayerResponse response, Template template) {
+        HashMap<Object, Object> model = getModel(playerName, command, response);
+        return formatWithModel(template, model);
+    }
+
+    private HashMap<Object, Object> getModel(String playerName, String command, PlayerResponse response) {
         HashMap<Object, Object> model = Maps.newHashMap();
         model.put("response", response);
         model.put("player", playerName);
@@ -37,7 +42,10 @@ public class PlayerResponseFormatter {
         Optional.ofNullable(response.getCurrentLocation())
                 .map(location -> location.getItems().getMobileItems())
                 .ifPresent(items -> model.put("locationItems", new ItemListToItemStackConverter().convert(items)));
+        return model;
+    }
 
+    private String formatWithModel(Template template, HashMap<Object, Object> model) {
         StringWriter writer = new StringWriter();
         try {
             template.process(model, writer);
@@ -51,7 +59,7 @@ public class PlayerResponseFormatter {
     private static Template getFreemarkerTemplate(String templateName) {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
         try {
-            cfg.setDirectoryForTemplateLoading(FileUtils.getFilepath("").toFile());
+            cfg.setDirectoryForTemplateLoading(FileUtils.getFilepath("response").toFile());
             cfg.setDefaultEncoding("UTF-8");
             cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
             return cfg.getTemplate(templateName);
