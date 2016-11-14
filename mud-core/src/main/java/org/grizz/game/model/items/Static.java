@@ -14,5 +14,5 @@ public class Static implements Item {
     private String name;
     private String description;
     private String pickUpMessage;
-    private List<CommandScript> commands;
+    private List<ScriptCommandDto> commands;
 }

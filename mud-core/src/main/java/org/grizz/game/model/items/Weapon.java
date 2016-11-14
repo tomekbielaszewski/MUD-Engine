@@ -13,7 +13,7 @@ public class Weapon implements Item {
     private String id;
     private String name;
     private String description;
-    private List<CommandScript> commands;
+    private List<ScriptCommandDto> commands;
     private WeaponType weaponType;
     private int minDamage;
     private int maxDamage;

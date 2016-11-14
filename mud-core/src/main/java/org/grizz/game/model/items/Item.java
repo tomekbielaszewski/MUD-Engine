@@ -9,7 +9,7 @@ public interface Item {
 
     String getDescription();
 
-    List<? extends CommandScript> getCommands();
+    List<? extends ScriptCommandDto> getCommands();
 
     ItemType getItemType();
 }

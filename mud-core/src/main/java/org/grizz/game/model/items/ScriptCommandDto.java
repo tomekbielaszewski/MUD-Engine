@@ -5,7 +5,7 @@ import lombok.experimental.Builder;
 
 @Data
 @Builder
-public class CommandScript {
+public class ScriptCommandDto {
     private String command;
     private String scriptId;
 }

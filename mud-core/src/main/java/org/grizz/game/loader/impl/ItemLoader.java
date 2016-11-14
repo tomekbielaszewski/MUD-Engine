@@ -57,8 +57,8 @@ public class ItemLoader implements Loader {
     }
 
     private void checkItemScripts(Item item) {
-        for (CommandScript commandScript : item.getCommands()) {
-            scriptRepo.get(commandScript.getScriptId());
+        for (ScriptCommandDto scriptCommandDto : item.getCommands()) {
+            scriptRepo.get(scriptCommandDto.getScriptId());
         }
     }
 
@@ -124,7 +124,7 @@ public class ItemLoader implements Loader {
         String description;
         String pickUpMessage;
         ItemType itemType;
-        List<CommandScript> commands;
+        List<ScriptCommandDto> commands;
         WeaponType weaponType;
         int minDamage;
         int maxDamage;
