@@ -11,26 +11,30 @@ function format() {
     return java.lang.String.format(string, args);
 }
 
+function getOrDefault(variableName, defaultValue) {
+    return this[variableName] !== undefined ? this[variableName] : defaultValue;
+}
+
 function tellPlayer(message) {
     response.getPlayerEvents().add(message);
 }
 
 function sendMessage(message, playerName) {
-    var player = playerRepo.findByNameIgnoreCase(playerName);
-    notificationService.send(player, message);
+    var player = playerRepository.findByNameIgnoreCase(playerName);
+    multiplayerNotificationService.send(player, message);
 }
 
 function sendMessageToAllOnLocation(message, sender, locationId) {
-    var playerSender = playerRepo.findByNameIgnoreCase(sender);
+    var playerSender = playerRepository.findByNameIgnoreCase(sender);
     var location = locationRepo.get(locationId);
-    notificationService.broadcast(location, message, playerSender);
+    multiplayerNotificationService.broadcast(location, message, playerSender);
 }
 
 function playerHas(itemId, amount) {
     if (amount === undefined) {
         amount = 1;
     }
-    var items = equipmentService.getItemsInEquipment(player);
+    var items = player.getEquipment().getBackpack();
     var itemsMatching = items.stream()
         .filter(function (item) {
             return item.getId() === itemId;

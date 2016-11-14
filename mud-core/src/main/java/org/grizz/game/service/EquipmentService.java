@@ -14,6 +14,7 @@ import org.grizz.game.model.repository.ItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,13 +43,22 @@ public class EquipmentService {
         return itemsFromBackpack;
     }
 
+    public void addItems(String itemName, int amount, Player player, PlayerResponse response) {
+        if (amount <= 0) {
+            throw new InvalidAmountException("cant.receive.none.items");
+        }
+        Item item = itemRepo.getByName(itemName);
+        validateItemType(item);
+        addItems(Collections.nCopies(amount, item), player, response);
+    }
+
     public void addItems(List<Item> items, Player player, PlayerResponse response) {
         if (items.size() == 0) {
             throw new InvalidAmountException("cant.put.in.backpack.none.items");
         }
 
         validateIfStaticItem(items);
-        addItemsTobackpack(items, player);
+        addItemsToBackpack(items, player);
         notifyPlayer(items, response);
     }
 
@@ -61,7 +71,7 @@ public class EquipmentService {
         });
     }
 
-    private void addItemsTobackpack(List<Item> items, Player player) {
+    private void addItemsToBackpack(List<Item> items, Player player) {
         List<Item> backpack = player.getEquipment().getBackpack();
         backpack.addAll(items);
     }

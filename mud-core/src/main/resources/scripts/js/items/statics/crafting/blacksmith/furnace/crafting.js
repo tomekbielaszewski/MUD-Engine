@@ -14,8 +14,7 @@ function informThatPlayerHasNoRequiredTools() {
     tellPlayer("Aby korzystać z pieca musisz mieć szczypce kowalskie!");
 }
 
-var itemName = commandUtils.getVariable("itemName", command, commandPattern);
-var amount = commandUtils.getVariableOrDefaultValue("amount", "1", command, commandPattern);
+var amountToCraft = getOrDefault('amount', 1);
 
-logger.info("{} is crafting {}x {} on anvil", [player.getName(), amount, itemName]);
-craft(itemName, amount);
+logger.info("{} is crafting {}x {} on anvil", [player.getName(), amountToCraft, itemName]);
+craft(itemName, amountToCraft);
