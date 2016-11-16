@@ -2,10 +2,10 @@ package org.grizz.game.service;
 
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import old.org.grizz.game.exception.NoSuchItemException;
-import old.org.grizz.game.exception.NotEnoughItemsException;
 import org.grizz.game.exception.CantMoveStaticItemException;
 import org.grizz.game.exception.InvalidAmountException;
+import org.grizz.game.exception.NoSuchItemException;
+import org.grizz.game.exception.NotEnoughItemsException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.items.ItemType;
@@ -73,8 +73,8 @@ public class LocationService {
                 .filter(i -> i.getName().equals(itemToRemove.getName()))
                 .limit(amount)
                 .collect(Collectors.toList());
-        if (matchingItems.size() == 0) throw new NoSuchItemException("");
-        if (matchingItems.size() < amount) throw new NotEnoughItemsException("");
+        if (matchingItems.size() == 0) throw new NoSuchItemException("no.item.on.location");
+        if (matchingItems.size() < amount) throw new NotEnoughItemsException("not.enough.items.on.location");
 
         matchingItems.forEach(mobileItems::remove);
         return matchingItems;

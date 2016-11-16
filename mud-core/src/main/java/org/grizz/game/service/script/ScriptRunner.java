@@ -2,12 +2,12 @@ package org.grizz.game.service.script;
 
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import old.org.grizz.game.utils.FileUtils;
 import org.grizz.game.exception.GameScriptException;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.Script;
 import org.grizz.game.model.repository.ScriptRepo;
+import org.grizz.game.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
