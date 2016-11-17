@@ -33,8 +33,10 @@ public class Game {
                 log.info("Non existing player {} wanted to run command [{}]", playerName, command);
                 throw new PlayerDoesNotExist("player.not.exist", playerName);
             }
+            player.setLastActivityTimestamp(System.currentTimeMillis());
 
             commandHandlerBus.execute(command, player, response);
+
             playerRepository.save(player);
         } catch (GameScriptException e) {
             log.error("GameScriptException: [{}] in file:[{}] {}x{}", e.getParams());

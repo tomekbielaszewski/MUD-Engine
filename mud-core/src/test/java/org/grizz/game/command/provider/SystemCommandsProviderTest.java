@@ -1,6 +1,7 @@
 package org.grizz.game.command.provider;
 
 import org.grizz.game.command.Command;
+import org.grizz.game.command.parsers.admin.AdminShowActivePlayerListCommand;
 import org.grizz.game.command.parsers.system.DropCommand;
 import org.grizz.game.command.parsers.system.LookAroundCommand;
 import org.grizz.game.command.parsers.system.ShowEquipmentCommand;
@@ -41,6 +42,8 @@ public class SystemCommandsProviderTest {
     private DropCommand dropCommand;
     @Mock
     private DropCommand pickUpCommand;
+    @Mock
+    private AdminShowActivePlayerListCommand adminShowActivePlayerListCommand;
 
     @InjectMocks
     private SystemCommandsProvider commandsProvider = new SystemCommandsProvider();
@@ -48,7 +51,8 @@ public class SystemCommandsProviderTest {
     @Before
     public void setUp() throws Exception {
         commandsProvider.setCommands(lookAroundCommand, northMoveCommand, southMoveCommand, westMoveCommand,
-                eastMoveCommand, upMoveCommand, downMoveCommand, showEquipmentCommand, dropCommand, pickUpCommand);
+                eastMoveCommand, upMoveCommand, downMoveCommand, showEquipmentCommand, dropCommand, pickUpCommand,
+                adminShowActivePlayerListCommand);
     }
 
     @Test
@@ -57,7 +61,7 @@ public class SystemCommandsProviderTest {
 
         List<Command> result = commandsProvider.provide(player);
 
-        assertThat(result, hasSize(10));
+        assertThat(result, hasSize(11));
         assertThat(result, hasItems(
                 lookAroundCommand,
                 northMoveCommand,
@@ -68,7 +72,8 @@ public class SystemCommandsProviderTest {
                 downMoveCommand,
                 showEquipmentCommand,
                 dropCommand,
-                pickUpCommand
+                pickUpCommand,
+                adminShowActivePlayerListCommand
         ));
     }
 }

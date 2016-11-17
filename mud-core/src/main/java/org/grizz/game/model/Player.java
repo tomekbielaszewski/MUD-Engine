@@ -30,6 +30,8 @@ public class Player {
     private String currentLocation;
     private String pastLocation;
 
+    private long lastActivityTimestamp;
+
     private Map<String, Object> parameters;
 
     public void addParameter(String key, Object value) {

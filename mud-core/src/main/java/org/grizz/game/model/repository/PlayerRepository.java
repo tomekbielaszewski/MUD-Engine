@@ -9,6 +9,7 @@ public interface PlayerRepository extends MongoRepository<Player, String> {
     Player findByName(String name);
 
     Player findByNameIgnoreCase(String name);
+    List<Player> findByLastActivityTimestampGreaterThan(long timestamp);
 
     List<Player> findByCurrentLocation(String id);
 }

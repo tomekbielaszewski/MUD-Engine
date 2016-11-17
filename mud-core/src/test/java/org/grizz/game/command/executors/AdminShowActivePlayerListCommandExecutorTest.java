@@ -1,9 +1,12 @@
 package org.grizz.game.command.executors;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-public class AdminShowPlayerListCommandExecutorTest {
+@RunWith(MockitoJUnitRunner.class)
+public class AdminShowActivePlayerListCommandExecutorTest {
 
     @Test
     public void testShowPlayerList() throws Exception {
