@@ -5,7 +5,7 @@ import org.grizz.game.command.engine.CommandHandler;
 import org.grizz.game.exception.GameException;
 import org.grizz.game.exception.GameExceptionHandler;
 import org.grizz.game.exception.GameScriptException;
-import org.grizz.game.exception.PlayerDoesNotExist;
+import org.grizz.game.exception.PlayerDoesNotExistException;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.repository.PlayerRepository;
@@ -31,7 +31,7 @@ public class Game {
         try {
             if (player == null) {
                 log.info("Non existing player {} wanted to run command [{}]", playerName, command);
-                throw new PlayerDoesNotExist("player.not.exist", playerName);
+                throw new PlayerDoesNotExistException("player.not.exist", playerName);
             }
             player.setLastActivityTimestamp(System.currentTimeMillis());
 

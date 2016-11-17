@@ -4,7 +4,7 @@ import org.grizz.game.command.engine.CommandHandler;
 import org.grizz.game.exception.GameException;
 import org.grizz.game.exception.GameExceptionHandler;
 import org.grizz.game.exception.GameScriptException;
-import org.grizz.game.exception.PlayerDoesNotExist;
+import org.grizz.game.exception.PlayerDoesNotExistException;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.repository.PlayerRepository;
@@ -62,7 +62,7 @@ public class GameTest {
 
         PlayerResponse response = game.runCommand(COMMAND, NAME);
 
-        verify(exceptionHandler).handle(any(PlayerDoesNotExist.class), eq(response));
+        verify(exceptionHandler).handle(any(PlayerDoesNotExistException.class), eq(response));
         verify(playerRepository, never()).save(any(Player.class));
     }
 

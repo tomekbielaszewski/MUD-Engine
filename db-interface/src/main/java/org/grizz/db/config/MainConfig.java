@@ -31,7 +31,7 @@ public class MainConfig {
 
     @Scheduled(cron = "*/5 * * * * *")
     public void scheduled() {
-        log.info("tick...");
+        System.out.print(".");
         commandProcessingTask.run();
     }
 

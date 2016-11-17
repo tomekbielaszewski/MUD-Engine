@@ -29,7 +29,7 @@ public class GameExceptionHandlerTest {
     @Test
     public void handlesExceptionAndPassesTheOutcomeToResponse() throws Exception {
         PlayerResponse response = new PlayerResponse();
-        GameException exception = new PlayerDoesNotExist(EXCEPTION_MESSAGE_CODE, EXCEPTION_PARAMS);
+        GameException exception = new PlayerDoesNotExistException(EXCEPTION_MESSAGE_CODE, EXCEPTION_PARAMS);
         when(eventService.getEvent(EXCEPTION_MESSAGE_CODE, EXCEPTION_PARAMS)).thenReturn(EXCEPTION_MESSAGE);
 
         exceptionHandler.handle(exception, response);

@@ -24,7 +24,9 @@ public class SystemCommandsProvider implements CommandsProvider {
             Command showEquipmentCommand,
             Command dropCommand,
             Command pickUpCommand,
-            Command adminShowActivePlayerListCommand
+
+            Command adminShowActivePlayerListCommand,
+            Command adminTeleportCommand
     ) {
         commands.add(lookAroundCommand);
         commands.add(northMoveCommand);
@@ -36,7 +38,9 @@ public class SystemCommandsProvider implements CommandsProvider {
         commands.add(showEquipmentCommand);
         commands.add(dropCommand);
         commands.add(pickUpCommand);
+
         commands.add(adminShowActivePlayerListCommand);
+        commands.add(adminTeleportCommand);
     }
 
     @Override

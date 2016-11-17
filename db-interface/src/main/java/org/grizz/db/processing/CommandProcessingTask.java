@@ -32,7 +32,7 @@ public class CommandProcessingTask implements Runnable {
             playerResponseRepository.save(playerResponses);
             playerCommandRepository.save(command);
 
-            playerResponses.forEach(r -> System.out.println(r.getResponse()));
+            playerResponses.forEach(r -> System.out.println("\n" + r.getResponse()));
         }
     }
 }
