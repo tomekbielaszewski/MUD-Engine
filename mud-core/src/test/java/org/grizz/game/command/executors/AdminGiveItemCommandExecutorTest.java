@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import static org.hamcrest.CoreMatchers.everyItem;
 import static org.hamcrest.CoreMatchers.not;
@@ -29,6 +30,7 @@ public class AdminGiveItemCommandExecutorTest {
     private static final String PLAYER_NAME = "player";
     private static final String ADMIN_NAME = "admin";
     private static final String ITEM_NAME = "someItem";
+    private static final String STATIC_ITEM_NAME = "staticItem";
 
     @Mock
     private EventService eventService;
@@ -37,7 +39,7 @@ public class AdminGiveItemCommandExecutorTest {
     private AdminGiveItemCommandExecutor executor = new AdminGiveItemCommandExecutor();
 
     @Test
-    public void playerReceivesDesiredSingleItem() throws Exception {
+    public void playerReceivesSingleItem() throws Exception {
         PlayerResponse adminResponse = new PlayerResponse();
         Item item = dummyItem(ITEM_NAME);
         Player admin = dummyPlayer(ADMIN_NAME);
@@ -51,23 +53,31 @@ public class AdminGiveItemCommandExecutorTest {
     }
 
     @Test(expected = InvalidAmountException.class)
-    public void playerCannotReceivesZeroItems() throws Exception {
+    public void playerCannotReceiveZeroItems() throws Exception {
         PlayerResponse adminResponse = new PlayerResponse();
         Player admin = dummyPlayer(ADMIN_NAME);
 
         executor.give(PLAYER_NAME, ITEM_NAME, 0, admin, adminResponse);
+    }
+
+    @Test(expected = InvalidAmountException.class)
+    public void playerCannotReceiveNegativeNumberOfItems() throws Exception {
+        PlayerResponse adminResponse = new PlayerResponse();
+        Player admin = dummyPlayer(ADMIN_NAME);
+
+        executor.give(PLAYER_NAME, ITEM_NAME, -1, admin, adminResponse);
     }
 
     @Test(expected = CantGiveStaticItemException.class)
-    public void playerCannotReceivesStaticItems() throws Exception {
+    public void playerCannotReceiveStaticItems() throws Exception {
         PlayerResponse adminResponse = new PlayerResponse();
         Player admin = dummyPlayer(ADMIN_NAME);
 
-        executor.give(PLAYER_NAME, ITEM_NAME, 0, admin, adminResponse);
+        executor.give(PLAYER_NAME, STATIC_ITEM_NAME, 1, admin, adminResponse);
     }
 
     @Test
-    public void playerReceivesDesiredMultipleItems() throws Exception {
+    public void playerReceivesMultipleItems() throws Exception {
         PlayerResponse adminResponse = new PlayerResponse();
         Item item = dummyItem(ITEM_NAME);
         Player admin = dummyPlayer(ADMIN_NAME);
@@ -81,7 +91,7 @@ public class AdminGiveItemCommandExecutorTest {
     }
 
     @Test
-    public void desiredItemDoesNotExistAndPlayersBackpackIsNotChanged() throws Exception {
+    public void whenItemDoesNotExistPlayersBackpackIsNotChanged() throws Exception {
         PlayerResponse adminResponse = new PlayerResponse();
         Player admin = dummyPlayer(ADMIN_NAME);
         Player player = dummyPlayer(PLAYER_NAME);
@@ -90,6 +100,21 @@ public class AdminGiveItemCommandExecutorTest {
 
         assertThat(player.getEquipment().getBackpack(), hasSize(0));
         assertThat(adminResponse.getPlayerEvents(), is(not(empty())));
+    }
+
+    @Test
+    public void checksAdminRights() throws Exception {
+        throw new NotImplementedException();
+    }
+
+    @Test
+    public void notifiesPlayerAboutReceivedItemsFromAdmin() throws Exception {
+        throw new NotImplementedException();
+    }
+
+    @Test
+    public void doesNotNotifyAdminAboutReceivedItemsWhenAdminIsGivingItemsHimself() throws Exception {
+        throw new NotImplementedException();
     }
 
     private Player dummyPlayer(String name) {
