@@ -14,6 +14,7 @@ import org.grizz.game.model.repository.LocationItemsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +36,12 @@ public class LocationService {
         saveLocationItems(location);
 
         return removedItems;
+    }
+
+    public void addItems(String itemName, int amount, Location location) {
+        validateAmount(amount, "cant.drop.none.items");
+        Item item = itemRepo.getByName(itemName);
+        addItems(Collections.nCopies(amount, item), location);
     }
 
     public void addItems(List<Item> items, Location location) {

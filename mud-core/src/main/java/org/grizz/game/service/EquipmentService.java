@@ -48,7 +48,6 @@ public class EquipmentService {
             throw new InvalidAmountException("cant.receive.none.items");
         }
         Item item = itemRepo.getByName(itemName);
-        validateItemType(item);
         addItems(Collections.nCopies(amount, item), player, response);
     }
 

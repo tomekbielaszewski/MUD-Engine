@@ -27,8 +27,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EquipmentServiceTest {
@@ -287,6 +286,28 @@ public class EquipmentServiceTest {
         equipmentService.addItems(items, player, response);
 
         assertThat(player.getEquipment().getBackpack(), hasSize(0));
+    }
+
+    @Test
+    public void throwsExceptionWhenAddingNegativeNumberOfItems() throws Exception {
+        Player player = dummyPlayer(Lists.newArrayList());
+        PlayerResponse response = new PlayerResponse();
+        expectedException.expect(InvalidAmountException.class);
+
+        equipmentService.addItems(ITEM_NAME, -1, player, response);
+    }
+
+    @Test
+    public void reusesAddItemsMethodWithList() throws Exception {
+        EquipmentService spiedEquipmentService = spy(this.equipmentService);
+        Player player = dummyPlayer(Lists.newArrayList());
+        PlayerResponse response = new PlayerResponse();
+        Item item = dummyItem(ITEM_NAME);
+        when(itemRepo.getByName(ITEM_NAME)).thenReturn(item);
+
+        spiedEquipmentService.addItems(ITEM_NAME, 3, player, response);
+
+        verify(spiedEquipmentService).addItems(Lists.newArrayList(item, item, item), player, response);
     }
 
     private Item dummyStaticItem() {

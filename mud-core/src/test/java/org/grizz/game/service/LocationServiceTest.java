@@ -1,10 +1,10 @@
 package org.grizz.game.service;
 
 import com.google.common.collect.Lists;
-import old.org.grizz.game.exception.NoSuchItemException;
-import old.org.grizz.game.exception.NotEnoughItemsException;
 import org.grizz.game.exception.CantMoveStaticItemException;
 import org.grizz.game.exception.InvalidAmountException;
+import org.grizz.game.exception.NoSuchItemException;
+import org.grizz.game.exception.NotEnoughItemsException;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.LocationItems;
 import org.grizz.game.model.items.Armor;
@@ -132,6 +132,26 @@ public class LocationServiceTest {
         expectedException.expect(CantMoveStaticItemException.class);
 
         locationService.addItems(items, location);
+    }
+
+    @Test
+    public void throwsExceptionWhenAddingNegativeNumberOfItems() throws Exception {
+        Location location = dummyLocation(Lists.newArrayList());
+        expectedException.expect(InvalidAmountException.class);
+
+        locationService.addItems(ITEM_1, -1, location);
+    }
+
+    @Test
+    public void reusesAddItemsMethodWithList() throws Exception {
+        LocationService spiedLocationService = spy(this.locationService);
+        Location location = dummyLocation(Lists.newArrayList());
+        Item item = dummyItem(ITEM_1);
+        when(itemRepo.getByName(ITEM_1)).thenReturn(item);
+
+        spiedLocationService.addItems(ITEM_1, 3, location);
+
+        verify(spiedLocationService).addItems(Lists.newArrayList(item, item, item), location);
     }
 
     @Test
