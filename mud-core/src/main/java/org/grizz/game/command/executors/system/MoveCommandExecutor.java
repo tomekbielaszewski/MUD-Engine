@@ -46,7 +46,9 @@ public class MoveCommandExecutor {
         Location targetLocation = locationRepo.get(targetLocationId);
 
         if (playerCanMove(sourceLocation, targetLocation, player, response)) {
+            runMovementEventScript(sourceLocation.getOnLeaveScript(), player, response);
             move(sourceLocation, targetLocation, player, response);
+            runMovementEventScript(targetLocation.getOnEnterScript(), player, response);
             broadcastMovement(sourceLocation, targetLocation, direction, player);
         }
         lookAroundCommandExecutor.lookAround(player, response);
@@ -68,8 +70,6 @@ public class MoveCommandExecutor {
     private boolean playerCanMove(Location sourceLocation, Location targetLocation, Player player, PlayerResponse response) {
         if (runMovementEventScript(sourceLocation.getBeforeLeaveScript(), player, response) &&
                 runMovementEventScript(targetLocation.getBeforeEnterScript(), player, response)) {
-            runMovementEventScript(sourceLocation.getOnLeaveScript(), player, response);
-            runMovementEventScript(targetLocation.getOnEnterScript(), player, response);
         } else {
             return false;
         }

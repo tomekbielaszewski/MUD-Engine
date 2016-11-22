@@ -1,10 +1,7 @@
 package org.grizz.game.service;
 
 import com.google.common.collect.Lists;
-import org.grizz.game.exception.CantMoveStaticItemException;
-import org.grizz.game.exception.InvalidAmountException;
-import org.grizz.game.exception.NoSuchItemException;
-import org.grizz.game.exception.NotEnoughItemsException;
+import org.grizz.game.exception.*;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.LocationItems;
 import org.grizz.game.model.items.Armor;
@@ -155,6 +152,59 @@ public class LocationServiceTest {
     }
 
     @Test
+    public void addsStaticItemToEmptyLocation() throws Exception {
+        Location location = dummyLocation(Lists.newArrayList());
+        Item staticItem = dummyStatic(ITEM_1);
+
+        locationService.addStaticItem(staticItem, location);
+
+        assertThat(location.getItems().getStaticItems(), hasSize(1));
+        assertThat(location.getItems().getStaticItems(), hasItem(dummyStatic(ITEM_1)));
+        assertThat(location.getItems().getMobileItems(), hasSize(0));
+        verify(locationItemsRepository).save(location.getItems());
+    }
+
+    @Test
+    public void throwsExceptionWhenAddingMobileItemAsStatic() throws Exception {
+        Location location = dummyLocation(Lists.newArrayList());
+        Item staticItem = dummyItem(ITEM_1);
+        expectedException.expect(NotStaticItemException.class);
+
+        locationService.addStaticItem(staticItem, location);
+
+        verify(locationItemsRepository, never()).save(location.getItems());
+    }
+
+    @Test
+    public void throwsExceptionWhenAddingMoreSameStaticItems() throws Exception {
+        Location location = dummyLocation(Lists.newArrayList());
+        Item staticItem = dummyStatic(ITEM_1);
+        expectedException.expect(CantAddStaticItemException.class);
+
+        locationService.addStaticItem(staticItem, location);
+        locationService.addStaticItem(staticItem, location);
+
+        assertThat(location.getItems().getStaticItems(), hasSize(1));
+        assertThat(location.getItems().getStaticItems(), hasItem(dummyStatic(ITEM_1)));
+        assertThat(location.getItems().getMobileItems(), hasSize(0));
+        verify(locationItemsRepository).save(location.getItems());
+    }
+
+    @Test
+    public void throwsExceptionWhenSameStaticItemAlreadyExistOnLocation() throws Exception {
+        Item staticItem = dummyStatic(ITEM_1);
+        Location location = dummyLocationWithStatic(staticItem);
+        expectedException.expect(CantAddStaticItemException.class);
+
+        locationService.addStaticItem(staticItem, location);
+
+        assertThat(location.getItems().getStaticItems(), hasSize(1));
+        assertThat(location.getItems().getStaticItems(), hasItem(dummyStatic(ITEM_1)));
+        assertThat(location.getItems().getMobileItems(), hasSize(0));
+        verify(locationItemsRepository).save(location.getItems());
+    }
+
+    @Test
     public void removesSingleExistingItem() throws Exception {
         List<Item> itemsOnLocation = dummyItems(ITEM_1);
         Location location = dummyLocation(itemsOnLocation);
@@ -285,8 +335,18 @@ public class LocationServiceTest {
                 .build();
     }
 
+    private Location dummyLocationWithStatic(Item staticItem) {
+        Location location = dummyLocation(Lists.newArrayList());
+        location.getItems().getStaticItems().add(staticItem);
+        return location;
+    }
+
     private Item dummyItem(String name) {
         return Armor.builder().name(name).build();
+    }
+
+    private Item dummyStatic(String name) {
+        return Static.builder().id("id_" + name).name(name).build();
     }
 
     private List<Item> dummyItems(String... names) {
@@ -295,9 +355,5 @@ public class LocationServiceTest {
             items.add(dummyItem(names[i]));
         }
         return items;
-    }
-
-    private Static dummyStatic(String name) {
-        return Static.builder().name(name).build();
     }
 }

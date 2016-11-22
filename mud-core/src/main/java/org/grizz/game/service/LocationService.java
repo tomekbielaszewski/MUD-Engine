@@ -2,11 +2,9 @@ package org.grizz.game.service;
 
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import org.grizz.game.exception.CantMoveStaticItemException;
-import org.grizz.game.exception.InvalidAmountException;
-import org.grizz.game.exception.NoSuchItemException;
-import org.grizz.game.exception.NotEnoughItemsException;
+import org.grizz.game.exception.*;
 import org.grizz.game.model.Location;
+import org.grizz.game.model.converters.ItemListToItemStackConverter;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.items.ItemType;
 import org.grizz.game.model.repository.ItemRepo;
@@ -30,7 +28,7 @@ public class LocationService {
         validateAmount(amount, "cant.pick.up.none.items");
 
         Item item = itemRepo.getByName(name);
-        validateIfStatic(Lists.newArrayList(item), "cant.pick.up.static.item");
+        validateIfMobile(Lists.newArrayList(item), "cant.pick.up.static.item");
 
         List<Item> removedItems = removeItemsFromLocation(item, amount, location);
         saveLocationItems(location);
@@ -46,10 +44,28 @@ public class LocationService {
 
     public void addItems(List<Item> items, Location location) {
         validateAmount(items.size(), "cant.drop.none.items");
-        validateIfStatic(items, "cant.drop.static.item");
+        validateIfMobile(items, "cant.drop.static.item");
 
-        addItemsToLocation(items, location);
+        addMobileItemsToLocation(items, location);
         saveLocationItems(location);
+    }
+
+    public void addStaticItem(Item item, Location location) {
+        validateIfStatic(item, "cant.add.mobile.item.as.static");
+        validateStaticItemsAmountOnLocation(item, location);
+
+        addStaticItemToLocation(item, location);
+        saveLocationItems(location);
+    }
+
+    private void validateStaticItemsAmountOnLocation(Item item, Location location) {
+        ItemListToItemStackConverter converter = new ItemListToItemStackConverter();
+        long amountOfSameItems = converter.convert(location.getItems().getStaticItems()).stream()
+                .filter(i -> item.getId().equals(i.getId()))
+                .count();
+
+        if (amountOfSameItems > 0)
+            throw new CantAddStaticItemException("admin.command.cant.add.more.static.items", item.getName());
     }
 
     private void validateAmount(int amount, String message) {
@@ -58,7 +74,13 @@ public class LocationService {
         }
     }
 
-    private void validateIfStatic(List<Item> items, String message) {
+    private void validateIfStatic(Item item, String message) {
+        if (!isStatic(item)) {
+            throw new NotStaticItemException(message);
+        }
+    }
+
+    private void validateIfMobile(List<Item> items, String message) {
         if (containsStaticItems(items)) {
             throw new CantMoveStaticItemException(message);
         }
@@ -66,12 +88,20 @@ public class LocationService {
 
     private boolean containsStaticItems(List<Item> items) {
         return items.stream()
-                .anyMatch(i -> i.getItemType().equals(ItemType.STATIC));
+                .anyMatch(i -> isStatic(i));
     }
 
-    private void addItemsToLocation(List<Item> items, Location location) {
+    private boolean isStatic(Item i) {
+        return ItemType.STATIC.equals(i.getItemType());
+    }
+
+    private void addMobileItemsToLocation(List<Item> items, Location location) {
         List<Item> mobileItems = location.getItems().getMobileItems();
         mobileItems.addAll(items);
+    }
+
+    private void addStaticItemToLocation(Item item, Location location) {
+        location.getItems().getStaticItems().add(item);
     }
 
     private List<Item> removeItemsFromLocation(Item itemToRemove, int amount, Location location) {
