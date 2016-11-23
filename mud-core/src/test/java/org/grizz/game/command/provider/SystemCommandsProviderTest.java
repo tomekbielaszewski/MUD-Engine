@@ -1,6 +1,7 @@
 package org.grizz.game.command.provider;
 
 import org.grizz.game.command.Command;
+import org.grizz.game.command.parsers.admin.AdminGiveItemCommand;
 import org.grizz.game.command.parsers.admin.AdminPutItemCommand;
 import org.grizz.game.command.parsers.admin.AdminShowActivePlayerListCommand;
 import org.grizz.game.command.parsers.admin.AdminTeleportCommand;
@@ -50,6 +51,8 @@ public class SystemCommandsProviderTest {
     private AdminTeleportCommand adminTeleportCommand;
     @Mock
     private AdminPutItemCommand adminPutItemCommand;
+    @Mock
+    private AdminGiveItemCommand adminGiveItemCommand;
 
     @InjectMocks
     private SystemCommandsProvider commandsProvider = new SystemCommandsProvider();
@@ -58,7 +61,7 @@ public class SystemCommandsProviderTest {
     public void setUp() throws Exception {
         commandsProvider.setCommands(lookAroundCommand, northMoveCommand, southMoveCommand, westMoveCommand,
                 eastMoveCommand, upMoveCommand, downMoveCommand, showEquipmentCommand, dropCommand, pickUpCommand,
-                adminShowActivePlayerListCommand, adminTeleportCommand, adminPutItemCommand);
+                adminShowActivePlayerListCommand, adminTeleportCommand, adminPutItemCommand, adminGiveItemCommand);
     }
 
     @Test
@@ -67,7 +70,7 @@ public class SystemCommandsProviderTest {
 
         List<Command> result = commandsProvider.provide(player);
 
-        assertThat(result, hasSize(13));
+        assertThat(result, hasSize(14));
         assertThat(result, hasItems(
                 lookAroundCommand,
                 northMoveCommand,
@@ -81,7 +84,8 @@ public class SystemCommandsProviderTest {
                 pickUpCommand,
                 adminShowActivePlayerListCommand,
                 adminTeleportCommand,
-                adminPutItemCommand
+                adminPutItemCommand,
+                adminGiveItemCommand
         ));
     }
 }

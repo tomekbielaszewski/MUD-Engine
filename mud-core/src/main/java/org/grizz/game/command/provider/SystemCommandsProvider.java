@@ -27,7 +27,8 @@ public class SystemCommandsProvider implements CommandsProvider {
 
             Command adminShowActivePlayerListCommand,
             Command adminTeleportCommand,
-            Command adminPutItemCommand
+            Command adminPutItemCommand,
+            Command adminGiveItemCommand
     ) {
         commands.add(lookAroundCommand);
         commands.add(northMoveCommand);
@@ -43,6 +44,7 @@ public class SystemCommandsProvider implements CommandsProvider {
         commands.add(adminShowActivePlayerListCommand);
         commands.add(adminTeleportCommand);
         commands.add(adminPutItemCommand);
+        commands.add(adminGiveItemCommand);
     }
 
     @Override

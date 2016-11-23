@@ -32,11 +32,15 @@ public class AdminTeleportCommandExecutor {
         adminRightsService.checkAdminRights(admin);
         Location targetLocation = locationRepo.get(locationId);
 
-        if (playerName.equals(admin.getName())) {
+        if (isSelfTeleporting(playerName, admin)) {
             selfTeleport(targetLocation, admin, response);
         } else {
             playerTeleport(playerName, targetLocation, admin, response);
         }
+    }
+
+    private boolean isSelfTeleporting(String playerName, Player admin) {
+        return playerName.equalsIgnoreCase(admin.getName());
     }
 
     private void selfTeleport(Location targetLocation, Player admin, PlayerResponse response) {
@@ -58,6 +62,7 @@ public class AdminTeleportCommandExecutor {
         notifyTeleportedPlayer(admin.getName(), targetLocation, playerResponse);
         notifyTargetLocationPlayers(targetLocation, player);
         notifyAdmin(playerName, targetLocation, admin, adminResponse);
+
         showLocation(player, playerResponse);
 
         sendPlayerNotifications(player, playerResponse);
