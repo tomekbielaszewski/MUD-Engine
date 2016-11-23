@@ -1,7 +1,6 @@
-package org.grizz.game.command.executors;
+package org.grizz.game.command.executors.admin;
 
 import com.google.common.collect.Lists;
-import org.grizz.game.command.executors.admin.AdminGiveItemCommandExecutor;
 import org.grizz.game.exception.CantGiveStaticItemException;
 import org.grizz.game.exception.InvalidAmountException;
 import org.grizz.game.model.Equipment;

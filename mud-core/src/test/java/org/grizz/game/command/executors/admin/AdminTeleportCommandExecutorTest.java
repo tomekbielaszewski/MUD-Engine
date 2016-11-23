@@ -1,6 +1,5 @@
-package org.grizz.game.command.executors;
+package org.grizz.game.command.executors.admin;
 
-import org.grizz.game.command.executors.admin.AdminTeleportCommandExecutor;
 import org.grizz.game.command.executors.system.LookAroundCommandExecutor;
 import org.grizz.game.exception.PlayerDoesNotExistException;
 import org.grizz.game.model.Location;

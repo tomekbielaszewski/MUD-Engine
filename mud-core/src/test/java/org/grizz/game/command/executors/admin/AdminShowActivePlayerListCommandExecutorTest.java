@@ -1,7 +1,6 @@
-package org.grizz.game.command.executors;
+package org.grizz.game.command.executors.admin;
 
 import com.google.common.collect.Lists;
-import org.grizz.game.command.executors.admin.AdminShowActivePlayerListCommandExecutor;
 import org.grizz.game.model.Location;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
