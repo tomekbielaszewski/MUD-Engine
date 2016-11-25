@@ -100,7 +100,7 @@ public class MoveCommandExecutorTest {
         commandExecutor.move(SOUTH, player, response);
 
         verify(scriptRepo, never()).get(any());
-        verify(scriptRunner, never()).execute(any(), any(), any(), any());
+        verify(scriptRunner, never()).execute(any(), any(), any(), eq(Boolean.class));
     }
 
     @Test
