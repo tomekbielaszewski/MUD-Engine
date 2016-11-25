@@ -26,16 +26,17 @@ Silnik budowany jest z myślą o zachowaniu minimalnych zależności i minimalne
 #### Plik application.properties (opcjonalne)
 Jest to plik szeroko opisany w dokumentacji Spring Boot. Zalecana konfiguracja to:
 - logging.level.org.springframework=INFO
+- logging.level.org.grizz.game=INFO
 - logging.file=mud-engine.log
 - banner.location=classpath:banner.txt
 - spring.data.mongodb.database=mud-engine
 
 #### Plik assets.properties (wymagane)
-W tym pliku definiujemy lokalizacje główne dla wszystkich assetów (lokacje, moby, itemy, skrypty)
+W tym pliku definiujemy lokalizacje główne dla wszystkich assetów (lokacje, itemy, skrypty)
 Więcej info patrz -> [Lokalizacje plikow gry](#lokalizacje-plikow-gry)
 
 #### Plik command-mapping.properties (wymagane)
-W pliku znajduje się mapowanie komend do klas implementujących ich działanie. Tzw komendy wbudowane.
+W pliku znajduje się mapowanie komend do klas implementujących ich działanie. Tzw komendy systemowe.
 Więcej info patrz -> [Komendy](#komendy)
  
 #### Plik strings.properties (wymagane)
@@ -46,14 +47,14 @@ Więcej info patrz -> [Teksty powiadomień](#teksty-powiadomień)
 Lokalizacje plikow gry domyslnie znajdują się pod:
 - Lokacje w folderze `locations`
 - Przedmioty w folderze `items`
-- Przeciwnicy w folderze `mobs`
 - Skrypty w folderze `scripts`
+- Szablony odpowiedzi w folderze `response`
 
 Przy czym sciezki do folderów można modyfikować przez zmianę ścieżek do nich w pliku [`assets.properties`](mud-core/src/main/resources/assets.properties), gdzie:
 - klucz `assets.json.path.locations` to ścieżka do folderu lokacji
 - klucz `assets.json.path.items` to ścieżka do folderu przedmiotów
-- klucz `assets.json.path.mobs` to ścieżka do folderu przeciwników
 - klucz `assets.json.path.scripts` to ścieżka do folderu skryptów
+- klucz `assets.response.templates.path` to ścieżka do folderu szablonów
 
 ## Komendy
 Jedyny sposób interakcji ze światem odbywa się przez komendy wywoływane przez gracza. Silnik posiada zaimplementowane podstawowe komendy jak i pozwala na implementację własnych - powiązanych z przedmiotami.
@@ -61,26 +62,26 @@ Jedyny sposób interakcji ze światem odbywa się przez komendy wywoływane prze
 ### Wbudowane komendy
 Komendy wbudowane dostępne dla wszystkich graczy:
 - Przechodzenie po lokacjach
-  - Na północ - `org.grizz.game.commands.impl.movement.MoveNorthCommand`
-  - Na południe - `org.grizz.game.commands.impl.movement.MoveSouthCommand`
-  - Na wschód - `org.grizz.game.commands.impl.movement.MoveEastCommand`
-  - Na zachód - `org.grizz.game.commands.impl.movement.MoveWestCommand`
-  - W górę - `org.grizz.game.commands.impl.movement.MoveUpCommand`
-  - W dół - `org.grizz.game.commands.impl.movement.MoveDownCommand`
-- Rozglądanie się - `org.grizz.game.commands.impl.LookAroundCommand`
-- Wyrzucanie przedmiotów - `org.grizz.game.commands.impl.DropCommand`
-- Podnoszenie przedmiotów - `org.grizz.game.commands.impl.PickUpCommand`
-- Podgląd ekwipunku - `org.grizz.game.commands.impl.ShowEquipmentCommand`
+  - Na północ - `org.grizz.game.command.parsers.system.movement.NorthMoveCommand`
+  - Na południe - `org.grizz.game.command.parsers.system.movement.SouthMoveCommand`
+  - Na wschód - `org.grizz.game.command.parsers.system.movement.EastMoveCommand`
+  - Na zachód - `org.grizz.game.command.parsers.system.movement.WestMoveCommand`
+  - W górę - `org.grizz.game.command.parsers.system.movement.UpMoveCommand`
+  - W dół - `org.grizz.game.command.parsers.system.movement.DownMoveCommand`
+- Rozglądanie się - `org.grizz.game.command.parsers.system.LookAroundCommand`
+- Wyrzucanie przedmiotów - `org.grizz.game.command.parsers.system.DropCommand`
+- Podnoszenie przedmiotów - `org.grizz.game.command.parsers.system.PickUpCommand`
+- Podgląd ekwipunku - `org.grizz.game.command.parsers.system.ShowEquipmentCommand`
 
 Komendy wbudowane dostępne dla administratorów:
-- Teleportacja graczy - `org.grizz.game.commands.impl.admin.AdminTeleportCommand`
-- Tworzenie przedmiotów i przekazywanie ich graczom (tylko mobilne przedmioty) - `org.grizz.game.commands.impl.admin.AdminGiveItemCommand`
-- Tworzenie przedmiotow i wyrzucanie ich na lokacji (statyczne i mobilne przedmioty) - `org.grizz.game.commands.impl.admin.AdminPutItemCommand`
-- Wyświetlanie listy graczy - `org.grizz.game.commands.impl.admin.AdminShowPlayerListCommand`
+- Teleportacja graczy - `org.grizz.game.command.parsers.admin.AdminTeleportCommand`
+- Tworzenie przedmiotów i przekazywanie ich graczom (tylko mobilne przedmioty) - `org.grizz.game.command.parsers.admin.AdminGiveItemCommand`
+- Tworzenie przedmiotow i wyrzucanie ich na lokacji (statyczne i mobilne przedmioty) - `org.grizz.game.command.parsers.admin.AdminPutItemCommand`
+- Wyświetlanie listy aktywnych graczy - `org.grizz.game.command.parsers.admin.AdminShowActivePlayerListCommand`
 
 ### Mapowanie komend
 Wbudowane komendy są zmapowane do słów pozwalających na wywołanie ich. Takie mapowanie znajduje się w pliku [`command-mapping.properties`](mud-core/src/main/resources/command-mapping.properties). W pliku tym znajdziemy pary klucz wartośc gdzie:
-- kluczem jest - pełna nazwa klasy podstawowej komendy
+- kluczem jest - pełna nazwa klasy podstawowej komendy (wypisane wyżej)
 - wartością są - słowa zmapowane do tej komendy. Może być ich wiele, muszą wtedy być oddzielone średnikami. Słowa nie mogą zawierać polskich znaków ani innych liter zawierających 'akcenty'. Spacje przed i po także nie są dozwolone (przed dopasowywanie wprowadzona przez uzytkownika komenda jest trimowana i usuwane są akcenty). W przypadku komendy potrzebującej pewnych wartości wejściowych należy opisac typ i nazwę wprowadzanego parametru:
   - `(?<word>[\\D]+)` - dla danych słownych
   - `(?<amount>[\\d]+)` - dla danych liczbowych
@@ -99,8 +100,8 @@ Komendy wymagające podania parametrów wejściowych:
   - `(?<playerName>[\\w-]{4,})` - Nazwa gracza, którego chcesz teleportować
   - `(?<locationId>[\\w-]+)` - [Opcjonalny, wartość domyślna = obecna lokacja administratora] ID lokacji na jaką gracz ma być teleportowany
 - `AdminGiveItemCommand` - parametry (nazwa i typ):
-  - `(?<playerName>[\\w-]{4,})` - Nazwa gracza, który ma otrzymać przedmiot
   - `(?<itemName>[\\D]+)` - Nazwa przedmiotu
+  - `(?<playerName>[\\w-]{4,})` - [Opcjonalny, wartość domyślna = nick administratora] Nazwa gracza, który ma otrzymać przedmiot
   - `(?<amount>[\\d]+)` - [Opcjonalny, wartość domyślna = 1] Liczba przedmiotów, którą ma otrzymać gracz
 - `AdminPutItemCommand` - parametry (nazwa i typ):
   - `(?<itemName>[\\D]+)` - Nazwa przedmiotu, który chcesz umieścić na bierzącej lokacji
@@ -138,12 +139,22 @@ Przystepne materiały można znaleźć [tutaj](https://docs.oracle.com/javase/8/
 
 ### Podstawowe zmienne
 W każdym odpalonym skrypcie jest dostęp do następujących zmiennych podstawowych:
-- `player` jest typu org.grizz.game.model. **PlayerContext** - pozwala na dostęp do wszystkich statystyk gracza, jego ekwipunku, parametrów, obecnej lokalizacji,
+- `player` jest typu org.grizz.game.model. **Player** - pozwala na dostęp do wszystkich statystyk gracza, jego ekwipunku, parametrów, obecnej lokalizacji,
 - `response` jest typu org.grizz.game.model. **PlayerResponse** - udostępnia obiekt odpowiedzi
-- `command` jest typu java.lang. **String** - wartością jest wywołana przez gracza komenda
-- `commandPattern` jest typu java.lang. **String** - wartością jest wzorzec dopasowany do wywołanej komendy
+- `scriptId` jest typu java.lang. **String** - id uruchomionego skryptu
+- `log` jest typu org.slf4j. **Logger** - logger systemowy uruchomiony w kontekście klasy ScriptRunner
 
-### Dostęp do serwisów
+W przypadku skryptów odpalanych przez gracza za pomocą komendy z parametrami, parametry te są zmapowane do zmiennych w skrypcie.
+Przykładowo komenda uruchamiająca skrypt craftingu w kowadle zdefiniowana jako:
+```javascript
+{
+    "command": "wykuj (?<itemName>[\\D]+) (?<amount>[\\d]+)",
+    "scriptId": "bs-anvil-crafting"
+}
+```
+ma zadeklarowane 2 parametry wejściowe "itemName" i "amount", które zostaną zmapowane do zmiennych w kodzie JS. Przy czym każda zmienna będzie miała typ String, a w przypadku zmiennej "amount" należy sprawdzić jej istnienie i ewentualnie zainicjalizować ją wartością domyślną (patrz linijka 17 w [`anvil/crafting.js`](mud-core/src/main/resources/scripts/js/items/statics/crafting/blacksmith/anvil/crafting.js))
+
+### Dostęp do serwisów i klas pomocniczych silnika //TODO tu skonczylem
 Zmienne pod którymi dostępne sa serwisy ułatwiające interakcję ze światem gry:
 - `locationRepo` jest typu org.grizz.game.model.repository. **LocationRepo** - pozwala na pobieranie lokalizacji na podstawie ID
 - `itemRepo` jest typu org.grizz.game.model.repository. **ItemRepo** - pozwala na pobieranie przedmiotów na podstawie ID lub nazwy

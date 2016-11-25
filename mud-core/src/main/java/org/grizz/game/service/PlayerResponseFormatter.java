@@ -9,6 +9,7 @@ import org.grizz.game.model.Equipment;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.converters.ItemListToItemStackConverter;
 import org.grizz.game.utils.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -18,6 +19,8 @@ import java.util.Optional;
 
 @Service
 public class PlayerResponseFormatter {
+    @Value("${assets.response.templates.path}")
+    private String directoryForTemplates;
     private Template template = getFreemarkerTemplate("output.ftl");
 
     public String format(String playerName, String command, PlayerResponse response) {
