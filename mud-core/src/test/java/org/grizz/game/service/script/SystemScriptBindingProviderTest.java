@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class SystemScriptBindingProviderTest {
     private static final String FIRST_PACKAGE = TestA.class.getPackage().getName();
     private static final String THIRD_PACKAGE = TestC_InsideB.class.getPackage().getName();
-    private static final String ALLOWED_PACKAGES = FIRST_PACKAGE+";"+THIRD_PACKAGE;
+    private static final String ALLOWED_PACKAGES = FIRST_PACKAGE + ";" + THIRD_PACKAGE;
     private static final TestA TEST_A_BEAN = new TestA();
     private static final TestB TEST_B_BEAN = new TestB();
     private static final TestC_InsideB TEST_C_BEAN = new TestC_InsideB();
@@ -38,7 +38,8 @@ public class SystemScriptBindingProviderTest {
     @Before
     public void setUp() throws Exception {
         ReflectionTestUtils.setField(provider, "scriptEngineServicePackagesConfiguration", ALLOWED_PACKAGES);
-        when(context.getBeanDefinitionNames()).thenReturn(new String[]{"testA","testB","testC_insideB"});
+        ReflectionTestUtils.setField(provider, "scriptEngineServiceBeansConfiguration", "");
+        when(context.getBeanDefinitionNames()).thenReturn(new String[]{"testA", "testB", "testC_insideB"});
         when(context.getBean("testA")).thenReturn(TEST_A_BEAN);
         when(context.getBean("testB")).thenReturn(TEST_B_BEAN);
         when(context.getBean("testC_insideB")).thenReturn(TEST_C_BEAN);
