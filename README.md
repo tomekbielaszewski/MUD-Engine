@@ -154,19 +154,34 @@ Przykładowo komenda uruchamiająca skrypt craftingu w kowadle zdefiniowana jako
 ```
 ma zadeklarowane 2 parametry wejściowe "itemName" i "amount", które zostaną zmapowane do zmiennych w kodzie JS. Przy czym każda zmienna będzie miała typ String, a w przypadku zmiennej "amount" należy sprawdzić jej istnienie i ewentualnie zainicjalizować ją wartością domyślną (patrz linijka 17 w [`anvil/crafting.js`](mud-core/src/main/resources/scripts/js/items/statics/crafting/blacksmith/anvil/crafting.js))
 
-### Dostęp do serwisów i klas pomocniczych silnika //TODO tu skonczylem
-Zmienne pod którymi dostępne sa serwisy ułatwiające interakcję ze światem gry:
+### Dostęp do serwisów i klas pomocniczych silnika
+Zmienne pod którymi dostępne są serwisy ułatwiające interakcję ze światem gry:
+Repozytoria: //TODO skonczylem tutaj
 - `locationRepo` jest typu org.grizz.game.model.repository. **LocationRepo** - pozwala na pobieranie lokalizacji na podstawie ID
 - `itemRepo` jest typu org.grizz.game.model.repository. **ItemRepo** - pozwala na pobieranie przedmiotów na podstawie ID lub nazwy
-- `playerRepo` jest typu org.grizz.game.model.repository. **PlayerRepository** - pozwala na pobieranie graczy na podstawie nicku
 - `scriptRepo` jest typu org.grizz.game.model.repository. **ScriptRepo** - pozwala na pobieranie skryptów za pomocą ID
-- `playerLocationInteractionService` jest typu org.grizz.game.service.complex.impl. **PlayerLocationInteractionServiceImpl** - upraszcza interakcje gracza z lokacją - podnoszenie, wyrzucanie przedmiotów
-- `equipmentService` jest typu org.grizz.game.service.simple.impl. **EquipmentServiceImpl** - upraszcza interakcje z ekwipunkiem - dodawanie, usuwanie przedmiotów, zakładanie zbroi, uzywanie broni
-- `locationService` jest typu org.grizz.game.service.simple.impl. **PlayerLocationInteractionServiceImpl** - upraszcza interakcje z lokacją - pobieranie obecnej lokacji, lista możliwych wyjść, przedmioty na lokacji (zwykle i statyczne), dodawanie, usuwanie przedmiotów
-- `commandRunner` jest typu org.grizz.game.commands. **CommandHandlerBus** - pozwala na uruchamianie komend
-- `commandUtils` jest typu org.grizz.game.service.util. **CommandUtil** - udostępnia metody pomocne przy parsowaniu komend
-- `notificationService` jest typu org.grizz.game.service.complex. **MultiplayerNotificationService** - Pozwala na interakcje między graczami w postaci przesyłania powiadomień
-- `logger` jest typu org.slf4j. **Logger** - jest to logger pozwalający na logowanie aktywności skryptu do konsoli silnika
+- `playerRepository` jest typu org.grizz.game.model.repository. **PlayerRepository** - pozwala na pobieranie graczy na podstawie nicku
+- `locationItemsRepository` jest typu org.grizz.game.model.repository. **PlayerRepository** - pozwala na pobieranie graczy na podstawie nicku
+
+Serwisy
+adminRightsService
+equipmentService
+eventService
+locationService
+multiplayerNotificationService
+commandHandler
+scriptRunner
+
+Konwertery
+DBItemPackToItemListConverter
+equipmentReadConverter
+equipmentWriteConverter
+itemListToItemStackConverter
+itemReadConverter
+itemStackWriteConverter
+itemWriteConverter
+locationItemsReadConverter
+locationItemsWriteConverter
 
 ### Zwracanie wartości
 Wartość jaką zwróci skrypt jest wartością zwróconą przez ostatnią funkcję w skrypcie. Przykładową konstrukcją zwracającą zawsze wartość true jest:
@@ -177,6 +192,7 @@ function alwaysTrue() {
 }
 alwaysTrue();
 ```
+Obecnie zwracana wartość jest brana pod uwagę jedynie w przypadku skryptów beforeX na lokacjach. Skrypty są predykatami do wykonywanej lokacji i muszą zwracać wartość typu Boolean.
 
 ### Skrypty specjalne
 #### Master script
