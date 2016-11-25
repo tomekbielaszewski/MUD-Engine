@@ -44,14 +44,23 @@ public class ScriptRunner {
         masterScript = scriptRepo.get(masterScriptId);
     }
 
-    public void execute(Script script, Player player, PlayerResponse response, ScriptBinding... bindings) {
-        execute(script, player, response, Object.class, bindings);
+    public void execute(Script script, Player player, PlayerResponse response) {
+        execute(script, player, response, Object.class);
+    }
+
+    public void execute(Script script, Player player, PlayerResponse response, List<ScriptBinding> additionalBindings) {
+        execute(script, player, response, Object.class, additionalBindings);
+    }
+
+    public <T> T execute(Script script, Player player, PlayerResponse response, Class<T> classOf) {
+        return execute(script, player, response, classOf, Lists.newArrayList());
     }
 
     @SuppressWarnings("unchecked")
-    public <T> T execute(Script script, Player player, PlayerResponse response, Class<T> classOf, ScriptBinding... additionalBindings) {
-        List<ScriptBinding> bindings = Lists.newArrayList(additionalBindings);
+    public <T> T execute(Script script, Player player, PlayerResponse response, Class<T> classOf, List<ScriptBinding> additionalBindings) {
+        List<ScriptBinding> bindings = Lists.newArrayList();
         bindings.addAll(bindingProvider.provide(player, response));
+        bindings.addAll(additionalBindings);
 
         return (T) eval(script, getSimpleBindings(bindings));
     }

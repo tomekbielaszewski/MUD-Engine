@@ -34,7 +34,7 @@ public class ScriptCommand extends CommandParser {
     public PlayerResponse execute(String command, Player player, PlayerResponse response) {
         Script script = scriptRepo.get(scriptCommandDto.getScriptId());
         List<ScriptBinding> bindings = getCommandVariableBindings(command);
-        scriptRunner.execute(script, player, response, bindings.toArray(new ScriptBinding[bindings.size()]));
+        scriptRunner.execute(script, player, response, bindings);
         return response;
     }
 
