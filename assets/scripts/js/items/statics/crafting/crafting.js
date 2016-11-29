@@ -1,4 +1,4 @@
-//@ sourceURL=mud-core/src/main/resources/scripts/js/items/statics/crafting/crafting.js
+//@ sourceURL=assets/scripts/js/items/statics/crafting/crafting.js
 //line above is for IntelliJ debugging purposes
 
 function itemIsOnRecipesList(item) {

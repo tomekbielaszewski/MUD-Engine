@@ -30,14 +30,12 @@ public class SystemScriptBindingProvider {
 
             for (String whiteListedPackage : scriptEngineServicePackages) {
                 if (fullServiceName.startsWith(whiteListedPackage)) {
-                    System.out.println(beanName);
                     bindings.add(ScriptBinding.builder().name(beanName).object(bean).build());
                 }
             }
 
             for (String whiteListedBean : scriptEngineServiceBeans) {
                 if (beanName.equals(whiteListedBean)) {
-                    System.out.println(beanName);
                     bindings.add(ScriptBinding.builder().name(beanName).object(bean).build());
                 }
             }

@@ -1,4 +1,4 @@
-//@ sourceURL=mud-core/src/main/resources/scripts/js/authorization-check.js
+//@ sourceURL=assets/scripts/js/authorization-check.js
 //line above is for IntelliJ debugging purposes
 
 var admins = ["Grizwold", "GameMaster"];

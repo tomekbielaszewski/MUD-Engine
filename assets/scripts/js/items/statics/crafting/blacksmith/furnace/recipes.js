@@ -1,4 +1,4 @@
-//@ sourceURL=mud-core/src/main/resources/scripts/js/items/statics/crafting/blacksmith/furnace/recipes.js
+//@ sourceURL=assets/scripts/js/items/statics/crafting/blacksmith/furnace/recipes.js
 //line above is for IntelliJ debugging purposes
 
 var recipes = [

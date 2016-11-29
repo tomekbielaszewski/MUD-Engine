@@ -17,10 +17,10 @@ import javax.script.ScriptEngineManager;
 @ComponentScan("org.grizz.game")
 @EnableMongoRepositories("org.grizz.game.model.repository")
 @PropertySources({
-        @PropertySource("assets.properties"),
-        @PropertySource("strings.properties"),
-        @PropertySource("command-mapping.properties"),
-        @PropertySource("script-runner.properties")
+        @PropertySource("file:assets/assets.properties"),
+        @PropertySource("file:assets/strings.properties"),
+        @PropertySource("file:assets/command-mapping.properties"),
+        @PropertySource("file:assets/script-runner.properties")
 })
 public class GameConfig {
     private static final String ASSETS_JSON_PATH_LOCATIONS = "assets.json.path.locations";

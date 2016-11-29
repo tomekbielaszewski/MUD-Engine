@@ -1,4 +1,4 @@
-//@ sourceURL=mud-core/src/main/resources/scripts/js/game-utils.js
+//@ sourceURL=assets/scripts/js/game-utils.js
 //line above is for IntelliJ debugging purposes
 
 function format() {

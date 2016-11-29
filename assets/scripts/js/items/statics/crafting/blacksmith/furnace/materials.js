@@ -1,4 +1,4 @@
-//@ sourceURL=mud-core/src/main/resources/scripts/js/items/statics/crafting/blacksmith/furnace/materials.js
+//@ sourceURL=assets/scripts/js/items/statics/crafting/blacksmith/furnace/materials.js
 //line above is for IntelliJ debugging purposes
 
 var ironOre = "401";

@@ -1,4 +1,4 @@
-//@ sourceURL=mud-core/src/main/resources/scripts/js/locations/startLocationBeforeEnter.js
+//@ sourceURL=assets/scripts/js/locations/startLocationBeforeEnter.js
 //line above is for IntelliJ debugging purposes
 
 function result() {

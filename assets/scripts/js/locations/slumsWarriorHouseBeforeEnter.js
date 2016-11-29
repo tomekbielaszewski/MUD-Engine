@@ -1,4 +1,4 @@
-//@ sourceURL=mud-core/src/main/resources/scripts/js/locations/slumsWarriorHouseBeforeEnter.js
+//@ sourceURL=assets/scripts/js/locations/slumsWarriorHouseBeforeEnter.js
 //line above is for IntelliJ debugging purposes
 
 function result() {

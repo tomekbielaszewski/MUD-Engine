@@ -1,17 +1,17 @@
-//@ sourceURL=mud-core/src/main/resources/scripts/js/items/statics/crafting/blacksmith/furnace/crafting.js
+//@ sourceURL=assets/scripts/js/items/statics/crafting/blacksmith/anvil/crafting.js
 //line above is for IntelliJ debugging purposes
-loadScript("bs-furnace-materials");
-loadScript("bs-furnace-recipes");
+loadScript("bs-anvil-materials");
+loadScript("bs-anvil-recipes");
 loadScript("crafting");
 
-var tongs = "8";
+var blacksmithsHammer = "9";
 
 function doesPlayerHaveRequiredTools() {
-    return playerHas(tongs);
+    return playerHas(blacksmithsHammer);
 }
 
 function informThatPlayerHasNoRequiredTools() {
-    tellPlayer("Aby korzystać z pieca musisz mieć szczypce kowalskie!");
+    tellPlayer("Aby korzystać z kowadła musisz mieć młot kowalski!");
 }
 
 var amountToCraft = getOrDefault('amount', 1);

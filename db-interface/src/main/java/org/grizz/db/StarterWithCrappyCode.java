@@ -8,7 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 public class StarterWithCrappyCode {
-    public static void main(String[] args) {
+    public static void _main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(MainConfig.class);
         LocationItemsRepository locationItemsRepository = context.getBean(LocationItemsRepository.class);
         ItemRepo itemRepo = context.getBean(ItemRepo.class);

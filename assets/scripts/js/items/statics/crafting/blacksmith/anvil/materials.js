@@ -1,4 +1,4 @@
-//@ sourceURL=mud-core/src/main/resources/scripts/js/items/statics/crafting/blacksmith/anvil/materials.js
+//@ sourceURL=assets/scripts/js/items/statics/crafting/blacksmith/anvil/materials.js
 //line above is for IntelliJ debugging purposes
 
 var ironIngot = "407";

@@ -1,4 +1,4 @@
-//@ sourceURL=mud-core/src/main/resources/scripts/js/alwaysTrue.js
+//@ sourceURL=assets/scripts/js/alwaysTrue.js
 //line above is for IntelliJ debugging purposes
 
 function alwaysTrue() {

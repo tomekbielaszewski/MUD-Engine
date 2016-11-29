@@ -1,4 +1,4 @@
-//@ sourceURL=mud-core/src/main/resources/scripts/js/items/teleportationGate.js
+//@ sourceURL=assets/scripts/js/items/teleportationGate.js
 //line above is for IntelliJ debugging purposes
 
 var startingLocationId = "1";

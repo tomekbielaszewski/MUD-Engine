@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 @Slf4j
 public class ScriptLoader implements Loader {
@@ -53,10 +54,8 @@ public class ScriptLoader implements Loader {
 
     private void checkScriptPath(Script script) {
         String path = script.getPath();
-        try {
-            FileUtils.getFilepath(path);
-        } catch (IOException e) {
-            throw new ScriptLoadingException("Problem loading script file [" + path + "]", e);
-        }
+        Path filepath = FileUtils.getFilepath(path);
+        if(!Files.exists(filepath))
+            throw new ScriptLoadingException("Problem loading script file [" + path + "]");
     }
 }

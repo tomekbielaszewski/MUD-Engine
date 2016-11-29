@@ -50,7 +50,7 @@ Lokalizacje plikow gry domyslnie znajdują się pod:
 - Skrypty w folderze `scripts`
 - Szablony odpowiedzi w folderze `response`
 
-Przy czym sciezki do folderów można modyfikować przez zmianę ścieżek do nich w pliku [`assets.properties`](mud-core/src/main/resources/assets.properties), gdzie:
+Przy czym sciezki do folderów można modyfikować przez zmianę ścieżek do nich w pliku [`assets.properties`](assets/assets.properties), gdzie:
 - klucz `assets.json.path.locations` to ścieżka do folderu lokacji
 - klucz `assets.json.path.items` to ścieżka do folderu przedmiotów
 - klucz `assets.json.path.scripts` to ścieżka do folderu skryptów
@@ -80,7 +80,7 @@ Komendy wbudowane dostępne dla administratorów:
 - Wyświetlanie listy aktywnych graczy - `org.grizz.game.command.parsers.admin.AdminShowActivePlayerListCommand`
 
 ### Mapowanie komend
-Wbudowane komendy są zmapowane do słów pozwalających na wywołanie ich. Takie mapowanie znajduje się w pliku [`command-mapping.properties`](mud-core/src/main/resources/command-mapping.properties). W pliku tym znajdziemy pary klucz wartośc gdzie:
+Wbudowane komendy są zmapowane do słów pozwalających na wywołanie ich. Takie mapowanie znajduje się w pliku [`command-mapping.properties`](assets/command-mapping.properties). W pliku tym znajdziemy pary klucz wartośc gdzie:
 - kluczem jest - pełna nazwa klasy podstawowej komendy (wypisane wyżej)
 - wartością są - słowa zmapowane do tej komendy. Może być ich wiele, muszą wtedy być oddzielone średnikami. Słowa nie mogą zawierać polskich znaków ani innych liter zawierających 'akcenty'. Spacje przed i po także nie są dozwolone (przed dopasowywanie wprowadzona przez uzytkownika komenda jest trimowana i usuwane są akcenty). W przypadku komendy potrzebującej pewnych wartości wejściowych należy opisac typ i nazwę wprowadzanego parametru:
   - `(?<word>[\\D]+)` - dla danych słownych
@@ -115,7 +115,7 @@ Komendy wymagające podania parametrów wejściowych:
 
 ## Skrypty
 ### pliki konfiguracyjne skryptów i mapowanie skryptów
-Plikiem konfiguracyjnym skryptów jest plik JSON znajdujący się w folderze domyślnym [`scripts`](mud-core/src/main/resources/scripts/) [[*]](#lokalizacje-plikow-gry):
+Plikiem konfiguracyjnym skryptów jest plik JSON znajdujący się w folderze domyślnym [`scripts`](assets/scripts/) [[*]](#lokalizacje-plikow-gry):
 ```javascript
 [
   {
@@ -152,7 +152,7 @@ Przykładowo komenda uruchamiająca skrypt craftingu w kowadle zdefiniowana jako
     "scriptId": "bs-anvil-crafting"
 }
 ```
-ma zadeklarowane 2 parametry wejściowe "itemName" i "amount", które zostaną zmapowane do zmiennych w kodzie JS. Przy czym każda zmienna będzie miała typ String, a w przypadku zmiennej "amount" należy sprawdzić jej istnienie i ewentualnie zainicjalizować ją wartością domyślną (patrz linijka 17 w [`anvil/crafting.js`](mud-core/src/main/resources/scripts/js/items/statics/crafting/blacksmith/anvil/crafting.js))
+ma zadeklarowane 2 parametry wejściowe "itemName" i "amount", które zostaną zmapowane do zmiennych w kodzie JS. Przy czym każda zmienna będzie miała typ String, a w przypadku zmiennej "amount" należy sprawdzić jej istnienie i ewentualnie zainicjalizować ją wartością domyślną (patrz linijka 17 w [`anvil/crafting.js`](assets/scripts/js/items/statics/crafting/blacksmith/anvil/crafting.js))
 
 ### Dostęp do serwisów i klas pomocniczych silnika
 Zmienne pod którymi dostępne są serwisy ułatwiające interakcję ze światem gry:
@@ -201,7 +201,7 @@ Obecnie zwracana wartość jest brana pod uwagę jedynie w przypadku skryptów b
 
 ## Przedmioty
 ### Model przedmiotów
-Pliki JSON opisujące właściwości przedmiotów znajdują się w folderze domyślnym [`items`](mud-core/src/main/resources/items/) [[*]](#lokalizacje-plikow-gry). Przykładowy wpis w pliku:
+Pliki JSON opisujące właściwości przedmiotów znajdują się w folderze domyślnym [`items`](assets/items/) [[*]](#lokalizacje-plikow-gry). Przykładowy wpis w pliku:
 ```javascript
 [
   {

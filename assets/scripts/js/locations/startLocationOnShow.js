@@ -1,4 +1,4 @@
-//@ sourceURL=mud-core/src/main/resources/scripts/js/locations/startLocationOnShow.js
+//@ sourceURL=assets/scripts/js/locations/startLocationOnShow.js
 //line above is for IntelliJ debugging purposes
 
 var playerName = player.getName();

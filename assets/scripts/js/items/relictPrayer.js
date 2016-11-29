@@ -1,4 +1,4 @@
-//@ sourceURL=mud-core/src/main/resources/scripts/js/items/relictPrayer.js
+//@ sourceURL=assets/scripts/js/items/relictPrayer.js
 //line above is for IntelliJ debugging purposes
 
 function result() {
