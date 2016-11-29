@@ -23,9 +23,10 @@ public class ItemLoader implements Loader {
 
     @Autowired
     private Repository<Item> itemRepo;
-
     @Autowired
     private Repository<Script> scriptRepo;
+    @Autowired
+    private FileUtils fileUtils;
 
     public ItemLoader(String path) {
         this._path = path;
@@ -39,7 +40,7 @@ public class ItemLoader implements Loader {
 
     private void readItems(String _path) throws IOException, URISyntaxException {
         Gson gson = new Gson();
-        FileUtils.listFilesInFolder(_path)
+        fileUtils.listFilesInFolder(_path)
                 .forEach(path -> {
                     UniversalItem[] itemsArray = null;
                     try {

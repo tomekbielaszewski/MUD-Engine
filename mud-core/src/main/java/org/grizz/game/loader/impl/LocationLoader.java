@@ -26,6 +26,8 @@ public class LocationLoader implements Loader {
     private Repository<Location> locationRepo;
     @Autowired
     private Repository<Script> scriptRepo;
+    @Autowired
+    private FileUtils fileUtils;
 
     @Autowired
     private LocationItemsRepository locationItemsRepository;
@@ -42,7 +44,7 @@ public class LocationLoader implements Loader {
 
     private void readLocations(String _path) throws IOException, URISyntaxException {
         Gson gson = new Gson();
-        FileUtils.listFilesInFolder(_path)
+        fileUtils.listFilesInFolder(_path)
                 .forEach(path -> {
                     Location[] locationsArray = null;
                     try {

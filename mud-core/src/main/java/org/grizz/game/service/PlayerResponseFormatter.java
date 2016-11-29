@@ -9,6 +9,7 @@ import org.grizz.game.model.Equipment;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.converters.ItemListToItemStackConverter;
 import org.grizz.game.utils.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ import java.util.Optional;
 public class PlayerResponseFormatter {
     @Value("${assets.response.templates.path}")
     private String directoryForTemplates;
+    @Autowired
+    private FileUtils fileUtils;
 
     public String format(String playerName, String command, PlayerResponse response) {
         return format(playerName, command, response, getFreemarkerTemplate("output.ftl", directoryForTemplates));
@@ -61,7 +64,7 @@ public class PlayerResponseFormatter {
     private Template getFreemarkerTemplate(String templateName, String directory) {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
         try {
-            cfg.setDirectoryForTemplateLoading(FileUtils.getFilepath(directory).toFile());
+            cfg.setDirectoryForTemplateLoading(fileUtils.getFilepath(directory).toFile());
             cfg.setDefaultEncoding("UTF-8");
             cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
             return cfg.getTemplate(templateName);

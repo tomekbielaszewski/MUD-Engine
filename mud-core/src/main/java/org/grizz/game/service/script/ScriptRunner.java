@@ -34,6 +34,8 @@ public class ScriptRunner {
     private ScriptBindingProvider bindingProvider;
     @Autowired
     private ScriptEngine engine;
+    @Autowired
+    private FileUtils fileUtils;
 
     @Value("${script.engine.master.script.id}")
     private String masterScriptId;
@@ -79,7 +81,7 @@ public class ScriptRunner {
     }
 
     private BufferedReader masterScriptReader() throws IOException {
-        return Files.newBufferedReader(FileUtils.getFilepath(masterScript.getPath()), StandardCharsets.UTF_8);
+        return Files.newBufferedReader(fileUtils.getFilepath(masterScript.getPath()), StandardCharsets.UTF_8);
     }
 
     private SimpleBindings getSimpleBindings(List<ScriptBinding> bindings) {

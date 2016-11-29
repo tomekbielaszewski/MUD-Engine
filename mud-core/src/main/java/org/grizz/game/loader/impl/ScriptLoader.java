@@ -21,6 +21,8 @@ public class ScriptLoader implements Loader {
 
     @Autowired
     private Repository<Script> scriptRepo;
+    @Autowired
+    private FileUtils fileUtils;
 
     public ScriptLoader(String path) {
         this._path = path;
@@ -34,7 +36,7 @@ public class ScriptLoader implements Loader {
 
     private void readScripts() throws IOException, URISyntaxException {
         Gson gson = new Gson();
-        FileUtils.listFilesInFolder(_path)
+        fileUtils.listFilesInFolder(_path)
                 .forEach(path -> {
                     if (path.toString().endsWith("json")) {
                         Script[] scriptsArray = null;
@@ -54,7 +56,7 @@ public class ScriptLoader implements Loader {
 
     private void checkScriptPath(Script script) {
         String path = script.getPath();
-        Path filepath = FileUtils.getFilepath(path);
+        Path filepath = fileUtils.getFilepath(path);
         if(!Files.exists(filepath))
             throw new ScriptLoadingException("Problem loading script file [" + path + "]");
     }
