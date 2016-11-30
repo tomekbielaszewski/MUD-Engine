@@ -5,6 +5,7 @@ import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.Script;
 import org.grizz.game.model.repository.ScriptRepo;
+import org.grizz.game.utils.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -38,6 +39,8 @@ public class ScriptRunnerTest {
     private ScriptBindingProvider bindingProvider;
     @Mock
     private ScriptEngine engine;
+    @Mock
+    private FileUtils fileUtils;
 
     @InjectMocks
     private ScriptRunner scriptRunner = new ScriptRunner();
