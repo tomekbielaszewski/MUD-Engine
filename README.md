@@ -165,24 +165,15 @@ Repozytoria: //TODO skonczylem tutaj
 - `locationItemsRepository` jest typu org.grizz.game.model.repository. **PlayerRepository** - pozwala na pobieranie graczy na podstawie nicku
 
 Serwisy
-adminRightsService
-equipmentService
-eventService
-locationService
-multiplayerNotificationService
-commandHandler
-scriptRunner
+- `adminRightsService` jest typu org.grizz.game.service. **AdminRightsService** - odpowiada za sprawdzenie czy obecny użytkownik ma uprawnienia administratora
+- `equipmentService` jest typu org.grizz.game.service. **EquipmentService** - udostępnia operacje na ekwipunku gracza
+- `locationService` jest typu org.grizz.game.service. **LocationService** - udostępnia operacje na lokacji
+- `multiplayerNotificationService` jest typu org.grizz.game.service.notifier **MultiplayerNotificationService** - odpowiada za komunikację miedzy graczami. Przykładowo udostępnia funkcjonalność wysyłania wiadomości na danej lokacji lub do danego gracza
+- `commandHandler` jest typu org.grizz.game.command.engine. **CommandHandler** - odpowiada za uruchamianie komend gracza
+- `scriptRunner` jest typu org.grizz.game.service.script **ScriptRunner** - odpowiada za uruchamianie skryptów
 
 Konwertery
-DBItemPackToItemListConverter
-equipmentReadConverter
-equipmentWriteConverter
-itemListToItemStackConverter
-itemReadConverter
-itemStackWriteConverter
-itemWriteConverter
-locationItemsReadConverter
-locationItemsWriteConverter
+- `itemListToItemStackConverter` jest typu org.grizz.game.model.converters **ItemListToItemStackConverter** - przekształca listę przedmiotów w paczkę przedmiotów (stack)
 
 ### Zwracanie wartości
 Wartość jaką zwróci skrypt jest wartością zwróconą przez ostatnią funkcję w skrypcie. Przykładową konstrukcją zwracającą zawsze wartość true jest:
