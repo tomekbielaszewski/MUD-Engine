@@ -33,7 +33,6 @@ public class ScriptRunnerTest {
     private static final Object BINDING_OBJECT = "binding object";
 
     private static String MASTER_SCRIPT_PATH = "master";
-    private static String SCRIPT_PATH = "script";
 
     @Mock
     private ScriptRepo scriptRepo;
