@@ -6,11 +6,7 @@ import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.model.Script;
-import org.grizz.game.model.enums.ItemType;
-import org.grizz.game.model.enums.WeaponType;
-import org.grizz.game.model.impl.items.*;
-import org.grizz.game.model.items.CommandScript;
-import org.grizz.game.model.items.Item;
+import org.grizz.game.model.items.*;
 import org.grizz.game.model.repository.Repository;
 import org.grizz.game.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +17,16 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.List;
 
-/**
- * Created by Grizz on 2015-04-17.
- */
 @Slf4j
 public class ItemLoader implements Loader {
     private final String _path;
 
     @Autowired
     private Repository<Item> itemRepo;
-
     @Autowired
     private Repository<Script> scriptRepo;
+    @Autowired
+    private FileUtils fileUtils;
 
     public ItemLoader(String path) {
         this._path = path;
@@ -46,7 +40,7 @@ public class ItemLoader implements Loader {
 
     private void readItems(String _path) throws IOException, URISyntaxException {
         Gson gson = new Gson();
-        FileUtils.listFilesInFolder(_path)
+        fileUtils.listFilesInFolder(_path)
                 .forEach(path -> {
                     UniversalItem[] itemsArray = null;
                     try {
@@ -64,8 +58,8 @@ public class ItemLoader implements Loader {
     }
 
     private void checkItemScripts(Item item) {
-        for (CommandScript commandScript : item.getCommands()) {
-            scriptRepo.get(commandScript.getScriptId());
+        for (ScriptCommandDto scriptCommandDto : item.getCommands()) {
+            scriptRepo.get(scriptCommandDto.getScriptId());
         }
     }
 
@@ -85,11 +79,10 @@ public class ItemLoader implements Loader {
     }
 
     private Item transformWeapon(UniversalItem item) {
-        return WeaponEntity.builder()
+        return Weapon.builder()
                 .id(item.id)
                 .name(item.name)
                 .description(item.description)
-                .itemType(item.itemType)
                 .commands(item.commands)
                 .weaponType(item.weaponType)
                 .minDamage(item.minDamage)
@@ -98,32 +91,29 @@ public class ItemLoader implements Loader {
     }
 
     private Item transformArmor(UniversalItem item) {
-        return ArmorEntity.builder()
+        return Armor.builder()
                 .id(item.id)
                 .name(item.name)
                 .description(item.description)
-                .itemType(item.itemType)
                 .commands(item.commands)
                 .build();
     }
 
     private Item transformMisc(UniversalItem item) {
-        return MiscEntity.builder()
+        return Misc.builder()
                 .id(item.id)
                 .name(item.name)
                 .description(item.description)
-                .itemType(item.itemType)
                 .commands(item.commands)
                 .build();
     }
 
     private Item transformStatic(UniversalItem item) {
-        return StaticEntity.builder()
+        return Static.builder()
                 .id(item.id)
                 .name(item.name)
                 .description(item.description)
                 .pickUpMessage(item.pickUpMessage)
-                .itemType(item.itemType)
                 .commands(item.commands)
                 .build();
     }
@@ -135,7 +125,7 @@ public class ItemLoader implements Loader {
         String description;
         String pickUpMessage;
         ItemType itemType;
-        List<CommandScriptEntity> commands;
+        List<ScriptCommandDto> commands;
         WeaponType weaponType;
         int minDamage;
         int maxDamage;

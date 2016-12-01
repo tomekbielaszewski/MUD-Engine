@@ -1,8 +1,18 @@
 package org.grizz.game.model.items;
 
-/**
- * Created by tomasz.bielaszewski on 2015-04-29.
- */
-public interface Static extends Item {
-    String getPickUpMessage();
+import lombok.Data;
+import lombok.experimental.Builder;
+
+import java.util.List;
+
+@Data
+@Builder
+public class Static implements Item {
+    private final ItemType itemType = ItemType.STATIC;
+
+    private String id;
+    private String name;
+    private String description;
+    private String pickUpMessage;
+    private List<ScriptCommandDto> commands;
 }

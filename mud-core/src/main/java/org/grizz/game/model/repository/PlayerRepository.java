@@ -1,17 +1,15 @@
 package org.grizz.game.model.repository;
 
-import org.grizz.game.model.PlayerContext;
-import org.grizz.game.model.impl.PlayerContextImpl;
+import org.grizz.game.model.Player;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-/**
- * Created by Grizz on 2015-04-27.
- */
-public interface PlayerRepository extends MongoRepository<PlayerContextImpl, String> {
-    PlayerContext findByName(String name);
-    PlayerContext findByNameIgnoreCase(String name);
+public interface PlayerRepository extends MongoRepository<Player, String> {
+    Player findByName(String name);
 
-    List<PlayerContext> findByCurrentLocation(String id);
+    Player findByNameIgnoreCase(String name);
+    List<Player> findByLastActivityTimestampGreaterThan(long timestamp);
+
+    List<Player> findByCurrentLocation(String id);
 }

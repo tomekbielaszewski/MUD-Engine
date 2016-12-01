@@ -1,14 +1,20 @@
 package org.grizz.game.model.items;
 
-import org.grizz.game.model.enums.WeaponType;
+import lombok.Data;
+import lombok.experimental.Builder;
 
-/**
- * Created by tomasz.bielaszewski on 2015-04-29.
- */
-public interface Weapon extends Item {
-    WeaponType getWeaponType();
+import java.util.List;
 
-    int getMinDamage();
+@Data
+@Builder
+public class Weapon implements Item {
+    private final ItemType itemType = ItemType.WEAPON;
 
-    int getMaxDamage();
+    private String id;
+    private String name;
+    private String description;
+    private List<ScriptCommandDto> commands;
+    private WeaponType weaponType;
+    private int minDamage;
+    private int maxDamage;
 }

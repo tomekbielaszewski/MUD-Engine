@@ -7,9 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.model.Location;
+import org.grizz.game.model.LocationItems;
 import org.grizz.game.model.Script;
-import org.grizz.game.model.impl.LocationEntity;
-import org.grizz.game.model.impl.LocationItemsEntity;
 import org.grizz.game.model.repository.LocationItemsRepository;
 import org.grizz.game.model.repository.Repository;
 import org.grizz.game.utils.FileUtils;
@@ -19,9 +18,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 
-/**
- * Created by Grizz on 2015-04-17.
- */
 @Slf4j
 public class LocationLoader implements Loader {
     private final String _path;
@@ -30,6 +26,8 @@ public class LocationLoader implements Loader {
     private Repository<Location> locationRepo;
     @Autowired
     private Repository<Script> scriptRepo;
+    @Autowired
+    private FileUtils fileUtils;
 
     @Autowired
     private LocationItemsRepository locationItemsRepository;
@@ -46,25 +44,15 @@ public class LocationLoader implements Loader {
 
     private void readLocations(String _path) throws IOException, URISyntaxException {
         Gson gson = new Gson();
-        FileUtils.listFilesInFolder(_path)
+        fileUtils.listFilesInFolder(_path)
                 .forEach(path -> {
-                    LocationEntity[] locationsArray = null;
+                    Location[] locationsArray = null;
                     try {
                         log.info("Reading: {}", path.toString());
-                        locationsArray = gson.fromJson(Files.newBufferedReader(path), LocationEntity[].class);
-                        for (LocationEntity location : locationsArray) {
-                            LocationItemsEntity locationItems = locationItemsRepository.findByLocationId(location.getId());
-                            if (locationItems == null) {
-                                log.info("Not found location items for location {}. Creating new entity...", location.getName());
-                                locationItems = LocationItemsEntity.builder()
-                                        .locationId(location.getId())
-                                        .mobileItems(Lists.newArrayList())
-                                        .staticItems(Lists.newArrayList())
-                                        .build();
-                                locationItems = locationItemsRepository.insert(locationItems);
-                            }
+                        locationsArray = gson.fromJson(Files.newBufferedReader(path), Location[].class);
+                        for (Location location : locationsArray) {
+                            loadLocationItems(location);
                             failFastOnScriptMissing(location);
-                            location.setItems(locationItems);
                             locationRepo.add(location);
                         }
                     } catch (IOException e) {
@@ -73,12 +61,32 @@ public class LocationLoader implements Loader {
                 });
     }
 
-    private void failFastOnScriptMissing(LocationEntity location) {
-        checkScript(location.getBeforeEnter());
-        checkScript(location.getOnEnter());
-        checkScript(location.getOnShow());
-        checkScript(location.getBeforeLeave());
-        checkScript(location.getOnLeave());
+    private void loadLocationItems(Location location) {
+        LocationItems locationItems = locationItemsRepository.findByLocationId(location.getId());
+        if (locationItems == null) {
+            locationItems = initializeDefaultLocationItems(location);
+        }
+        location.setItems(locationItems);
+    }
+
+    private LocationItems initializeDefaultLocationItems(Location location) {
+        LocationItems locationItems;
+        log.info("Not found location items for location {}. Creating new entity...", location.getName());
+        locationItems = LocationItems.builder()
+                .locationId(location.getId())
+                .mobileItems(Lists.newArrayList())
+                .staticItems(Lists.newArrayList())
+                .build();
+        locationItems = locationItemsRepository.insert(locationItems);
+        return locationItems;
+    }
+
+    private void failFastOnScriptMissing(Location location) {
+        checkScript(location.getBeforeEnterScript());
+        checkScript(location.getOnEnterScript());
+        checkScript(location.getOnShowScript());
+        checkScript(location.getBeforeLeaveScript());
+        checkScript(location.getOnLeaveScript());
     }
 
     private void checkScript(String scriptId) {

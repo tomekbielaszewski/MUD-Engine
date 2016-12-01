@@ -39,6 +39,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.8.9</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
@@ -68,25 +74,18 @@
             <version>1.8.4</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>console</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>./mud-core</module>
-                <module>./console-ui</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>mirko</id>
-            <modules>
-                <module>./mud-core</module>
-                <module>./mirko-ui</module>
-            </modules>
-        </profile>
-    </profiles>
+
+    <modules>
+        <module>./mud-core</module>
+        <module>./db-interface</module>
+    </modules>
 </project>

@@ -2,9 +2,6 @@ package org.grizz.game.exception;
 
 import lombok.Getter;
 
-/**
- * Created by Grizz on 2015-08-17.
- */
 public class GameException extends RuntimeException {
     @Getter
     protected String[] params;

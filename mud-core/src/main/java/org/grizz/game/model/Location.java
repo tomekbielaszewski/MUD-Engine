@@ -1,36 +1,27 @@
 package org.grizz.game.model;
 
-/**
- * Created by Grizz on 2015-04-21.
- */
-public interface Location {
-    String getId();
+import lombok.Data;
+import lombok.experimental.Builder;
 
-    String getName();
+@Data
+@Builder
+public class Location {
+    private String id;
+    private String name;
+    private String description;
 
-    String getDescription();
+    private String beforeEnterScript;
+    private String onEnterScript;
+    private String onShowScript;
+    private String beforeLeaveScript;
+    private String onLeaveScript;
 
-    String getSouth();
+    private String south;
+    private String north;
+    private String east;
+    private String west;
+    private String up;
+    private String down;
 
-    String getNorth();
-
-    String getEast();
-
-    String getWest();
-
-    String getUp();
-
-    String getDown();
-
-    LocationItems getItems();
-
-    String getBeforeEnter();
-
-    String getOnEnter();
-
-    String getOnShow();
-
-    String getBeforeLeave();
-
-    String getOnLeave();
+    private LocationItems items;
 }

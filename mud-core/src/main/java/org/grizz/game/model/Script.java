@@ -1,14 +1,15 @@
 package org.grizz.game.model;
 
-/**
- * Created by Grizz on 2015-04-21.
- */
-public interface Script {
-    String getId();
+import lombok.Data;
+import lombok.ToString;
+import lombok.experimental.Builder;
 
-    String getName();
-
-    String getPath();
-
-    String getCode();
+@Data
+@Builder
+@ToString(exclude = "code")
+public class Script {
+    private String id;
+    private String name;
+    private String code;
+    private String path;
 }

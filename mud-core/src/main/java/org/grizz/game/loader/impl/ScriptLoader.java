@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.grizz.game.exception.ScriptLoadingException;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.model.Script;
-import org.grizz.game.model.impl.ScriptEntity;
 import org.grizz.game.model.repository.Repository;
 import org.grizz.game.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
-/**
- * Created by Grizz on 2015-04-17.
- */
 @Slf4j
 public class ScriptLoader implements Loader {
     private final String _path;
 
     @Autowired
     private Repository<Script> scriptRepo;
+    @Autowired
+    private FileUtils fileUtils;
 
     public ScriptLoader(String path) {
         this._path = path;
@@ -37,14 +36,14 @@ public class ScriptLoader implements Loader {
 
     private void readScripts() throws IOException, URISyntaxException {
         Gson gson = new Gson();
-        FileUtils.listFilesInFolder(_path)
+        fileUtils.listFilesInFolder(_path)
                 .forEach(path -> {
                     if (path.toString().endsWith("json")) {
-                        ScriptEntity[] scriptsArray = null;
+                        Script[] scriptsArray = null;
                         try {
                             log.info("Reading: {}", path.toString());
-                            scriptsArray = gson.fromJson(Files.newBufferedReader(path), ScriptEntity[].class);
-                            for (ScriptEntity script : scriptsArray) {
+                            scriptsArray = gson.fromJson(Files.newBufferedReader(path), Script[].class);
+                            for (Script script : scriptsArray) {
                                 checkScriptPath(script);
                                 scriptRepo.add(script);
                             }
@@ -57,10 +56,8 @@ public class ScriptLoader implements Loader {
 
     private void checkScriptPath(Script script) {
         String path = script.getPath();
-        try {
-            FileUtils.getFilepath(path);
-        } catch (IOException e) {
-            throw new ScriptLoadingException("Problem loading script file ["+path+"]", e);
-        }
+        Path filepath = fileUtils.getFilepath(path);
+        if(!Files.exists(filepath))
+            throw new ScriptLoadingException("Problem loading script file [" + path + "]");
     }
 }
