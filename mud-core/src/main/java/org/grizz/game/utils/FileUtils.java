@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,5 +25,9 @@ public class FileUtils {
 
     public Path getFilepath(String filePath) {
         return Paths.get(filePath);
+    }
+
+    public Reader getReader(String filePath) throws IOException {
+        return Files.newBufferedReader(getFilepath(filePath), StandardCharsets.UTF_8);
     }
 }

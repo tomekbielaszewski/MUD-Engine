@@ -16,10 +16,8 @@ import javax.annotation.PostConstruct;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+import java.io.Reader;
 import java.util.List;
 
 @Slf4j
@@ -80,8 +78,8 @@ public class ScriptRunner {
         }
     }
 
-    private BufferedReader masterScriptReader() throws IOException {
-        return Files.newBufferedReader(fileUtils.getFilepath(masterScript.getPath()), StandardCharsets.UTF_8);
+    private Reader masterScriptReader() throws IOException {
+        return fileUtils.getReader(masterScript.getPath());
     }
 
     private SimpleBindings getSimpleBindings(List<ScriptBinding> bindings) {
