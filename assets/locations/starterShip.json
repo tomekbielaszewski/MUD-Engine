@@ -1,0 +1,34 @@
+[
+  {
+    "id": "1",
+    "name": "Ładownia statku - część sypialna",
+    "description": "Znajdujesz się w ładowni statku handlowego. Dookoła jest ciemno i śmierdzi mieszaniną potu, przypraw i ryb. Jedyne światło pochodzi z uchylonej klapy prowadzącej na pokład i starych, brudnych bulaji. W tej części ładowni pozaczepiano mnóstwo hamaków. Tutaj załoga odsypia ciężkie dni na morzu.",
+    "west": "2",
+    "east": "3",
+    "up": "5",
+    "onShowScript": "tutorial-welcome"
+  },
+  {
+    "id": "2",
+    "name": "Ładownia statku - część magazynowa",
+    "description": "Znajdujesz się w części magazynowej ładowni statku handlowego. Tutaj wyjątkowo czujesz mocny zapach przypraw, a nie doskwiera tak smród potu śpiącej załogi. Poustawiane są tutaj skrzynie i worki z towarem.",
+    "east": "1",
+    "onEnterScript": "tutorial-respawnPackage",
+    "beforePickUpScript": "tutorial-canPickupPackage"
+  },
+  {
+    "id": "3",
+    "name": "Ładownia statku",
+    "description": "Znajdujesz się w ładowni statku handlowego. Poustawiane są tutaj ławy i krzesła przy nich. Wszystkie meble są solidnie przytwierdzone do podłogi aby nie stanowiły zagrożenia podczas sztormu.",
+    "west": "1",
+    "east": "4"
+  },
+  {
+    "id": "4",
+    "name": "Ładownia statku - część magazynowa",
+    "description": "Znajdujesz się w dziobowej części magazynowej ładowni statku handlowego. Tutaj wyjątkowo czujesz mocny zapach ryb, a nie doskwiera tak smród potu śpiącej załogi. Poustawiane są tutaj skrzynie i worki z towarem.",
+    "west": "3",
+    "onEnterScript": "tutorial-respawnPackage",
+    "beforePickUpScript": "tutorial-canPickupPackage"
+  }
+]
