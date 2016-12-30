@@ -31,5 +31,118 @@
     "west": "3",
     "onEnterScript": "tutorial-respawnPackage",
     "beforePickUpScript": "tutorial-canPickupPackage"
+  },
+
+
+  {
+    "id": "5",
+    "name": "Pokład - zejście do ładowni",
+    "description": "",
+    "west": "16",
+    "east": "12",
+    "north": "14",
+    "south": "6",
+    "down": "1"
+  },
+  {
+    "id": "6",
+    "name": "Pokład - punkt rozładunku",
+    "description": "",
+    "west": "17",
+    "east": "7",
+    "north": "5"
+  },
+  {
+    "id": "7",
+    "name": "Pokład - zejście ze statku",
+    "description": "",
+    "west": "6",
+    "east": "8",
+    "north": "12",
+    "south": "18"
+  },
+  {
+    "id": "8",
+    "name": "Pokład - przednia sterburta",
+    "description": "",
+    "west": "7",
+    "north": "9"
+  },
+  {
+    "id": "9",
+    "name": "Pokład - przy dziobie",
+    "description": "",
+    "west": "12",
+    "east": "10",
+    "north": "11",
+    "south": "8"
+  },
+  {
+    "id": "10",
+    "name": "Pokład - sterówka na dziobie",
+    "description": "",
+    "west": "9"
+  },
+  {
+    "id": "11",
+    "name": "Pokład - przednia bakburta",
+    "description": "",
+    "west": "13",
+    "south": "9"
+  },
+  {
+    "id": "12",
+    "name": "Pokład - pod masztem",
+    "description": "",
+    "west": "5",
+    "east": "9",
+    "north": "13",
+    "south": "7",
+    "up": "TODO"
+  },
+  {
+    "id": "13",
+    "name": "Pokład - bakburta",
+    "description": "",
+    "west": "14",
+    "east": "11",
+    "south": "12"
+  },
+  {
+    "id": "14",
+    "name": "Pokład - bakburta",
+    "description": "",
+    "west": "16",
+    "east": "13",
+    "south": "5"
+  },
+  {
+    "id": "15",
+    "name": "Pokład - tylna bakburta",
+    "description": "",
+    "east": "14",
+    "south": "16"
+  },
+  {
+    "id": "16",
+    "name": "Pokład - rufa",
+    "description": "",
+    "east": "5",
+    "north": "15",
+    "south": "17"
+  },
+  {
+    "id": "17",
+    "name": "Pokład - tylna sterburta",
+    "description": "",
+    "east": "6",
+    "north": "16"
+  },
+  {
+    "id": "18",
+    "name": "Zejście ze statku - trap",
+    "description": "",
+    "north": "7",
+    "south": "TODO"
   }
 ]
