@@ -19,16 +19,6 @@
     "name": "Crafting library script",
     "path": "assets/scripts/js/items/statics/crafting/crafting.js"
   },
-  {
-    "id": "100",
-    "name": "Always true script",
-    "path": "assets/scripts/js/alwaysTrue.js"
-  },
-  {
-    "id": "101",
-    "name": "Gold coin sound",
-    "path": "assets/scripts/js/items/goldCoinBlink.js"
-  },
 
   {
     "id": "bs-anvil-crafting",

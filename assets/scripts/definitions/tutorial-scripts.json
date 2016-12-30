@@ -1,0 +1,17 @@
+[
+  {
+    "id": "tutorial-welcome",
+    "name": "Always true script",
+    "path": "assets/scripts/js/alwaysTrue.js"
+  },
+  {
+    "id": "tutorial-respawnPackage",
+    "name": "Always true script",
+    "path": "assets/scripts/js/alwaysTrue.js"
+  },
+  {
+    "id": "tutorial-canPickupPackage",
+    "name": "Always true script",
+    "path": "assets/scripts/js/alwaysTrue.js"
+  }
+]
