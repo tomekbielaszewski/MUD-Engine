@@ -1,6 +1,6 @@
 package org.grizz.game.command.parsers.system;
 
-import org.grizz.game.command.executors.DropCommandExecutor;
+import org.grizz.game.command.executors.system.DropCommandExecutor;
 import org.grizz.game.command.parsers.CommandParser;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;

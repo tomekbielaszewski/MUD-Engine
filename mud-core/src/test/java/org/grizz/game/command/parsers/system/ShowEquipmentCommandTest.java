@@ -1,6 +1,6 @@
 package org.grizz.game.command.parsers.system;
 
-import org.grizz.game.command.executors.ShowEquipmentCommandExecutor;
+import org.grizz.game.command.executors.system.ShowEquipmentCommandExecutor;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
 import org.junit.Before;

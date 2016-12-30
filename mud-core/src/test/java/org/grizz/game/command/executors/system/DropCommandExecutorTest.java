@@ -1,4 +1,4 @@
-package org.grizz.game.command.executors;
+package org.grizz.game.command.executors.system;
 
 import com.google.common.collect.Lists;
 import org.grizz.game.exception.InvalidAmountException;

@@ -1,4 +1,4 @@
-package org.grizz.game.command.executors;
+package org.grizz.game.command.executors.system;
 
 import org.grizz.game.exception.InvalidAmountException;
 import org.grizz.game.model.Location;
