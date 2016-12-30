@@ -2,9 +2,11 @@ package org.grizz.game.exception;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 public class GameException extends RuntimeException {
     @Getter
-    protected String[] params;
+    protected final String[] params;
 
     public GameException(String message) {
         super(message);
@@ -19,5 +21,10 @@ public class GameException extends RuntimeException {
     public GameException(String message, String... params) {
         super(message);
         this.params = params;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + Arrays.toString(params);
     }
 }

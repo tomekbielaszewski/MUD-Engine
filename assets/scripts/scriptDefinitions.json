@@ -29,21 +29,6 @@
     "name": "Gold coin sound",
     "path": "assets/scripts/js/items/goldCoinBlink.js"
   },
-  {
-    "id": "102",
-    "name": "Welcome text script",
-    "path": "assets/scripts/js/locations/startLocationOnShow.js"
-  },
-  {
-    "id": "103",
-    "name": "Cant enter start location script",
-    "path": "assets/scripts/js/locations/startLocationBeforeEnter.js"
-  },
-  {
-    "id": "104",
-    "name": "Warrior house is locked, you need a key",
-    "path": "assets/scripts/js/locations/slumsWarriorHouseBeforeEnter.js"
-  },
 
   {
     "id": "bs-anvil-crafting",
@@ -84,16 +69,5 @@
     "id": "bs-furnace-listing",
     "name": "Black Smith's furnace crafting listing recipes script",
     "path": "assets/scripts/js/items/statics/crafting/blacksmith/furnace/listing.js"
-  },
-
-  {
-    "id": "106",
-    "name": "Relict prayer script",
-    "path": "assets/scripts/js/items/relictPrayer.js"
-  },
-  {
-    "id": "107",
-    "name": "Teleportation gate script - teleports to starting location",
-    "path": "assets/scripts/js/items/teleportationGate.js"
   }
 ]
