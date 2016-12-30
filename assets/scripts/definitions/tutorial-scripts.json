@@ -1,17 +1,22 @@
 [
   {
     "id": "tutorial-welcome",
-    "name": "Always true script",
-    "path": "assets/scripts/js/alwaysTrue.js"
+    "name": "Tutorial: welcome-ish text",
+    "path": "assets/scripts/js/quests/tutorial/welcome.js"
+  },
+  {
+    "id": "tutorial-welcome-off",
+    "name": "Tutorial: welcome text shut down",
+    "path": "assets/scripts/js/quests/tutorial/welcome-off.js"
   },
   {
     "id": "tutorial-respawnPackage",
-    "name": "Always true script",
+    "name": "always true script - Tutorial: respawning package",
     "path": "assets/scripts/js/alwaysTrue.js"
   },
   {
     "id": "tutorial-canPickupPackage",
-    "name": "Always true script",
+    "name": "always true script - Tutorial: can player pickup package?",
     "path": "assets/scripts/js/alwaysTrue.js"
   }
 ]

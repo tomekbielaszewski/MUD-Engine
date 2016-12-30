@@ -3,7 +3,7 @@
 
 function loadScript(id) {
   var _script = scriptRepo.get(id);
-  logger.info("Loading inner script [{}] described as [{}]", [_script.getPath(), _script.getName()]);
+  logger.info("Loading inner script [{}] described as [{}] with id [{}]", [_script.getPath(), _script.getName(), id]);
 
   var _scriptRelativePath = _script.getPath();
   var _scriptJavaPath = fileUtils.getFilepath(_scriptRelativePath);

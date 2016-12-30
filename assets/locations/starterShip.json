@@ -2,11 +2,12 @@
   {
     "id": "1",
     "name": "Ładownia statku - część sypialna",
-    "description": "Znajdujesz się w ładowni statku handlowego. Dookoła jest ciemno i śmierdzi mieszaniną potu, przypraw i ryb. Jedyne światło pochodzi z uchylonej klapy prowadzącej na pokład i starych, brudnych bulaji. W tej części ładowni pozaczepiano mnóstwo hamaków. Tutaj załoga odsypia ciężkie dni na morzu.",
+    "description": "Znajdujesz się w ładowni statku handlowego. Dookoła jest ciemno i śmierdzi mieszaniną potu, przypraw i ryb. Jedyne światło pochodzi z uchylonej klapy prowadzącej na pokład nad tobą i starych, brudnych bulaji. W tej części ładowni porozwieszano mnóstwo hamaków. Tutaj załoga odsypia ciężkie dni na morzu.",
     "west": "2",
     "east": "3",
     "up": "5",
-    "onShowScript": "tutorial-welcome"
+    "onShowScript": "tutorial-welcome",
+    "onLeaveScript": "tutorial-welcome-off"
   },
   {
     "id": "2",

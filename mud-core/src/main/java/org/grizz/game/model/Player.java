@@ -46,7 +46,7 @@ public class Player {
         parameters.remove(key);
     }
 
-    public boolean containsParameter(String key) {
+    public boolean hasParameter(String key) {
         return parameters.containsKey(key);
     }
 }
