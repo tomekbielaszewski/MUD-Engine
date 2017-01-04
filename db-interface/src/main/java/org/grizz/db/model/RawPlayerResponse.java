@@ -1,7 +1,7 @@
 package org.grizz.db.model;
 
+import lombok.Builder;
 import lombok.Value;
-import lombok.experimental.Builder;
 import org.grizz.game.model.PlayerResponse;
 
 @Value
