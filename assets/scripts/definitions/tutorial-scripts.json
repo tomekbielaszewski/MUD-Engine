@@ -11,12 +11,12 @@
   },
   {
     "id": "tutorial-respawnPackage",
-    "name": "always true script - Tutorial: respawning package",
-    "path": "assets/scripts/js/alwaysTrue.js"
+    "name": "Respawns package if not on location",
+    "path": "assets/scripts/js/quests/tutorial/respawnPackage.js"
   },
   {
     "id": "tutorial-canPickupPackage",
-    "name": "always true script - Tutorial: can player pickup package?",
-    "path": "assets/scripts/js/alwaysTrue.js"
+    "name": "Checks if player has already taken this package before",
+    "path": "assets/scripts/js/quests/tutorial/canPickupPackage.js"
   }
 ]
