@@ -29,28 +29,40 @@ var game = (function () {
   }
 })();
 
-// (function () {
-//   location.hasItems = function(itemId, amount) {
-//     var items = this.getItems().getMobileItems();
-//     return game.areItemsIn(items, itemId, amount);
-//   };
-//
-//   location.hasItemsByName = function(itemName, amount) {
-//     var itemId = itemRepo.getByName(itemName).getId();
-//     var items = this.getItems().getMobileItems();
-//     return game.areItemsIn(items, itemId, amount);
-//   };
-// })();
+var location = (function () {
+  var location = game.currentLocation();
+
+  function hasItems(itemId, amount) {
+    var items = location.getItems().getMobileItems();
+    return game.areItemsIn(items, itemId, amount);
+  }
+
+  function hasItemsByName(itemName, amount) {
+    var itemId = itemRepo.getByName(itemName).getId();
+    var items = location.getItems().getMobileItems();
+    return game.areItemsIn(items, itemId, amount);
+  }
+
+  return {
+    hasItems: hasItems,
+    hasItemsByName: hasItemsByName
+  };
+})();
 
 (function () {
-  player.hasItems = function (itemId, amount) {
+  function hasItems(itemId, amount) {
     var items = this.getEquipment().getBackpack();
     return game.areItemsIn(items, itemId, amount);
-  };
+  }
 
-  player.hasItemsByName = function (itemName, amount) {
+  function hasItemsByName(itemName, amount) {
     var itemId = itemRepo.getByName(itemName).getId();
     var items = this.getEquipment().getBackpack();
     return game.areItemsIn(items, itemId, amount);
-  };
+  }
+
+  player = Object.bindProperties({
+    hasItems: hasItems,
+    hasItemsByName: hasItemsByName
+  }, player);
 })();

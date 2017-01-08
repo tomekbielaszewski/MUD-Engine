@@ -13,4 +13,5 @@ function loadScript(id) {
 }
 
 loadScript("game-utils");
+loadScript("game-sdk");
 loadScript(scriptId);

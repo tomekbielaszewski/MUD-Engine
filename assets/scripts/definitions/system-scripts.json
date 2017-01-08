@@ -15,6 +15,11 @@
     "path": "assets/scripts/js/game-utils.js"
   },
   {
+    "id": "game-sdk",
+    "name": "Game SDK script",
+    "path": "assets/scripts/js/sdk/game-sdk.js"
+  },
+  {
     "id": "crafting",
     "name": "Crafting library script",
     "path": "assets/scripts/js/items/statics/crafting/crafting.js"

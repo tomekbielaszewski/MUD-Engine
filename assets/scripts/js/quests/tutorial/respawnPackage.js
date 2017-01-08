@@ -2,14 +2,14 @@
 //line above is for IntelliJ debugging purposes
 
 (function () {
-  var packageId = "";
+  var packageName = "Wór z towarem";
 
   function locationHasNoPackage() {
-    return !locationHasItems(packageId);
+    return !location.hasItemsByName(packageName);
   }
 
   function respawnPackage() {
-
+    locationService.addItems(packageName, 1, location);
   }
 
   if (locationHasNoPackage()) {
