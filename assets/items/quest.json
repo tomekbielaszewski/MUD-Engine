@@ -1,0 +1,9 @@
+[
+  {
+    "id": "1000",
+    "name": "Wór z towarem",
+    "description": "Wielki ciężki wór pełen ziarna.",
+    "itemType": "MISC",
+    "commands": []
+  }
+]

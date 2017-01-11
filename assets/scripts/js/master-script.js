@@ -12,6 +12,5 @@ function loadScript(id) {
   return load(_scriptFilePath);
 }
 
-loadScript("game-utils");
 loadScript("game-sdk");
 loadScript(scriptId);

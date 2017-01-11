@@ -1,5 +1,10 @@
 [
   {
+    "id": "tutorial-quest-ids",
+    "name": "Tutorial quest identifiers",
+    "path": "assets/scripts/js/quests/tutorial/questIDs.js"
+  },
+  {
     "id": "tutorial-welcome",
     "name": "Tutorial: welcome-ish text",
     "path": "assets/scripts/js/quests/tutorial/welcome.js"

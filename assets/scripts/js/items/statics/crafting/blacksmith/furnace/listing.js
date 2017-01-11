@@ -6,4 +6,4 @@ loadScript("crafting");
 
 var title = "Możesz tutaj wytopić:";
 
-printList(title, recipes);
+game.crafting.list(title, recipes);

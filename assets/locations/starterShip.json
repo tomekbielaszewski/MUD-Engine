@@ -98,7 +98,7 @@
     "east": "9",
     "north": "13",
     "south": "7",
-    "up": "TODO"
+    "up": "19"
   },
   {
     "id": "13",
@@ -144,5 +144,11 @@
     "description": "",
     "north": "7",
     "south": "TODO"
+  },
+  {
+    "id": "19",
+    "name": "Maszt - bocianie gniazdo",
+    "description": "",
+    "down": "12"
   }
 ]

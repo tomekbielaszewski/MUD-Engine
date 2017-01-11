@@ -1,26 +1,29 @@
 //@ sourceURL=assets/scripts/js/quests/tutorial/welcome.js
 //line above is for IntelliJ debugging purposes
 
+loadScript("tutorial-quest-ids");
+
 (function (){
-  var welcomeTextDeactivated = 'tutorial:welcomeTextDeactivated';
-  var welcomeTextAlreadyDisplayed = 'tutorial:welcomeTextAlreadyDisplayed';
+  var welcomeTextDeactivated = Quest.ID.welcomeTextDeactivated;
+  var welcomeTextAlreadyDisplayed = Quest.ID.welcomeTextAlreadyDisplayed;
+
   var longWelcomeText = 'Pobudka zaspany szczurze lądowy! **Rozejrzyj się**! Dopływamy do portu! Jazda na pokład! Won **na górę** i pomagać przy rozładunku! Nie płyniesz za darmo!';
   var shortWelcomeText = 'Nie słyszałeś!? Dupa w troki i won **na górę**!';
 
-  if(!is(welcomeTextDeactivated)) {
-    displayWelcomeText();
-  }
-
   function displayWelcomeText() {
     if (is(welcomeTextAlreadyDisplayed)) {
-      tellPlayer(shortWelcomeText);
+      game.player.message(shortWelcomeText);
     } else {
-      tellPlayer(longWelcomeText);
-      player.addParameter(welcomeTextAlreadyDisplayed, true);
+      game.player.message(longWelcomeText);
+      game.player.addParameter(welcomeTextAlreadyDisplayed, true);
     }
   }
 
   function is(parameter) {
-    return player.hasParameter(parameter);
+    return game.player.hasParameter(parameter);
+  }
+
+  if (!is(welcomeTextDeactivated)) {
+    displayWelcomeText();
   }
 })();

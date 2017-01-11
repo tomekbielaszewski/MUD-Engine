@@ -1,18 +1,20 @@
 //@ sourceURL=assets/scripts/js/quests/tutorial/welcome-off.js
 //line above is for IntelliJ debugging purposes
 
-(function (){
-  var welcomeTextDeactivated = 'tutorial:welcomeTextDeactivated';
+loadScript("tutorial-quest-ids");
 
-  if(!is(welcomeTextDeactivated)) {
-    deactivateWelcomeText();
-  }
+(function (){
+  var welcomeTextDeactivated = Quest.ID.welcomeTextDeactivated;
 
   function deactivateWelcomeText() {
-    player.addParameter(welcomeTextDeactivated, true);
+    game.player.addParameter(welcomeTextDeactivated, true);
   }
 
   function is(parameter) {
-    return player.hasParameter(parameter);
+    return game.player.hasParameter(parameter);
+  }
+
+  if (!is(welcomeTextDeactivated)) {
+    deactivateWelcomeText();
   }
 })();

@@ -1,15 +1,15 @@
 //@ sourceURL=assets/scripts/js/quests/tutorial/respawnPackage.js
 //line above is for IntelliJ debugging purposes
 
-(function () {
-  var packageName = "Wór z towarem";
+loadScript("tutorial-quest-ids");
 
+(function () {
   function locationHasNoPackage() {
-    return !location.hasItemsByName(packageName);
+    return !game.location.hasItems(Quest.ITEM.package.id);
   }
 
   function respawnPackage() {
-    locationService.addItems(packageName, 1, location);
+    game.location.addItems(Quest.ITEM.package.name);
   }
 
   if (locationHasNoPackage()) {
