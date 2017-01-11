@@ -4,7 +4,7 @@
 game.crafting = (function () {
   var titleRowPattern = "%1$s\n------------";
   var itemDescRowPattern = "[%1$-20s]: \"%2$s\""; //Krótki miecz: Krótkie, lekko uszczerbione, jednoręczne ostrze. Prosty jelec. Zużyta rękojeść. Nic szczególnego.
-  var ingredientRowPattern = "     %1$-3s %2$s"    //    2x Sztabka żelaza
+  var ingredientRowPattern = "     %1$-3s %2$s";    //    2x Sztabka żelaza
 
   function itemIsOnRecipesList(item) {
     for (var i = 0; i < recipes.length; i++) {
