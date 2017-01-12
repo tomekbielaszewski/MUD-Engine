@@ -1,4 +1,4 @@
-//@ sourceURL=assets/scripts/js/sdk/game-sdk.js
+//@ sourceURL=assets/scripts/js/sdk/game-sdk-commons.js
 //line above is for IntelliJ debugging purposes
 
 function getOrDefault(variableName, defaultValue) {
