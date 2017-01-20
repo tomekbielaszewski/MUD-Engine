@@ -1,6 +1,7 @@
 package org.grizz.game.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -15,8 +16,11 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class FileUtils {
+    @Value("${properties.absolute.path.prefix:}")
+    private String pathPrefix;
+
     public List<Path> listFilesInFolder(String filePath) throws IOException {
-        Path directoryPath = Paths.get(filePath);
+        Path directoryPath = getFilepath(filePath);
 
         return Files.walk(directoryPath)
                 .filter(Files::isRegularFile)
@@ -24,7 +28,8 @@ public class FileUtils {
     }
 
     public Path getFilepath(String filePath) {
-        return Paths.get(filePath);
+        String fullPath = pathPrefix + filePath;
+        return Paths.get(fullPath);
     }
 
     public Reader getReader(String filePath) throws IOException {

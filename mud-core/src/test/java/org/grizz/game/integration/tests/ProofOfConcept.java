@@ -1,16 +1,15 @@
 package org.grizz.game.integration.tests;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.grizz.game.Game;
 import org.grizz.game.integration.config.TestGameWithEmbeddedMongo;
 import org.grizz.game.model.Equipment;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.PlayerResponse;
-import org.grizz.game.service.notifier.Notifier;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -26,8 +25,6 @@ public class ProofOfConcept {
     @Autowired
     private MongoOperations mongo;
 
-    private Notifier notifier = Mockito.mock(Notifier.class);
-
     @Before
     public void init() {
         mongo.save(Player.builder()
@@ -36,6 +33,7 @@ public class ProofOfConcept {
                 .equipment(Equipment.builder()
                         .backpack(Lists.newArrayList())
                         .build())
+                .parameters(Maps.newHashMap())
                 .build());
     }
 
