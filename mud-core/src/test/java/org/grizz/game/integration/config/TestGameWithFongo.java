@@ -16,7 +16,7 @@ import javax.annotation.PostConstruct;
 
 @Configuration
 @Import(GameConfig.class)
-public class TestGameWithEmbeddedMongo extends AbstractMongoConfiguration {
+public class TestGameWithFongo extends AbstractMongoConfiguration {
     @Autowired
     private ProxyNotifier notifier;
     @Value("${spring.data.mongodb.database}")
