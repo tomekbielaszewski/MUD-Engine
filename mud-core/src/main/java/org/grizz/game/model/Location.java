@@ -16,9 +16,6 @@ public class Location {
     private String beforeLeaveScript;
     private String onLeaveScript;
 
-    private String beforePickUpScript;
-    private String onPickUpScript;
-
     private String south;
     private String north;
     private String east;

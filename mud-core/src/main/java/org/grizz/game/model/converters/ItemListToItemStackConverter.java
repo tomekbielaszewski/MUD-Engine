@@ -16,8 +16,7 @@ public class ItemListToItemStackConverter implements Converter<List<Item>, List<
     @Override
     public List<ItemStack> convert(List<Item> source) {
         Multiset<Item> items = HashMultiset.create();
-        source.stream()
-                .forEach(item -> items.add(item));
+        source.forEach(items::add);
         List<ItemStack> itemStacks = items.elementSet().stream()
                 .map(item -> ItemStack.builder()
                         .id(item.getId())

@@ -17,4 +17,9 @@ public class Weapon implements Item {
     private WeaponType weaponType;
     private int minDamage;
     private int maxDamage;
+
+    private String onDropScript;
+    private String beforeDropScript;
+    private String onReceiveScript;
+    private String beforeReceiveScript;
 }
