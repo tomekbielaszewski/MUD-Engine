@@ -26,7 +26,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.*;
 
@@ -202,10 +202,11 @@ public class EquipmentServiceTest {
         setupItemRepo(item);
         setupScriptRepo();
 
-        equipmentService.addItems(ITEM_NAME, amount, player, response);
+        boolean canReceive = equipmentService.addItems(ITEM_NAME, amount, player, response);
 
         verify(scriptRunner).execute(dummyScript(ON_RECEIVE_SCRIPT_ID), player, response, Boolean.class, dummyBindings(item, amount));
         verifyScriptRunnerNeverCalledWith(ON_DROP_SCRIPT_ID, BEFORE_DROP_SCRIPT_ID, BEFORE_RECEIVE_SCRIPT_ID);
+        assertTrue(canReceive);
     }
 
     @Test
@@ -217,10 +218,11 @@ public class EquipmentServiceTest {
         setupItemRepo(item);
         setupScriptRepo();
 
-        equipmentService.addItems(ITEM_NAME, amount, player, response);
+        boolean canReceive = equipmentService.addItems(ITEM_NAME, amount, player, response);
 
         verify(scriptRunner).execute(dummyScript(BEFORE_RECEIVE_SCRIPT_ID), player, response, Boolean.class, dummyBindings(item, amount));
         verifyScriptRunnerNeverCalledWith(ON_DROP_SCRIPT_ID, BEFORE_DROP_SCRIPT_ID, ON_RECEIVE_SCRIPT_ID);
+        assertTrue(canReceive);
     }
 
     @Test
@@ -232,10 +234,11 @@ public class EquipmentServiceTest {
         PlayerResponse response = new PlayerResponse();
         setupScriptRepo();
 
-        equipmentService.addItems(items, player, response);
+        boolean canReceive = equipmentService.addItems(items, player, response);
 
         verify(scriptRunner).execute(dummyScript(ON_RECEIVE_SCRIPT_ID), player, response, Boolean.class, dummyBindings(item, 1));
         verifyScriptRunnerNeverCalledWith(ON_DROP_SCRIPT_ID, BEFORE_DROP_SCRIPT_ID, BEFORE_RECEIVE_SCRIPT_ID);
+        assertTrue(canReceive);
     }
 
     @Test
@@ -247,10 +250,11 @@ public class EquipmentServiceTest {
         PlayerResponse response = new PlayerResponse();
         setupScriptRepo();
 
-        equipmentService.addItems(items, player, response);
+        boolean canReceive = equipmentService.addItems(items, player, response);
 
         verify(scriptRunner).execute(dummyScript(BEFORE_RECEIVE_SCRIPT_ID), player, response, Boolean.class, dummyBindings(item, 1));
         verifyScriptRunnerNeverCalledWith(ON_DROP_SCRIPT_ID, BEFORE_DROP_SCRIPT_ID, ON_RECEIVE_SCRIPT_ID);
+        assertTrue(canReceive);
     }
 
     @Test
@@ -263,10 +267,11 @@ public class EquipmentServiceTest {
         when(itemStackConverter.convert(items)).thenReturn(Lists.newArrayList());
         when(scriptRunner.execute(dummyScript(BEFORE_RECEIVE_SCRIPT_ID), player, response, Boolean.class, dummyBindings(item, 1))).thenReturn(false);
 
-        equipmentService.addItems(items, player, response);
+        boolean canReceive = equipmentService.addItems(items, player, response);
 
         assertThat(player.getEquipment().getBackpack(), hasSize(0));
         verify(scriptRunner).execute(dummyScript(BEFORE_RECEIVE_SCRIPT_ID), player, response, Boolean.class, dummyBindings(item, 1));
+        assertFalse(canReceive);
     }
 
     @Test
@@ -280,10 +285,11 @@ public class EquipmentServiceTest {
         when(itemStackConverter.convert(items)).thenReturn(Lists.newArrayList());
         when(scriptRunner.execute(dummyScript(BEFORE_RECEIVE_SCRIPT_ID), player, response, Boolean.class, dummyBindings(item, 1))).thenReturn(false);
 
-        equipmentService.addItems(items, player, response);
+        boolean canReceive = equipmentService.addItems(items, player, response);
 
         assertThat(player.getEquipment().getBackpack(), hasSize(0));
         verify(scriptRunner).execute(dummyScript(BEFORE_RECEIVE_SCRIPT_ID), player, response, Boolean.class, dummyBindings(item, 1));
+        assertFalse(canReceive);
     }
 
     @Test
@@ -353,10 +359,11 @@ public class EquipmentServiceTest {
         List<Item> items = dummyItems(ITEM_NAME);
         when(itemStackConverter.convert(items)).thenReturn(Lists.newArrayList());
 
-        equipmentService.addItems(items, player, response);
+        boolean canReceive = equipmentService.addItems(items, player, response);
 
         assertThat(player.getEquipment().getBackpack(), hasSize(1));
         assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(ITEM_NAME)));
+        assertTrue(canReceive);
     }
 
     @Test
@@ -366,11 +373,12 @@ public class EquipmentServiceTest {
         List<Item> items = dummyItems(ITEM_NAME);
         when(itemStackConverter.convert(items)).thenReturn(Lists.newArrayList());
 
-        equipmentService.addItems(items, player, response);
+        boolean canReceive = equipmentService.addItems(items, player, response);
 
         assertThat(player.getEquipment().getBackpack(), hasSize(2));
         assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(ITEM_NAME)));
         assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(NOT_RELEVANT_ITEM_NAME)));
+        assertTrue(canReceive);
     }
 
     @Test
@@ -380,10 +388,11 @@ public class EquipmentServiceTest {
         List<Item> items = dummyItems(ITEM_NAME, ITEM_NAME, ITEM_NAME);
         when(itemStackConverter.convert(items)).thenReturn(Lists.newArrayList());
 
-        equipmentService.addItems(items, player, response);
+        boolean canReceive = equipmentService.addItems(items, player, response);
 
         assertThat(player.getEquipment().getBackpack(), hasSize(3));
         assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(ITEM_NAME)));
+        assertTrue(canReceive);
     }
 
     @Test
@@ -393,11 +402,12 @@ public class EquipmentServiceTest {
         List<Item> items = dummyItems(ITEM_NAME, ITEM_NAME, ITEM_NAME);
         when(itemStackConverter.convert(items)).thenReturn(Lists.newArrayList());
 
-        equipmentService.addItems(items, player, response);
+        boolean canReceive = equipmentService.addItems(items, player, response);
 
         assertThat(player.getEquipment().getBackpack(), hasSize(4));
         assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(ITEM_NAME)));
         assertThat(player.getEquipment().getBackpack(), hasItem(dummyItem(NOT_RELEVANT_ITEM_NAME)));
+        assertTrue(canReceive);
     }
 
     @Test
@@ -415,12 +425,13 @@ public class EquipmentServiceTest {
         when(eventService.getEvent(ITEMS_RECEIVED_EVENT_KEY_SINGLE_ENTRY, "1", ITEM_NAME))
                 .thenReturn(ITEMS_RECEIVED_EVENT_MESSAGE_SINGLE_ENTRY_2);
 
-        equipmentService.addItems(items, player, response);
+        boolean canReceive = equipmentService.addItems(items, player, response);
 
         assertThat(response.getPlayerEvents(), hasSize(3));
         assertThat(response.getPlayerEvents(), hasItems(ITEMS_RECEIVED_EVENT_MESSAGE_HEADER));
         assertThat(response.getPlayerEvents(), hasItems(ITEMS_RECEIVED_EVENT_MESSAGE_SINGLE_ENTRY_1));
         assertThat(response.getPlayerEvents(), hasItems(ITEMS_RECEIVED_EVENT_MESSAGE_SINGLE_ENTRY_2));
+        assertTrue(canReceive);
     }
 
     @Test

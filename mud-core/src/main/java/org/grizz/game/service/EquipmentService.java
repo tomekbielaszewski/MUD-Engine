@@ -58,26 +58,29 @@ public class EquipmentService {
         return itemsFromBackpack;
     }
 
-    public void addItems(String itemName, int amount, Player player, PlayerResponse response) {
+    public boolean addItems(String itemName, int amount, Player player, PlayerResponse response) {
         if (amount <= 0) {
             throw new InvalidAmountException("cant.receive.none.items");
         }
         Item item = itemRepo.getByName(itemName);
-        addItems(Collections.nCopies(amount, item), player, response);
+        return addItems(Collections.nCopies(amount, item), player, response);
     }
 
-    public void addItems(List<Item> items, Player player, PlayerResponse response) {
+    public boolean addItems(List<Item> items, Player player, PlayerResponse response) {
         if (items.size() == 0) {
             throw new InvalidAmountException("cant.put.in.backpack.none.items");
         }
 
         validateIfStaticItem(items);
+        boolean couldReceive;
 
-        if (canReceive(items, player, response)) {
+        if (couldReceive = canReceive(items, player, response)) {
             onReceive(items, player, response);
             addItemsToBackpack(items, player);
             notifyPlayer(items, response);
         }
+
+        return couldReceive;
     }
 
     private void onReceive(List<Item> items, Player player, PlayerResponse response) {

@@ -30,13 +30,18 @@ public class PickUpCommandExecutor {
 
         Location location = locationRepo.get(player.getCurrentLocation());
 
-        pickUpItems(itemName, amount, player, location, response);
-        notifyPlayer(response);
+        boolean couldPickup = pickUpItems(itemName, amount, player, location, response);
+
+        if (!couldPickup) {
+            locationService.addItems(itemName, amount, location);
+        } else {
+            notifyPlayer(response);
+        }
     }
 
-    private void pickUpItems(String itemName, int amount, Player player, Location location, PlayerResponse response) {
+    private boolean pickUpItems(String itemName, int amount, Player player, Location location, PlayerResponse response) {
         List<Item> items = locationService.removeItems(itemName, amount, location);
-        equipmentService.addItems(items, player, response);
+        return equipmentService.addItems(items, player, response);
     }
 
     private void validateAmount(int amount) {

@@ -20,13 +20,8 @@
     "path": "assets/scripts/js/quests/tutorial/respawnPackage.js"
   },
   {
-    "id": "tutorial-canPickupPackageFirst",
-    "name": "Checks if player has already taken first package before",
-    "path": "assets/scripts/js/quests/tutorial/canPickupPackageFirst.js"
-  },
-  {
-    "id": "tutorial-canPickupPackageSecond",
-    "name": "Checks if player has already taken second package before",
-    "path": "assets/scripts/js/quests/tutorial/canPickupPackageSecond.js"
+    "id": "tutorial-canPickupPackage",
+    "name": "Checks if player can pickup package",
+    "path": "assets/scripts/js/quests/tutorial/canPickupPackage.js"
   }
 ]

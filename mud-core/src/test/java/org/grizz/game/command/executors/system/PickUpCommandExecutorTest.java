@@ -21,8 +21,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PickUpCommandExecutorTest {
@@ -58,6 +57,23 @@ public class PickUpCommandExecutorTest {
     }
 
     @Test
+    public void ItemsStaysOnLocationWhenPlayerCouldNotPickUpThem() throws Exception {
+        Player player = dummyPlayer();
+        Location location = dummyLocation();
+        PlayerResponse response = new PlayerResponse();
+        List<Item> itemsToPickUp = Lists.newArrayList(dummyItem());
+        when(locationService.removeItems(ITEM_NAME, 1, location)).thenReturn(itemsToPickUp);
+        when(locationRepo.get(LOCATION_ID)).thenReturn(location);
+        when(equipmentService.addItems(itemsToPickUp, player, response)).thenReturn(false);
+
+        commandExecutor.pickUp(ITEM_NAME, 1, player, response);
+
+        verify(locationService).removeItems(ITEM_NAME, 1, location);
+        verify(locationService).addItems(ITEM_NAME, 1, location);
+        verify(eventService, never()).getEvent(PICK_UP_EVENT_KEY);
+    }
+
+    @Test
     public void notifiesPlayerAboutPickedUpItems() throws Exception {
         Player player = dummyPlayer();
         Location location = dummyLocation();
@@ -66,6 +82,7 @@ public class PickUpCommandExecutorTest {
         when(locationService.removeItems(ITEM_NAME, 1, location)).thenReturn(itemsToPickUp);
         when(locationRepo.get(LOCATION_ID)).thenReturn(location);
         when(eventService.getEvent(PICK_UP_EVENT_KEY)).thenReturn(PICK_UP_EVENT);
+        when(equipmentService.addItems(itemsToPickUp, player, response)).thenReturn(true);
 
         commandExecutor.pickUp(ITEM_NAME, 1, player, response);
 

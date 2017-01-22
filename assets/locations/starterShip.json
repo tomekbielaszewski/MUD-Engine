@@ -14,8 +14,7 @@
     "name": "Ładownia statku - część magazynowa",
     "description": "Znajdujesz się w części magazynowej ładowni statku handlowego. Tutaj wyjątkowo czujesz mocny zapach przypraw, a nie doskwiera tak smród potu śpiącej załogi. Poustawiane są tutaj skrzynie i worki z towarem.",
     "east": "1",
-    "onEnterScript": "tutorial-respawnPackage",
-    "beforePickUpScript": "tutorial-canPickupPackageFirst"
+    "onEnterScript": "tutorial-respawnPackage"
   },
   {
     "id": "3",
@@ -29,8 +28,7 @@
     "name": "Ładownia statku - część magazynowa",
     "description": "Znajdujesz się w dziobowej części magazynowej ładowni statku handlowego. Tutaj wyjątkowo czujesz mocny zapach ryb, a nie doskwiera tak smród potu śpiącej załogi. Poustawiane są tutaj skrzynie i worki z towarem.",
     "west": "3",
-    "onEnterScript": "tutorial-respawnPackage",
-    "beforePickUpScript": "tutorial-canPickupPackageSecond"
+    "onEnterScript": "tutorial-respawnPackage"
   },
 
 
