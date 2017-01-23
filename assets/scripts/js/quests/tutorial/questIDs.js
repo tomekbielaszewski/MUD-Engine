@@ -9,13 +9,24 @@ var Quest = (function () {
       packagePickedUpOn: {
         location2: "quest:tutorial-ship-package-picked-on-locations-2",
         location4: "quest:tutorial-ship-package-picked-on-locations-4"
+      },
+      captainDocuments: {
+        started: "quest:tutorial-ship-captain-documents-started",
+        finished: "quest:tutorial-ship-captain-documents-finished"
       }
     },
     ITEM: {
       package: {
         name: "Wór z towarem",
         id: "1000",
-        respawnLocations: ["2", "4"]
+        respawnLocations: ["2", "4"],
+        collectingPoint: "6"
+      }
+    },
+    REWARDS: {
+      packagesBrought: {
+        items: [],
+        experience: 100
       }
     }
   }

@@ -45,6 +45,9 @@ public class Game {
             exceptionHandler.handle(e, response);
         }
 
+        System.out.println("################################");
+        System.out.println("### " + command);
+        System.out.println("### " + response.toString());
         return response;
     }
 }

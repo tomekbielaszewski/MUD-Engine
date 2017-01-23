@@ -40,7 +40,8 @@
     "east": "12",
     "north": "14",
     "south": "6",
-    "down": "1"
+    "down": "1",
+    "beforeEnterScript": "tutorial-needToTakePackageBeforeEnterUpperDeck"
   },
   {
     "id": "6",

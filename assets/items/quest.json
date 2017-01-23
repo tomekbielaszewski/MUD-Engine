@@ -5,6 +5,9 @@
     "description": "Wielki ciężki wór pełen ziarna.",
     "itemType": "MISC",
     "commands": [],
-    "beforeReceiveScript": "tutorial-canPickupPackage"
+    "beforeReceiveScript": "tutorial-canPickupPackage",
+    "onReceiveScript": "tutorial-onPickupPackage",
+    "beforeDropScript": "tutorial-canDropPackage",
+    "onDropScript": "tutorial-onDropPackage"
   }
 ]

@@ -23,5 +23,25 @@
     "id": "tutorial-canPickupPackage",
     "name": "Checks if player can pickup package",
     "path": "assets/scripts/js/quests/tutorial/canPickupPackage.js"
+  },
+  {
+    "id": "tutorial-onPickupPackage",
+    "name": "Saves where package was picked up",
+    "path": "assets/scripts/js/quests/tutorial/onPickupPackage.js"
+  },
+  {
+    "id": "tutorial-needToTakePackageBeforeEnterUpperDeck",
+    "name": "Cant enter upper deck without taking at least one package",
+    "path": "assets/scripts/js/quests/tutorial/needToTakePackageBeforeEnterUpperDeck.js"
+  },
+  {
+    "id": "tutorial-canDropPackage",
+    "name": "Checks if player can drop package here",
+    "path": "assets/scripts/js/quests/tutorial/canDropPackage.js"
+  },
+  {
+    "id": "tutorial-onDropPackage",
+    "name": "Gives reward and informs player about next quest",
+    "path": "assets/scripts/js/quests/tutorial/onDropPackage.js"
   }
 ]
