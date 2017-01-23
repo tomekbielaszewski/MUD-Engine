@@ -14,4 +14,9 @@ public class Armor implements Item {
     private String name;
     private String description;
     private List<ScriptCommandDto> commands;
+
+    private String onDropScript;
+    private String beforeDropScript;
+    private String onReceiveScript;
+    private String beforeReceiveScript;
 }

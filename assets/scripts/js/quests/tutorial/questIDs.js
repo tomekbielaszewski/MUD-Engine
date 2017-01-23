@@ -6,13 +6,16 @@ var Quest = (function () {
     ID: {
       welcomeTextDeactivated: "quest:tutorial-welcome-text-deactivated",
       welcomeTextAlreadyDisplayed: "quest:tutorial-text-already-displayed",
-      firstPackageBrought: "quest:tutorial-ship-first-package-brought",
-      secondPackageBrought: "quest:tutorial-ship-second-package-brought"
+      packagePickedUpOn: {
+        location2: "quest:tutorial-ship-package-picked-on-locations-2",
+        location4: "quest:tutorial-ship-package-picked-on-locations-4"
+      }
     },
     ITEM: {
       package: {
         name: "Wór z towarem",
-        id: "1000"
+        id: "1000",
+        respawnLocations: ["2", "4"]
       }
     }
   }
