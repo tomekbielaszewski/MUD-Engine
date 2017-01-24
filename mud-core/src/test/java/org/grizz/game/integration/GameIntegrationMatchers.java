@@ -20,7 +20,7 @@ public interface GameIntegrationMatchers {
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("Expected player event list to contain event equal to \"" + searchedEvent + "\" but couldn't found it");
+                description.appendText("Expected player event list to contain event equal to \"" + searchedEvent + "\" but couldn't find it");
             }
         };
     }
@@ -36,7 +36,7 @@ public interface GameIntegrationMatchers {
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("Expected player event list to contain event like \"" + partOfSearchedEvent + "\" but couldn't found it");
+                description.appendText("Expected player event list to contain event like \"" + partOfSearchedEvent + "\" but couldn't find it");
             }
         };
     }

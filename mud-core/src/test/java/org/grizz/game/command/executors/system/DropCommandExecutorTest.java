@@ -71,7 +71,7 @@ public class DropCommandExecutorTest {
     public void name() throws Exception {
         throw new NotImplementedException();
 
-        //test what happens when player couldn't drop items (beforeDropEvent returns false)
+        //TODO test what happens when player couldn't drop items (beforeDropEvent returns false)
     }
 
     @Test

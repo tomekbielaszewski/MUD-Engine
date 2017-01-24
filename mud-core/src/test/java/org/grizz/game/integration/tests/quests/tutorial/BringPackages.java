@@ -1,6 +1,7 @@
 package org.grizz.game.integration.tests.quests.tutorial;
 
 import org.grizz.game.integration.GameIntegrationTest;
+import org.grizz.game.model.Player;
 import org.grizz.game.model.items.Item;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,18 +25,17 @@ public class BringPackages extends GameIntegrationTest {
 
     @Test
     public void testPackageBringing() throws Exception {
-        //TODO Debug this - hard!
         cannotPickupPackageCreatedByAdminOnStartingLocation();
         cannotExitLowerDeckAndMessageAppearWhenTriedTo();
         respawnsPackageAndShowsQuestHintOnFirstLocation();
         respawnsPackageAndShowsQuestHintOnSecondLocation();
         canPickupPackageOnFirstLocation();
         questHintIsNotShownOnFirstLocationAnymore();
-        cannotPickupPackageSecondTimeOnFirstLocation();
         questHintIsStillVisibleOnSecondLocation();
         cannotPickupNextPackageOnSecondLocationWhenHoldingPackageFromFirstLocation();
         cannotDropPackageOnLocationDifferentThanPackageCollectingPointUpstairs();
         canDropFirstPackageOnPackageCollectingPointLocation();
+        cannotPickupPackageSecondTimeOnFirstLocation();
         canPickupPackageOnSecondLocation();
         canDropSecondPackageOnPackageCollectingPointLocationAndShowsMessageAboutNextQuest();
         questHintIsNotVisibleOnSecondLocationAnymore();
@@ -102,20 +102,51 @@ public class BringPackages extends GameIntegrationTest {
         player1("west");
         player1("west");
         player1("west");
+
+        Player playerBefore = fromDB().player(PLAYER1);
+        String currentLocation = playerBefore.getCurrentLocation();
+        List<Item> locationItemsBefore = fromDB().locationOf(PLAYER1).getMobileItems();
+        List<Item> backpackBefore = playerBefore.getEquipment().getBackpack();
+        boolean playerFirstLocationPickUpParamBefore = playerBefore.hasParameter("quest:tutorial-ship-package-picked-on-locations-2");
+
         player1("wez wor z towarem");
 
-        //assert that player has parameter regarding pickup
+        Player playerAfter = fromDB().player(PLAYER1);
+        List<Item> locationItemsAfter = fromDB().locationOf(PLAYER1).getMobileItems();
+        List<Item> backpackAfter = playerAfter.getEquipment().getBackpack();
+        boolean playerFirstLocationPickUpParamAfter = playerAfter.hasParameter("quest:tutorial-ship-package-picked-on-locations-2");
+
+        assertThat(currentLocation, is(FIRST_LOCATION));
+
+        assertThat(locationItemsBefore, hasItem(item(PACKAGE)));
+        assertThat(locationItemsAfter, hasSize(0));
+
+        assertThat(backpackBefore, hasSize(0));
+        assertThat(backpackAfter, hasItem(item(PACKAGE)));
+
+        assertThat(playerFirstLocationPickUpParamBefore, is(false));
+        assertThat(playerFirstLocationPickUpParamAfter, is(true));
     }
 
     private void questHintIsNotShownOnFirstLocationAnymore() {
         player1("east");
         player1("west");
+
+        String currentLocation = fromDB().player(PLAYER1).getCurrentLocation();
+        assertThat(currentLocation, is(FIRST_LOCATION));
+
+        assertThat(response, hasNoEvents());
     }
 
     private void questHintIsStillVisibleOnSecondLocation() {
         player1("east");
         player1("east");
         player1("east");
+
+        String currentLocation = fromDB().player(PLAYER1).getCurrentLocation();
+        assertThat(currentLocation, is(SECOND_LOCATION));
+
+        assertThat(response, hasEvent("Zanieś ten towar na pokład!"));
     }
 
     private void cannotPickupNextPackageOnSecondLocationWhenHoldingPackageFromFirstLocation() {
