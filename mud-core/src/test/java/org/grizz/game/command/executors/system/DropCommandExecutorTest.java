@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
@@ -64,6 +65,13 @@ public class DropCommandExecutorTest {
 
         verify(equipmentService).removeItems(ITEM_NAME, amount, player, response);
         verify(locationService).addItems(itemsFromEquipment, location);
+    }
+
+    @Test
+    public void name() throws Exception {
+        throw new NotImplementedException();
+
+        //test what happens when player couldn't drop items (beforeDropEvent returns false)
     }
 
     @Test

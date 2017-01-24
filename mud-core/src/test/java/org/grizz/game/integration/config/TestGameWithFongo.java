@@ -8,6 +8,7 @@ import org.grizz.game.service.notifier.ProxyNotifier;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
@@ -24,7 +25,12 @@ public class TestGameWithFongo extends AbstractMongoConfiguration {
 
     @PostConstruct
     public void init() {
-        notifier.setNotifier(Mockito.mock(Notifier.class));
+        notifier.setNotifier(notifier());
+    }
+
+    @Bean
+    public Notifier notifier() {
+        return Mockito.mock(Notifier.class);
     }
 
     @Override

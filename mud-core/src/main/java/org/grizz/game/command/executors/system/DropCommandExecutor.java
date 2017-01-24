@@ -32,15 +32,22 @@ public class DropCommandExecutor {
         validateAmount(amount);
 
         Location location = locationRepo.get(player.getCurrentLocation());
-        dropItems(itemName, amount, player, location, response);
 
-        notifyPlayer(itemName, amount, response);
-        broadcastItemDrop(itemName, amount, location, player);
+        if (dropItems(itemName, amount, player, location, response)) {
+            notifyPlayer(itemName, amount, response);
+            broadcastItemDrop(itemName, amount, location, player);
+        }
     }
 
-    private void dropItems(String itemName, int amount, Player player, Location location, PlayerResponse response) {
+    private boolean dropItems(String itemName, int amount, Player player, Location location, PlayerResponse response) {
         List<Item> namedItemsFromBackpack = equipmentService.removeItems(itemName, amount, player, response);
-        locationService.addItems(namedItemsFromBackpack, location);
+        boolean couldDrop = namedItemsFromBackpack.size() > 0;
+
+        if (couldDrop) {
+            locationService.addItems(namedItemsFromBackpack, location);
+        }
+
+        return couldDrop;
     }
 
     private void validateAmount(int amount) {
