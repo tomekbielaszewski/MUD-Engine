@@ -1,6 +1,7 @@
 package org.grizz.game.integration.tests.quests.tutorial;
 
 import org.grizz.game.integration.GameIntegrationTest;
+import org.grizz.game.model.LocationItems;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.items.Item;
 import org.junit.Test;
@@ -10,8 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.argThat;
@@ -20,8 +20,10 @@ import static org.mockito.Matchers.eq;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class BringPackages extends GameIntegrationTest {
     private static final String PACKAGE = "wor z towarem";
-    private static final String FIRST_LOCATION = "2";
-    private static final String SECOND_LOCATION = "4";
+    private static final String BRONZE_COIN = "Brązowa moneta";
+    private static final String FIRST_PACKAGE_RESPAWN_LOCATION = "2";
+    private static final String SECOND_PACKAGE_RESPAWN_LOCATION = "4";
+    private static final String PACKAGE_COLLECTING_LOCATION = "6";
 
     @Test
     public void testPackageBringing() throws Exception {
@@ -33,12 +35,13 @@ public class BringPackages extends GameIntegrationTest {
         questHintIsNotShownOnFirstLocationAnymore();
         questHintIsStillVisibleOnSecondLocation();
         cannotPickupNextPackageOnSecondLocationWhenHoldingPackageFromFirstLocation();
-        cannotDropPackageOnLocationDifferentThanPackageCollectingPointUpstairs();
+        cannotDropPackageOnRespawnLocationWhichIsNotPackageCollectingPoint();
+        cannotDropPackageOnLocationWhichIsNotPackageCollectingPoint();
         canDropFirstPackageOnPackageCollectingPointLocation();
         cannotPickupPackageSecondTimeOnFirstLocation();
         canPickupPackageOnSecondLocation();
         canDropSecondPackageOnPackageCollectingPointLocationAndShowsMessageAboutNextQuest();
-        questHintIsNotVisibleOnSecondLocationAnymore();
+        questHintIsNotVisibleOnSecondLocationAnymoreButStillRespawnsPackage();
         cannotPickupPackageOnSecondLocationAnymore();
     }
 
@@ -71,10 +74,10 @@ public class BringPackages extends GameIntegrationTest {
     }
 
     private void respawnsPackageAndShowsQuestHintOnFirstLocation() {
-        List<Item> locationItemsBefore = fromDB().location(FIRST_LOCATION).getMobileItems();
+        List<Item> locationItemsBefore = fromDB().location(FIRST_PACKAGE_RESPAWN_LOCATION).getMobileItems();
         player1("idź na zachód");
 
-        List<Item> locationItemsAfter = fromDB().location(FIRST_LOCATION).getMobileItems();
+        List<Item> locationItemsAfter = fromDB().location(FIRST_PACKAGE_RESPAWN_LOCATION).getMobileItems();
 
         assertThat(locationItemsBefore, hasSize(0));
         assertThat(locationItemsAfter, hasSize(1));
@@ -86,15 +89,15 @@ public class BringPackages extends GameIntegrationTest {
         player1("east");
         player1("idź na wschód");
 
-        List<Item> locationItemsBefore = fromDB().location(SECOND_LOCATION).getMobileItems();
+        List<Item> locationItemsBefore = fromDB().location(SECOND_PACKAGE_RESPAWN_LOCATION).getMobileItems();
         player1("wschod");
 
-        List<Item> locationItemsAfter = fromDB().location(SECOND_LOCATION).getMobileItems();
+        List<Item> locationItemsAfter = fromDB().location(SECOND_PACKAGE_RESPAWN_LOCATION).getMobileItems();
         String currentLocation = fromDB().player(PLAYER1).getCurrentLocation();
 
         assertThat(locationItemsBefore, hasSize(0));
         assertThat(locationItemsAfter, hasSize(1));
-        assertThat(currentLocation, is(SECOND_LOCATION));
+        assertThat(currentLocation, is(SECOND_PACKAGE_RESPAWN_LOCATION));
         assertThat(response, hasEvent("Zanieś ten towar na pokład!"));
     }
 
@@ -116,7 +119,7 @@ public class BringPackages extends GameIntegrationTest {
         List<Item> backpackAfter = playerAfter.getEquipment().getBackpack();
         boolean playerFirstLocationPickUpParamAfter = playerAfter.hasParameter("quest:tutorial-ship-package-picked-on-locations-2");
 
-        assertThat(currentLocation, is(FIRST_LOCATION));
+        assertThat(currentLocation, is(FIRST_PACKAGE_RESPAWN_LOCATION));
 
         assertThat(locationItemsBefore, hasItem(item(PACKAGE)));
         assertThat(locationItemsAfter, hasSize(0));
@@ -133,7 +136,7 @@ public class BringPackages extends GameIntegrationTest {
         player1("west");
 
         String currentLocation = fromDB().player(PLAYER1).getCurrentLocation();
-        assertThat(currentLocation, is(FIRST_LOCATION));
+        assertThat(currentLocation, is(FIRST_PACKAGE_RESPAWN_LOCATION));
 
         assertThat(response, hasNoEvents());
     }
@@ -144,40 +147,130 @@ public class BringPackages extends GameIntegrationTest {
         player1("east");
 
         String currentLocation = fromDB().player(PLAYER1).getCurrentLocation();
-        assertThat(currentLocation, is(SECOND_LOCATION));
+        assertThat(currentLocation, is(SECOND_PACKAGE_RESPAWN_LOCATION));
 
         assertThat(response, hasEvent("Zanieś ten towar na pokład!"));
     }
 
     private void cannotPickupNextPackageOnSecondLocationWhenHoldingPackageFromFirstLocation() {
+        Player playerBefore = fromDB().player(PLAYER1);
+        List<Item> backpackBefore = playerBefore.getEquipment().getBackpack();
+
         player1("wez wor z towarem");
+
+        List<Item> backpackAfter = fromDB().player(PLAYER1).getEquipment().getBackpack();
+
+        assertThat(backpackBefore, hasSize(1));
+        assertThat(backpackBefore, hasItem(item(PACKAGE)));
+        assertThat(playerBefore.getCurrentLocation(), is(SECOND_PACKAGE_RESPAWN_LOCATION));
+        assertThat(backpackAfter, hasSize(1));
+        assertThat(backpackAfter, hasItem(item(PACKAGE)));
+        assertThat(response, hasEvent("Masz już jeden pakunek w rękach!"));
     }
 
-    private void cannotDropPackageOnLocationDifferentThanPackageCollectingPointUpstairs() {
+    private void cannotDropPackageOnRespawnLocationWhichIsNotPackageCollectingPoint() {
+        Player playerBefore = fromDB().player(PLAYER1);
+        List<Item> backpackBefore = playerBefore.getEquipment().getBackpack();
+
         player1("wyrzuc wor z towarem");
+
+        List<Item> backpackAfter = fromDB().player(PLAYER1).getEquipment().getBackpack();
+
+        assertThat(playerBefore.getCurrentLocation(), is(SECOND_PACKAGE_RESPAWN_LOCATION));
+        assertThat(backpackBefore, hasSize(1));
+        assertThat(backpackBefore, hasItem(item(PACKAGE)));
+        assertThat(backpackAfter, hasSize(1));
+        assertThat(backpackAfter, hasItem(item(PACKAGE)));
+        assertThat(response, hasEvent("Gdzie to kładziesz?! Punkt rozładunku jest na pokładzie!"));
+    }
+
+    private void cannotDropPackageOnLocationWhichIsNotPackageCollectingPoint() {
+        Player playerBefore = fromDB().player(PLAYER1);
+        List<Item> backpackBefore = playerBefore.getEquipment().getBackpack();
+
         player1("west");
         player1("west");
         player1("wyrzuc wor z towarem");
+
+        Player playerAfter = fromDB().player(PLAYER1);
+        List<Item> backpackAfter = playerAfter.getEquipment().getBackpack();
+
+        assertThat(playerBefore.getCurrentLocation(), is(SECOND_PACKAGE_RESPAWN_LOCATION));
+        assertThat(playerAfter.getCurrentLocation(), is(STARTING_LOCATION));
+        assertThat(backpackBefore, hasSize(1));
+        assertThat(backpackBefore, hasItem(item(PACKAGE)));
+        assertThat(backpackAfter, hasSize(1));
+        assertThat(backpackAfter, hasItem(item(PACKAGE)));
+        assertThat(response, hasEvent("Gdzie to kładziesz?! Punkt rozładunku jest na pokładzie!"));
     }
 
     private void canDropFirstPackageOnPackageCollectingPointLocation() {
         player1("up");
         player1("south");
+
+        Player playerBefore = fromDB().player(PLAYER1);
+        List<Item> backpackBefore = playerBefore.getEquipment().getBackpack();
+
         player1("wyrzuc wor z towarem");
+
+        Player playerAfter = fromDB().player(PLAYER1);
+        List<Item> backpackAfter = playerAfter.getEquipment().getBackpack();
+
+        assertThat(playerAfter.getCurrentLocation(), is(PACKAGE_COLLECTING_LOCATION));
+        assertThat(backpackBefore, hasSize(1));
+        assertThat(backpackBefore, hasItem(item(PACKAGE)));
+        assertThat(backpackAfter, hasSize(0));
+        assertThat(response, hasEvent("Dobry majtek! Jeszcze jeden taki wór i wystarczy."));
+        assertThat(response, hasEvent("Straciles 1 wor z towarem"));
     }
 
     private void cannotPickupPackageSecondTimeOnFirstLocation() {
+        player2("west");
+        assertThat(response, hasEvent("Zanieś ten towar na pokład!"));
+
+        Player playerBefore = fromDB().player(PLAYER1);
+        LocationItems locationBefore = fromDB().location(FIRST_PACKAGE_RESPAWN_LOCATION);
+        List<Item> backpackBefore = playerBefore.getEquipment().getBackpack();
+
         player1("north");
         player1("down");
-        player2("west");
+        player1("west");
         player1("wez wor z towarem");
+
+        Player playerAfter = fromDB().player(PLAYER1);
+        LocationItems locationAfter = fromDB().location(FIRST_PACKAGE_RESPAWN_LOCATION);
+        List<Item> backpackAfter = playerAfter.getEquipment().getBackpack();
+
+        assertThat(playerAfter.getCurrentLocation(), is(FIRST_PACKAGE_RESPAWN_LOCATION));
+        assertThat(locationBefore.getMobileItems(), hasItem(item(PACKAGE)));
+        assertThat(locationAfter.getMobileItems(), hasItem(item(PACKAGE)));
+        assertThat(backpackBefore, hasSize(0));
+        assertThat(backpackAfter, hasSize(0));
     }
 
     private void canPickupPackageOnSecondLocation() {
         player1("east");
         player1("east");
         player1("east");
+
+        assertThat(response, hasEvent("Zanieś ten towar na pokład!"));
+        Player playerBefore = fromDB().player(PLAYER1);
+        List<Item> backpackBefore = playerBefore.getEquipment().getBackpack();
+        LocationItems locationBefore = fromDB().location(SECOND_PACKAGE_RESPAWN_LOCATION);
+
         player1("wez wor z towarem");
+
+        Player playerAfter = fromDB().player(PLAYER1);
+        List<Item> backpackAfter = playerAfter.getEquipment().getBackpack();
+        LocationItems locationAfter = fromDB().location(SECOND_PACKAGE_RESPAWN_LOCATION);
+
+        assertThat(locationBefore.getMobileItems(), hasItem(item(PACKAGE)));
+        assertThat(locationAfter.getMobileItems(), hasSize(0));
+
+        assertThat(playerAfter.getCurrentLocation(), is(SECOND_PACKAGE_RESPAWN_LOCATION));
+        assertThat(backpackBefore, hasSize(0));
+        assertThat(backpackAfter, hasItem(item(PACKAGE)));
+        assertThat(backpackAfter, hasSize(1));
     }
 
     private void canDropSecondPackageOnPackageCollectingPointLocationAndShowsMessageAboutNextQuest() {
@@ -185,19 +278,54 @@ public class BringPackages extends GameIntegrationTest {
         player1("west");
         player1("up");
         player1("south");
+
+        Player playerBefore = fromDB().player(PLAYER1);
+        List<Item> backpackBefore = playerBefore.getEquipment().getBackpack();
+
         player1("wyrzuc wor z towarem");
+
+        Player playerAfter = fromDB().player(PLAYER1);
+        List<Item> backpackAfter = playerAfter.getEquipment().getBackpack();
+        LocationItems locationAfter = fromDB().location(PACKAGE_COLLECTING_LOCATION);
+
+        assertThat(playerAfter.getCurrentLocation(), is(PACKAGE_COLLECTING_LOCATION));
+        assertThat(backpackBefore, hasItem(item(PACKAGE)));
+        assertThat(backpackAfter, hasSize(4));
+        assertThat(backpackAfter, hasItem(item(BRONZE_COIN)));
+        assertThat(backpackAfter, not(hasItem(item(PACKAGE))));
+        assertThat(locationAfter.getMobileItems(), hasSize(2));
+        assertThat(locationAfter.getMobileItems(), hasItem(item(PACKAGE)));
+        assertThat(response, hasEvent("Masz tu kilka miedziaków za uczciwą pracę!"));
+        assertThat(response, hasEvent("Otrzymane przedmioty:"));
+        assertThat(response, hasEventLike("4x Brązowa moneta"));
+        assertThat(response, hasEventLike("Weź te papiery i zanieś je sternikowi!"));
+        assertThat(response, not(hasEvent("Dobry majtek! Jeszcze jeden taki wór i wystarczy.")));
     }
 
-    private void questHintIsNotVisibleOnSecondLocationAnymore() {
+    private void questHintIsNotVisibleOnSecondLocationAnymoreButStillRespawnsPackage() {
         player1("north");
         player1("down");
         player1("east");
+        LocationItems locationBefore = fromDB().location(SECOND_PACKAGE_RESPAWN_LOCATION);
         player1("east");
+        LocationItems locationAfter = fromDB().location(SECOND_PACKAGE_RESPAWN_LOCATION);
+
+        assertThat(response, hasNoEvents());
+        assertThat(locationBefore.getMobileItems(), hasSize(0));
+        assertThat(locationAfter.getMobileItems(), hasSize(1));
+        assertThat(locationAfter.getMobileItems(), hasItem(item(PACKAGE)));
     }
 
     private void cannotPickupPackageOnSecondLocationAnymore() {
-        player3("east");
-        player3("east");
+        LocationItems locationBefore = fromDB().location(SECOND_PACKAGE_RESPAWN_LOCATION);
+
         player1("wez wor z towarem");
+
+        LocationItems locationAfter = fromDB().location(SECOND_PACKAGE_RESPAWN_LOCATION);
+
+        assertThat(locationBefore.getMobileItems(), hasSize(1));
+        assertThat(locationBefore.getMobileItems(), hasItem(item(PACKAGE)));
+        assertThat(locationAfter.getMobileItems(), hasSize(1));
+        assertThat(response, hasEvent("Juz skonczyles pracowac! Nie musisz już nosić tych pakunków."));
     }
 }

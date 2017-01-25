@@ -25,7 +25,10 @@ var Quest = (function () {
     },
     REWARDS: {
       packagesBrought: {
-        items: [],
+        items: [{
+          item: "Brązowa moneta",
+          amount: 4
+        }],
         experience: 100
       }
     }

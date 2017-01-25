@@ -12,7 +12,7 @@ loadScript("tutorial-quest-ids");
   function rewardPlayer() {
     game.player.message("Masz tu kilka miedziaków za uczciwą pracę!");
     Quest.REWARDS.packagesBrought.items.forEach(function (reward) {
-      game.player.addItems(reward.item, reward.amount);
+      game.player.addItemsByName(reward.item, reward.amount);
     });
     //give player experience -> Quest.REWARDS.packagesBrought.experience
   }

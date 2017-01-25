@@ -47,6 +47,7 @@ public class Game {
 
         System.out.println("################################");
         System.out.println("### " + command);
+        System.out.println("### Location:" + player.getCurrentLocation());
         System.out.println("### " + response.toString());
         return response;
     }
