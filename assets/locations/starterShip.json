@@ -49,7 +49,8 @@
     "description": "",
     "west": "17",
     "east": "7",
-    "north": "5"
+    "north": "5",
+    "onShowScript": "tutorial-onShowPackageCollectingPoint"
   },
   {
     "id": "7",

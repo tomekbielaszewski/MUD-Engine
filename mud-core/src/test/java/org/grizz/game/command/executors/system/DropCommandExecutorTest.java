@@ -17,15 +17,13 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DropCommandExecutorTest {
@@ -69,9 +67,19 @@ public class DropCommandExecutorTest {
 
     @Test
     public void name() throws Exception {
-        throw new NotImplementedException();
+        int amount = 2;
+        Player player = dummyPlayer();
+        List<Item> itemsFromEquipment = Lists.newArrayList();
+        PlayerResponse response = new PlayerResponse();
+        Location location = dummyLocation();
+        when(locationRepo.get(LOCATION_ID)).thenReturn(location);
+        when(equipmentService.removeItems(ITEM_NAME, amount, player, response)).thenReturn(itemsFromEquipment);
 
-        //TODO test what happens when player couldn't drop items (beforeDropEvent returns false)
+        commandExecutor.drop(ITEM_NAME, amount, player, response);
+
+        verify(equipmentService).removeItems(ITEM_NAME, amount, player, response);
+        verify(locationService, never()).addItems(itemsFromEquipment, location);
+        assertThat(response.getPlayerEvents(), hasSize(0));
     }
 
     @Test
@@ -79,8 +87,11 @@ public class DropCommandExecutorTest {
         int amount = 2;
         String amountStr = "2";
         Player player = dummyPlayer();
+        PlayerResponse response = new PlayerResponse();
         Location location = dummyLocation();
+        List<Item> itemsFromEquipment = Lists.newArrayList(dummyItem());
         when(eventService.getEvent(MULTIPLAYER_DROP_EVENT_KEY, PLAYER_NAME, amountStr, ITEM_NAME)).thenReturn(MULTIPLAYER_DROP_EVENT);
+        when(equipmentService.removeItems(ITEM_NAME, amount, player, response)).thenReturn(itemsFromEquipment);
         when(locationRepo.get(LOCATION_ID)).thenReturn(location);
 
         commandExecutor.drop(ITEM_NAME, amount, player, new PlayerResponse());
@@ -96,7 +107,9 @@ public class DropCommandExecutorTest {
         Player player = dummyPlayer();
         Location location = dummyLocation();
         PlayerResponse response = new PlayerResponse();
+        List<Item> itemsFromEquipment = Lists.newArrayList(dummyItem());
         when(eventService.getEvent(DROP_EVENT_KEY, amountStr, ITEM_NAME)).thenReturn(DROP_EVENT);
+        when(equipmentService.removeItems(ITEM_NAME, amount, player, response)).thenReturn(itemsFromEquipment);
         when(locationRepo.get(LOCATION_ID)).thenReturn(location);
 
         commandExecutor.drop(ITEM_NAME, amount, player, response);

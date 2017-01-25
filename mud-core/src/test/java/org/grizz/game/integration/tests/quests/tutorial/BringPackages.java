@@ -71,6 +71,7 @@ public class BringPackages extends GameIntegrationTest {
         String currentLocation = fromDB().player(PLAYER1).getCurrentLocation();
         assertThat(currentLocation, is(pastLocation));
         assertThat(response, hasEventLike("Gdzie leziesz z pustymi łapami?!"));
+        assertThat(response, not(hasEventLike("Nie słyszałeś!? Dupa w troki i won **na górę**!")));
     }
 
     private void respawnsPackageAndShowsQuestHintOnFirstLocation() {
@@ -210,6 +211,9 @@ public class BringPackages extends GameIntegrationTest {
 
         Player playerBefore = fromDB().player(PLAYER1);
         List<Item> backpackBefore = playerBefore.getEquipment().getBackpack();
+        assertThat(response, hasEvent("Dawaj to tu! **Połóż wór z towarem** tutaj!"));
+        assertThat(response, not(hasEvent("Dobry z ciebie majtek! Poloz to i robota skończona!")));
+        assertThat(response, not(hasEvent("Zanieś wreszcie te dokumenty sternikowi! Zaraz odpływamy!")));
 
         player1("wyrzuc wor z towarem");
 
@@ -246,6 +250,7 @@ public class BringPackages extends GameIntegrationTest {
         assertThat(locationAfter.getMobileItems(), hasItem(item(PACKAGE)));
         assertThat(backpackBefore, hasSize(0));
         assertThat(backpackAfter, hasSize(0));
+        assertThat(response, hasEvent("Już zaniosłeś stąd pakunek. Zostaw trochę roboty dla innych!"));
     }
 
     private void canPickupPackageOnSecondLocation() {
@@ -281,6 +286,9 @@ public class BringPackages extends GameIntegrationTest {
 
         Player playerBefore = fromDB().player(PLAYER1);
         List<Item> backpackBefore = playerBefore.getEquipment().getBackpack();
+        assertThat(response, hasEvent("Dobry z ciebie majtek! Poloz to i robota skończona!"));
+        assertThat(response, not(hasEvent("Dawaj to tu! **Połóż wór z towarem** tutaj!")));
+        assertThat(response, not(hasEvent("Zanieś wreszcie te dokumenty sternikowi! Zaraz odpływamy!")));
 
         player1("wyrzuc wor z towarem");
 

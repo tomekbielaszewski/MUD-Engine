@@ -43,5 +43,10 @@
     "id": "tutorial-onDropPackage",
     "name": "Gives reward and informs player about next quest",
     "path": "assets/scripts/js/quests/tutorial/onDropPackage.js"
+  },
+  {
+    "id": "tutorial-onShowPackageCollectingPoint",
+    "name": "Displays hints on package collecting point",
+    "path": "assets/scripts/js/quests/tutorial/onShowPackageCollectingPoint.js"
   }
 ]

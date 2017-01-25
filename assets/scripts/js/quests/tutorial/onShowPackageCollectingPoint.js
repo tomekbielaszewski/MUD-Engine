@@ -22,12 +22,12 @@ loadScript("tutorial-quest-ids");
   }
 
   function onShowPackageCollectingPoint() {
-    if (hasPackage()) {
+    if (hasPackage() && !broughtPackageFromBothLocations()) {
       game.player.message("Dawaj to tu! **Połóż wór z towarem** tutaj!")
     }
 
     if (broughtPackageFromBothLocations()) {
-      game.player.message("Dobry z ciebie majtek, robota skończona!")
+      game.player.message("Dobry z ciebie majtek! Poloz to i robota skończona!")
     }
 
     if (captainDocumentsQuestStarted()) {
