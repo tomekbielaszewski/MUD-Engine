@@ -45,10 +45,7 @@ public class Game {
             exceptionHandler.handle(e, response);
         }
 
-//        System.out.println("################################");
-//        System.out.println("### " + command);
-//        System.out.println("### Location:" + player.getCurrentLocation());
-//        System.out.println("### " + response.toString());
+        log.debug(response.toString());
         return response;
     }
 }
