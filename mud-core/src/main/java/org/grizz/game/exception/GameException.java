@@ -13,18 +13,8 @@ public class GameException extends RuntimeException {
         this.params = new String[]{};
     }
 
-    public GameException(String message, Throwable cause) {
-        super(message, cause);
-        this.params = new String[]{};
-    }
-
     public GameException(String message, String... params) {
         super(message);
         this.params = params;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + " " + Arrays.toString(params);
     }
 }
