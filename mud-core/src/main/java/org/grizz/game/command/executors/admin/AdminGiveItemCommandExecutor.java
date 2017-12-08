@@ -1,5 +1,7 @@
 package org.grizz.game.command.executors.admin;
 
+import org.grizz.game.exception.CantGiveStaticItemException;
+import org.grizz.game.exception.CantOwnStaticItemException;
 import org.grizz.game.exception.InvalidAmountException;
 import org.grizz.game.exception.PlayerDoesNotExistException;
 import org.grizz.game.model.Player;
@@ -71,7 +73,11 @@ public class AdminGiveItemCommandExecutor {
     }
 
     private void give(String itemName, int amount, Player player, PlayerResponse response) {
-        equipmentService.addItems(itemName, amount, player, response);
+        try {
+            equipmentService.addItems(itemName, amount, player, response);
+        } catch (CantOwnStaticItemException e) {
+            throw new CantGiveStaticItemException("cant.give.static.item");
+        }
     }
 
     private boolean isSelfGiving(String playerName, Player admin) {

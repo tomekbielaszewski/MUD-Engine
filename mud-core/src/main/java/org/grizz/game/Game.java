@@ -45,6 +45,7 @@ public class Game {
             exceptionHandler.handle(e, response);
         }
 
+        log.debug(response.toString());
         return response;
     }
 }

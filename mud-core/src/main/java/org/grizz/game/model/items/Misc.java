@@ -1,7 +1,7 @@
 package org.grizz.game.model.items;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.Builder;
 
 import java.util.List;
 
@@ -14,4 +14,9 @@ public class Misc implements Item {
     private String name;
     private String description;
     private List<ScriptCommandDto> commands;
+
+    private String onDropScript;
+    private String beforeDropScript;
+    private String onReceiveScript;
+    private String beforeReceiveScript;
 }

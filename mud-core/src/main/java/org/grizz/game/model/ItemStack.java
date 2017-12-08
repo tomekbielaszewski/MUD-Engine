@@ -1,8 +1,8 @@
 package org.grizz.game.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.Builder;
 
 @Data
 @Builder

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "tutorial-quest-ids",
+    "name": "Tutorial quest identifiers",
+    "path": "assets/scripts/js/quests/tutorial/questIDs.js"
+  },
+  {
+    "id": "tutorial-welcome",
+    "name": "Tutorial: welcome-ish text",
+    "path": "assets/scripts/js/quests/tutorial/welcome.js"
+  },
+  {
+    "id": "tutorial-welcome-off",
+    "name": "Tutorial: welcome text shut down",
+    "path": "assets/scripts/js/quests/tutorial/welcome-off.js"
+  },
+  {
+    "id": "tutorial-respawnPackage",
+    "name": "Respawns package if not on location",
+    "path": "assets/scripts/js/quests/tutorial/respawnPackage.js"
+  },
+  {
+    "id": "tutorial-canPickupPackage",
+    "name": "Checks if player can pickup package",
+    "path": "assets/scripts/js/quests/tutorial/canPickupPackage.js"
+  },
+  {
+    "id": "tutorial-onPickupPackage",
+    "name": "Saves where package was picked up",
+    "path": "assets/scripts/js/quests/tutorial/onPickupPackage.js"
+  },
+  {
+    "id": "tutorial-needToTakePackageBeforeEnterUpperDeck",
+    "name": "Cant enter upper deck without taking at least one package",
+    "path": "assets/scripts/js/quests/tutorial/needToTakePackageBeforeEnterUpperDeck.js"
+  },
+  {
+    "id": "tutorial-canDropPackage",
+    "name": "Checks if player can drop package here",
+    "path": "assets/scripts/js/quests/tutorial/canDropPackage.js"
+  },
+  {
+    "id": "tutorial-onDropPackage",
+    "name": "Gives reward and informs player about next quest",
+    "path": "assets/scripts/js/quests/tutorial/onDropPackage.js"
+  },
+  {
+    "id": "tutorial-onShowPackageCollectingPoint",
+    "name": "Displays hints on package collecting point",
+    "path": "assets/scripts/js/quests/tutorial/onShowPackageCollectingPoint.js"
+  }
+]

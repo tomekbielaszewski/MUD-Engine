@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import lombok.SneakyThrows;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.grizz.game.loader.Loader;
 import org.grizz.game.model.Script;
 import org.grizz.game.model.items.*;
@@ -61,6 +62,16 @@ public class ItemLoader implements Loader {
         for (ScriptCommandDto scriptCommandDto : item.getCommands()) {
             scriptRepo.get(scriptCommandDto.getScriptId());
         }
+        checkScript(item.getOnDropScript());
+        checkScript(item.getBeforeDropScript());
+        checkScript(item.getOnReceiveScript());
+        checkScript(item.getBeforeReceiveScript());
+    }
+
+    private void checkScript(String scriptId) {
+        if (!StringUtils.isEmpty(scriptId)) {
+            scriptRepo.get(scriptId);
+        }
     }
 
     private Item transformItem(UniversalItem item) {
@@ -87,6 +98,10 @@ public class ItemLoader implements Loader {
                 .weaponType(item.weaponType)
                 .minDamage(item.minDamage)
                 .maxDamage(item.maxDamage)
+                .onDropScript(item.onDropScript)
+                .beforeDropScript(item.beforeDropScript)
+                .onReceiveScript(item.onReceiveScript)
+                .beforeReceiveScript(item.beforeReceiveScript)
                 .build();
     }
 
@@ -96,6 +111,10 @@ public class ItemLoader implements Loader {
                 .name(item.name)
                 .description(item.description)
                 .commands(item.commands)
+                .onDropScript(item.onDropScript)
+                .beforeDropScript(item.beforeDropScript)
+                .onReceiveScript(item.onReceiveScript)
+                .beforeReceiveScript(item.beforeReceiveScript)
                 .build();
     }
 
@@ -105,6 +124,10 @@ public class ItemLoader implements Loader {
                 .name(item.name)
                 .description(item.description)
                 .commands(item.commands)
+                .onDropScript(item.onDropScript)
+                .beforeDropScript(item.beforeDropScript)
+                .onReceiveScript(item.onReceiveScript)
+                .beforeReceiveScript(item.beforeReceiveScript)
                 .build();
     }
 
@@ -115,6 +138,10 @@ public class ItemLoader implements Loader {
                 .description(item.description)
                 .pickUpMessage(item.pickUpMessage)
                 .commands(item.commands)
+                .onDropScript(item.onDropScript)
+                .beforeDropScript(item.beforeDropScript)
+                .onReceiveScript(item.onReceiveScript)
+                .beforeReceiveScript(item.beforeReceiveScript)
                 .build();
     }
 
@@ -129,5 +156,10 @@ public class ItemLoader implements Loader {
         WeaponType weaponType;
         int minDamage;
         int maxDamage;
+
+        String onDropScript;
+        String beforeDropScript;
+        String onReceiveScript;
+        String beforeReceiveScript;
     }
 }

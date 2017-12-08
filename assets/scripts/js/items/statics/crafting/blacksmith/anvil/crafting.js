@@ -4,17 +4,21 @@ loadScript("bs-anvil-materials");
 loadScript("bs-anvil-recipes");
 loadScript("crafting");
 
-var blacksmithsHammer = "9";
+var doesPlayerHaveRequiredTools;
+var informThatPlayerHasNoRequiredTools;
 
-function doesPlayerHaveRequiredTools() {
-    return playerHas(blacksmithsHammer);
-}
+(function () {
+  var blacksmithsHammer = "9";
+  var amountToCraft = getOrDefault('amount', 1);
 
-function informThatPlayerHasNoRequiredTools() {
-    tellPlayer("Aby korzystać z kowadła musisz mieć młot kowalski!");
-}
+  doesPlayerHaveRequiredTools = function () {
+    return game.player.hasItems(blacksmithsHammer);
+  };
 
-var amountToCraft = getOrDefault('amount', 1);
+  informThatPlayerHasNoRequiredTools = function () {
+    game.player.message("Aby korzystać z kowadła musisz mieć młot kowalski!");
+  };
 
-logger.info("{} is crafting {}x {} on anvil", [player.getName(), amountToCraft, itemName]);
-craft(itemName, amountToCraft);
+  logger.info("{} is crafting {}x {} on anvil", [game.player.getName(), amountToCraft, itemName]);
+  game.crafting.make(itemName, amountToCraft);
+})();

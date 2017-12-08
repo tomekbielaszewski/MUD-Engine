@@ -1,0 +1,154 @@
+[
+  {
+    "id": "1",
+    "name": "Ładownia statku - część sypialna",
+    "description": "Znajdujesz się w ładowni statku handlowego. Dookoła jest ciemno i śmierdzi mieszaniną potu, przypraw i ryb. Jedyne światło pochodzi z uchylonej klapy prowadzącej na pokład nad tobą i starych, brudnych bulaji. W tej części ładowni porozwieszano mnóstwo hamaków. Tutaj załoga odsypia ciężkie dni na morzu.",
+    "west": "2",
+    "east": "3",
+    "up": "5",
+    "onShowScript": "tutorial-welcome",
+    "onLeaveScript": "tutorial-welcome-off"
+  },
+  {
+    "id": "2",
+    "name": "Ładownia statku - część magazynowa",
+    "description": "Znajdujesz się w części magazynowej ładowni statku handlowego. Tutaj wyjątkowo czujesz mocny zapach przypraw, a nie doskwiera tak smród potu śpiącej załogi. Poustawiane są tutaj skrzynie i worki z towarem.",
+    "east": "1",
+    "onEnterScript": "tutorial-respawnPackage"
+  },
+  {
+    "id": "3",
+    "name": "Ładownia statku",
+    "description": "Znajdujesz się w ładowni statku handlowego. Poustawiane są tutaj ławy i krzesła przy nich. Wszystkie meble są solidnie przytwierdzone do podłogi aby nie stanowiły zagrożenia podczas sztormu.",
+    "west": "1",
+    "east": "4"
+  },
+  {
+    "id": "4",
+    "name": "Ładownia statku - część magazynowa",
+    "description": "Znajdujesz się w dziobowej części magazynowej ładowni statku handlowego. Tutaj wyjątkowo czujesz mocny zapach ryb, a nie doskwiera tak smród potu śpiącej załogi. Poustawiane są tutaj skrzynie i worki z towarem.",
+    "west": "3",
+    "onEnterScript": "tutorial-respawnPackage"
+  },
+
+
+  {
+    "id": "5",
+    "name": "Pokład - zejście do ładowni",
+    "description": "",
+    "west": "16",
+    "east": "12",
+    "north": "14",
+    "south": "6",
+    "down": "1",
+    "beforeEnterScript": "tutorial-needToTakePackageBeforeEnterUpperDeck"
+  },
+  {
+    "id": "6",
+    "name": "Pokład - punkt rozładunku",
+    "description": "",
+    "west": "17",
+    "east": "7",
+    "north": "5",
+    "onShowScript": "tutorial-onShowPackageCollectingPoint"
+  },
+  {
+    "id": "7",
+    "name": "Pokład - zejście ze statku",
+    "description": "",
+    "west": "6",
+    "east": "8",
+    "north": "12",
+    "south": "18"
+  },
+  {
+    "id": "8",
+    "name": "Pokład - przednia sterburta",
+    "description": "",
+    "west": "7",
+    "north": "9"
+  },
+  {
+    "id": "9",
+    "name": "Pokład - przy dziobie",
+    "description": "",
+    "west": "12",
+    "east": "10",
+    "north": "11",
+    "south": "8"
+  },
+  {
+    "id": "10",
+    "name": "Pokład - sterówka na dziobie",
+    "description": "",
+    "west": "9"
+  },
+  {
+    "id": "11",
+    "name": "Pokład - przednia bakburta",
+    "description": "",
+    "west": "13",
+    "south": "9"
+  },
+  {
+    "id": "12",
+    "name": "Pokład - pod masztem",
+    "description": "",
+    "west": "5",
+    "east": "9",
+    "north": "13",
+    "south": "7",
+    "up": "19"
+  },
+  {
+    "id": "13",
+    "name": "Pokład - bakburta",
+    "description": "",
+    "west": "14",
+    "east": "11",
+    "south": "12"
+  },
+  {
+    "id": "14",
+    "name": "Pokład - bakburta",
+    "description": "",
+    "west": "16",
+    "east": "13",
+    "south": "5"
+  },
+  {
+    "id": "15",
+    "name": "Pokład - tylna bakburta",
+    "description": "",
+    "east": "14",
+    "south": "16"
+  },
+  {
+    "id": "16",
+    "name": "Pokład - rufa",
+    "description": "",
+    "east": "5",
+    "north": "15",
+    "south": "17"
+  },
+  {
+    "id": "17",
+    "name": "Pokład - tylna sterburta",
+    "description": "",
+    "east": "6",
+    "north": "16"
+  },
+  {
+    "id": "18",
+    "name": "Zejście ze statku - trap",
+    "description": "",
+    "north": "7",
+    "south": "TODO"
+  },
+  {
+    "id": "19",
+    "name": "Maszt - bocianie gniazdo",
+    "description": "",
+    "down": "12"
+  }
+]

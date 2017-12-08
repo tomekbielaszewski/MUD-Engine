@@ -3,15 +3,14 @@
 
 function loadScript(id) {
   var _script = scriptRepo.get(id);
-  var FileUtils = Java.type("org.grizz.game.utils.FileUtils");
-  logger.info("Loading inner script [{}] described as [{}]", [_script.getPath(), _script.getName()]);
+  logger.info("Executing script [{}] described as [{}] with id [{}]", [_script.getPath(), _script.getName(), id]);
 
   var _scriptRelativePath = _script.getPath();
-  var _scriptJavaPath = FileUtils.getFilepath(_scriptRelativePath);
+  var _scriptJavaPath = fileUtils.getFilepath(_scriptRelativePath);
   var _scriptFilePath = _scriptJavaPath.toString();
 
   return load(_scriptFilePath);
 }
 
-loadScript("game-utils");
+loadScript("game-sdk");
 loadScript(scriptId);

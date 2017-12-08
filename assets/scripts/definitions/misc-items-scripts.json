@@ -1,0 +1,7 @@
+[
+  {
+    "id": "gold-coin-sound",
+    "name": "Gold coin sound",
+    "path": "assets/scripts/js/items/goldCoinBlink.js"
+  }
+]

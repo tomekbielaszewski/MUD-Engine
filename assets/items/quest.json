@@ -1,0 +1,13 @@
+[
+  {
+    "id": "1000",
+    "name": "Wór z towarem",
+    "description": "Wielki ciężki wór pełen ziarna.",
+    "itemType": "MISC",
+    "commands": [],
+    "beforeReceiveScript": "tutorial-canPickupPackage",
+    "onReceiveScript": "tutorial-onPickupPackage",
+    "beforeDropScript": "tutorial-canDropPackage",
+    "onDropScript": "tutorial-onDropPackage"
+  }
+]

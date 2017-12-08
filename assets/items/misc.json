@@ -7,7 +7,7 @@
     "commands": [
       {
         "command": "podrzuc sakiewke",
-        "scriptId": "101"
+        "scriptId": "gold-coin-sound"
       }
     ]
   },

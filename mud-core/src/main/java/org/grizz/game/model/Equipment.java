@@ -1,7 +1,7 @@
 package org.grizz.game.model;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.Builder;
 import org.grizz.game.model.items.Armor;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.items.Weapon;

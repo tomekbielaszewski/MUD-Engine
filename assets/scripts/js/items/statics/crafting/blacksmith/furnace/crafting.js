@@ -4,17 +4,21 @@ loadScript("bs-furnace-materials");
 loadScript("bs-furnace-recipes");
 loadScript("crafting");
 
-var tongs = "8";
+var doesPlayerHaveRequiredTools;
+var informThatPlayerHasNoRequiredTools;
 
-function doesPlayerHaveRequiredTools() {
-    return playerHas(tongs);
-}
+(function () {
+  var tongs = "8";
+  var amountToCraft = getOrDefault('amount', 1);
 
-function informThatPlayerHasNoRequiredTools() {
-    tellPlayer("Aby korzystać z pieca musisz mieć szczypce kowalskie!");
-}
+  doesPlayerHaveRequiredTools = function () {
+    return game.player.hasItems(tongs);
+  };
 
-var amountToCraft = getOrDefault('amount', 1);
+  informThatPlayerHasNoRequiredTools = function () {
+    game.player.message("Aby korzystać z pieca musisz mieć szczypce kowalskie!");
+  };
 
-logger.info("{} is crafting {}x {} on anvil", [player.getName(), amountToCraft, itemName]);
-craft(itemName, amountToCraft);
+  logger.info("{} is crafting {}x {} on anvil", [game.player.getName(), amountToCraft, itemName]);
+  game.crafting.make(itemName, amountToCraft);
+})();

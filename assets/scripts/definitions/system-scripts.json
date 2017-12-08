@@ -1,0 +1,32 @@
+[
+  {
+    "id": "master-script",
+    "name": "Master script",
+    "path": "assets/scripts/js/master-script.js"
+  },
+  {
+    "id": "authorization-check",
+    "name": "Authorization check script",
+    "path": "assets/scripts/js/authorization-check.js"
+  },
+  {
+    "id": "game-sdk",
+    "name": "Game SDK script",
+    "path": "assets/scripts/js/sdk/game-sdk.js"
+  },
+  {
+    "id": "game-sdk-commons",
+    "name": "Game SDK script common functions",
+    "path": "assets/scripts/js/sdk/game-sdk-commons.js"
+  },
+  {
+    "id": "game-sdk-player",
+    "name": "Game SDK - player extensions",
+    "path": "assets/scripts/js/sdk/game-sdk-player.js"
+  },
+  {
+    "id": "game-sdk-location",
+    "name": "Game SDK - location extensions",
+    "path": "assets/scripts/js/sdk/game-sdk-location.js"
+  }
+]
