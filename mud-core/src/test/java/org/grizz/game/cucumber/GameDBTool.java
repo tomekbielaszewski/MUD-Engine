@@ -1,4 +1,4 @@
-package org.grizz.game.integration.utils;
+package org.grizz.game.cucumber;
 
 import org.grizz.game.model.LocationItems;
 import org.grizz.game.model.Player;

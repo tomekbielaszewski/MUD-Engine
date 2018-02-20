@@ -2,7 +2,7 @@ package org.grizz.game.integration;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.grizz.game.integration.utils.GameDBTool;
+import org.grizz.game.cucumber.GameDBTool;
 import org.grizz.game.model.Equipment;
 import org.grizz.game.model.Player;
 import org.junit.After;

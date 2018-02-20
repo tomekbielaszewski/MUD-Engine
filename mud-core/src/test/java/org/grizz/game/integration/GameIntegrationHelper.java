@@ -1,6 +1,7 @@
 package org.grizz.game.integration;
 
 import org.grizz.game.Game;
+import org.grizz.game.cucumber.GameMatchers;
 import org.grizz.game.integration.config.TestGameWithFongo;
 import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.items.Item;
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 
 @SpringApplicationConfiguration(classes = TestGameWithFongo.class)
-public abstract class GameIntegrationHelper implements GameIntegrationMatchers {
+public abstract class GameIntegrationHelper implements GameMatchers {
     protected static final String ADMIN = "GameMaster";
     protected static final String PLAYER1 = "player1";
     protected static final String PLAYER2 = "player2";
