@@ -74,7 +74,7 @@ public class CucumberTest implements GameMatchers {
         return playerBuilder(name, location).build();
     }
 
-    protected Player.PlayerBuilder playerBuilder(String name, String location) {
+    private Player.PlayerBuilder playerBuilder(String name, String location) {
         return Player.builder()
                 .name(name)
                 .currentLocation(location)
