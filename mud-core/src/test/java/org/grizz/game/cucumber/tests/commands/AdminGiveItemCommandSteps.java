@@ -11,9 +11,18 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class AdminGiveItemCommandSteps extends CucumberTest {
 
-    @Given("player with empty backpack$")
-    public void player_with_empty_backpack() {
-        currentPlayer = PLAYER1;
+    @Given("^player with name \"(.+)\"$")
+    public void current_player(String playerName) {
+        currentPlayer = playerName;
+    }
+
+    @Given("^as player with name \"(.+)\"$")
+    public void as_current_player(String playerName) {
+        current_player(playerName);
+    }
+
+    @Given("^he has empty backpack$")
+    public void having_with_empty_backpack() {
         Player player = fromDB().player(currentPlayer);
         assertThat(player, hasEmptyBackpack());
     }
