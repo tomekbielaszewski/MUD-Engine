@@ -1,5 +1,28 @@
 Feature: Administrative command for giving items to players
 
+  Scenario: Admin player can give normal items to players
+    Given player with name "GameMaster"
+    And he has empty backpack
+    When he executed following command "admin daj zlota moneta graczowi player1"
+    Then his backpack has 0 items
+    And as player with name "player1"
+    And there is 1 "Złota moneta" in his backpack
+    And game responded with following event "Przekazales 1szt. zlota moneta graczowi player1"
+    And game has notified "player1" with events:
+      | "Otrzymane przedmioty:"                              |
+      | "   1x Złota moneta"                                 |
+      | "Przedmioty otrzymales od administratora GameMaster" |
+
+  Scenario: Admin player can give normal items to himself
+    Given player with name "GameMaster"
+    And he has empty backpack
+    When he executed following command "admin daj zlota moneta"
+    Then his backpack has 1 items
+    And there is 1 "Złota moneta" in his backpack
+    And game responded with following events:
+      | "Otrzymane przedmioty:" |
+      | "   1x Złota moneta"    |
+
   Scenario: Non admin player should not be allowed to run administrative command
     Given player with name "player1"
     And he has empty backpack
