@@ -1,4 +1,4 @@
-package org.grizz.game.cucumber.tests.commands;
+package org.grizz.game.cucumber.steps.commands;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -48,6 +48,20 @@ public class AdminGiveItemCommandSteps extends CucumberTest {
         assertThat(player, hasEmptyBackpack());
     }
 
+    @Given("^he has parameter \"(.+)\"$")
+    public void player_has_parameter(String parameter) {
+        Player player = fromDB().player(currentPlayer);
+        boolean hasParameter = player.hasParameter(parameter);
+        assertThat(hasParameter, is(true));
+    }
+
+    @Given("^he has no parameter \"(.+)\"$")
+    public void player_has_no_parameter(String parameter) {
+        Player player = fromDB().player(currentPlayer);
+        boolean hasParameter = player.hasParameter(parameter);
+        assertThat(hasParameter, is(false));
+    }
+
     @When("^he executed following command \"(.+)\"$")
     public void player_executed_command(String command) {
         runCommand(command, currentPlayer);
@@ -59,9 +73,19 @@ public class AdminGiveItemCommandSteps extends CucumberTest {
         assertThat(player, hasThisManyItemsInBackpack(amount));
     }
 
+    @Then("^game responded with no events$")
+    public void game_responded_with_no_events() {
+        assertThat(response, hasNoEvents());
+    }
+
     @Then("^game responded with following event \"(.+)\"$")
     public void game_responded_with_event(String event) {
         assertThat(response, hasEvent(event));
+    }
+
+    @Then("^game responded with event like \"(.+)\"$")
+    public void game_responded_with_event_like(String event) {
+        assertThat(response, hasEventLike(event));
     }
 
     @Then("^game responded with following events:$")

@@ -1,5 +1,8 @@
 Feature: Administrative command for giving items to players
 
+  Background:
+    Given I have standard set of players on starting location
+
   Scenario: Admin player can give normal items to players
     Given player with name "GameMaster"
     And he has empty backpack
