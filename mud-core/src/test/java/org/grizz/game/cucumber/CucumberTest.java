@@ -7,7 +7,6 @@ import org.grizz.game.Game;
 import org.grizz.game.cucumber.config.TestGameConfigWithFongo;
 import org.grizz.game.model.Equipment;
 import org.grizz.game.model.Player;
-import org.grizz.game.model.PlayerResponse;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.service.notifier.Notifier;
@@ -27,8 +26,8 @@ public class CucumberTest implements GameMatchers {
     protected static final String PLAYER2 = "player2";
     protected static final String PLAYER3 = "player3";
 
-    protected PlayerResponse response;
-    protected String currentPlayer;
+    @Autowired
+    protected CucumberSharedData sharedData;
 
     @Autowired
     protected Game game;
@@ -63,7 +62,7 @@ public class CucumberTest implements GameMatchers {
     }
 
     protected void runCommand(String command, String player) {
-        response = game.runCommand(command, player);
+        sharedData.setResponse(game.runCommand(command, player));
     }
 
     protected GameDBTool fromDB() {

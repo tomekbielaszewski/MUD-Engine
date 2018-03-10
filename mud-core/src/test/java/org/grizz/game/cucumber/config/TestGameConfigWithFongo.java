@@ -3,6 +3,7 @@ package org.grizz.game.cucumber.config;
 import com.github.fakemongo.Fongo;
 import com.mongodb.Mongo;
 import org.grizz.game.config.GameConfig;
+import org.grizz.game.cucumber.CucumberSharedData;
 import org.grizz.game.service.notifier.Notifier;
 import org.grizz.game.service.notifier.ProxyNotifier;
 import org.mockito.Mockito;
@@ -32,6 +33,11 @@ public class TestGameConfigWithFongo extends AbstractMongoConfiguration {
     @Bean
     public Notifier notifier() {
         return Mockito.mock(Notifier.class);
+    }
+
+    @Bean
+    public CucumberSharedData cucumberSharedData() {
+        return new CucumberSharedData();
     }
 
     @Override
