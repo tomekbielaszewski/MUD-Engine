@@ -9,4 +9,6 @@ import org.grizz.game.model.PlayerResponse;
 public class CucumberSharedData {
     private PlayerResponse response;
     private String currentPlayer;
+    private String locationBeforeCommand;
+    private String locationAfterCommand;
 }

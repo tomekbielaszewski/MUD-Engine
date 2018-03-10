@@ -22,7 +22,7 @@ Feature: Starting location, tutorial quests
   # When moved out of the starting area and went back the welcome text is gone
     Given as player with name "player1"
     And he has no parameter "quest:tutorial-welcome-text-deactivated"
-    When he executed following command "west"
-    And he executed following command "east"
+    When he executed following command "idź na zachód"
+    And he executed following command "idź na wschód"
     And he has parameter "quest:tutorial-welcome-text-deactivated"
     And game responded with no events

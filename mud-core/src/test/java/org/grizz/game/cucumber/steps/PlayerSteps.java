@@ -58,7 +58,9 @@ public class PlayerSteps extends CucumberTest {
 
     @When("^he executed following command \"(.+)\"$")
     public void player_executed_command(String command) {
+        sharedData.setLocationBeforeCommand(fromDB().player(sharedData.getCurrentPlayer()).getCurrentLocation());
         runCommand(command, sharedData.getCurrentPlayer());
+        sharedData.setLocationAfterCommand(fromDB().player(sharedData.getCurrentPlayer()).getCurrentLocation());
     }
 
     @Then("^his backpack has (\\d+) items$")

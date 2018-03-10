@@ -12,7 +12,26 @@ Feature: Starting location, tutorial quests
   # Second location - the location with package respawn located on the east
 
   # Player1 cannot pickup package created by admin on starting location
+    Given as player with name "GameMaster"
+    When he executed following command "admin poloz wor z towarem"
+    Then game responded with following event "Dodales 1 Wór z towarem na tej lokacji"
+    And game has notified "player1" with event "Administrator GameMaster polozyl 1szt. Wór z towarem na tej lokacji"
+
+    Given as player with name "player1"
+    And he has empty backpack
+    And current location has "Wór z towarem"
+    When he executed following command "wez wor z towarem"
+    Then he has empty backpack
+    And current location has "Wór z towarem"
+    And game responded with following event "Tej roboty nie masz w umowie. Zostaw to!"
+
   # Player1 cannot exit ships lower and message appears when he tries
+    Given as player with name "player1"
+    When he executed following command "idź na górę"
+    Then current location not changed
+    And game responded with event like "Gdzie leziesz z pustymi łapami?!"
+    And game did not respond with following event "Nie słyszałeś!? Dupa w troki i won **na górę**!"
+
   # Package appears/respawns on first collecting point and quest hint is shown
   # Package appears/respawns on second collecting point and quest hint is shown
   # Player1 can pick up package on first location

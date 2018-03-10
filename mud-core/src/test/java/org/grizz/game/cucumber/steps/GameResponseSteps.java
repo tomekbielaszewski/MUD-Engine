@@ -5,6 +5,7 @@ import org.grizz.game.cucumber.CucumberTest;
 
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
@@ -21,6 +22,11 @@ public class GameResponseSteps extends CucumberTest {
     @Then("^game responded with following event \"(.+)\"$")
     public void game_responded_with_event(String event) {
         assertThat(sharedData.getResponse(), hasEvent(event));
+    }
+
+    @Then("^game did not respond with following event \"(.+)\"$")
+    public void game_did_not_respond_with_event(String event) {
+        assertThat(sharedData.getResponse(), not(hasEvent(event)));
     }
 
     @Then("^game responded with event like \"(.+)\"$")
