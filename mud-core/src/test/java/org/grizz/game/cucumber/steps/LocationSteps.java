@@ -32,6 +32,12 @@ public class LocationSteps extends CucumberTest {
         assertThat(mobileItems, hasItem(item(itemName)));
     }
 
+    @Given("^current location has no items$")
+    public void current_location_has_no_items() {
+        List<Item> mobileItems = sharedData.getCurrentLocationItems().getMobileItems();
+        assertThat(mobileItems, hasSize(0));
+    }
+
     @Given("^current location had \"(.+)\" before last command$")
     public void current_location_had_item_before_command(String itemName) {
         LocationItems locationBeforeCommand = sharedData.getCurrentLocationItemsBeforeCommand();

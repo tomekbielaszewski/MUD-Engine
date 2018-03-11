@@ -135,6 +135,15 @@ Feature: Starting location, tutorial quests
       | "Dobry majtek! Jeszcze jeden taki wór i wystarczy." |
       | "Straciles 1 wor z towarem"                         |
 
+  # Package does not respawn when Player1 has already took it from here
+    Given as player with name "player1"
+    And current location id is "6"
+    When he executed following commands
+      | "north" |
+      | "down"  |
+      | "west"  |
+    Then current location id is "2"
+    And current location has no items
 
   # Player1 can't pick up package on first location for the second time
   # Player1 can pick up package on second location
