@@ -77,6 +77,14 @@ Feature: Starting location, tutorial quests
     And game responded with no events
 
   # Quest hint is still visible on second location
+    Given as player with name "player1"
+    When he executed following commands
+      | "east" |
+      | "east" |
+      | "east" |
+    Then current location id is "4"
+    And game responded with following event "Zanieś ten towar na pokład!"
+
   # Player1 can't pick up package on second location when holding package from first location
   # Player1 can't drop package on package-respawn location as it is not a package collecting point
   # Player1 can't drop package on some other location which is not a package collecting point
