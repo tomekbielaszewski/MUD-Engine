@@ -44,15 +44,19 @@ Feature: Starting location, tutorial quests
   # Package appears/respawns on second collecting point and quest hint is shown
     Given as player with name "player1"
     And location with id "4" has 0 items
-    When he executed following command "idź na wschód"
-    When he executed following command "east"
-    When he executed following command "wschod"
+    When he executed following commands
+      | "idź na wschód" |
+      | "east"          |
+      | "wschod"        |
     Then current location id is "4"
     Then current location has 1 items
     And current location has "Wór z towarem"
     And game responded with following event "Zanieś ten towar na pokład!"
 
   # Player1 can pick up package on first location
+    Given as player with name "player1"
+
+
   # Quest hint is no longer visible on first location
   # Quest hint is still visible on second location
   # Player1 can't pick up package on second location when holding package from first location

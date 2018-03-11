@@ -6,6 +6,8 @@ import cucumber.api.java.en.When;
 import org.grizz.game.cucumber.CucumberTest;
 import org.grizz.game.model.Player;
 
+import java.util.List;
+
 import static org.grizz.game.utils.StringUtils.stripAccents;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -61,6 +63,11 @@ public class PlayerSteps extends CucumberTest {
         sharedData.setCurrentLocationItemsBeforeCommand(fromDB().locationOf(sharedData.getCurrentPlayer()));
         runCommand(command, sharedData.getCurrentPlayer());
         sharedData.setCurrentLocationItemsAfterCommand(fromDB().locationOf(sharedData.getCurrentPlayer()));
+    }
+
+    @When("^he executed following commands$")
+    public void player_executed_commands(List<String> command) {
+        command.forEach(c -> player_executed_command(c.replaceAll("\"", "")));
     }
 
     @Then("^his backpack has (\\d+) items$")
