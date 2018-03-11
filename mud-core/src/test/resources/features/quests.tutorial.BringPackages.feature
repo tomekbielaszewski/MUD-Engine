@@ -61,7 +61,7 @@ Feature: Starting location, tutorial quests
       | "west"              |
       | "wez wor z towarem" |
     Then current location id is "2"
-    And current location had "Wór z towarem" before command
+    And current location had "Wór z towarem" before last command
     And current location has 0 items
     And he had empty backpack before last command
     And he has 1 items in his backpack

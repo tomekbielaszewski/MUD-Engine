@@ -32,7 +32,7 @@ public class LocationSteps extends CucumberTest {
         assertThat(mobileItems, hasItem(item(itemName)));
     }
 
-    @Given("^current location had \"(.+)\" before command$")
+    @Given("^current location had \"(.+)\" before last command$")
     public void current_location_had_item_before_command(String itemName) {
         LocationItems locationBeforeCommand = sharedData.getCurrentLocationItemsBeforeCommand();
         LocationItems locationAfterCommand = sharedData.getCurrentLocationItems();
@@ -61,11 +61,4 @@ public class LocationSteps extends CucumberTest {
         String after = sharedData.getCurrentLocationItems().getLocationId();
         assertThat(before, is(after));
     }
-
-    /**
-
-     Then location before command had 0 items
-     And location after command has 1 items
-     And location after command has "Wór z towarem"
-     */
 }
