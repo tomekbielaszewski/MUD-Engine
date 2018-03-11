@@ -31,6 +31,12 @@ public class LocationSteps extends CucumberTest {
         assertThat(mobileItems, hasItem(item(itemName)));
     }
 
+    @Given("^current location id is \"(.+)\"$")
+    public void current_location_id_is(String expectedLocationId) {
+        String locationId = sharedData.getCurrentLocationItemsAfterCommand().getLocationId();
+        assertThat(locationId, is(expectedLocationId));
+    }
+
     @Given("^current location has (\\d+) items$")
     public void current_location_has_items_in_amount_of(int amountOfItems) {
         List<Item> mobileItems = sharedData.getCurrentLocationItemsAfterCommand().getMobileItems();
