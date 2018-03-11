@@ -2,6 +2,7 @@ package org.grizz.game.cucumber;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.grizz.game.model.LocationItems;
 import org.grizz.game.model.PlayerResponse;
 
 @Getter
@@ -9,6 +10,6 @@ import org.grizz.game.model.PlayerResponse;
 public class CucumberSharedData {
     private PlayerResponse response;
     private String currentPlayer;
-    private String locationBeforeCommand;
-    private String locationAfterCommand;
+    private LocationItems currentLocationItemsBeforeCommand;
+    private LocationItems currentLocationItemsAfterCommand;
 }
