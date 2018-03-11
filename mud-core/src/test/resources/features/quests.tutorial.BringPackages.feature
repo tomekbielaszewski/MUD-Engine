@@ -146,6 +146,20 @@ Feature: Starting location, tutorial quests
     And current location has no items
 
   # Player1 can't pick up package on first location for the second time
+    Given as player with name "GameMaster"
+    And current location id is "1"
+    When he executed following commands
+      | "west" |
+      | "east" |
+    Given as player with name "player1"
+    And current location id is "2"
+    And current location has "Wór z towarem"
+    And he executed following command "Wez wór z towarem"
+    Then current location has "Wór z towarem"
+    And he had empty backpack before last command
+    And he has empty backpack
+    And game responded with following event "Już zaniosłeś stąd pakunek. Zostaw trochę roboty dla innych!"
+  
   # Player1 can pick up package on second location
   # Player1 can drop second package on the package collecting point
   # Game shows message about next guest

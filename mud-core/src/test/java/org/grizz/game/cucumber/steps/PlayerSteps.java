@@ -16,7 +16,9 @@ public class PlayerSteps extends CucumberTest {
 
     @Given("^player with name \"(.+)\"$")
     public void current_player(String playerName) {
-        sharedData.setCurrentPlayer(fromDB().player(playerName));
+        Player currentPlayer = fromDB().player(playerName);
+        sharedData.setCurrentPlayer(currentPlayer);
+        sharedData.setCurrentLocationItems(fromDB().location(currentPlayer.getCurrentLocation()));
     }
 
     @Given("^as player with name \"(.+)\"$")
