@@ -86,6 +86,13 @@ Feature: Starting location, tutorial quests
     And game responded with following event "Zanieś ten towar na pokład!"
 
   # Player1 can't pick up package on second location when holding package from first location
+    Given as player with name "player1"
+    When he executed following command "Weź wór z towarem"
+    Then he had 1 "Wór z towarem" in his backpack before last command
+    And he has 1 "Wór z towarem" in his backpack
+    And game responded with following event "Masz już jeden pakunek w rękach!"
+    And current location id is "4"
+
   # Player1 can't drop package on package-respawn location as it is not a package collecting point
   # Player1 can't drop package on some other location which is not a package collecting point
   # Player1 can drop package on the package collecting point
