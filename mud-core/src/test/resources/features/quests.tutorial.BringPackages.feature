@@ -69,6 +69,13 @@ Feature: Starting location, tutorial quests
     And he had no parameter "quest:tutorial-ship-package-picked-on-locations-2" before command
 
   # Quest hint is no longer visible on first location
+    Given as player with name "player1"
+    When he executed following commands
+      | "east" |
+      | "west" |
+    Then current location id is "2"
+    And game responded with no events
+
   # Quest hint is still visible on second location
   # Player1 can't pick up package on second location when holding package from first location
   # Player1 can't drop package on package-respawn location as it is not a package collecting point
