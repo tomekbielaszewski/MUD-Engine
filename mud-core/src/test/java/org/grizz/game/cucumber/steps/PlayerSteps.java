@@ -16,7 +16,7 @@ public class PlayerSteps extends CucumberTest {
 
     @Given("^player with name \"(.+)\"$")
     public void current_player(String playerName) {
-        sharedData.setCurrentPlayer(playerName);
+        sharedData.setCurrentPlayer(fromDB().player(playerName));
     }
 
     @Given("^as player with name \"(.+)\"$")
@@ -31,7 +31,10 @@ public class PlayerSteps extends CucumberTest {
 
     @Given("^there is (\\d+) \"(.+)\" in his backpack$")
     public void there_is_item_in_backpack(int expectedAmount, String itemName) {
-        int amountOfGivenItemsInBackpack = (int) fromDB().player(sharedData.getCurrentPlayer()).getEquipment().getBackpack().stream()
+        int amountOfGivenItemsInBackpack = (int) sharedData.getCurrentPlayer()
+                .getEquipment()
+                .getBackpack()
+                .stream()
                 .map(item -> stripAccents(item.getName()))
                 .filter(_itemName -> _itemName.equals(stripAccents(itemName)))
                 .count();
@@ -40,29 +43,47 @@ public class PlayerSteps extends CucumberTest {
 
     @Given("^he has empty backpack$")
     public void having_with_empty_backpack() {
-        Player player = fromDB().player(sharedData.getCurrentPlayer());
+        Player player = sharedData.getCurrentPlayer();
         assertThat(player, hasEmptyBackpack());
     }
 
     @Given("^he has parameter \"(.+)\"$")
     public void player_has_parameter(String parameter) {
-        Player player = fromDB().player(sharedData.getCurrentPlayer());
+        Player player = sharedData.getCurrentPlayer();
         boolean hasParameter = player.hasParameter(parameter);
         assertThat(hasParameter, is(true));
     }
 
     @Given("^he has no parameter \"(.+)\"$")
     public void player_has_no_parameter(String parameter) {
-        Player player = fromDB().player(sharedData.getCurrentPlayer());
+        Player player = sharedData.getCurrentPlayer();
+        boolean hasParameter = player.hasParameter(parameter);
+        assertThat(hasParameter, is(false));
+    }
+
+    @Given("^he had parameter \"(.+)\" before command$")
+    public void player_had_parameter_before(String parameter) {
+        Player player = sharedData.getPlayerBeforeCommand();
+        boolean hasParameter = player.hasParameter(parameter);
+        assertThat(hasParameter, is(true));
+    }
+
+    @Given("^he had no parameter \"(.+)\" before command$")
+    public void player_had_no_parameter_before(String parameter) {
+        Player player = sharedData.getPlayerBeforeCommand();
         boolean hasParameter = player.hasParameter(parameter);
         assertThat(hasParameter, is(false));
     }
 
     @When("^he executed following command \"(.+)\"$")
     public void player_executed_command(String command) {
-        sharedData.setCurrentLocationItemsBeforeCommand(fromDB().locationOf(sharedData.getCurrentPlayer()));
-        runCommand(command, sharedData.getCurrentPlayer());
-        sharedData.setCurrentLocationItemsAfterCommand(fromDB().locationOf(sharedData.getCurrentPlayer()));
+        sharedData.setPlayerBeforeCommand(fromDB().player(sharedData.getCurrentPlayer().getName()));
+        sharedData.setCurrentLocationItemsBeforeCommand(fromDB().locationOf(sharedData.getCurrentPlayer().getName()));
+
+        runCommand(command, sharedData.getCurrentPlayer().getName());
+
+        sharedData.setCurrentLocationItems(fromDB().locationOf(sharedData.getCurrentPlayer().getName()));
+        sharedData.setCurrentPlayer(fromDB().player(sharedData.getCurrentPlayer().getName()));
     }
 
     @When("^he executed following commands$")
@@ -72,7 +93,13 @@ public class PlayerSteps extends CucumberTest {
 
     @Then("^his backpack has (\\d+) items$")
     public void player_backpack_has_items_in_amount_of(int amount) {
-        Player player = fromDB().player(sharedData.getCurrentPlayer());
+        Player player = sharedData.getCurrentPlayer();
+        assertThat(player, hasThisManyItemsInBackpack(amount));
+    }
+
+    @Then("^his backpack had (\\d+) items before command$")
+    public void player_backpack_had_items_in_amount_of(int amount) {
+        Player player = sharedData.getPlayerBeforeCommand();
         assertThat(player, hasThisManyItemsInBackpack(amount));
     }
 }

@@ -28,7 +28,7 @@ Feature: Starting location, tutorial quests
   # Player1 cannot exit ships lower and message appears when he tries
     Given as player with name "player1"
     When he executed following command "idź na górę"
-    Then current location not changed
+    Then current locationId has not changed
     And game responded with event like "Gdzie leziesz z pustymi łapami?!"
     And game did not respond with following event "Nie słyszałeś!? Dupa w troki i won **na górę**!"
 
@@ -55,7 +55,18 @@ Feature: Starting location, tutorial quests
 
   # Player1 can pick up package on first location
     Given as player with name "player1"
-
+    When he executed following commands
+      | "west"              |
+      | "west"              |
+      | "west"              |
+      | "wez wor z towarem" |
+    Then current location id is "2"
+    And current location had "Wór z towarem" before command
+    And current location has 0 items
+    And his backpack had 0 items before command
+    And his backpack has 1 items
+    And he has parameter "quest:tutorial-ship-package-picked-on-locations-2"
+    And he had no parameter "quest:tutorial-ship-package-picked-on-locations-2" before command
 
   # Quest hint is no longer visible on first location
   # Quest hint is still visible on second location
