@@ -118,6 +118,24 @@ Feature: Starting location, tutorial quests
     And game responded with following event "Gdzie to kładziesz?! Punkt rozładunku jest na pokładzie!"
 
   # Player1 can drop package on the package collecting point
+    Given as player with name "player1"
+    And current location id is "3"
+    When he executed following commands
+      | "west"  |
+      | "up"    |
+      | "south" |
+    Then game responded with following event "Dawaj to tu! **Połóż wór z towarem** tutaj!"
+    And game did not respond with following event "Dobry z ciebie majtek! Poloz to i robota skończona!"
+    And game did not respond with following event "Zanieś wreszcie te dokumenty sternikowi! Zaraz odpływamy!"
+    And current location id is "6"
+    When he executed following command "wyrzuc wor z towarem"
+    Then he had "wór z towarem" in his backpack before last command
+    And he has empty backpack
+    And game responded with following events:
+      | "Dobry majtek! Jeszcze jeden taki wór i wystarczy." |
+      | "Straciles 1 wor z towarem"                         |
+
+
   # Player1 can't pick up package on first location for the second time
   # Player1 can pick up package on second location
   # Player1 can drop second package on the package collecting point
