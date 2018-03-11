@@ -78,6 +78,7 @@ Feature: Starting location, tutorial quests
 
   # Quest hint is still visible on second location
     Given as player with name "player1"
+    And current location id is "2"
     When he executed following commands
       | "east" |
       | "east" |
@@ -94,6 +95,17 @@ Feature: Starting location, tutorial quests
     And current location id is "4"
 
   # Player1 can't drop package on package-respawn location as it is not a package collecting point
+    Given as player with name "player1"
+    And current location id is "4"
+    When he executed following commands
+      | "west"                 |
+      | "west"                 |
+      | "wyrzuc wor z towarem" |
+    Then he had 1 "Wór z towarem" in his backpack before last command
+    And he has 1 "Wór z towarem" in his backpack
+    And current location id is "1"
+    And game responded with following event "Gdzie to kładziesz?! Punkt rozładunku jest na pokładzie!"
+
   # Player1 can't drop package on some other location which is not a package collecting point
   # Player1 can drop package on the package collecting point
   # Player1 can't pick up package on first location for the second time
