@@ -39,6 +39,9 @@ http://www.w3.org/2001/XMLSchema-instance ">
                         <goals>
                             <goal>repackage</goal>
                         </goals>
+                        <configuration>
+                            <mainClass>org.grizz.db.Starter</mainClass>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
