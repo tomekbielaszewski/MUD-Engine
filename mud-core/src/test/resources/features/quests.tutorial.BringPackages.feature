@@ -63,8 +63,8 @@ Feature: Starting location, tutorial quests
     Then current location id is "2"
     And current location had "Wór z towarem" before command
     And current location has 0 items
-    And his backpack had 0 items before command
-    And his backpack has 1 items
+    And he had empty backpack before last command
+    And he has 1 items in his backpack
     And he has parameter "quest:tutorial-ship-package-picked-on-locations-2"
     And he had no parameter "quest:tutorial-ship-package-picked-on-locations-2" before command
 

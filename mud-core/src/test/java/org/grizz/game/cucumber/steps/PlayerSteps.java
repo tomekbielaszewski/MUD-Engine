@@ -24,27 +24,48 @@ public class PlayerSteps extends CucumberTest {
         current_player(playerName);
     }
 
-    @Given("^there is \"(.+)\" in his backpack$")
-    public void there_is_item_in_backpack(String itemName) {
-        there_is_item_in_backpack(1, itemName);
+    @Given("^he has \"(.+)\" in his backpack$")
+    public void he_has_item_in_backpack(String itemName) {
+        he_has_items_in_backpack(1, itemName);
     }
 
-    @Given("^there is (\\d+) \"(.+)\" in his backpack$")
-    public void there_is_item_in_backpack(int expectedAmount, String itemName) {
-        int amountOfGivenItemsInBackpack = (int) sharedData.getCurrentPlayer()
-                .getEquipment()
-                .getBackpack()
-                .stream()
-                .map(item -> stripAccents(item.getName()))
-                .filter(_itemName -> _itemName.equals(stripAccents(itemName)))
-                .count();
-        assertThat(amountOfGivenItemsInBackpack, is(expectedAmount));
+    @Given("^he had \"(.+)\" in his backpack before last command$")
+    public void he_had_item_in_backpack(String itemName) {
+        he_had_items_in_backpack(1, itemName);
+    }
+
+    @Given("^he has (\\d+) \"(.+)\" in his backpack$")
+    public void he_has_items_in_backpack(int expectedAmount, String itemName) {
+        there_are_items_in_players_backpack(sharedData.getCurrentPlayer(), expectedAmount, itemName);
+    }
+
+    @Given("^he had (\\d+) \"(.+)\" in his backpack before last command$")
+    public void he_had_items_in_backpack(int expectedAmount, String itemName) {
+        there_are_items_in_players_backpack(sharedData.getPlayerBeforeCommand(), expectedAmount, itemName);
     }
 
     @Given("^he has empty backpack$")
-    public void having_with_empty_backpack() {
+    public void he_has_empty_backpack() {
         Player player = sharedData.getCurrentPlayer();
         assertThat(player, hasEmptyBackpack());
+    }
+
+    @Given("^he had empty backpack before last command$")
+    public void he_had_empty_backpack() {
+        Player player = sharedData.getPlayerBeforeCommand();
+        assertThat(player, hasEmptyBackpack());
+    }
+
+    @Then("^he has (\\d+) items in his backpack$")
+    public void player_backpack_has_items_in_amount_of(int amount) {
+        Player player = sharedData.getCurrentPlayer();
+        assertThat(player, hasThisManyItemsInBackpack(amount));
+    }
+
+    @Then("^he had (\\d+) items in his backpack before last command$")
+    public void player_backpack_had_items_in_amount_of(int amount) {
+        Player player = sharedData.getPlayerBeforeCommand();
+        assertThat(player, hasThisManyItemsInBackpack(amount));
     }
 
     @Given("^he has parameter \"(.+)\"$")
@@ -91,15 +112,14 @@ public class PlayerSteps extends CucumberTest {
         command.forEach(c -> player_executed_command(c.replaceAll("\"", "")));
     }
 
-    @Then("^his backpack has (\\d+) items$")
-    public void player_backpack_has_items_in_amount_of(int amount) {
-        Player player = sharedData.getCurrentPlayer();
-        assertThat(player, hasThisManyItemsInBackpack(amount));
-    }
-
-    @Then("^his backpack had (\\d+) items before command$")
-    public void player_backpack_had_items_in_amount_of(int amount) {
-        Player player = sharedData.getPlayerBeforeCommand();
-        assertThat(player, hasThisManyItemsInBackpack(amount));
+    private void there_are_items_in_players_backpack(Player player, int expectedAmount, String itemName) {
+        int amountOfGivenItemsInBackpack = (int) player
+                .getEquipment()
+                .getBackpack()
+                .stream()
+                .map(item -> stripAccents(item.getName()))
+                .filter(_itemName -> _itemName.equals(stripAccents(itemName)))
+                .count();
+        assertThat(amountOfGivenItemsInBackpack, is(expectedAmount));
     }
 }
