@@ -39,6 +39,11 @@ public class GameResponseSteps extends CucumberTest {
         events.forEach(event -> game_responded_with_event(event.replaceAll("\"", "")));
     }
 
+    @Then("^game responded with events like:$")
+    public void game_responded_with_events_like(List<String> events) {
+        events.forEach(event -> game_responded_with_event_like(event.replaceAll("\"", "")));
+    }
+
     @Then("^game has not notified anyone else$")
     public void game_has_not_notified_anyone() {
         verifyZeroInteractions(notifier);

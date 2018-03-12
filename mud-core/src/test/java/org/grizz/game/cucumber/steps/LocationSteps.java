@@ -32,6 +32,14 @@ public class LocationSteps extends CucumberTest {
         assertThat(mobileItems, hasItem(item(itemName)));
     }
 
+    @Given("^current location has (\\d+) \"(.+)\"$")
+    public void current_location_has_items(int expectedAmount, String itemName) {
+        List<Item> mobileItems = sharedData.getCurrentLocationItems().getMobileItems();
+        int actualAmount = (int) mobileItems.stream().filter(item -> item.equals(item(itemName))).count();
+        assertThat(mobileItems, hasItem(item(itemName)));
+        assertThat(expectedAmount, is(actualAmount));
+    }
+
     @Given("^current location has no items$")
     public void current_location_has_no_items() {
         List<Item> mobileItems = sharedData.getCurrentLocationItems().getMobileItems();

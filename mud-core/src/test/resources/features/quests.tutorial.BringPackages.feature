@@ -175,7 +175,28 @@ Feature: Starting location, tutorial quests
     And he had empty backpack before last command
     And he has "Wór z towarem" in his backpack
 
-  # Player1 can drop second package on the package collecting point
-  # Game shows message about next guest
+  # Player1 can drop second package on the package collecting point and game shows message about next guest
+    Given as player with name "player1"
+    And current location id is "4"
+    When he executed following commands
+      | "west"  |
+      | "west"  |
+      | "up"    |
+      | "south" |
+    Then game responded with following event "Dobry z ciebie majtek! Poloz to i robota skończona!"
+    And game did not respond with following event "Dawaj to tu! **Połóż wór z towarem** tutaj!"
+    And game did not respond with following event "Zanieś wreszcie te dokumenty sternikowi! Zaraz odpływamy!"
+    And current location id is "6"
+    When he executed following command "wyrzuc wor z towarem"
+    Then he had "Wór z towarem" in his backpack before last command
+    And he has 4 "Brazowa moneta" in his backpack
+    And current location has 2 "wor z towarem"
+    And game responded with events like:
+      | "Masz tu kilka miedziaków za uczciwą pracę!" |
+      | "Otrzymane przedmioty:"                      |
+      | "4x Brązowa moneta"                          |
+      | "Weź te papiery i zanieś je sternikowi!"     |
+    And game did not respond with following event "Dobry majtek! Jeszcze jeden taki wór i wystarczy."
+
   # Quest hint is not visible on second location anymore but package is respawned
   # Player1 can't pick up package on second location anymore
