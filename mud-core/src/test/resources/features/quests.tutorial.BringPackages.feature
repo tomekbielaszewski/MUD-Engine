@@ -211,3 +211,16 @@ Feature: Starting location, tutorial quests
     And game responded with no events
 
   # Player1 can't pick up package on second location anymore
+    Given as player with name "GameMaster"
+    And current location id is "1"
+    When he executed following commands
+      | "east" |
+      | "east" |
+    Then current location id is "4"
+    And current location has "wor z towarem"
+    Given as player with name "player1"
+    And current location id is "4"
+    When he executed following command "wez wor z towarem"
+    Then current location has "wor z towarem"
+    And he has no "wor z towarem" in his backpack
+    And game responded with following event "Juz skonczyles pracowac! Nie musisz już nosić tych pakunków."

@@ -27,8 +27,13 @@ public class PlayerSteps extends CucumberTest {
     }
 
     @Given("^he has \"(.+)\" in his backpack$")
-    public void he_has_item_in_backpack(String itemName) {
+    public void he_has_no_given_item_in_backpack(String itemName) {
         he_has_items_in_backpack(1, itemName);
+    }
+
+    @Given("^he has no \"(.+)\" in his backpack$")
+    public void he_has_item_in_backpack(String itemName) {
+        he_has_items_in_backpack(0, itemName);
     }
 
     @Given("^he had \"(.+)\" in his backpack before last command$")
