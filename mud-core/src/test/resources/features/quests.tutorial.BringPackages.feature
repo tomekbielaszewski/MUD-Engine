@@ -198,5 +198,16 @@ Feature: Starting location, tutorial quests
       | "Weź te papiery i zanieś je sternikowi!"     |
     And game did not respond with following event "Dobry majtek! Jeszcze jeden taki wór i wystarczy."
 
-  # Quest hint is not visible on second location anymore but package is respawned
+  # Quest hint is not visible on second location anymore and package is not respawned
+    Given as player with name "player1"
+    And current location id is "6"
+    When he executed following commands
+      | "north" |
+      | "down"  |
+      | "east"  |
+      | "east"  |
+    Then current location id is "4"
+    And current location has no items
+    And game responded with no events
+
   # Player1 can't pick up package on second location anymore
