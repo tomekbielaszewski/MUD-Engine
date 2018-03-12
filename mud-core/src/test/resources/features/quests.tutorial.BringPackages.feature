@@ -159,8 +159,22 @@ Feature: Starting location, tutorial quests
     And he had empty backpack before last command
     And he has empty backpack
     And game responded with following event "Już zaniosłeś stąd pakunek. Zostaw trochę roboty dla innych!"
-  
+
   # Player1 can pick up package on second location
+    Given as player with name "player1"
+    And current location id is "2"
+    When he executed following commands
+      | "east" |
+      | "east" |
+      | "east" |
+    Then current location id is "4"
+    And game responded with following event "Zanieś ten towar na pokład!"
+    When he executed following command "wez wor z towarem"
+    Then current location had "Wór z towarem" before last command
+    And current location has no items
+    And he had empty backpack before last command
+    And he has "Wór z towarem" in his backpack
+
   # Player1 can drop second package on the package collecting point
   # Game shows message about next guest
   # Quest hint is not visible on second location anymore but package is respawned
