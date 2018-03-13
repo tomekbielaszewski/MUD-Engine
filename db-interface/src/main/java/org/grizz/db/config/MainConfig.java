@@ -29,9 +29,8 @@ public class MainConfig {
     @Autowired
     private ProxyNotifier notifier;
 
-    @Scheduled(cron = "*/5 * * * * *")
+    @Scheduled(cron = "*/1 * * * * *")
     public void scheduled() {
-        System.out.print(".");
         commandProcessingTask.run();
     }
 
