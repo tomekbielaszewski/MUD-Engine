@@ -26,7 +26,7 @@ loadScript("tutorial-quest-ids");
       game.player.message("Dawaj to tu! **Połóż wór z towarem** tutaj!")
     }
 
-    if (broughtPackageFromBothLocations()) {
+    if (broughtPackageFromBothLocations() && !captainDocumentsQuestStarted()) {
       game.player.message("Dobry z ciebie majtek! Poloz to i robota skończona!")
     }
 

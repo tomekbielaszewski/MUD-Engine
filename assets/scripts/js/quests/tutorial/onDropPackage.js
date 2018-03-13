@@ -18,8 +18,8 @@ loadScript("tutorial-quest-ids");
   }
 
   function startNextQuest() {
+    game.player.addParameter(Quest.ID.captainDocuments.started, true);
     //get documents
-    //save parameter about started quest
   }
 
   function informAboutNextQuest() {

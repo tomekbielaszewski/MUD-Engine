@@ -174,6 +174,8 @@ Feature: Starting location, tutorial quests
     And current location has no items
     And he had empty backpack before last command
     And he has "Wór z towarem" in his backpack
+    And he had no parameter "quest:tutorial-ship-package-picked-on-locations-4" before command
+    And he has parameter "quest:tutorial-ship-package-picked-on-locations-4"
 
   # Player1 can drop second package on the package collecting point and game shows message about next guest
     Given as player with name "player1"
@@ -197,6 +199,12 @@ Feature: Starting location, tutorial quests
       | "4x Brązowa moneta"                          |
       | "Weź te papiery i zanieś je sternikowi!"     |
     And game did not respond with following event "Dobry majtek! Jeszcze jeden taki wór i wystarczy."
+
+  # Quest hint is no longer visible on package collecting point location
+    Given as player with name "player1"
+    And current location id is "6"
+    When he executed following command "spojrz"
+    Then game did not respond with following event "Dobry z ciebie majtek! Poloz to i robota skończona!"
 
   # Quest hint is not visible on second location anymore and package is not respawned
     Given as player with name "player1"
