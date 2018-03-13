@@ -26,7 +26,7 @@ public class GameResponseSteps extends CucumberTest {
 
     @Then("^game did not respond with following event \"(.+)\"$")
     public void game_did_not_respond_with_event(String event) {
-        assertThat(sharedData.getResponse(), not(hasEvent(event)));
+        assertThat(sharedData.getResponse(), hasNoEvent(event));
     }
 
     @Then("^game responded with event like \"(.+)\"$")

@@ -9,6 +9,7 @@ import org.hamcrest.Matcher;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.IsNot.not;
 
 public interface GameMatchers {
     default Matcher<PlayerResponse> hasEvent(String searchedEvent) {
@@ -22,6 +23,20 @@ public interface GameMatchers {
             @Override
             public void describeTo(Description description) {
                 description.appendText("Expected player event list to contain event equal to \"" + searchedEvent + "\" but couldn't find it");
+            }
+        };
+    }
+    default Matcher<PlayerResponse> hasNoEvent(String searchedEvent) {
+        return new BaseMatcher<PlayerResponse>() {
+            @Override
+            public boolean matches(Object item) {
+                final PlayerResponse response = (PlayerResponse) item;
+                return not(hasItem(searchedEvent)).matches(response.getPlayerEvents());
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Expected player event list not to contain event equal to \"" + searchedEvent + "\" but the event was found");
             }
         };
     }
