@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Przynieś towar na pokład",
+    "scripted": [
+      {
+        "type": "Location",
+        "id": "1",
+        "onShowScript": "tutorial-welcome",
+        "onLeaveScript": "tutorial-welcome-off"
+      },
+      {
+        "type": "Location",
+        "id": "2",
+        "onEnterScript": "tutorial-respawnPackage"
+      },
+      {
+        "type": "Location",
+        "id": "4",
+        "onEnterScript": "tutorial-respawnPackage"
+      },
+      {
+        "type": "Location",
+        "id": "5",
+        "beforeEnterScript": "tutorial-needToTakePackageBeforeEnterUpperDeck"
+      },
+      {
+        "type": "Location",
+        "id": "6",
+        "onShowScript": "tutorial-onShowPackageCollectingPoint"
+      },
+
+      {
+        "type": "Item",
+        "id": "1000",
+        "beforeReceiveScript": "tutorial-canPickupPackage",
+        "onReceiveScript": "tutorial-onPickupPackage",
+        "beforeDropScript": "tutorial-canDropPackage",
+        "onDropScript": "tutorial-onDropPackage"
+      }
+    ]
+  }
+]
