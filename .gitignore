@@ -1,5 +1,9 @@
 *.iml
 *.log
 *.class
+*.gz
 
 dump
+.idea
+mud-core/target
+db-interface/target
