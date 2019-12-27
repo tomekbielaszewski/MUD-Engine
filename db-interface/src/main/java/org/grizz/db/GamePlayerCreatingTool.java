@@ -26,7 +26,7 @@ public class GamePlayerCreatingTool {
         PlayerRepository playerRepository = context.getBean(PlayerRepository.class);
         Player alreadyExist = playerRepository.findByName(name);
         if (alreadyExist == null) {
-            playerRepository.save(player);
+            playerRepository.insert(player);
         }
         SpringApplication.exit(context);
     }

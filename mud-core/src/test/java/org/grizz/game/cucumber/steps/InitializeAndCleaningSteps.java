@@ -51,7 +51,7 @@ public class InitializeAndCleaningSteps extends CucumberTest {
 
     private void savePlayer(Player player) {
         jdbi.onDemand(PlayerRepository.class)
-                .save(player);
+                .insert(player);
     }
 
     private boolean playerExist(String name) {
