@@ -2,30 +2,29 @@ package org.grizz.game.cucumber;
 
 import org.grizz.game.model.LocationItems;
 import org.grizz.game.model.Player;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import org.grizz.game.model.repository.LocationItemsRepository;
+import org.grizz.game.model.repository.PlayerRepository;
+import org.jdbi.v3.core.Jdbi;
 
 public class GameDBTool {
-    private final MongoOperations db;
+    private final Jdbi db;
 
-    public GameDBTool(MongoOperations db) {
+    public GameDBTool(Jdbi db) {
         this.db = db;
     }
 
     public Player player(String name) {
-        Query searchPlayerQuery = new Query(Criteria.where("name").is(name));
-        return db.findOne(searchPlayerQuery, Player.class);
+        PlayerRepository playerRepository = db.onDemand(PlayerRepository.class);
+        return playerRepository.findByName(name);
+    }
+
+    public LocationItems location(String locationId) {
+        LocationItemsRepository locationItemsRepository = db.onDemand(LocationItemsRepository.class);
+        return locationItemsRepository.findByLocationId(locationId);
     }
 
     public LocationItems locationOf(String name) {
         String playerLocation = player(name).getCurrentLocation();
-        Query query = new Query(Criteria.where("locationId").is(playerLocation));
-        return db.findOne(query, LocationItems.class);
-    }
-
-    public LocationItems location(String locationId) {
-        Query query = new Query(Criteria.where("locationId").is(locationId));
-        return db.findOne(query, LocationItems.class);
+        return location(playerLocation);
     }
 }

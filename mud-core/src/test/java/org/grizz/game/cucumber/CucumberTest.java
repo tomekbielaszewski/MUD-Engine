@@ -10,10 +10,10 @@ import org.grizz.game.model.Player;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.service.notifier.Notifier;
+import org.jdbi.v3.core.Jdbi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationContextLoader;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.test.context.ContextConfiguration;
 
 @ContextConfiguration(
@@ -33,7 +33,7 @@ public class CucumberTest implements GameMatchers {
     protected Game game;
 
     @Autowired
-    protected MongoOperations mongo;
+    protected Jdbi jdbi;
 
     @Autowired
     protected Notifier notifier;
@@ -66,7 +66,7 @@ public class CucumberTest implements GameMatchers {
     }
 
     protected GameDBTool fromDB() {
-        return new GameDBTool(mongo);
+        return new GameDBTool(jdbi);
     }
 
     protected Player createPlayer(String name, String location) {

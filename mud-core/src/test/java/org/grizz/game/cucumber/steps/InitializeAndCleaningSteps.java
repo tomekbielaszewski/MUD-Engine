@@ -5,11 +5,10 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import org.grizz.game.cucumber.CucumberTest;
 import org.grizz.game.model.Player;
+import org.grizz.game.model.repository.PlayerRepository;
 import org.grizz.game.service.notifier.Notifier;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class InitializeAndCleaningSteps extends CucumberTest {
 
     @Before
     public void init() {
-        mongo.dropCollection("players");
+        jdbi.useHandle(h -> h.execute("TRUNCATE TABLE players"));
         Mockito.reset(notifier);
     }
 
@@ -44,8 +43,23 @@ public class InitializeAndCleaningSteps extends CucumberTest {
         players.forEach(p -> {
             assertThat(p.getName(), not(nullValue()));
             assertThat(p.getCurrentLocation(), not(nullValue()));
-            if(!mongo.exists(Query.query(Criteria.where("name").is(p.getName())), Player.class))
-                mongo.save(createPlayer(p.getName(), p.getCurrentLocation()));
+            if (!playerExist(p.getName())) {
+                savePlayer(p);
+            }
         });
+    }
+
+    private void savePlayer(Player player) {
+        jdbi.onDemand(PlayerRepository.class)
+                .save(player);
+    }
+
+    private boolean playerExist(String name) {
+        return jdbi.withHandle(h -> h.createQuery("SELECT count(*) FROM players WHERE player_name='" + name + "'")
+                .map((rs, ctx) -> rs.getInt("count"))
+                .findOne()
+                .filter(i -> i > 0)
+                .isPresent()
+        );
     }
 }
