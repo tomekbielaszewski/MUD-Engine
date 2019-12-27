@@ -5,6 +5,7 @@ import org.grizz.db.model.repository.ProcessedPlayerResponseRepository;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.spi.JdbiPlugin;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -34,11 +35,13 @@ public class JdbiConfig {
     }
 
     @Bean
+    @Qualifier(DB_INTERFACE_JDBI_NAME)
     public PlayerCommandRepository playerCommandRepository(Jdbi dbInterfaceJdbi) {
         return dbInterfaceJdbi.onDemand(PlayerCommandRepository.class);
     }
 
     @Bean
+    @Qualifier(DB_INTERFACE_JDBI_NAME)
     public ProcessedPlayerResponseRepository processedPlayerResponseRepository(Jdbi dbInterfaceJdbi) {
         return dbInterfaceJdbi.onDemand(ProcessedPlayerResponseRepository.class);
     }
