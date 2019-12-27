@@ -1,30 +1,31 @@
-package org.grizz.game.model.converters;
+package org.grizz.game.model.mappers;
 
 import com.google.common.collect.Lists;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import org.grizz.game.model.Equipment;
 import org.grizz.game.model.items.Armor;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.items.Weapon;
+import org.grizz.game.model.mapper.EquipmentMapper;
+import org.grizz.game.model.repository.ItemListRepository;
 import org.grizz.game.model.repository.ItemRepo;
+import org.hamcrest.collection.IsCollectionWithSize;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.List;
+import java.sql.ResultSet;
 
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EquipmentReadConverterTest {
+public class EquipmentMapperTest {
     private static final String HEAD_ITEM = "head item";
     private static final String TORSO_ITEM = "torso item";
     private static final String HANDS_ITEM = "hands item";
@@ -32,26 +33,29 @@ public class EquipmentReadConverterTest {
     private static final String FEET_ITEM = "feet item";
     private static final String MELEE_ITEM = "melee item";
     private static final String RANGE_ITEM = "range item";
+    private static final String BACKPACK_ID = "backpack id";
 
     @Mock
     private ItemRepo itemRepo;
     @Mock
-    private DBItemPackToItemListConverter itemListConverter;
+    private ItemListRepository itemListRepository;
 
     @InjectMocks
-    private EquipmentReadConverter converter = new EquipmentReadConverter();
+    private EquipmentMapper mapper = new EquipmentMapper();
 
     @Test
     public void convertsActiveEquipment() throws Exception {
-        DBObject dbo = new BasicDBObject();
-        dbo.put("head", HEAD_ITEM);
-        dbo.put("torso", TORSO_ITEM);
-        dbo.put("hands", HANDS_ITEM);
-        dbo.put("legs", LEGS_ITEM);
-        dbo.put("feet", FEET_ITEM);
-        dbo.put("melee", MELEE_ITEM);
-        dbo.put("range", RANGE_ITEM);
-        dbo.put("backpack", Lists.newArrayList());
+        ResultSet resultSet = mock(ResultSet.class);
+
+        when(resultSet.getString("head")).thenReturn(HEAD_ITEM);
+        when(resultSet.getString("torso")).thenReturn(TORSO_ITEM);
+        when(resultSet.getString("hands")).thenReturn(HANDS_ITEM);
+        when(resultSet.getString("legs")).thenReturn(LEGS_ITEM);
+        when(resultSet.getString("feet")).thenReturn(FEET_ITEM);
+        when(resultSet.getString("melee")).thenReturn(MELEE_ITEM);
+        when(resultSet.getString("range")).thenReturn(RANGE_ITEM);
+        when(resultSet.getString("backpack")).thenReturn(BACKPACK_ID);
+
         when(itemRepo.get(HEAD_ITEM)).thenReturn(dummyArmor(HEAD_ITEM));
         when(itemRepo.get(TORSO_ITEM)).thenReturn(dummyArmor(TORSO_ITEM));
         when(itemRepo.get(HANDS_ITEM)).thenReturn(dummyArmor(HANDS_ITEM));
@@ -59,25 +63,25 @@ public class EquipmentReadConverterTest {
         when(itemRepo.get(FEET_ITEM)).thenReturn(dummyArmor(FEET_ITEM));
         when(itemRepo.get(MELEE_ITEM)).thenReturn(dummyWeapon(MELEE_ITEM));
         when(itemRepo.get(RANGE_ITEM)).thenReturn(dummyWeapon(RANGE_ITEM));
+        when(itemListRepository.get(BACKPACK_ID)).thenReturn(Lists.newArrayList());
 
-        Equipment converted = converter.convert(dbo);
+        Equipment equipment = mapper.map(resultSet, null);
 
-        assertThat(converted.getHeadItem(), is(dummyArmor(HEAD_ITEM)));
-        assertThat(converted.getTorsoItem(), is(dummyArmor(TORSO_ITEM)));
-        assertThat(converted.getHandsItem(), is(dummyArmor(HANDS_ITEM)));
-        assertThat(converted.getLegsItem(), is(dummyArmor(LEGS_ITEM)));
-        assertThat(converted.getFeetItem(), is(dummyArmor(FEET_ITEM)));
-        assertThat(converted.getMeleeWeapon(), is(dummyWeapon(MELEE_ITEM)));
-        assertThat(converted.getRangeWeapon(), is(dummyWeapon(RANGE_ITEM)));
-        assertThat(converted.getBackpack(), is(empty()));
+        assertThat(equipment.getHeadItem(), is(dummyArmor(HEAD_ITEM)));
+        assertThat(equipment.getTorsoItem(), is(dummyArmor(TORSO_ITEM)));
+        assertThat(equipment.getHandsItem(), is(dummyArmor(HANDS_ITEM)));
+        assertThat(equipment.getLegsItem(), is(dummyArmor(LEGS_ITEM)));
+        assertThat(equipment.getFeetItem(), is(dummyArmor(FEET_ITEM)));
+        assertThat(equipment.getMeleeWeapon(), is(dummyWeapon(MELEE_ITEM)));
+        assertThat(equipment.getRangeWeapon(), is(dummyWeapon(RANGE_ITEM)));
+        assertThat(equipment.getBackpack(), is(empty()));
     }
 
     @Test
     public void doesNotAttachItemsWhenNoItemInDB() throws Exception {
-        DBObject dbo = new BasicDBObject();
-        dbo.put("backpack", Lists.newArrayList());
+        ResultSet resultSet = mock(ResultSet.class);
 
-        Equipment converted = converter.convert(dbo);
+        Equipment converted = mapper.map(resultSet, null);
 
         assertThat(converted.getHeadItem(), is(nullValue()));
         assertThat(converted.getTorsoItem(), is(nullValue()));
@@ -90,17 +94,15 @@ public class EquipmentReadConverterTest {
     }
 
     @Test
-    public void callsDBItemPackConverterToGetBackpackContents() throws Exception {
-        List<DBObject> backpack = Lists.newArrayList(
-                new BasicDBObject("parameter", "value"),
-                new BasicDBObject("parameter2", "value2")
-        );
-        DBObject dbo = new BasicDBObject();
-        dbo.put("backpack", backpack);
+    public void callsItemListRepoToGetBackpackContents() throws Exception {
+        ResultSet resultSet = mock(ResultSet.class);
+        when(resultSet.getString("backpack")).thenReturn(BACKPACK_ID);
+        when(itemListRepository.get(BACKPACK_ID)).thenReturn(Lists.newArrayList(dummyWeapon("someWeapon")));
 
-        converter.convert(dbo);
+        Equipment equipment = mapper.map(resultSet, null);
 
-        verify(itemListConverter).convert(backpack);
+        verify(itemListRepository).get(BACKPACK_ID);
+        assertThat(equipment.getBackpack(), hasSize(1));
     }
 
     private Item dummyArmor(String id) {

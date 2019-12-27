@@ -1,9 +1,8 @@
-package org.grizz.game.model.converters;
+package org.grizz.game.model.mappers;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import org.grizz.game.model.items.Armor;
 import org.grizz.game.model.items.Item;
+import org.grizz.game.model.mapper.ItemMapper;
 import org.grizz.game.model.repository.ItemRepo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,27 +11,32 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.sql.ResultSet;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ItemReadConverterTest {
+public class ItemMapperTest {
     private static final String ID = "id";
 
     @Mock
     private ItemRepo itemRepo;
 
     @InjectMocks
-    private ItemReadConverter converter = new ItemReadConverter();
+    private ItemMapper mapper = new ItemMapper();
 
     @Test
-    public void shouldGetItemByIdFromDBObject() throws Exception {
+    public void shouldGetItemByIdFromResultSet() throws Exception {
         Item expectedItem = dummyItem(ID);
         Mockito.when(itemRepo.get(ID)).thenReturn(expectedItem);
-        DBObject dbo = new BasicDBObject();
-        dbo.put("_id", ID);
 
-        Item converted = converter.convert(dbo);
+        ResultSet resultSet = mock(ResultSet.class);
+        when(resultSet.getString("id")).thenReturn(ID);
+
+        Item converted = mapper.map(resultSet, null);
 
         assertThat(converted.getId(), is(ID));
     }
