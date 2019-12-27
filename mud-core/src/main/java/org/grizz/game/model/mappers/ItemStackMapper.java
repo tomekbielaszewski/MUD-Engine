@@ -22,7 +22,7 @@ public class ItemStackMapper implements RowMapper<List<Item>> {
     @Override
     public List<Item> map(ResultSet rs, StatementContext ctx) throws SQLException {
         int amount = rs.getInt("amount");
-        String id = rs.getString("id");
+        String id = rs.getString("item_id");
         Item item = itemRepo.get(id);
 
         return IntStream.range(0, amount)
