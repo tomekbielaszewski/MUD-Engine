@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SystemScriptBindingProvider {
@@ -26,7 +27,10 @@ public class SystemScriptBindingProvider {
         String[] beanNames = context.getBeanDefinitionNames();
         for (String beanName : beanNames) {
             Object bean = context.getBean(beanName);
-            String fullServiceName = bean.getClass().getCanonicalName();
+            String fullServiceName = Optional.ofNullable(bean)
+                    .map(Object::getClass)
+                    .map(Class::getCanonicalName)
+                    .orElse("");
 
             for (String whiteListedPackage : scriptEngineServicePackages) {
                 if (fullServiceName.startsWith(whiteListedPackage)) {
