@@ -57,7 +57,7 @@ public class AdminGiveItemCommandExecutorTest {
         executor.give(PLAYER_NAME, ITEM_NAME, 1, admin, adminResponse);
 
         verify(equipmentService).addItems(eq(ITEM_NAME), eq(1), eq(player), any());
-        verify(playerRepository).save(player);
+        verify(playerRepository).update(player);
     }
 
     @Test(expected = InvalidAmountException.class)
@@ -86,7 +86,7 @@ public class AdminGiveItemCommandExecutorTest {
         executor.give(PLAYER_NAME, ITEM_NAME, 10, admin, adminResponse);
 
         verify(equipmentService).addItems(eq(ITEM_NAME), eq(10), eq(player), any());
-        verify(playerRepository).save(player);
+        verify(playerRepository).update(player);
     }
 
     @Test

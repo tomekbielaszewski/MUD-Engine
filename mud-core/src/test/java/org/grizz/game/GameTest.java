@@ -41,7 +41,7 @@ public class GameTest {
         game.runCommand(COMMAND, NAME);
 
         verify(commandHandler).execute(eq(COMMAND), eq(player), any());
-        verify(playerRepository).save(player);
+        verify(playerRepository).update(player);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class GameTest {
         PlayerResponse response = game.runCommand(COMMAND, NAME);
 
         verify(exceptionHandler).handle(any(GameException.class), eq(response));
-        verify(playerRepository, never()).save(any(Player.class));
+        verify(playerRepository, never()).update(any(Player.class));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class GameTest {
         PlayerResponse response = game.runCommand(COMMAND, NAME);
 
         verify(exceptionHandler).handle(any(PlayerDoesNotExistException.class), eq(response));
-        verify(playerRepository, never()).save(any(Player.class));
+        verify(playerRepository, never()).update(any(Player.class));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class GameTest {
         PlayerResponse response = game.runCommand(COMMAND, NAME);
 
         verify(exceptionHandler).handleLocalized(any(GameScriptException.class), eq(response));
-        verify(playerRepository, never()).save(any(Player.class));
+        verify(playerRepository, never()).update(any(Player.class));
     }
 
     private Player dummyPlayer() {

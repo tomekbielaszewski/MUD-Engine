@@ -189,7 +189,7 @@ public class AdminTeleportCommandExecutorTest {
 
         commandExecutor.teleport(PLAYER_NAME, TARGET_LOCATION_ID, admin, new PlayerResponse());
 
-        verify(playerRepository).save(player);
+        verify(playerRepository).update(player);
     }
 
     @Test
