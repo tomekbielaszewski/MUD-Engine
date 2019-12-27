@@ -1,4 +1,4 @@
-package org.grizz.game.model.mapper;
+package org.grizz.game.model.mappers;
 
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.ItemRepo;
@@ -6,7 +6,6 @@ import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

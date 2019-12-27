@@ -2,7 +2,6 @@ package org.grizz.game.model.mappers;
 
 import com.google.common.collect.Lists;
 import org.grizz.game.model.LocationItems;
-import org.grizz.game.model.mapper.LocationItemsMapper;
 import org.grizz.game.model.repository.ItemListRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;

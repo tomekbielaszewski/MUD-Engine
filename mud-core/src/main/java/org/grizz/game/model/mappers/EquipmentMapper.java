@@ -1,4 +1,4 @@
-package org.grizz.game.model.mapper;
+package org.grizz.game.model.mappers;
 
 import org.apache.commons.lang3.StringUtils;
 import org.grizz.game.model.Equipment;

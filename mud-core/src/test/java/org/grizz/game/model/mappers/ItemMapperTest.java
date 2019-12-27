@@ -2,7 +2,6 @@ package org.grizz.game.model.mappers;
 
 import org.grizz.game.model.items.Armor;
 import org.grizz.game.model.items.Item;
-import org.grizz.game.model.mapper.ItemMapper;
 import org.grizz.game.model.repository.ItemRepo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
