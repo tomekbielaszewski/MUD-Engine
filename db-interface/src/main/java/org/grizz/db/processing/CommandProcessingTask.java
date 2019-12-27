@@ -29,8 +29,8 @@ public class CommandProcessingTask implements Runnable {
 
         for (PlayerCommand command : commands) {
             List<ProcessedPlayerResponse> playerResponses = commandProcessor.process(command);
-            playerResponseRepository.save(playerResponses);
-            playerCommandRepository.save(command);
+            playerResponseRepository.insert(playerResponses);
+            playerCommandRepository.insert(command);
 
             playerResponses.forEach(r -> System.out.println("\n" + r.getResponse()));
         }

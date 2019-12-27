@@ -24,7 +24,7 @@ public class Starter {
                         .processed(false)
                         .timestamp(System.currentTimeMillis())
                         .build();
-                playerCommandRepository.save(playerCommand);
+                playerCommandRepository.insert(playerCommand);
             }
             context.close();
         }
