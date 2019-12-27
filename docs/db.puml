@@ -1,50 +1,55 @@
 @startuml
 
 package mud_core {
-    players "1" *-- "1" equipments : equipment_id
-    players "1" *-- "1" location_items : current_location_id
-    players "1" *-- "1" location_items : past_location_id
-    players "1" *-- "many" player_params : params_collection_id
-    equipments "1" *-- "many" item_lists : backpack_id
-    location_items "1" *-- "many" item_lists : item_list_id
-    location_items "1" *-- "many" item_lists : static_item_list_id
+    players "1" *-- "1" equipments : player_name
+    players "1" *-- "1" locations : current_location_id
+    players "1" *-- "1" locations : past_location_id
+    locations "1" *-- "many" location_items : location_id && item_id
+    players "1" *-- "many" player_params : player_name && key
+    equipments "1" *-- "many" backpack_items : player_name && item_id
 }
 
 package mud_db_interface {
-    player_commands "many" *-- "1" players : player_id
+    player_commands "many" *-- "1" players : player_name
     processed_player_response "many" *-- "1" player_commands : command_id
-    processed_player_response "many" *-- "1" players : player_id
+    processed_player_response "many" *-- "1" players : executed_by_player
+    processed_player_response "many" *-- "1" players : addressed_to_player
+}
+
+class locations {
+    PK String id
+    String name
 }
 
 class location_items {
-    String location_id
-    String item_list_id
-    String static_item_list_id
+    CK String location_id
+    CK String item_id
+    String item_name
+    int amount
 }
 
-class item_lists {
-    String owner_id
-    String list_id
-    String item_id
+class backpack_items {
+    CK String player_name
+    CK String item_id
     String item_name
     int amount
 }
 
 class equipments {
-    Armor head_item_id
-    Armor torso_item_id
-    Armor hands_item_id
-    Armor legs_item_id
-    Armor feet_item_id
+    FK String player_name
+
+    String head
+    String torso
+    String hands
+    String legs
+    String feet
     
-    Weapon melee_weapon_id
-    Weapon range_weapon_id
-    
-    String backpack_id
+    String melee_weapon
+    String range_weapon
 }
 
 class players {
-    String name
+    PK String name
 
     Integer strength
     Integer dexterity
@@ -53,38 +58,33 @@ class players {
     Integer wisdom
     Integer charisma
     
-    String equipment_id
-
     String current_location_id;
     String past_location_id;
 
     long last_activity_timestamp
-
-    String params_collection_id
 }
 
 class player_params {
-    String player_id
-    String key
+    CK String player_name
+    CK String key
     String value
 }
 
 class processed_player_response {
-    String id
-    String player_id
-    String player_nick
+    PK String id
+    FK String command_id
+    FK String executed_by_player
+    FK String addressed_to_player
     String response
-    String command_id
-    boolean sent
+    timestamp sent
 }
 
 class player_commands {
-    String id;
-    String player_id;
-    String player_nick;
-    String command;
-    boolean processed;
-    long timestamp;
+    PK String id
+    String command
+    FK String player_name
+    timestamp processed
+    timestamp executed
 }
 
 @enduml
