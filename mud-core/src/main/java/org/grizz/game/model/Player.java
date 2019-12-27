@@ -3,19 +3,18 @@ package org.grizz.game.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
 
 @Data
 @Builder
 @AllArgsConstructor
-@Document(collection = "players")
+//@Document(collection = "players")
 public class Player {
-    @Id
+    //    @Id
     private String id;
 
+    //    unique
     private String name;
 
     private Integer strength;
