@@ -2,11 +2,12 @@
 
 package mud_core {
     players "1" *-- "1" equipments : player_name
+    players "1" *-- "1" player_stats : player_name
     players "1" *-- "1" locations : current_location_id
     players "1" *-- "1" locations : past_location_id
     locations "1" *-- "many" location_items : location_id && item_id
     players "1" *-- "many" player_params : player_name && key
-    equipments "1" *-- "many" backpack_items : player_name && item_id
+    players "1" *-- "many" backpack_items : player_name && item_id
 }
 
 package mud_db_interface {
@@ -50,6 +51,15 @@ class equipments {
 
 class players {
     PK String name
+    
+    String current_location_id;
+    String past_location_id;
+
+    long last_activity_timestamp
+}
+
+class player_stats {
+    FK String player_name
 
     Integer strength
     Integer dexterity
@@ -57,11 +67,6 @@ class players {
     Integer intelligence
     Integer wisdom
     Integer charisma
-    
-    String current_location_id;
-    String past_location_id;
-
-    long last_activity_timestamp
 }
 
 class player_params {
