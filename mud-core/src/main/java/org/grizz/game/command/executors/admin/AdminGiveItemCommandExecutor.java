@@ -46,7 +46,7 @@ public class AdminGiveItemCommandExecutor {
     }
 
     private void savePlayer(Player player) {
-        playerRepository.save(player);
+        playerRepository.update(player);
     }
 
     private void validateAmount(int amount) {

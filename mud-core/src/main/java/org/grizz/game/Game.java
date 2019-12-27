@@ -37,7 +37,7 @@ public class Game {
 
             commandHandlerBus.execute(command, player, response);
 
-            playerRepository.save(player);
+            playerRepository.update(player);
         } catch (GameScriptException e) {
             log.error("GameScriptException: [{}] in file:[{}] {}x{}", e.getParams());
             exceptionHandler.handleLocalized(e, response);

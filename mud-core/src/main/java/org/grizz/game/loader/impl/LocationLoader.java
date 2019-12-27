@@ -77,7 +77,7 @@ public class LocationLoader implements Loader {
                 .mobileItems(Lists.newArrayList())
                 .staticItems(Lists.newArrayList())
                 .build();
-        locationItems = locationItemsRepository.insert(locationItems);
+        locationItems = locationItemsRepository.save(locationItems);
         return locationItems;
     }
 

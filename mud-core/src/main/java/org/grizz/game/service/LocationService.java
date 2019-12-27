@@ -118,6 +118,6 @@ public class LocationService {
     }
 
     private void saveLocationItems(Location location) {
-        locationItemsRepository.save(location.getItems());
+        locationItemsRepository.update(location.getItems());
     }
 }
