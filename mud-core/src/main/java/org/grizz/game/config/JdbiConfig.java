@@ -5,7 +5,8 @@ import org.grizz.game.model.repository.LocationItemsRepository;
 import org.grizz.game.model.repository.PlayerRepository;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.RowMapper;
-import org.jdbi.v3.core.spi.JdbiPlugin;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
@@ -17,10 +18,16 @@ import java.util.List;
 public class JdbiConfig {
 
     @Bean
-    public Jdbi jdbi(DataSource ds, List<JdbiPlugin> jdbiPlugins, List<RowMapper<?>> rowMappers) {
+    @ConfigurationProperties(prefix = "mud.engine.datasource")
+    public DataSource dataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    public Jdbi jdbi(DataSource ds, /*List<JdbiPlugin> jdbiPlugins,*/ List<RowMapper<?>> rowMappers) {
         TransactionAwareDataSourceProxy proxy = new TransactionAwareDataSourceProxy(ds);
         Jdbi jdbi = Jdbi.create(proxy);
-        jdbiPlugins.forEach(jdbi::installPlugin);
+//        jdbiPlugins.forEach(jdbi::installPlugin);
         rowMappers.forEach(jdbi::registerRowMapper);
         return jdbi;
     }
