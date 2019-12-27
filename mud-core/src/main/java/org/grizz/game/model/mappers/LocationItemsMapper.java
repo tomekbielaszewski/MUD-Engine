@@ -5,6 +5,7 @@ import org.grizz.game.model.repository.ItemListRepository;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 @Component
 public class LocationItemsMapper implements RowMapper<LocationItems> {
 
+    @Lazy
     @Autowired
     private ItemListRepository itemListRepository;
 
