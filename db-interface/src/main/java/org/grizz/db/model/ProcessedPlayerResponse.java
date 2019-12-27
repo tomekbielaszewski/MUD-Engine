@@ -1,13 +1,11 @@
 package org.grizz.db.model;
 
-
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Builder
-@Document(collection = "commandResponses")
+//@Document(collection = "commandResponses")
 public class ProcessedPlayerResponse {
     private String id;
     private String receiver;

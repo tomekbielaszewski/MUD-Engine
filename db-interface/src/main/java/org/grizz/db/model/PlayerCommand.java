@@ -2,11 +2,10 @@ package org.grizz.db.model;
 
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Builder
-@Document(collection = "commandQueue")
+//@Document(collection = "commandQueue")
 public class PlayerCommand {
     private String id;
     private String player;

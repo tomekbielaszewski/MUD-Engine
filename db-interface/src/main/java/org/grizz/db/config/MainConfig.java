@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -19,7 +18,6 @@ import javax.annotation.PostConstruct;
 @EnableScheduling
 @ComponentScan("org.grizz.db")
 @Import(GameConfig.class)
-@EnableMongoRepositories("org.grizz.db.model.repository")
 @SpringBootApplication
 public class MainConfig {
     @Autowired
