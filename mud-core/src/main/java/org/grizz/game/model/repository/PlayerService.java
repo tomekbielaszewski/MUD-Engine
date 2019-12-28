@@ -61,6 +61,7 @@ public class PlayerService implements PlayerRepository {
                 .stats(fromEntity(statsEntity))
                 .build();
         paramEntities.forEach(param -> player.addParameter(param.getKey(), param.getValue()));
+        return player;
     }
 
     @Override
