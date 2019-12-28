@@ -34,6 +34,9 @@ create table if not exists equipments
     ranged_weapon varchar
 );
 
+create unique index equipments_player_name_uindex
+    on equipments (player_name);
+
 create table if not exists player_stats
 (
     player_name varchar not null
@@ -46,6 +49,9 @@ create table if not exists player_stats
     wisdom integer default 0,
     charisma integer default 0
 );
+
+create unique index player_stats_player_name_uindex
+    on player_stats (player_name);
 
 create table if not exists location_items
 (
