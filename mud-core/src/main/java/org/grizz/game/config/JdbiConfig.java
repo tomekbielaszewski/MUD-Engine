@@ -1,8 +1,6 @@
 package org.grizz.game.config;
 
-import org.grizz.game.model.repository.ItemListRepository;
-import org.grizz.game.model.repository.LocationItemsRepository;
-import org.grizz.game.model.repository.PlayerRepository;
+import org.grizz.game.model.db.dao.*;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.spi.JdbiPlugin;
@@ -39,18 +37,48 @@ public class JdbiConfig {
         return new SqlObjectPlugin();
     }
 
+//    @Bean
+//    public ItemListRepository itemListRepository(Jdbi jdbi) {
+//        return jdbi.onDemand(ItemListRepository.class);
+//    }
+//
+//    @Bean
+//    public LocationItemsRepository locationItemsRepository(Jdbi jdbi) {
+//        return jdbi.onDemand(LocationItemsRepository.class);
+//    }
+
     @Bean
-    public ItemListRepository itemListRepository(Jdbi jdbi) {
-        return jdbi.onDemand(ItemListRepository.class);
+    public PlayersDao playersDao(Jdbi jdbi) {
+        return jdbi.onDemand(PlayersDao.class);
     }
 
     @Bean
-    public LocationItemsRepository locationItemsRepository(Jdbi jdbi) {
-        return jdbi.onDemand(LocationItemsRepository.class);
+    public EquipmentsDao equipmentsDao(Jdbi jdbi) {
+        return jdbi.onDemand(EquipmentsDao.class);
     }
 
     @Bean
-    public PlayerRepository playerRepository(Jdbi jdbi) {
-        return jdbi.onDemand(PlayerRepository.class);
+    public BackpackItemsDao backpackItemsDao(Jdbi jdbi) {
+        return jdbi.onDemand(BackpackItemsDao.class);
+    }
+
+    @Bean
+    public PlayerStatsDao playerStatsDao(Jdbi jdbi) {
+        return jdbi.onDemand(PlayerStatsDao.class);
+    }
+
+    @Bean
+    public PlayerParamsDao playerParamsDao(Jdbi jdbi) {
+        return jdbi.onDemand(PlayerParamsDao.class);
+    }
+
+    @Bean
+    public LocationItemsDao locationItemsDao(Jdbi jdbi) {
+        return jdbi.onDemand(LocationItemsDao.class);
+    }
+
+    @Bean
+    public LocationsDao locationsDao(Jdbi jdbi) {
+        return jdbi.onDemand(LocationsDao.class);
     }
 }
