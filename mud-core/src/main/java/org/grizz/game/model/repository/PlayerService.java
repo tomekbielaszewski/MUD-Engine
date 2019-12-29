@@ -90,8 +90,12 @@ public class PlayerService implements PlayerRepository {
         jdbi.useTransaction(h -> {
             h.attach(PlayersDao.class).upsert(toPlayerEntity(player));
             h.attach(EquipmentsDao.class).upsert(toEquipmentEntity(player.getEquipment(), player.getName()));
-            h.attach(BackpackItemsDao.class).upsert(toBackpackItemsEntities(player.getEquipment().getBackpack(), player.getName()));
-            h.attach(PlayerParamsDao.class).upsert(toParamsEntity(player.getParameters(), player.getName()));
+            BackpackItemsDao backpackItemsDao = h.attach(BackpackItemsDao.class);
+            backpackItemsDao.removeAll(player.getName());
+            backpackItemsDao.insert(toBackpackItemsEntities(player.getEquipment().getBackpack(), player.getName()));
+            PlayerParamsDao playerParamsDao = h.attach(PlayerParamsDao.class);
+            playerParamsDao.removeAll(player.getName());
+            playerParamsDao.insert(toParamsEntity(player.getParameters(), player.getName()));
             h.attach(PlayerStatsDao.class).upsert(toPlayerStatsEntity(player.getStats(), player.getName()));
         });
     }
