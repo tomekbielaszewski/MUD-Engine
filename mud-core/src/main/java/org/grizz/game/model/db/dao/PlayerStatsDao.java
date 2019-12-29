@@ -13,7 +13,7 @@ public interface PlayerStatsDao {
     @SqlQuery("SELECT *\n" +
             "FROM player_stats\n" +
             "WHERE player_name = :name;")
-    PlayerStatsEntity getByName(@Bind String name);
+    PlayerStatsEntity getByName(@Bind("name") String name);
 
     @SqlUpdate("INSERT INTO player_stats\n" +
             "VALUES (:p.playerName, :p.strength, :p.dexterity, :p.endurance, :p.intelligence, " +

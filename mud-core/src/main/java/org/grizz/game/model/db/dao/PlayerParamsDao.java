@@ -15,7 +15,7 @@ public interface PlayerParamsDao {
     @SqlQuery("SELECT player_name, key, value " +
             "FROM player_params " +
             "WHERE player_name = :name;")
-    List<PlayerParamEntity> getByName(@Bind String name);
+    List<PlayerParamEntity> getByName(@Bind("name") String name);
 
     @SqlUpdate("INSERT INTO player_params " +
             "VALUES (:p.playerName, :p.key, :p.value) " +
@@ -25,5 +25,5 @@ public interface PlayerParamsDao {
     @SqlUpdate("DELETE " +
             "FROM player_params " +
             "WHERE player_name = :name;")
-    void removeAll(@Bind String name);
+    void removeAll(@Bind("name") String name);
 }

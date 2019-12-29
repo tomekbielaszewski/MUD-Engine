@@ -16,12 +16,12 @@ public interface LocationItemsDao {
     @SqlQuery("SELECT location_id, item_id, item_name, amount " +
             "FROM location_items " +
             "WHERE location_id = :locationId;")
-    List<LocationItemsEntity> getByLocationId(@Bind String locationId);
+    List<LocationItemsEntity> getByLocationId(@Bind("locationId") String locationId);
 
     @SqlUpdate("DELETE " +
             "FROM location_items " +
             "WHERE location_id = :locationId;")
-    void removeAll(String locationId);
+    void removeAll(@Bind("locationId") String locationId);
 
     @SqlBatch("INSERT INTO location_items " +
             "VALUES (:l.locationId, :l.itemId, :l.itemName, :l.amount) " +

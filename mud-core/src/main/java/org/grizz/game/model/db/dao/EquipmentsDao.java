@@ -12,7 +12,7 @@ public interface EquipmentsDao {
     @UseRowMapper(EquipmentEntityMapper.class)
     @SqlQuery("SELECT * FROM equipments " +
             "WHERE player_name = :name;")
-    EquipmentEntity getByName(@Bind String name);
+    EquipmentEntity getByName(@Bind("name") String name);
 
     @SqlUpdate("INSERT INTO equipments " +
             "VALUES (:e.playerName, :e.head, :e.torso, :e.hands, :e.legs, :e.feet, :e.meleeWeapon, :e.rangedWeapon) " +

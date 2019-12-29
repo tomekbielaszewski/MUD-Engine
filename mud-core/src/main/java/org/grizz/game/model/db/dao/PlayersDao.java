@@ -16,22 +16,22 @@ public interface PlayersDao {
     @SqlQuery("SELECT * " +
             "FROM players " +
             "WHERE name = :name;")
-    PlayerEntity getByName(@Bind String name);
+    PlayerEntity getByName(@Bind("name") String name);
 
     @SqlQuery("SELECT name " +
             "FROM players " +
             "WHERE last_activity > TO_TIMESTAMP(:timestamp / 1000);")
-    List<String> findByLastActivityTimestampGreaterThan(@Bind long timestamp);
+    List<String> findByLastActivityTimestampGreaterThan(@Bind("timestamp") long timestamp);
 
     @SqlQuery("SELECT name " +
             "FROM players " +
             "WHERE current_location_id = :id;")
-    List<String> findByCurrentLocation(@Bind String id);
+    List<String> findByCurrentLocation(@Bind("id") String id);
 
     @SqlQuery("SELECT name " +
             "FROM players " +
             "WHERE name = :name;")
-    Optional<String> checkExistence(String name);
+    Optional<String> checkExistence(@Bind("name") String name);
 
     @SqlUpdate("INSERT INTO players " +
             "VALUES (:p.name, :p.currentLocationId, :p.pastLocationId, TO_TIMESTAMP(:p.lastActivity / 1000)) " +

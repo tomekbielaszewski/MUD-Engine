@@ -12,7 +12,7 @@ public interface LocationsDao {
     @SqlQuery("SELECT name " +
             "FROM locations " +
             "WHERE location_id = :locationId;")
-    Optional<String> checkExistence(@Bind String locationId);
+    Optional<String> checkExistence(@Bind("locationId") String locationId);
 
     @SqlUpdate("INSERT INTO locations " +
             "VALUES (:l.locationId, :l.name);")

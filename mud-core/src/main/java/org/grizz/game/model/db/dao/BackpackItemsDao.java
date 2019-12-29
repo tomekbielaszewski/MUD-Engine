@@ -16,7 +16,7 @@ public interface BackpackItemsDao {
     @SqlQuery("SELECT player_name, item_id, item_name, amount " +
             "FROM backpack_items " +
             "WHERE player_name = :name;")
-    List<BackpackItemsEntity> getByName(@Bind String name);
+    List<BackpackItemsEntity> getByName(@Bind("name") String name);
 
     @SqlBatch("INSERT INTO backpack_items " +
             "VALUES (:b.playerName, :b.itemId, :b.itemName, :b.amount) " +
@@ -24,6 +24,6 @@ public interface BackpackItemsDao {
     void insert(@BindBean("b") List<BackpackItemsEntity> toBackpackItemsEntities);
 
     @SqlUpdate("DELETE FROM backpack_items " +
-            "WHERE player_name=:name;")
-    void removeAll(@Bind String name);
+            "WHERE player_name = :name;")
+    void removeAll(@Bind("name") String name);
 }
