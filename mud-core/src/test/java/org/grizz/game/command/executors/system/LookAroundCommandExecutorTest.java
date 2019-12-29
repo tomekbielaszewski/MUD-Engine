@@ -27,9 +27,6 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class LookAroundCommandExecutorTest {
     private static final String LOCATION_ID = "id";
-    private static final String PLAYER_ID = "id1";
-    private static final String PLAYER_ID_2 = "id2";
-    private static final String PLAYER_ID_3 = "id3";
     private static final String PLAYER_NAME = "name1";
     private static final String PLAYER_NAME_2 = "name2";
     private static final String PLAYER_NAME_3 = "name3";
@@ -51,7 +48,7 @@ public class LookAroundCommandExecutorTest {
     public void addsCurrentLocationToPlayerResponse() throws Exception {
         when(locationRepo.get(LOCATION_ID)).thenReturn(Location.builder().id(LOCATION_ID).build());
         PlayerResponse response = new PlayerResponse();
-        Player player = dummyPlayer(PLAYER_ID, PLAYER_NAME, LOCATION_ID);
+        Player player = dummyPlayer(PLAYER_NAME, LOCATION_ID);
 
         executor.lookAround(player, response);
 
@@ -61,13 +58,13 @@ public class LookAroundCommandExecutorTest {
     @Test
     public void findsOtherPlayersOnLocation() throws Exception {
         PlayerResponse response = new PlayerResponse();
-        Player player = dummyPlayer(PLAYER_ID, PLAYER_NAME, LOCATION_ID);
+        Player player = dummyPlayer(PLAYER_NAME, LOCATION_ID);
         Location location = Location.builder().id(LOCATION_ID).build();
         when(locationRepo.get(LOCATION_ID)).thenReturn(location);
         when(playerRepository.findByCurrentLocation(LOCATION_ID)).thenReturn(Lists.newArrayList(
                 player,
-                dummyPlayer(PLAYER_ID_2, PLAYER_NAME_2, LOCATION_ID),
-                dummyPlayer(PLAYER_ID_3, PLAYER_NAME_3, LOCATION_ID)
+                dummyPlayer(PLAYER_NAME_2, LOCATION_ID),
+                dummyPlayer(PLAYER_NAME_3, LOCATION_ID)
         ));
 
         executor.lookAround(player, response);
@@ -82,7 +79,7 @@ public class LookAroundCommandExecutorTest {
     @Test
     public void callsOnShowScriptWhenPresent() throws Exception {
         PlayerResponse response = new PlayerResponse();
-        Player player = dummyPlayer(PLAYER_ID, PLAYER_NAME, LOCATION_ID);
+        Player player = dummyPlayer(PLAYER_NAME, LOCATION_ID);
         Location location = Location.builder().id(LOCATION_ID).onShowScript(SCRIPT_ID).build();
         Script script = Script.builder().id(SCRIPT_ID).build();
         when(locationRepo.get(LOCATION_ID)).thenReturn(location);
@@ -97,7 +94,7 @@ public class LookAroundCommandExecutorTest {
     @Test
     public void doesNotTryToRunOnShowScriptWhenAbsent() throws Exception {
         PlayerResponse response = new PlayerResponse();
-        Player player = dummyPlayer(PLAYER_ID, PLAYER_NAME, LOCATION_ID);
+        Player player = dummyPlayer(PLAYER_NAME, LOCATION_ID);
         Location location = Location.builder().id(LOCATION_ID).build();
         when(locationRepo.get(LOCATION_ID)).thenReturn(location);
 
@@ -107,9 +104,8 @@ public class LookAroundCommandExecutorTest {
         verify(scriptRunner, never()).execute(any(), eq(player), eq(response));
     }
 
-    private Player dummyPlayer(String id, String name, String location) {
+    private Player dummyPlayer(String name, String location) {
         return Player.builder()
-                .id(id)
                 .name(name)
                 .currentLocation(location)
                 .build();

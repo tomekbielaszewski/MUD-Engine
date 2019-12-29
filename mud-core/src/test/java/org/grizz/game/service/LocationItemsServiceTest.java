@@ -27,7 +27,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LocationServiceTest {
+public class LocationItemsServiceTest {
     private static final String ITEM_1 = "itemName 1";
     private static final String ITEM_2 = "itemName 2";
     private static final String ITEM_3 = "itemName 3";
@@ -59,7 +59,7 @@ public class LocationServiceTest {
                 dummyItem(ITEM_3)
         ));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location.getItems());
+        verify(locationItemsRepository).save(location);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class LocationServiceTest {
                 dummyItem(ITEM_5)
         ));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location.getItems());
+        verify(locationItemsRepository).save(location);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class LocationServiceTest {
         assertThat(location.getItems().getMobileItems(), hasSize(1));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_1)));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location.getItems());
+        verify(locationItemsRepository).save(location);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class LocationServiceTest {
                 dummyItem(ITEM_5)
         ));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location.getItems());
+        verify(locationItemsRepository).save(location);
     }
 
     @Test
@@ -161,7 +161,7 @@ public class LocationServiceTest {
         assertThat(location.getItems().getStaticItems(), hasSize(1));
         assertThat(location.getItems().getStaticItems(), hasItem(dummyStatic(ITEM_1)));
         assertThat(location.getItems().getMobileItems(), hasSize(0));
-        verify(locationItemsRepository).save(location.getItems());
+        verify(locationItemsRepository).save(location);
     }
 
     @Test
@@ -172,7 +172,7 @@ public class LocationServiceTest {
 
         locationService.addStaticItem(staticItem, location);
 
-        verify(locationItemsRepository, never()).save(location.getItems());
+        verify(locationItemsRepository, never()).save(location);
     }
 
     @Test
@@ -187,7 +187,7 @@ public class LocationServiceTest {
         assertThat(location.getItems().getStaticItems(), hasSize(1));
         assertThat(location.getItems().getStaticItems(), hasItem(dummyStatic(ITEM_1)));
         assertThat(location.getItems().getMobileItems(), hasSize(0));
-        verify(locationItemsRepository).save(location.getItems());
+        verify(locationItemsRepository).save(location);
     }
 
     @Test
@@ -201,7 +201,7 @@ public class LocationServiceTest {
         assertThat(location.getItems().getStaticItems(), hasSize(1));
         assertThat(location.getItems().getStaticItems(), hasItem(dummyStatic(ITEM_1)));
         assertThat(location.getItems().getMobileItems(), hasSize(0));
-        verify(locationItemsRepository).save(location.getItems());
+        verify(locationItemsRepository).save(location);
     }
 
     @Test
@@ -216,7 +216,7 @@ public class LocationServiceTest {
         assertThat(removedItems, hasItem(dummyItem(ITEM_1)));
         assertThat(location.getItems().getMobileItems(), hasSize(0));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location.getItems());
+        verify(locationItemsRepository).save(location);
     }
 
     @Test
@@ -232,7 +232,7 @@ public class LocationServiceTest {
         assertThat(location.getItems().getMobileItems(), hasSize(1));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_1)));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location.getItems());
+        verify(locationItemsRepository).save(location);
     }
 
     @Test
@@ -252,7 +252,7 @@ public class LocationServiceTest {
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_2)));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_3)));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location.getItems());
+        verify(locationItemsRepository).save(location);
     }
 
     @Test
@@ -266,7 +266,7 @@ public class LocationServiceTest {
 
         assertThat(location.getItems().getMobileItems(), hasSize(1));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_1)));
-        verify(locationItemsRepository, never()).save(location.getItems());
+        verify(locationItemsRepository, never()).save(location);
     }
 
     @Test
@@ -280,7 +280,7 @@ public class LocationServiceTest {
 
         assertThat(location.getItems().getMobileItems(), hasSize(1));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_2)));
-        verify(locationItemsRepository, never()).save(location.getItems());
+        verify(locationItemsRepository, never()).save(location);
     }
 
     @Test
@@ -295,7 +295,7 @@ public class LocationServiceTest {
 
         assertThat(location.getItems().getMobileItems(), hasSize(0));
         assertThat(location.getItems().getStaticItems(), hasSize(1));
-        verify(locationItemsRepository, never()).save(location.getItems());
+        verify(locationItemsRepository, never()).save(location);
     }
 
     @Test
@@ -309,7 +309,7 @@ public class LocationServiceTest {
 
         assertThat(location.getItems().getMobileItems(), hasSize(1));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_1)));
-        verify(locationItemsRepository, never()).save(location.getItems());
+        verify(locationItemsRepository, never()).save(location);
     }
 
     @Test
@@ -323,7 +323,7 @@ public class LocationServiceTest {
 
         assertThat(location.getItems().getMobileItems(), hasSize(1));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_1)));
-        verify(locationItemsRepository, never()).save(location.getItems());
+        verify(locationItemsRepository, never()).save(location);
     }
 
     private Location dummyLocation(List<Item> mobileItems) {
