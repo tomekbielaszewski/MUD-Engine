@@ -18,9 +18,14 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class InitializeAndCleaningSteps extends CucumberTest {
+    private final Notifier notifier;
+    private final PlayerRepository playerRepository;
 
     @Autowired
-    private Notifier notifier;
+    public InitializeAndCleaningSteps(Notifier notifier, PlayerRepository playerRepository) {
+        this.notifier = notifier;
+        this.playerRepository = playerRepository;
+    }
 
     @Before
     public void init() {
@@ -50,12 +55,11 @@ public class InitializeAndCleaningSteps extends CucumberTest {
     }
 
     private void savePlayer(Player player) {
-        jdbi.onDemand(PlayerRepository.class)
-                .insert(player);
+        playerRepository.insert(player);
     }
 
     private boolean playerExist(String name) {
-        return jdbi.withHandle(h -> h.createQuery("SELECT count(*) FROM players WHERE player_name='" + name + "'")
+        return jdbi.withHandle(h -> h.createQuery("SELECT count(*) FROM players WHERE name = '" + name + "'")
                 .map((rs, ctx) -> rs.getInt("count"))
                 .findOne()
                 .filter(i -> i > 0)
