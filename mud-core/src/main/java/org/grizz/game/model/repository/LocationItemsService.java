@@ -1,12 +1,7 @@
 package org.grizz.game.model.repository;
 
-import org.grizz.game.exception.LocationAlreadyExistException;
-import org.grizz.game.exception.NoSuchLocationException;
-import org.grizz.game.model.Location;
 import org.grizz.game.model.LocationItems;
 import org.grizz.game.model.db.dao.LocationItemsDao;
-import org.grizz.game.model.db.dao.LocationsDao;
-import org.grizz.game.model.db.entities.LocationEntity;
 import org.grizz.game.model.db.entities.LocationItemsEntity;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.items.ItemType;
@@ -21,13 +16,11 @@ import java.util.stream.Stream;
 
 @Service
 public class LocationItemsService implements LocationItemsRepository {
-    private final LocationsDao locationsDao;
     private final LocationItemsDao locationItemsDao;
     private final ItemRepo itemRepo;
 
     @Autowired
-    public LocationItemsService(LocationsDao locationsDao, LocationItemsDao locationItemsDao, ItemRepo itemRepo) {
-        this.locationsDao = locationsDao;
+    public LocationItemsService(LocationItemsDao locationItemsDao, ItemRepo itemRepo) {
         this.locationItemsDao = locationItemsDao;
         this.itemRepo = itemRepo;
     }
@@ -46,25 +39,11 @@ public class LocationItemsService implements LocationItemsRepository {
     }
 
     @Override
-    public void update(LocationItems items) {
-        if (!locationsDao.checkExistence(items.getLocationId()).isPresent()) {
-            throw new NoSuchLocationException("no.such.location", items.getLocationId());
-        }
+    public LocationItems upsert(LocationItems items) {
         List<LocationItemsEntity> itemsEntities = toEntities(items);
         locationItemsDao.removeAll(items.getLocationId()); //in case of depleting some item stack
         locationItemsDao.insert(itemsEntities);
-    }
-
-    @Override
-    public LocationItems save(Location location) {
-        if (locationsDao.checkExistence(location.getId()).isPresent()) {
-            throw new LocationAlreadyExistException("location.already.exist", location.getId());
-        }
-        LocationEntity locationEntity = toEntity(location);
-        locationsDao.insert(locationEntity);
-        List<LocationItemsEntity> itemsEntities = toEntities(location.getItems());
-        locationItemsDao.insert(itemsEntities);
-        return location.getItems();
+        return items;
     }
 
     private List<Item> toItems(List<LocationItemsEntity> itemsEntities) {
@@ -103,12 +82,5 @@ public class LocationItemsService implements LocationItemsRepository {
                         .amount(entry.getValue().size())
                         .build())
                 .collect(Collectors.toList());
-    }
-
-    private LocationEntity toEntity(Location location) {
-        return LocationEntity.builder()
-                .locationId(location.getId())
-                .name(location.getName())
-                .build();
     }
 }

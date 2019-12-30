@@ -37,16 +37,6 @@ public class JdbiConfig {
         return new SqlObjectPlugin();
     }
 
-//    @Bean
-//    public ItemListRepository itemListRepository(Jdbi jdbi) {
-//        return jdbi.onDemand(ItemListRepository.class);
-//    }
-//
-//    @Bean
-//    public LocationItemsRepository locationItemsRepository(Jdbi jdbi) {
-//        return jdbi.onDemand(LocationItemsRepository.class);
-//    }
-
     @Bean
     public PlayersDao playersDao(Jdbi jdbi) {
         return jdbi.onDemand(PlayersDao.class);
@@ -75,10 +65,5 @@ public class JdbiConfig {
     @Bean
     public LocationItemsDao locationItemsDao(Jdbi jdbi) {
         return jdbi.onDemand(LocationItemsDao.class);
-    }
-
-    @Bean
-    public LocationsDao locationsDao(Jdbi jdbi) {
-        return jdbi.onDemand(LocationsDao.class);
     }
 }

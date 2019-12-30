@@ -1,22 +1,10 @@
-create table if not exists locations
-(
-    location_id varchar not null
-        constraint locations_pk
-            primary key,
-    name        varchar not null
-);
-
 create table if not exists players
 (
     name                varchar                 not null
         constraint players_pk
             primary key,
-    current_location_id varchar                 not null
-        constraint players_locations_location_id_fk
-            references locations,
-    past_location_id    varchar                 not null
-        constraint players_locations_location_id_fk_2
-            references locations,
+    current_location_id varchar                 not null,
+    past_location_id    varchar                 not null,
     last_activity       timestamp default now() not null
 );
 
@@ -55,9 +43,7 @@ create unique index player_stats_player_name_uindex
 
 create table if not exists location_items
 (
-    location_id varchar           not null
-        constraint location_items_locations_location_id_fk
-            references locations,
+    location_id varchar           not null,
     item_id     varchar,
     item_name   varchar           not null,
     amount      integer default 0 not null,
