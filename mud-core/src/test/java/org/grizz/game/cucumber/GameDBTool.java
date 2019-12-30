@@ -4,22 +4,21 @@ import org.grizz.game.model.LocationItems;
 import org.grizz.game.model.Player;
 import org.grizz.game.model.repository.LocationItemsRepository;
 import org.grizz.game.model.repository.PlayerRepository;
-import org.jdbi.v3.core.Jdbi;
 
 public class GameDBTool {
-    private final Jdbi db;
+    private final LocationItemsRepository locationItemsRepository;
+    private final PlayerRepository playerRepository;
 
-    public GameDBTool(Jdbi db) {
-        this.db = db;
+    public GameDBTool(LocationItemsRepository locationItemsRepository, PlayerRepository playerRepository) {
+        this.locationItemsRepository = locationItemsRepository;
+        this.playerRepository = playerRepository;
     }
 
     public Player player(String name) {
-        PlayerRepository playerRepository = db.onDemand(PlayerRepository.class);
         return playerRepository.findByName(name);
     }
 
     public LocationItems location(String locationId) {
-        LocationItemsRepository locationItemsRepository = db.onDemand(LocationItemsRepository.class);
         return locationItemsRepository.findByLocationId(locationId);
     }
 

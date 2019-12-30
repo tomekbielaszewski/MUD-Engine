@@ -10,6 +10,8 @@ import org.grizz.game.model.Player;
 import org.grizz.game.model.Stats;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.ItemRepo;
+import org.grizz.game.model.repository.LocationItemsRepository;
+import org.grizz.game.model.repository.PlayerRepository;
 import org.grizz.game.service.notifier.Notifier;
 import org.jdbi.v3.core.Jdbi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,12 @@ public class CucumberTest implements GameMatchers {
     @Autowired
     protected ItemRepo itemRepo;
 
+    @Autowired
+    private LocationItemsRepository locationItemsRepository;
+
+    @Autowired
+    private PlayerRepository playerRepository;
+
     protected void player1(String command) {
         runCommand(command, PLAYER1);
     }
@@ -67,7 +75,7 @@ public class CucumberTest implements GameMatchers {
     }
 
     protected GameDBTool fromDB() {
-        return new GameDBTool(jdbi);
+        return new GameDBTool(locationItemsRepository, playerRepository);
     }
 
     protected Player createPlayer(String name, String location) {
