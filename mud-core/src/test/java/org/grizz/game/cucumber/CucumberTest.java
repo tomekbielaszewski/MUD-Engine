@@ -7,6 +7,7 @@ import org.grizz.game.Game;
 import org.grizz.game.cucumber.config.TestGameConfigWithFongo;
 import org.grizz.game.model.Equipment;
 import org.grizz.game.model.Player;
+import org.grizz.game.model.Stats;
 import org.grizz.game.model.items.Item;
 import org.grizz.game.model.repository.ItemRepo;
 import org.grizz.game.service.notifier.Notifier;
@@ -79,6 +80,8 @@ public class CucumberTest implements GameMatchers {
                 .currentLocation(location)
                 .equipment(Equipment.builder()
                         .backpack(Lists.newArrayList())
+                        .build())
+                .stats(Stats.builder()
                         .build())
                 .parameters(Maps.newHashMap());
     }
