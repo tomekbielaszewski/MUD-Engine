@@ -34,7 +34,7 @@ public interface PlayersDao {
     Optional<String> checkExistence(@Bind("name") String name);
 
     @SqlUpdate("INSERT INTO players " +
-            "VALUES (:p.name, :p.currentLocationId, :p.pastLocationId, TO_TIMESTAMP(:p.lastActivity / 1000)) " +
+            "VALUES (:p.name, :p.currentLocationId, :p.pastLocationId, :p.lastActivity " +
             "ON CONFLICT (name) DO UPDATE SET name = excluded.name, " +
             "                                 current_location_id = excluded.current_location_id, " +
             "                                 past_location_id = excluded.past_location_id, " +
