@@ -24,7 +24,7 @@ public class InitializeAndCleaningSteps extends CucumberTest {
 
     @Before
     public void init() {
-        jdbi.useHandle(h -> h.execute("TRUNCATE TABLE players"));
+        jdbi.useHandle(h -> h.execute("TRUNCATE TABLE players CASCADE"));
         Mockito.reset(notifier);
     }
 
