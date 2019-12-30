@@ -18,6 +18,7 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -179,13 +180,13 @@ public class PlayerService implements PlayerRepository {
     private EquipmentEntity toEquipmentEntity(Equipment equipment, String name) {
         return EquipmentEntity.builder()
                 .playerName(name)
-                .head(equipment.getHeadItem().getId())
-                .torso(equipment.getTorsoItem().getId())
-                .hands(equipment.getHandsItem().getId())
-                .legs(equipment.getLegsItem().getId())
-                .feet(equipment.getFeetItem().getId())
-                .meleeWeapon(equipment.getMeleeWeapon().getId())
-                .rangedWeapon(equipment.getRangeWeapon().getId())
+                .head(Optional.ofNullable(equipment).map(Equipment::getHeadItem).map(Item::getId).orElse(null))
+                .torso(Optional.ofNullable(equipment).map(Equipment::getTorsoItem).map(Item::getId).orElse(null))
+                .hands(Optional.ofNullable(equipment).map(Equipment::getHandsItem).map(Item::getId).orElse(null))
+                .legs(Optional.ofNullable(equipment).map(Equipment::getLegsItem).map(Item::getId).orElse(null))
+                .feet(Optional.ofNullable(equipment).map(Equipment::getFeetItem).map(Item::getId).orElse(null))
+                .meleeWeapon(Optional.ofNullable(equipment).map(Equipment::getMeleeWeapon).map(Item::getId).orElse(null))
+                .rangedWeapon(Optional.ofNullable(equipment).map(Equipment::getRangeWeapon).map(Item::getId).orElse(null))
                 .build();
     }
 
