@@ -19,9 +19,9 @@ public interface BackpackItemsDao {
     List<BackpackItemsEntity> getByName(@Bind("name") String name);
 
     @SqlBatch("INSERT INTO backpack_items " +
-            "VALUES (:b.playerName, :b.itemId, :b.itemName, :b.amount) " +
+            "VALUES (:playerName, :itemId, :itemName, :amount) " +
             "ON CONFLICT (player_name, item_id) DO UPDATE SET amount = excluded.amount;")
-    void insert(@BindBean("b") List<BackpackItemsEntity> toBackpackItemsEntities);
+    void insert(@BindBean List<BackpackItemsEntity> toBackpackItemsEntities);
 
     @SqlUpdate("DELETE FROM backpack_items " +
             "WHERE player_name = :name;")

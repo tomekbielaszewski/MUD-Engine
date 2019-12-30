@@ -24,7 +24,7 @@ public interface LocationItemsDao {
     void removeAll(@Bind("locationId") String locationId);
 
     @SqlBatch("INSERT INTO location_items " +
-            "VALUES (:l.locationId, :l.itemId, :l.itemName, :l.amount) " +
+            "VALUES (:locationId, :itemId, :itemName, :amount) " +
             "ON CONFLICT (location_id, item_id) DO UPDATE SET amount = excluded.amount;")
-    void insert(@BindBean("l") List<LocationItemsEntity> locationItemsEntities);
+    void insert(@BindBean List<LocationItemsEntity> locationItemsEntities);
 }

@@ -4,6 +4,7 @@ import org.grizz.game.model.db.entities.PlayerParamEntity;
 import org.grizz.game.model.db.mappers.PlayerParamsEntityMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.statement.UseRowMapper;
@@ -17,10 +18,10 @@ public interface PlayerParamsDao {
             "WHERE player_name = :name;")
     List<PlayerParamEntity> getByName(@Bind("name") String name);
 
-    @SqlUpdate("INSERT INTO player_params " +
-            "VALUES (:p.playerName, :p.key, :p.value) " +
+    @SqlBatch("INSERT INTO player_params " +
+            "VALUES (:playerName, :key, :value) " +
             "ON CONFLICT (player_name, key) DO UPDATE SET value = excluded.value;")
-    void insert(@BindBean("p") List<PlayerParamEntity> toParamsEntity);
+    void insert(@BindBean List<PlayerParamEntity> toParamsEntity);
 
     @SqlUpdate("DELETE " +
             "FROM player_params " +
