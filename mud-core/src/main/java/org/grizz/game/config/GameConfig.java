@@ -46,6 +46,7 @@ public class GameConfig {
     }
 
     @Bean
+    @DependsOn("flyway")
     public Loader locationLoader() {
         return new LocationLoader(env.getProperty(ASSETS_JSON_PATH_LOCATIONS));
     }
