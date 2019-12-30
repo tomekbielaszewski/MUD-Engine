@@ -59,7 +59,7 @@ public class LocationItemsServiceTest {
                 dummyItem(ITEM_3)
         ));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location);
+        verify(locationItemsRepository).upsert(location.getItems());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class LocationItemsServiceTest {
                 dummyItem(ITEM_5)
         ));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location);
+        verify(locationItemsRepository).upsert(location.getItems());
     }
 
     @Test
@@ -91,7 +91,7 @@ public class LocationItemsServiceTest {
         assertThat(location.getItems().getMobileItems(), hasSize(1));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_1)));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location);
+        verify(locationItemsRepository).upsert(location.getItems());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class LocationItemsServiceTest {
                 dummyItem(ITEM_5)
         ));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location);
+        verify(locationItemsRepository).upsert(location.getItems());
     }
 
     @Test
@@ -161,7 +161,7 @@ public class LocationItemsServiceTest {
         assertThat(location.getItems().getStaticItems(), hasSize(1));
         assertThat(location.getItems().getStaticItems(), hasItem(dummyStatic(ITEM_1)));
         assertThat(location.getItems().getMobileItems(), hasSize(0));
-        verify(locationItemsRepository).save(location);
+        verify(locationItemsRepository).upsert(location.getItems());
     }
 
     @Test
@@ -172,7 +172,7 @@ public class LocationItemsServiceTest {
 
         locationService.addStaticItem(staticItem, location);
 
-        verify(locationItemsRepository, never()).save(location);
+        verify(locationItemsRepository, never()).upsert(location.getItems());
     }
 
     @Test
@@ -187,7 +187,7 @@ public class LocationItemsServiceTest {
         assertThat(location.getItems().getStaticItems(), hasSize(1));
         assertThat(location.getItems().getStaticItems(), hasItem(dummyStatic(ITEM_1)));
         assertThat(location.getItems().getMobileItems(), hasSize(0));
-        verify(locationItemsRepository).save(location);
+        verify(locationItemsRepository).upsert(location.getItems());
     }
 
     @Test
@@ -201,7 +201,7 @@ public class LocationItemsServiceTest {
         assertThat(location.getItems().getStaticItems(), hasSize(1));
         assertThat(location.getItems().getStaticItems(), hasItem(dummyStatic(ITEM_1)));
         assertThat(location.getItems().getMobileItems(), hasSize(0));
-        verify(locationItemsRepository).save(location);
+        verify(locationItemsRepository).upsert(location.getItems());
     }
 
     @Test
@@ -216,7 +216,7 @@ public class LocationItemsServiceTest {
         assertThat(removedItems, hasItem(dummyItem(ITEM_1)));
         assertThat(location.getItems().getMobileItems(), hasSize(0));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location);
+        verify(locationItemsRepository).upsert(location.getItems());
     }
 
     @Test
@@ -232,7 +232,7 @@ public class LocationItemsServiceTest {
         assertThat(location.getItems().getMobileItems(), hasSize(1));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_1)));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location);
+        verify(locationItemsRepository).upsert(location.getItems());
     }
 
     @Test
@@ -252,7 +252,7 @@ public class LocationItemsServiceTest {
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_2)));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_3)));
         assertThat(location.getItems().getStaticItems(), hasSize(0));
-        verify(locationItemsRepository).save(location);
+        verify(locationItemsRepository).upsert(location.getItems());
     }
 
     @Test
@@ -266,7 +266,7 @@ public class LocationItemsServiceTest {
 
         assertThat(location.getItems().getMobileItems(), hasSize(1));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_1)));
-        verify(locationItemsRepository, never()).save(location);
+        verify(locationItemsRepository, never()).upsert(location.getItems());
     }
 
     @Test
@@ -280,7 +280,7 @@ public class LocationItemsServiceTest {
 
         assertThat(location.getItems().getMobileItems(), hasSize(1));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_2)));
-        verify(locationItemsRepository, never()).save(location);
+        verify(locationItemsRepository, never()).upsert(location.getItems());
     }
 
     @Test
@@ -295,7 +295,7 @@ public class LocationItemsServiceTest {
 
         assertThat(location.getItems().getMobileItems(), hasSize(0));
         assertThat(location.getItems().getStaticItems(), hasSize(1));
-        verify(locationItemsRepository, never()).save(location);
+        verify(locationItemsRepository, never()).upsert(location.getItems());
     }
 
     @Test
@@ -309,7 +309,7 @@ public class LocationItemsServiceTest {
 
         assertThat(location.getItems().getMobileItems(), hasSize(1));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_1)));
-        verify(locationItemsRepository, never()).save(location);
+        verify(locationItemsRepository, never()).upsert(location.getItems());
     }
 
     @Test
@@ -323,7 +323,7 @@ public class LocationItemsServiceTest {
 
         assertThat(location.getItems().getMobileItems(), hasSize(1));
         assertThat(location.getItems().getMobileItems(), hasItem(dummyItem(ITEM_1)));
-        verify(locationItemsRepository, never()).save(location);
+        verify(locationItemsRepository, never()).upsert(location.getItems());
     }
 
     private Location dummyLocation(List<Item> mobileItems) {
