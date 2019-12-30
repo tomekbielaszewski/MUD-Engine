@@ -129,15 +129,30 @@ public class PlayerService implements PlayerRepository {
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
         return Equipment.builder()
-                .headItem((Armor) itemRepo.get(equipmentEntity.getHead()))
-                .torsoItem((Armor) itemRepo.get(equipmentEntity.getTorso()))
-                .handsItem((Armor) itemRepo.get(equipmentEntity.getHands()))
-                .legsItem((Armor) itemRepo.get(equipmentEntity.getLegs()))
-                .feetItem((Armor) itemRepo.get(equipmentEntity.getFeet()))
-                .meleeWeapon((Weapon) itemRepo.get(equipmentEntity.getMeleeWeapon()))
-                .rangeWeapon((Weapon) itemRepo.get(equipmentEntity.getRangedWeapon()))
+                .headItem(getNullableArmor(equipmentEntity.getHead()))
+                .torsoItem(getNullableArmor(equipmentEntity.getTorso()))
+                .handsItem(getNullableArmor(equipmentEntity.getHands()))
+                .legsItem(getNullableArmor(equipmentEntity.getLegs()))
+                .feetItem(getNullableArmor(equipmentEntity.getFeet()))
+                .meleeWeapon(getNullableWeapon(equipmentEntity.getMeleeWeapon()))
+                .rangeWeapon(getNullableWeapon(equipmentEntity.getRangedWeapon()))
                 .backpack(backpack)
                 .build();
+    }
+
+    private Armor getNullableArmor(String id) {
+        return getNullableItem(id, Armor.class);
+    }
+
+    private Weapon getNullableWeapon(String id) {
+        return getNullableItem(id, Weapon.class);
+    }
+
+    private <T> T getNullableItem(String id, Class<T> clazz) {
+        return Optional.ofNullable(id)
+                .map(itemRepo::get)
+                .map(clazz::cast)
+                .orElse(null);
     }
 
     private PlayerStatsEntity toPlayerStatsEntity(Stats stats, String name) {
