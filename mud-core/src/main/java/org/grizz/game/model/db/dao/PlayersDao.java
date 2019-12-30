@@ -34,10 +34,10 @@ public interface PlayersDao {
     Optional<String> checkExistence(@Bind("name") String name);
 
     @SqlUpdate("INSERT INTO players " +
-            "VALUES (:p.name, :p.currentLocationId, :p.pastLocationId, :p.lastActivity " +
+            "VALUES (:p.name, :p.currentLocationId, COALESCE(:p.pastLocationId, :p.currentLocationId), :p.lastActivity) " +
             "ON CONFLICT (name) DO UPDATE SET name = excluded.name, " +
             "                                 current_location_id = excluded.current_location_id, " +
-            "                                 past_location_id = excluded.past_location_id, " +
+            "                                 past_location_id = COALESCE(excluded.past_location_id, excluded.current_location_id), " +
             "                                 last_activity = excluded.last_activity;")
     void upsert(@BindBean("p") PlayerEntity playerEntity);
 }
