@@ -5,89 +5,80 @@ package mud_core {
     players "1" *-- "1" player_stats : player_name
     players "1" *-- "1" locations : current_location_id
     players "1" *-- "1" locations : past_location_id
-    locations "1" *-- "many" location_items : location_id && item_id
     players "1" *-- "many" player_params : player_name && key
     players "1" *-- "many" backpack_items : player_name && item_id
+
+    class location_items {
+        CK varchar location_id
+        CK varchar item_id
+        varchar item_name
+        integer amount
+    }
 }
 
 package mud_db_interface {
-    player_commands "many" *-- "1" players : player_name
     processed_player_response "many" *-- "1" player_commands : command_id
-    processed_player_response "many" *-- "1" players : executed_by_player
-    processed_player_response "many" *-- "1" players : addressed_to_player
-}
-
-class locations {
-    PK String id
-    String name
-}
-
-class location_items {
-    CK String location_id
-    CK String item_id
-    String item_name
-    int amount
 }
 
 class backpack_items {
-    CK String player_name
-    CK String item_id
-    String item_name
-    int amount
+    CK varchar player_name
+    CK varchar item_id
+    varchar item_name
+    integer amount
 }
 
 class equipments {
-    FK String player_name
+    FK varchar player_name
 
-    String head
-    String torso
-    String hands
-    String legs
-    String feet
+    varchar head
+    varchar torso
+    varchar hands
+    varchar legs
+    varchar feet
     
-    String melee_weapon
-    String range_weapon
+    varchar melee_weapon
+    varchar range_weapon
 }
 
 class players {
     PK String name
     
-    String current_location_id;
-    String past_location_id;
+    varchar current_location_id;
+    varchar past_location_id;
 
-    long last_activity_timestamp
+    timestamp last_activity
 }
 
 class player_stats {
-    FK String player_name
+    FK varchar player_name
 
-    Integer strength
-    Integer dexterity
-    Integer endurance
-    Integer intelligence
-    Integer wisdom
-    Integer charisma
+    integer strength
+    integer dexterity
+    integer endurance
+    integer intelligence
+    integer wisdom
+    integer charisma
 }
 
 class player_params {
-    CK String player_name
-    CK String key
-    String value
+    CK varchar player_name
+    CK varchar key
+    varchar value
 }
 
 class processed_player_response {
-    PK String id
-    FK String command_id
-    FK String executed_by_player
-    FK String addressed_to_player
-    String response
+    PK varchar id
+    FK varchar command_id
+    varchar executed_by_player
+    varchar addressed_to_player
+    varchar response
     timestamp sent
 }
 
 class player_commands {
-    PK String id
-    String command
-    FK String player_name
+    PK varchar id
+    varchar command
+    varchar player_name
     timestamp processed
     timestamp executed
 }
