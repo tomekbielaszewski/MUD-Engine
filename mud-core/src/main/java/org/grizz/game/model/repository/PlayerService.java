@@ -61,6 +61,7 @@ public class PlayerService implements PlayerRepository {
                 .lastActivityTimestamp(playerEntity.getLastActivity().getTime())
                 .equipment(fromEntity(equipmentEntity, itemsEntities))
                 .stats(fromEntity(statsEntity))
+                .parameters(Maps.newHashMap())
                 .build();
         paramEntities.forEach(param -> player.addParameter(param.getKey(), param.getValue()));
         return player;
