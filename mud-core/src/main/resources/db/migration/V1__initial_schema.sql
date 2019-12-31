@@ -60,7 +60,7 @@ create table if not exists player_params
         constraint player_params_players_name_fk
             references players,
     key         varchar not null,
-    value       jsonb   not null,
+    value       varchar   not null,
     constraint player_params_pk
         unique (player_name, key)
 );
