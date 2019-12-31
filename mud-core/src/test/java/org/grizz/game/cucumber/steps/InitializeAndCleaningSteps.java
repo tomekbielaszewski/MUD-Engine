@@ -1,16 +1,20 @@
 package org.grizz.game.cucumber.steps;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import org.grizz.game.cucumber.CucumberTest;
+import org.grizz.game.model.Equipment;
 import org.grizz.game.model.Player;
+import org.grizz.game.model.Stats;
 import org.grizz.game.model.repository.PlayerRepository;
 import org.grizz.game.service.notifier.Notifier;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.grizz.game.cucumber.GameConstants.STARTING_LOCATION;
 import static org.hamcrest.CoreMatchers.not;
@@ -55,6 +59,14 @@ public class InitializeAndCleaningSteps extends CucumberTest {
     }
 
     private void savePlayer(Player player) {
+        player.setEquipment(Optional.ofNullable(player.getEquipment())
+                .orElse(Equipment.builder()
+                        .backpack(Lists.newArrayList())
+                        .build()));
+        player.setParameters(Optional.ofNullable(player.getParameters())
+                .orElse(Maps.newHashMap()));
+        player.setStats(Optional.ofNullable(player.getStats())
+                .orElse(Stats.builder().build()));
         playerRepository.insert(player);
     }
 
