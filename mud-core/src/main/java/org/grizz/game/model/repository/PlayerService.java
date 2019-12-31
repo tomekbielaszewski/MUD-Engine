@@ -1,5 +1,6 @@
 package org.grizz.game.model.repository;
 
+import com.google.common.collect.Maps;
 import org.grizz.game.exception.PlayerDoesNotExistException;
 import org.grizz.game.model.Equipment;
 import org.grizz.game.model.Player;
@@ -168,7 +169,9 @@ public class PlayerService implements PlayerRepository {
     }
 
     private List<PlayerParamEntity> toParamsEntity(Map<String, Object> parameters, String name) {
-        return parameters.entrySet()
+        return Optional.ofNullable(parameters)
+                .orElse(Maps.newHashMap())
+                .entrySet()
                 .stream()
                 .map(entry -> PlayerParamEntity.builder()
                         .playerName(name)
