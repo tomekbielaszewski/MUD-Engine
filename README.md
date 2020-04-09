@@ -18,10 +18,10 @@
 
 ## Wstęp
 MUD-Engine jak sama nazwa wskazuje jest silnikiem do tworzenia gier typu MUD, czyli Multi User Dungeon. Interakcja z grami tego typu odbywa się wyłącznie za pomocą komend i czytania opisów.
-Silnik w całości napisany jest w Javie, natomiast skryptowany jest w JavaScripcie, a definicje przedmiotów, lokacji itp sa zapisane jako JSON. Zmienne elementy gry, takie jak model gracza czy przedmioty na lokacjach, zapisywane są w bazie MongoDB.
+Silnik w całości napisany jest w Javie, natomiast skryptowany jest w JavaScripcie, a definicje przedmiotów, lokacji itp sa zapisane jako JSON. Zmienne elementy gry, takie jak model gracza czy przedmioty na lokacjach, zapisywane są w bazie Postgres.
 
 ## Instalacja, konfiguracja i pierwsze uruchomienie
-Silnik budowany jest z myślą o zachowaniu minimalnych zależności i minimalnej konfiguracji, więc do działania wymaga jedynie Javy 8 i MongoDB 3.
+Silnik budowany jest z myślą o zachowaniu minimalnych zależności i minimalnej konfiguracji, więc do działania wymaga jedynie Javy 8 i Postgres 10.
 
 ### Wymagana/zalecana konfiguracja to
 #### Plik application.properties (opcjonalne)
@@ -30,7 +30,9 @@ Jest to plik szeroko opisany w dokumentacji Spring Boot. Zalecana konfiguracja t
 - logging.level.org.grizz.game=INFO
 - logging.file=mud-engine.log
 - banner.location=classpath:banner.txt
-- spring.data.mongodb.database=mud-engine
+- mud.engine.datasource.url=jdbc:postgresql://localhost:5432/mud-engine
+- mud.engine.datasource.username=postgres
+- mud.engine.datasource.password=postgres
 
 #### Plik assets.properties (wymagane)
 W tym pliku definiujemy lokalizacje główne dla wszystkich assetów (lokacje, itemy, skrypty)

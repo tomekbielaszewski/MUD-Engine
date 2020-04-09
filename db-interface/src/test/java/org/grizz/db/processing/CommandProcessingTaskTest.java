@@ -38,8 +38,8 @@ public class CommandProcessingTaskTest {
 
         task.run();
 
-        verify(playerResponseRepository).save(Lists.newArrayList(PROCESSED_RESPONSE));
-        verify(playerCommandRepository).save(COMMAND);
+        verify(playerResponseRepository).insert(Lists.newArrayList(PROCESSED_RESPONSE));
+        verify(playerCommandRepository).insert(COMMAND);
     }
 
     private static PlayerCommand dummyCommand() {

@@ -1,6 +1,5 @@
 package org.grizz.game.loader.impl;
 
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -63,22 +62,7 @@ public class LocationLoader implements Loader {
 
     private void loadLocationItems(Location location) {
         LocationItems locationItems = locationItemsRepository.findByLocationId(location.getId());
-        if (locationItems == null) {
-            locationItems = initializeDefaultLocationItems(location);
-        }
         location.setItems(locationItems);
-    }
-
-    private LocationItems initializeDefaultLocationItems(Location location) {
-        LocationItems locationItems;
-        log.info("Not found location items for location {}. Creating new entity...", location.getName());
-        locationItems = LocationItems.builder()
-                .locationId(location.getId())
-                .mobileItems(Lists.newArrayList())
-                .staticItems(Lists.newArrayList())
-                .build();
-        locationItems = locationItemsRepository.insert(locationItems);
-        return locationItems;
     }
 
     private void failFastOnScriptMissing(Location location) {

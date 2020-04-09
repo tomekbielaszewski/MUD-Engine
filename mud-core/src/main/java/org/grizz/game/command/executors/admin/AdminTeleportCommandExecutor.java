@@ -115,6 +115,6 @@ public class AdminTeleportCommandExecutor {
     }
 
     private void savePlayer(Player player) {
-        playerRepository.save(player);
+        playerRepository.update(player);
     }
 }

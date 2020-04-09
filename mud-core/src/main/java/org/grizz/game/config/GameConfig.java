@@ -7,7 +7,6 @@ import org.grizz.game.loader.impl.ScriptLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import javax.annotation.PostConstruct;
 import javax.script.ScriptEngine;
@@ -15,7 +14,6 @@ import javax.script.ScriptEngineManager;
 
 @Configuration
 @ComponentScan("org.grizz.game")
-@EnableMongoRepositories("org.grizz.game.model.repository")
 @PropertySources({
         @PropertySource("file:${properties.absolute.path.prefix:}assets/assets.properties"),
         @PropertySource("file:${properties.absolute.path.prefix:}assets/strings.properties"),
@@ -48,6 +46,7 @@ public class GameConfig {
     }
 
     @Bean
+    @DependsOn("flyway")
     public Loader locationLoader() {
         return new LocationLoader(env.getProperty(ASSETS_JSON_PATH_LOCATIONS));
     }

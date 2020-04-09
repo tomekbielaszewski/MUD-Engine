@@ -1,8 +1,10 @@
 package org.grizz.game.model.repository;
 
 import org.grizz.game.model.LocationItems;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 
-public interface LocationItemsRepository extends MongoRepository<LocationItems, String> {
-    LocationItems findByLocationId(String locationId);
+public interface LocationItemsRepository {
+    LocationItems findByLocationId(@Bind String locationId);
+
+    LocationItems upsert(LocationItems locationItems);
 }

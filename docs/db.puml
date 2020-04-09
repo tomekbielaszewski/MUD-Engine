@@ -1,0 +1,86 @@
+@startuml
+
+package mud_core {
+    players "1" *-- "1" equipments : player_name
+    players "1" *-- "1" player_stats : player_name
+    players "1" *-- "1" locations : current_location_id
+    players "1" *-- "1" locations : past_location_id
+    players "1" *-- "many" player_params : player_name && key
+    players "1" *-- "many" backpack_items : player_name && item_id
+
+    class location_items {
+        CK varchar location_id
+        CK varchar item_id
+        varchar item_name
+        integer amount
+    }
+}
+
+package mud_db_interface {
+    processed_player_response "many" *-- "1" player_commands : command_id
+}
+
+class backpack_items {
+    CK varchar player_name
+    CK varchar item_id
+    varchar item_name
+    integer amount
+}
+
+class equipments {
+    FK varchar player_name
+
+    varchar head
+    varchar torso
+    varchar hands
+    varchar legs
+    varchar feet
+    
+    varchar melee_weapon
+    varchar range_weapon
+}
+
+class players {
+    PK String name
+    
+    varchar current_location_id;
+    varchar past_location_id;
+
+    timestamp last_activity
+}
+
+class player_stats {
+    FK varchar player_name
+
+    integer strength
+    integer dexterity
+    integer endurance
+    integer intelligence
+    integer wisdom
+    integer charisma
+}
+
+class player_params {
+    CK varchar player_name
+    CK varchar key
+    varchar value
+}
+
+class processed_player_response {
+    PK varchar id
+    FK varchar command_id
+    varchar executed_by_player
+    varchar addressed_to_player
+    varchar response
+    timestamp sent
+}
+
+class player_commands {
+    PK varchar id
+    varchar command
+    varchar player_name
+    timestamp processed
+    timestamp executed
+}
+
+@enduml

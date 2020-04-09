@@ -20,7 +20,7 @@ loadScript("tutorial-quest-ids");
     game.player.message("Zanieś ten towar na pokład!");
   }
 
-  if (!locationHasPackage()) {
+    if (!locationHasPackage() && !playerHasAlreadyTakenPackageFromThisLocation()) {
     respawnPackage();
   }
 })();
